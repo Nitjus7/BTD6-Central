@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTD6 Stats</title>
+
+    <!--CUSTOM FONTS IMPORT BEGIN-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <!--CUSTOM FONTS IMPORT END-->
+
+    <link rel="icon" href="media/victory.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/stats.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="navBarContainer">
+      <nav>
+        <ul class="navList">
+          <li class="mainContent navItem item1">
+            <strong>BTD6 Central</strong>
+          </li>
+          <li class="mainContent navItem item2">
+            <a href="index.html"> Home</a>
+          </li>
+          <li class="mainContent navItem item3">
+            <a href="events.html"> Events</a>
+          </li>
+          <li class="mainContent navItem item4 wip">
+            <a href="#"> Blogs</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="statSelectionContainer">
+      <div class="statTypeSelection">
+        <button id="towerButton">Towers, Heroes, and Paragons</button>
+        <button id="bloonButton">Bloons and Bosses</button>
+        <button id="miscButton" class="wip">
+          Knowledge, Powers, and Relics
+        </button>
+      </div>
+      <div class="sixInchSelection">
+        <div id="towerCategorySelection">
+          <button id="primaryCategoryButton">Primary</button>
+          <button id="militaryCategoryButton">Military</button>
+          <button id="magicCategoryButton">Magic</button>
+          <button id="supportCategoryButton">Support</button>
+          <button id="heroCategoryButton" class="wip">Heroes</button>
+          <button id="paragonCategoryButton" class="wip">Paragons</button>
+        </div>
+        <div id="bloonCategorySelection">
+          <button id="regBloonsCategoryButton">Bloons</button>
+          <button id="bossCategoryButton">Bosses</button>
+          <button id="roundsCategoryButton" class="wip">Rounds</button>
+        </div>
+      </div>
+      <div class="footlongSelection">
+        <div id="primaryCategorySelection">
+          <button class="towerStatButton" id="dartTowerButton">
+            Dart Monkey
+          </button>
+          <button class="towerStatButton" id="boomerTowerButton">
+            Boomerang Monkey
+          </button>
+          <button class="towerStatButton" id="bombTowerButton">
+            Bomb Shooter
+          </button>
+          <button class="towerStatButton" id="tackTowerButton">
+            Tack Shooter
+          </button>
+          <button class="towerStatButton" id="iceTowerButton">
+            Ice Monkey
+          </button>
+          <button class="towerStatButton" id="glueTowerButton">
+            Glue Gunner
+          </button>
+        </div>
+        <div id="militaryCategorySelection">
+          <button class="towerStatButton" id="sniperTowerButton">
+            Sniper Monkey
+          </button>
+          <button class="towerStatButton" id="subTowerButton">
+            Monkey Sub
+          </button>
+          <button class="towerStatButton" id="boatTowerButton">
+            Monkey Buccaneer
+          </button>
+          <button class="towerStatButton" id="aceTowerButton">
+            Monkey Ace
+          </button>
+          <button class="towerStatButton" id="heliTowerButton">
+            Heli Pilot
+          </button>
+          <button class="towerStatButton" id="mortarTowerButton">
+            Mortar Monkey
+          </button>
+          <button class="towerStatButton" id="dartlingTowerButton">
+            Dartling Gunner
+          </button>
+        </div>
+        <div id="magicCategorySelection">
+          <button class="towerStatButton" id="wizardTowerButton">
+            Wizard Monkey
+          </button>
+          <button class="towerStatButton" id="superTowerButton">
+            Super Monkey
+          </button>
+          <button class="towerStatButton" id="ninjaTowerButton">
+            Ninja Monkey
+          </button>
+          <button class="towerStatButton" id="alchTowerButton">
+            Alchemist
+          </button>
+          <button class="towerStatButton" id="druidTowerButton">Druid</button>
+        </div>
+        <div id="supportCategorySelection">
+          <button class="towerStatButton" id="farmTowerButton">
+            Banana Farm
+          </button>
+          <button class="towerStatButton" id="spikeTowerButton">
+            Spike Factory
+          </button>
+          <button class="towerStatButton" id="villageTowerButton">
+            Monkey Village
+          </button>
+          <button class="towerStatButton" id="engiTowerButton">
+            Engineer Monkey
+          </button>
+          <button class="towerStatButton wip" id="beastTowerButton">
+            Beast Handler
+          </button>
+        </div>
+        <div id="bloonStatsContainer">
+          <div class="bloonStatsCard">
+            <div class="bloonTitle">Red Bloon</div>
+            <div class="bloonImageContainer">
+              <img src="media/trophy.png" alt="Placeholder" />
+            </div>
+            <div class="bloonDetails">
+              <ul>
+                <li>1 HP</li>
+                <li>is a Boss Ass Bitch</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="bossStats"><p class="mainContent">what do i put here</p></div>
+      </div>
+      <p id="SALVATION" class="mainContent"></p>
+    </div>
+    <script src="scripts/stats.js"></script>
+  </body>
+</html>

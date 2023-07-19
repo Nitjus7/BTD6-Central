@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTD6 Event Archive</title>
+
+    <!--CUSTOM FONTS IMPORT BEGIN-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <!--CUSTOM FONTS IMPORT END-->
+
+    <link rel="icon" href="media/victory.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/events.css" />
+  </head>
+  <body>
+    <div class="navBarContainer">
+      <nav>
+        <ul class="navList">
+          <li class="mainContent navItem item1">
+            <strong>BTD6 Central</strong>
+          </li>
+          <li class="mainContent navItem item2">
+            <a href="index.html"> Home</a>
+          </li>
+          <li class="mainContent navItem">
+            <a href="stats.html"> Stats</a>
+          </li>
+          <li class="mainContent navItem item4 wip">
+            <a href="#"> Blogs</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div id="eventPickContainer">
+      <button class="mainContent eventChoice" id="raceEventButton">
+        Races
+      </button>
+      <button class="mainContent eventChoice wip" id="odysseyEventButton">
+        Odysseys
+      </button>
+      <button class="mainContent eventChoice wip" id="bossEventButton">
+        Bosses
+      </button>
+      <button class="mainContent eventChoice wip" id="ctEventButton">
+        Contested Territory
+      </button>
+    </div>
+    <button id="takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia">
+      Back
+    </button>
+    <div id="dataDisplayContainer">
+      <p id="test"></p>
+    </div>
+    <script src="scripts/events.js"></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+#eventPickList {
+  list-style: none;
+}
+
+#eventPickContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.eventChoice {
+  margin: 15px;
+  padding: 15px;
+  width: 100%;
+  max-width: 900px;
+  border: 1px var(--background) solid;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  background: rgb(32, 124, 195);
+  background: linear-gradient(
+    90deg,
+    rgba(32, 124, 195, 0.5) 0%,
+    rgba(177, 0, 255, 0.5004595588235294) 100%
+  );
+}
+
+.eventChoice:hover {
+  cursor: pointer;
+  border: 1px blue solid;
+}
+
+#dataDisplayContainer {
+  display: none;
+}
+#takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia {
+  display: none;
+}
+
+.wip {
+  cursor: default !important;
+}

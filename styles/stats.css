@@ -1,0 +1,55 @@
+:root {
+  --statsTitleBackgroundColor: #3c3c3c;
+  --statsDescriptionBackgroundColor: #757575;
+  --primaryTextMainColor: #38b6ff;
+  --primaryBannerColor: #000000;
+  --primaryBackgroundColor: #84c5db; /* opacity at 0.5 */
+  --militaryMainColor: #c3e406;
+  --militaryBannerColor: #000000;
+  --militaryBackgroundColor: #8fa414; /* opacity at 0.5 */
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.statTypeSelection,
+#towerCategorySelection,
+.footlongSelection {
+  display: inline-block;
+  white-space: nowrap;
+  display: inline-block;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.35rem;
+  border: none;
+  margin: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.wip {
+  cursor: default !important;
+}
+
+.selected {
+  background-color: yellow;
+}
+
+.bloonStatsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100vh;
+}
+
+.bloonStatsCard {
+  width: 50vh;
+  border: black solid;
+}

@@ -1,0 +1,225 @@
+/* variables */
+:root {
+  --background: #e8e5e5;
+  --textColor: #121212;
+  --mainButton: #5274af;
+  --secondaryButton: #7498e7;
+  --buttonBackground: #8a8c9b;
+  --accent: #7e7e7e;
+  --mainFont: "Nunito", sans-serif;
+  --wip: 0.33;
+}
+
+/* removes text decoration from visited or unviisted links */
+a:link {
+  text-decoration: none;
+  color: var(--textColor);
+}
+a:visited {
+  text-decoration: none;
+  color: var(--textColor);
+}
+
+/* format everything */
+body {
+  background-color: var(--background, white);
+  color: var(--textColor, black);
+  letter-spacing: 0.25px;
+  margin: 0 20px;
+  padding: 0 1rem;
+}
+
+.mainContent,
+.homePageHeader {
+  font-family: var(--mainFont);
+}
+
+.pageTitle {
+  display: flex;
+  justify-content: center;
+  margin: 45px 0 45px 0;
+}
+
+.header {
+  font-size: 1.75rem;
+}
+
+.versionHeader {
+  font-size: 1.4rem;
+}
+
+button {
+  font-family: var(--mainFont);
+}
+
+.navBarContainer {
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px gray;
+  background-color: white;
+}
+
+/* This thing has caused me so much trouble. I want it to confess its sins. */
+.navList {
+  display: flex;
+  flex-wrap: none;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1.4rem;
+  padding: 1rem 0;
+  list-style: none;
+  flex-shrink: 1;
+}
+.navList a {
+  margin-right: 35px;
+}
+.navList a:hover {
+  opacity: 1;
+  color: skyblue;
+  transition: cubic-bezier(0, -0.03, 0.08, 1.01) 0.25s;
+}
+.item1 {
+  margin-right: auto;
+  margin-left: 30px;
+}
+@media only screen and (max-width: 615px) {
+  .navList {
+    font-size: 1rem;
+    letter-spacing: 0.15px;
+  }
+  .navList a {
+    margin-right: 10px;
+  }
+  .item1 {
+    margin-left: 10px;
+    word-spacing: 0.5px;
+  }
+}
+div {
+  user-select: none;
+}
+
+/* done with hell, time for a new type of hell */
+/* setting up the split home screen thing */
+.websiteVersionHistoryContainer {
+  display: inline-block;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  width: 65%;
+  box-shadow: 0px 0px 5px gray;
+}
+
+/* 
+font-family: 'Luckiest Guy', sans-serif;
+font-family: 'Nunito', sans-serif;
+font-family: 'Roboto', sans-serif; 
+ SUSCRIBE BUTTON 
+.subscribe-button {
+    background-color: rgb(200, 0, 0);
+    color: white;
+    border: none;
+    height: 36px;
+    width: 105px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+.subscribe-button:hover {
+    opacity: 0.8;
+}
+.subscribe-button:active {
+    opacity: 0.5;
+}
+
+
+ JOIN BUTTON 
+.join-button {
+    background-color: white;
+    color: rgb(41, 118, 211);
+    height: 36px;
+    width: 75px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(41, 118, 211);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.15s,
+        color 0.15s;
+}
+.join-button:hover {
+    color: white;
+    background-color: rgb(41, 118, 211);
+}
+.join-button:active {
+    opacity: 0.7;
+}
+
+ TWEET BUTTON 
+.tweet-button {
+    background-color: rgb(2, 158, 255);
+    color: white;
+    border: none;
+    height: 36px;
+    width: 74px;
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+#submitValues {
+    height: 36px;
+    width: 74px;
+    margin-top: 5px;
+}
+
+body {
+    background: rgb(13,103,6);
+background: linear-gradient(90deg, rgba(13,103,6,1) 0%, rgba(164,14,14,1) 51%, rgba(0,110,255,1) 100%);
+}
+
+
+.newSection {
+  margin-top: 1rem;
+}
+
+#tempInput {
+  margin-bottom: 1rem;
+}
+
+#submit {
+  height: 1rem;
+  width: 2rem;
+  margin-top: 1rem;
+}
+
+#result {
+  margin-top: 3rem;
+}
+
+.navList button {
+  color: var(--textColor);
+  border: 2px solid var(--textColor);
+  background-color: var(--buttonBackground);
+  border-radius: 0.5rem;
+  width: 10rem;
+  padding: 1.25rem;
+  text-align: center;
+  height: 5.5rem;
+  transition: cubic-bezier(0, -0.03, 0.08, 1.01) 0.5s;
+  font-size: 2rem;
+}
+
+.navList button:hover {
+  cursor: pointer;
+  border-color: rgb(22, 103, 180);
+  color: rgb(22, 103, 180);
+  background-color: rgb(180, 194, 240);
+  box-shadow: 1px 1px 8px rgb(166, 201, 234);
+}
+*/
+.wip {
+  opacity: var(--wip) !important;
+}
