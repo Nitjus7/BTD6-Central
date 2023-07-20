@@ -30,9 +30,6 @@ body {
   font-family: var(--mainFont);
 }
 
-.homePageHeader {
-}
-
 .pageTitle {
   display: flex;
   justify-content: center;
