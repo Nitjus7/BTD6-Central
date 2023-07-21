@@ -8,6 +8,7 @@
   --accent: #7e7e7e;
   --mainFont: "Nunito", sans-serif;
   --wip: 0.33;
+  font-size: 15px;
 }
 
 /* removes text decoration from visited or unviisted links */
@@ -25,7 +26,7 @@ body {
   background-color: var(--background, white);
   color: var(--textColor, black);
   letter-spacing: 0.25px;
-  margin: 0 20px;
+  margin: 0 1rem;
   padding: 0 1rem;
   font-family: var(--mainFont);
 }
@@ -53,7 +54,6 @@ button {
   border-radius: 10px;
   box-shadow: 0px 0px 5px gray;
   background-color: white;
-  position: sticky;
 }
 
 /* This thing has caused me so much trouble. I want it to confess its sins. */
@@ -63,12 +63,13 @@ button {
   position: relative;
   align-items: center;
   justify-content: flex-end;
-  font-size: 1.4rem;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  font-size: 1.2rem;
   list-style: none;
   flex-shrink: 1;
+  height: 3.4rem;
 }
-.navList a {
+.navList > * {
   margin-right: 35px;
 }
 .navList a:hover {
@@ -80,13 +81,24 @@ button {
   margin-right: auto;
   margin-left: 30px;
 }
-@media only screen and (max-width: 615px) {
+.currentPage {
+  background-color: skyblue;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+@media only screen and (max-width: 768px) {
+  body {
+    margin: 0 0.5rem;
+    padding: 0 0.5rem;
+  }
   .navList {
     font-size: 1rem;
     letter-spacing: 0.15px;
+    height: 2.5rem;
   }
-  .navList a {
-    margin-right: 10px;
+  .navList > *:not(:first-child) {
+    margin-right: 0.75rem;
+    font-size: 0.75rem;
   }
   .item1 {
     margin-left: 10px;
