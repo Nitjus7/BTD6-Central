@@ -53,6 +53,7 @@ button {
   border-radius: 10px;
   box-shadow: 0px 0px 5px gray;
   background-color: white;
+  position: sticky;
 }
 
 /* This thing has caused me so much trouble. I want it to confess its sins. */
