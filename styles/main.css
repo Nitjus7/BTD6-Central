@@ -11,6 +11,13 @@
   font-size: 15px;
 }
 
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
 /* removes text decoration from visited or unviisted links */
 a:link {
   text-decoration: none;
