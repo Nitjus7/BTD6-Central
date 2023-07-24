@@ -64,10 +64,10 @@ button {
   align-items: center;
   justify-content: flex-end;
   padding: 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   list-style: none;
   flex-shrink: 1;
-  height: 3.4rem;
+  height: 3rem;
 }
 .navList > * {
   margin-right: 35px;
@@ -84,26 +84,7 @@ button {
 .currentPage {
   background-color: skyblue;
   padding: 0.5rem;
-  border-radius: 10px;
-}
-@media only screen and (max-width: 768px) {
-  body {
-    margin: 0 0.5rem;
-    padding: 0 0.5rem;
-  }
-  .navList {
-    font-size: 1rem;
-    letter-spacing: 0.15px;
-    height: 2.5rem;
-  }
-  .navList > *:not(:first-child) {
-    margin-right: 0.75rem;
-    font-size: 0.75rem;
-  }
-  .item1 {
-    margin-left: 10px;
-    word-spacing: 0.5px;
-  }
+  border-radius: 20px;
 }
 div {
   user-select: none;
@@ -118,6 +99,26 @@ div {
   border-radius: 10px;
   width: 65%;
   box-shadow: 0px 0px 5px gray;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    margin: 0 0.5rem;
+    padding: 0 0.5rem;
+  }
+  .navList {
+    font-size: 1rem;
+    letter-spacing: 0.15px;
+    height: 2rem;
+  }
+  .navList > *:not(:first-child) {
+    margin-right: 0.75rem;
+    font-size: 0.75rem;
+  }
+  .item1 {
+    margin-left: 10px;
+    word-spacing: 0.5px;
+  }
 }
 
 /* 
