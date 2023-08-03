@@ -73,10 +73,44 @@ function figureOutEndTime(endTime) {
 raceEventButton.onclick = () => {
   eventPickContainer.style.display = "none";
   backButton.style.display = "block";
-  dataDisplayContainer.innerText =
-    fetchMeSomeRaceDataAlmightyComputerOverlord();
+  dataDisplayContainer.style.display = "block";
+  document.getElementById("statTitle").innerText = "Latest Race Events";
+  getRaceData();
 };
 backButton.onclick = () => {
   eventPickContainer.style.display = "flex";
   backButton.style.display = "none";
+  dataDisplayContainer.style.display = "none";
 };
+
+getRaceData = () => {
+  fetch("https://data.ninjakiwi.com/btd6/races?")
+    .then((response) => response.json())
+    .then((data) => {
+      formatRaceData(data["body"]);
+    })
+    .catch((error) => {
+      alert(
+        "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
+      );
+    });
+};
+
+function formatRaceData(data) {
+  timeInfo(data);
+}
+
+function timeInfo(data) {
+  for (let i = 0; i < data.length - 1; i++) {
+    const startTimestamp = data[i]["start"];
+    const endTimestamp = data[i]["end"];
+    const currentTimestamp = Date.now();
+    if (currentTimestamp > endTimestamp) {
+      console.log(`${data[i]["name"]} has ended`);
+    } else if (currentTimestamp < startTimestamp) {
+      console.log(`${data[i]["name"]} has not begun`);
+    } else {
+      console.log(`${data[i]["name"]} is ongoing.`);
+    }
+  }
+}

@@ -100,14 +100,14 @@ function hideCategories(level) {
   }
 }
 
-function showTowerStats(buttonId) {
-  statContainer.style.display = "block";
-  statContainer.innerText = buttonId;
-}
-
 // does stuff
 function doStuff(num) {
   return num;
+}
+
+function showTowerStats(buttonId) {
+  statContainer.style.display = "block";
+  statContainer.innerText = buttonId;
 }
 
 hideCategories("sub");
@@ -128,6 +128,7 @@ for (let i = 0; i < middleButtonArray.length; i++) {
     swapSelection(button, "furtherSub", showThisCategory);
   });
 }
+
 // adds event listeners to tower stat buttons
 for (let i = 0; i < towerButtonArray.length; i++) {
   const button = towerButtonArray[i];
