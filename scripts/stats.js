@@ -107,7 +107,34 @@ function doStuff(num) {
 
 function showTowerStats(buttonId) {
   statContainer.style.display = "block";
-  statContainer.innerText = buttonId;
+  let towerName = buttonId.slice(0, buttonId.indexOf("TowerButton"));
+  statContainer.innerText = towerName;
+  examineData(towerName);
+}
+
+function examineData(name) {
+  fetch("/data/towers.json")
+    .then((response) => response.json())
+    .then((broadData) => {
+      const data = broadData[name];
+      parseStats(data);
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+function parseStats(data) {
+  for (let i = 0; i < 3; i++) {
+    let microData = data["topPath"][i];
+    if (microData.hasOwnProperty("enable")) {
+      let enable = microData["enable"];
+      console.log(data[enable]);
+    }
+    if (microData.hasOwnProperty("disable")) {
+      let disable = microData["disable"];
+      console.log(data[disable]);
+    }
+  }
 }
 
 hideCategories("sub");

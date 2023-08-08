@@ -81,15 +81,15 @@ button {
 }
 .navList a:hover {
   opacity: 1;
-  color: skyblue;
-  transition: cubic-bezier(0, -0.03, 0.08, 1.01) 0.25s;
+  color: var(--secondaryButton);
+  transition: 0.25s;
 }
 .websiteTitle {
   margin-right: auto;
   margin-left: 30px;
 }
 .currentPage {
-  background-color: skyblue;
+  background-color: var(--secondaryButton);
   padding: 0.5rem;
   border-radius: 20px;
 }

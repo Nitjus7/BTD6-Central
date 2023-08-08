@@ -5,11 +5,9 @@ const dataDisplayContainer = document.getElementById("dataDisplayContainer");
 const backButton = document.getElementById(
   "takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia"
 );
-
-let raceID = "";
-let bossID = "";
-let odysseyID = "";
-let ctID = "";
+const statTitle = document.getElementById("statTitle");
+const raceMetaAndLB = document.getElementById("raceMetaAndLB");
+let contentLoaded = false;
 
 function showLB(URL) {
   fetch(URL)
@@ -22,35 +20,6 @@ function showLB(URL) {
     });
 }
 
-function parseMetadata(URL) {
-  fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      alert(error);
-    });
-}
-
-function fetchMeSomeRaceDataAlmightyComputerOverlord() {
-  fetch("https://data.ninjakiwi.com/btd6/races?")
-    .then((response) => response.json())
-    .then((data) => {
-      const startTime = data.body.start;
-      const startDate = figureOutStartTime(startTime);
-      const endTime = data.body.end;
-      const endDate = figureOutEndTime(endTime);
-      return `The event starts at ${startTime}, and ends at ${endTime}`;
-    })
-    .catch((error) => {
-      // Handle any errors
-      alert(
-        "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central server."
-      );
-      eventPickContainer.style.display = "flex";
-    });
-}
 function figureOutStartTime(startTime) {
   const startDate = new Date(startTime);
   return startDate.toLocaleDateString("en-US", {
@@ -62,51 +31,64 @@ function figureOutStartTime(startTime) {
 }
 function figureOutEndTime(endTime) {
   const endDate = new Date(endTime);
-  return endDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return endDate.toLocaleDateString();
 }
-
-raceEventButton.onclick = () => {
-  eventPickContainer.style.display = "none";
-  backButton.style.display = "block";
-  dataDisplayContainer.style.display = "block";
-  document.getElementById("statTitle").innerText = "Latest Race Events";
-  getRaceData();
-};
-backButton.onclick = () => {
-  eventPickContainer.style.display = "flex";
-  backButton.style.display = "none";
-  dataDisplayContainer.style.display = "none";
-};
 
 getRaceData = () => {
-  fetch("https://data.ninjakiwi.com/btd6/races?")
-    .then((response) => response.json())
-    .then((data) => {
-      formatRaceData(data["body"]);
-    })
-    .catch((error) => {
-      alert(
-        "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
-      );
-    });
+  if (!contentLoaded) {
+    fetch("https://data.ninjakiwi.com/btd6/races?")
+      .then((response) => response.json())
+      .then((data) => {
+        contentLoaded = true;
+        generateRaceTitles(data["body"]);
+      })
+      .catch((error) => {
+        alert(
+          "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
+        );
+        alert(error);
+      });
+  }
 };
 
-function formatRaceData(data) {
-  timeInfo(data);
+function generateRaceTitles(data) {
+  for (let i = 0; i < data.length; i++) {
+    let docElem = document.createElement("div");
+    docElem.classList.add("eventTitle");
+    docElem.innerHTML = `<b>${data[i]["name"]}</b>`;
+    dataDisplayContainer.appendChild(docElem);
+    docElem.onclick = () => {
+      dataDisplayContainer.style.display = "none";
+      generateRaceMetadata(i, data);
+    };
+  }
 }
 
-function timeInfo(data) {
+function generateRaceMetadata(raceNum, data) {
+  fetch(data[raceNum]["metadata"])
+    .then((response) => response.json())
+    .then((metadata) => {
+      let shit = metadata["body"];
+      statTitle.innerText = `Starts at ${shit["startRound"]} and ends at ${shit["endRound"]}`;
+      raceMetaAndLB.style.display = "flex";
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function fetchStartTime(data) {
+  data["start"].toLocaleDateString();
+}
+
+function isItLive(data) {
   for (let i = 0; i < data.length - 1; i++) {
     const startTimestamp = data[i]["start"];
     const endTimestamp = data[i]["end"];
     const currentTimestamp = Date.now();
     if (currentTimestamp > endTimestamp) {
       console.log(`${data[i]["name"]} has ended`);
+      console.log(figureOutEndTime(endTimestamp));
     } else if (currentTimestamp < startTimestamp) {
       console.log(`${data[i]["name"]} has not begun`);
     } else {
@@ -114,3 +96,17 @@ function timeInfo(data) {
     }
   }
 }
+
+raceEventButton.onclick = () => {
+  eventPickContainer.style.display = "none";
+  backButton.style.display = "block";
+  dataDisplayContainer.style.display = "flex";
+  document.getElementById("eventTitle").innerText = "Latest Race Events";
+  getRaceData();
+};
+backButton.onclick = () => {
+  eventPickContainer.style.display = "flex";
+  backButton.style.display = "none";
+  dataDisplayContainer.style.display = "none";
+  raceMetaAndLB.style.display = "none";
+};
