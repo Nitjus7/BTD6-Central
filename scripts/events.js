@@ -7,6 +7,8 @@ const backButton = document.getElementById(
 );
 const statTitle = document.getElementById("statTitle");
 const raceMetaAndLB = document.getElementById("raceMetaAndLB");
+const specialModsContainer = document.getElementById("specialModsContainer");
+
 let contentLoaded = false;
 
 function showLB(URL) {
@@ -68,13 +70,24 @@ function generateRaceMetadata(raceNum, data) {
   fetch(data[raceNum]["metadata"])
     .then((response) => response.json())
     .then((metadata) => {
-      let shit = metadata["body"];
-      statTitle.innerText = `Starts at ${shit["startRound"]} and ends at ${shit["endRound"]}`;
+      statTitle.innerText = `"${data[raceNum]["name"]}" Race Info`;
+      statTitle.style.display = "flex";
+      parseTowersAndMods(metadata["body"]);
       raceMetaAndLB.style.display = "flex";
     })
     .catch((error) => {
       console.log(error);
     });
+}
+
+function parseTowersAndMods(metadata) {
+  document.getElementById(
+    "startingCash"
+  ).innerText = `Starting Cash: $${metadata["startingCash"]}`;
+  document.getElementById("lives").innerText = `Lives: ${metadata["lives"]}`;
+  document.getElementById(
+    "rounds"
+  ).innerText = `Rounds: ${metadata["startRound"]} to ${metadata["endRound"]}`;
 }
 
 function fetchStartTime(data) {
@@ -107,6 +120,7 @@ raceEventButton.onclick = () => {
 backButton.onclick = () => {
   eventPickContainer.style.display = "flex";
   backButton.style.display = "none";
+  statTitle.style.display = "none";
   dataDisplayContainer.style.display = "none";
   raceMetaAndLB.style.display = "none";
 };
