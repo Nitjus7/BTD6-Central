@@ -8,7 +8,15 @@ const backButton = document.getElementById(
 const statTitle = document.getElementById("statTitle");
 const raceMetaAndLB = document.getElementById("raceMetaAndLB");
 const specialModsContainer = document.getElementById("specialModsContainer");
+const enabledTowersContainer = document.getElementById(
+  "enabledTowersContainer"
+);
+const enabledTowers = document.getElementById("enabledTowers");
+const enabledHeroes = document.getElementById("enabledHeroes");
+const eventDates = document.getElementById("eventDates");
 
+let startDate;
+let endDate;
 let contentLoaded = false;
 
 function showLB(URL) {
@@ -41,8 +49,8 @@ getRaceData = () => {
     fetch("https://data.ninjakiwi.com/btd6/races?")
       .then((response) => response.json())
       .then((data) => {
-        contentLoaded = true;
         generateRaceTitles(data["body"]);
+        contentLoaded = true;
       })
       .catch((error) => {
         alert(
@@ -55,10 +63,13 @@ getRaceData = () => {
 
 function generateRaceTitles(data) {
   for (let i = 0; i < data.length; i++) {
+    // adds a new div for every race event
     let docElem = document.createElement("div");
     docElem.classList.add("eventTitle");
     docElem.innerHTML = `<b>${data[i]["name"]}</b>`;
     dataDisplayContainer.appendChild(docElem);
+
+    // adds event listeners to each element
     docElem.onclick = () => {
       dataDisplayContainer.style.display = "none";
       generateRaceMetadata(i, data);
@@ -72,7 +83,7 @@ function generateRaceMetadata(raceNum, data) {
     .then((metadata) => {
       statTitle.innerText = `"${data[raceNum]["name"]}" Race Info`;
       statTitle.style.display = "flex";
-      parseTowersAndMods(metadata["body"]);
+      displayInfo(metadata["body"]);
       raceMetaAndLB.style.display = "flex";
     })
     .catch((error) => {
@@ -80,18 +91,73 @@ function generateRaceMetadata(raceNum, data) {
     });
 }
 
-function parseTowersAndMods(metadata) {
+function displayInfo(metadata) {
+  // this just sucks so much lmao
+  enabledTowers.innerText = "";
   document.getElementById(
     "startingCash"
-  ).innerText = `Starting Cash: $${metadata["startingCash"]}`;
-  document.getElementById("lives").innerText = `Lives: ${metadata["lives"]}`;
+  ).innerHTML = `<b>Cash</b><br>$${metadata["startingCash"]}`;
+  document.getElementById(
+    "lives"
+  ).innerHTML = `<b>Lives</b><br>${metadata["lives"]}`;
   document.getElementById(
     "rounds"
-  ).innerText = `Rounds: ${metadata["startRound"]} to ${metadata["endRound"]}`;
+  ).innerHTML = `<b>Rounds</b><br>${metadata["startRound"]} to ${metadata["endRound"]}`;
+  let mode;
+  if (metadata["mode"] == "DoubleMoabHealth") {
+    mode = "Double HP MOABs";
+  } else {
+    mode = metadata["mode"];
+  }
+  document.getElementById(
+    "mode"
+  ).innerHTML = `<b>${metadata["difficulty"]}</b><br>${mode}`;
+  for (const tower of metadata["_towers"]) {
+    if (!tower["isHero"]) {
+      if (tower["max"] != 0) parseTowerUpgrades(tower);
+    } else {
+      if (tower["tower"] == "ChosenPrimaryHero" && tower["max"] != 0) {
+        parseHeroes(tower, true);
+      } else if (tower["max"] != 0) {
+        parseHeroes(tower, false);
+      }
+    }
+  }
+  document.getElementById("upperStatsContainer").style.display = "flex";
 }
 
-function fetchStartTime(data) {
-  data["start"].toLocaleDateString();
+// sorts out the tower upgrades
+function parseTowerUpgrades(tower) {
+  let enabledUpgrades;
+  let badName = tower["tower"];
+  let name = badName.replace(/([A-Z])/g, " $1").trim(); // magic code by AI that adds spaces do NOT fucking touch this
+  let path1Tiers = 5;
+  let path2Tiers = 5;
+  let path3Tiers = 5;
+  path1Tiers -= tower["path1NumBlockedTiers"];
+  path2Tiers -= tower["path2NumBlockedTiers"];
+  path3Tiers -= tower["path3NumBlockedTiers"];
+  if (path1Tiers + path2Tiers + path3Tiers >= 15) {
+    enabledUpgrades = ``;
+  } else {
+    enabledUpgrades = `(${path1Tiers}-${path2Tiers}-${path3Tiers})`;
+  }
+  const towerInfoDisplay = document.createElement("p");
+  enabledTowersContainer.appendChild(towerInfoDisplay);
+  towerInfoDisplay.classList.add("towerInfoDisplay");
+  if (tower["max"] > 0) {
+    towerInfoDisplay.innerText = `${tower["max"]}x ${name}\n${enabledUpgrades}`;
+  } else if (tower["max"] == -1) {
+    towerInfoDisplay.innerText = `${name}\n${enabledUpgrades}`;
+  }
+}
+
+function parseHeroes(hero, isSelectable) {}
+
+function generateTimestamps(data) {
+  const startDate = new Date(data["start"]);
+  const endDate = new Date(data["end"]);
+  dates = `<b>Start</b> ${startDate.toLocaleDateString()} | <b>End</b> ${endDate.toLocaleDateString()}`;
 }
 
 function isItLive(data) {
@@ -123,4 +189,7 @@ backButton.onclick = () => {
   statTitle.style.display = "none";
   dataDisplayContainer.style.display = "none";
   raceMetaAndLB.style.display = "none";
+  while (enabledTowersContainer.hasChildNodes()) {
+    enabledTowersContainer.removeChild(enabledTowersContainer.firstChild);
+  }
 };
