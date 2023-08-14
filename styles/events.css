@@ -85,17 +85,35 @@
   box-shadow: 0px 0px 10px gray;
 }
 
+#mapImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 3px gray;
+  border-radius: 25px;
+  width: 300px;
+  height: 180px;
+  /* height = 0.6x width*/
+}
+
 #statTitle {
   display: none;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   align-items: center;
   justify-content: center;
   font-weight: bold;
 }
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #raceMetaAndLB {
+  display: none;
   flex-direction: column;
 }
-#upperStatsContainer {
+#modifiersContainer {
   display: none;
   flex-direction: row;
   align-items: center;
@@ -107,7 +125,7 @@
   justify-content: space-evenly;
   background: white;
 }
-#upperStatsContainer > * {
+#modifiersContainer > * {
   margin-right: 1rem;
 }
 
@@ -123,7 +141,4 @@
 
 .wip {
   cursor: default !important;
-}
-
-@media only screen and (max-width: 768px) {
 }

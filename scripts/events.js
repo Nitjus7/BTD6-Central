@@ -14,6 +14,8 @@ const enabledTowersContainer = document.getElementById(
 const enabledTowers = document.getElementById("enabledTowers");
 const enabledHeroes = document.getElementById("enabledHeroes");
 const eventDates = document.getElementById("eventDates");
+const mapContainer = document.getElementById("mapContainer");
+const mapImage = document.getElementById("mapImage");
 
 let startDate;
 let endDate;
@@ -87,6 +89,9 @@ function generateRaceMetadata(raceNum, data) {
       raceMetaAndLB.style.display = "flex";
     })
     .catch((error) => {
+      alert(
+        "There was an issue while getting detailed race info. Please send a screenshot of this error in the BTD6 Central Discord Server. Reload the page to continue."
+      );
       console.log(error);
     });
 }
@@ -94,6 +99,7 @@ function generateRaceMetadata(raceNum, data) {
 function displayInfo(metadata) {
   // this just sucks so much lmao
   enabledTowers.innerText = "";
+  showMap(metadata);
   document.getElementById(
     "startingCash"
   ).innerHTML = `<b>Cash</b><br>$${metadata["startingCash"]}`;
@@ -123,7 +129,14 @@ function displayInfo(metadata) {
       }
     }
   }
-  document.getElementById("upperStatsContainer").style.display = "flex";
+  document.getElementById("modifiersContainer").style.display = "flex";
+}
+
+function showMap(metadata) {
+  mapImage.src = metadata["mapURL"];
+  mapImage.alt = metadata["map"].replace(/([A-Z])/g, " $1").trim(); // magic code by AI that adds spaces do NOT fucking touch this
+  mapImage.style.display = "block";
+  mapContainer.appendChild(mapImage);
 }
 
 // sorts out the tower upgrades
@@ -186,9 +199,11 @@ raceEventButton.onclick = () => {
 backButton.onclick = () => {
   eventPickContainer.style.display = "flex";
   backButton.style.display = "none";
-  statTitle.style.display = "none";
   dataDisplayContainer.style.display = "none";
   raceMetaAndLB.style.display = "none";
+  while (mapContainer.hasChildNodes()) {
+    mapContainer.removeChild(mapContainer.firstChild);
+  }
   while (enabledTowersContainer.hasChildNodes()) {
     enabledTowersContainer.removeChild(enabledTowersContainer.firstChild);
   }
