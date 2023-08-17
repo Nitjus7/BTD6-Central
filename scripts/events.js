@@ -21,55 +21,47 @@ let startDate;
 let endDate;
 let contentLoaded = false;
 
-function showLB(URL) {
-  fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-function figureOutStartTime(startTime) {
-  const startDate = new Date(startTime);
-  return startDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-function figureOutEndTime(endTime) {
-  const endDate = new Date(endTime);
-  return endDate.toLocaleDateString();
-}
-
-getRaceData = () => {
+// fetches the race data from the nk api
+function getRaceData() {
   if (!contentLoaded) {
     fetch("https://data.ninjakiwi.com/btd6/races?")
       .then((response) => response.json())
       .then((data) => {
-        generateRaceTitles(data["body"]);
-        contentLoaded = true;
+        if (data["error"] == null) {
+          generateRaceTitles(data["body"]);
+          contentLoaded = true;
+        } else {
+          alert(
+            "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
+          );
+          document.getElementById("eventTitle").innerText = "An Error Occured";
+        }
       })
       .catch((error) => {
         alert(
           "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
         );
-        alert(error);
+        document.getElementById("eventTitle").innerText = "An Error Occured";
+        console.log(error);
       });
   }
-};
+}
 
+// generates the title cards with the event names as the text
+// and adds event listeners to each element
 function generateRaceTitles(data) {
   for (let i = 0; i < data.length; i++) {
+    let status = determineStatus(data[i]["start"], data[i]["end"]);
     // adds a new div for every race event
     let docElem = document.createElement("div");
     docElem.classList.add("eventTitle");
-    docElem.innerHTML = `<b>${data[i]["name"]}</b>`;
+    docElem.innerHTML = `<b>${data[i]["name"]}</b>&nbsp;${status}`;
     dataDisplayContainer.appendChild(docElem);
+    if (status == "[LIVE]") {
+      docElem.classList.add("live");
+    }
+    generateTotalPlayers(data[i], dataDisplayContainer);
+    generateTimestamps(data[i], dataDisplayContainer);
 
     // adds event listeners to each element
     docElem.onclick = () => {
@@ -79,6 +71,45 @@ function generateRaceTitles(data) {
   }
 }
 
+// determines whether an event has ended, not begun, or is LIVE
+// returns a string value
+function determineStatus(startDate, endDate) {
+  let currentDate = Date.now();
+  if (currentDate > endDate) {
+    return "[ended]";
+  } else if (currentDate < startDate) {
+    return "[not begun]";
+  } else {
+    return "[LIVE]";
+  }
+}
+
+function generateTimestamps(data, parentElem) {
+  const dateFormatting = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  };
+  const startDate = new Date(data["start"]);
+  const endDate = new Date(data["end"]);
+  const timestampsElem = document.createElement("div");
+  timestampsElem.innerHTML += `${startDate.toLocaleDateString(
+    [],
+    dateFormatting
+  )} to ${endDate.toLocaleDateString([], dateFormatting)}`;
+  timestampsElem.classList.add("timestamps");
+  parentElem.appendChild(timestampsElem);
+}
+function generateTotalPlayers(data, parentElem) {
+  const totalPlayersElem = document.createElement("div");
+  totalPlayersElem.innerHTML += `<b>${data["totalScores"]}</b> submissions`;
+  parentElem.appendChild(totalPlayersElem);
+}
+
+// fetches for the metadata for the specific race based on raceNum
+// calls displayInfo with the relevant metadata
 function generateRaceMetadata(raceNum, data) {
   fetch(data[raceNum]["metadata"])
     .then((response) => response.json())
@@ -96,8 +127,9 @@ function generateRaceMetadata(raceNum, data) {
     });
 }
 
+// uuuuugggggghhhhhh
+// kill me please
 function displayInfo(metadata) {
-  // this just sucks so much lmao
   enabledTowers.innerText = "";
   showMap(metadata);
   document.getElementById(
@@ -132,14 +164,17 @@ function displayInfo(metadata) {
   document.getElementById("modifiersContainer").style.display = "flex";
 }
 
+// shows a map
 function showMap(metadata) {
   mapImage.src = metadata["mapURL"];
-  mapImage.alt = metadata["map"].replace(/([A-Z])/g, " $1").trim(); // magic code by AI that adds spaces do NOT fucking touch this
+  mapImage.alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
   mapImage.style.display = "block";
   mapContainer.appendChild(mapImage);
 }
 
 // sorts out the tower upgrades
+// formats into something like "3x Monkey Sub [new line] (5-3-5)"
+// adds spaces via magic code generated by phind.com
 function parseTowerUpgrades(tower) {
   let enabledUpgrades;
   let badName = tower["tower"];
@@ -165,30 +200,11 @@ function parseTowerUpgrades(tower) {
   }
 }
 
+// same thing as parseTowers but we don't need to worry about upgrades or max tower count
+// (still sucks)
 function parseHeroes(hero, isSelectable) {}
 
-function generateTimestamps(data) {
-  const startDate = new Date(data["start"]);
-  const endDate = new Date(data["end"]);
-  dates = `<b>Start</b> ${startDate.toLocaleDateString()} | <b>End</b> ${endDate.toLocaleDateString()}`;
-}
-
-function isItLive(data) {
-  for (let i = 0; i < data.length - 1; i++) {
-    const startTimestamp = data[i]["start"];
-    const endTimestamp = data[i]["end"];
-    const currentTimestamp = Date.now();
-    if (currentTimestamp > endTimestamp) {
-      console.log(`${data[i]["name"]} has ended`);
-      console.log(figureOutEndTime(endTimestamp));
-    } else if (currentTimestamp < startTimestamp) {
-      console.log(`${data[i]["name"]} has not begun`);
-    } else {
-      console.log(`${data[i]["name"]} is ongoing.`);
-    }
-  }
-}
-
+// event listener for race button. this needs to be cleaned up
 raceEventButton.onclick = () => {
   eventPickContainer.style.display = "none";
   backButton.style.display = "block";
@@ -196,6 +212,39 @@ raceEventButton.onclick = () => {
   document.getElementById("eventTitle").innerText = "Latest Race Events";
   getRaceData();
 };
+/* Take Me Home, Country Roads by John Denver
+Almost heaven, West Virginia
+Blue Ridge Mountains, Shenandoah River
+Life is old there, older than the trees
+Younger than the mountains, growin' like a breeze
+Country roads, take me home
+To the place I belong
+West Virginia, mountain mama
+Take me home, country roads
+All my memories gather 'round her
+Miner's lady, stranger to blue water
+Dark and dusty, painted on the sky
+Misty taste of moonshine, teardrop in my eye
+Country roads, take me home
+To the place I belong
+West Virginia, mountain mama
+Take me home, country roads
+I hear her voice in the mornin' hour, she calls me
+The radio reminds me of my home far away
+Drivin' down the road, I get a feelin'
+That I should've been home yesterday, yesterday
+Country roads, take me home
+To the place I belong
+West Virginia, mountain mama
+Take me home, country roads
+Country roads, take me home
+To the place I belong
+West Virginia, mountain mama
+Take me home, country roads
+Take me home, (down) country roads
+Take me home, (down) country roads
+*/
+// event listener for the back button. this REALLY needs to be fucking cleaned up
 backButton.onclick = () => {
   eventPickContainer.style.display = "flex";
   backButton.style.display = "none";
