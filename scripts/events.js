@@ -1,7 +1,8 @@
 const text = document.getElementById("eventDataContainer");
 const raceEventButton = document.getElementById("raceEventButton");
+const bossEventButton = document.getElementById("bossEventButton");
 const eventPickContainer = document.getElementById("eventPickContainer");
-const dataDisplayContainer = document.getElementById("dataDisplayContainer");
+const eventListContainer = document.getElementById("eventListContainer");
 const backButton = document.getElementById(
   "takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia"
 );
@@ -52,19 +53,28 @@ const supportTowers = [
   "BeastHandler",
 ];
 
-let startDate;
-let endDate;
-let contentLoaded = false;
+let raceContentLoaded = false;
+let bossContentLoaded = false;
+let raceData;
+let urlParams = new URLSearchParams(window.location.search);
+let urlEvent;
+let urlID;
+let id;
 
 // fetches the race data from the nk api
-function getRaceData() {
-  if (!contentLoaded) {
-    fetch("https://data.ninjakiwi.com/btd6/races?")
+function getData(event) {
+  urlID = null;
+  urlParams.set("event", `${event}`);
+  history.replaceState(null, null, "?" + urlParams.toString());
+  if (event == "races" && raceData == null) {
+    fetch(`https://data.ninjakiwi.com/btd6/races?`)
       .then((response) => response.json())
       .then((data) => {
         if (data["error"] == null) {
-          generateRaceTitles(data["body"]);
-          contentLoaded = true;
+          raceData = data["body"];
+          generateRaceTitles(raceData);
+
+          raceContentLoaded = true;
         } else {
           alert(
             "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
@@ -91,16 +101,17 @@ function generateRaceTitles(data) {
     let docElem = document.createElement("div");
     docElem.classList.add("eventTitle");
     docElem.innerHTML = `<b>${data[i]["name"]}</b>&nbsp;${status}`;
-    dataDisplayContainer.appendChild(docElem);
+    eventListContainer.appendChild(docElem);
     if (status == "[LIVE]") {
       docElem.classList.add("live");
     }
-    generateTotalPlayers(data[i], dataDisplayContainer);
-    generateTimestamps(data[i], dataDisplayContainer);
+    generateTotalPlayers(data[i], eventListContainer);
+    generateTimestamps(data[i], eventListContainer);
 
     // adds event listeners to each element
     docElem.onclick = () => {
-      dataDisplayContainer.style.display = "none";
+      eventListContainer.style.display = "none";
+      id = data[i]["id"];
       generateRaceMetadata(i, data);
     };
   }
@@ -149,10 +160,7 @@ function generateRaceMetadata(raceNum, data) {
   fetch(data[raceNum]["metadata"])
     .then((response) => response.json())
     .then((metadata) => {
-      statTitle.innerText = `"${data[raceNum]["name"]}" Race Info`;
-      statTitle.style.display = "flex";
       displayInfo(metadata["body"]);
-      raceMetaAndLB.style.display = "flex";
     })
     .catch((error) => {
       alert(
@@ -165,6 +173,8 @@ function generateRaceMetadata(raceNum, data) {
 // uuuuugggggghhhhhh
 // kill me please
 function displayInfo(metadata) {
+  statTitle.innerText = `"${metadata["name"]}" Race Info`;
+  statTitle.style.display = "flex";
   showMap(metadata);
   document.getElementById(
     "startingCash"
@@ -209,6 +219,9 @@ function displayInfo(metadata) {
     prependElement(enabledSupport, `Support`);
   }
   document.getElementById("modifiersContainer").style.display = "flex";
+  raceMetaAndLB.style.display = "flex";
+  urlParams.set("id", `${id}`);
+  history.replaceState(null, null, "?" + urlParams.toString());
 }
 
 // shows a map
@@ -357,14 +370,68 @@ function determineSpecialMods(metadata) {
   }
 }
 
-// event listener for race button. this needs to be cleaned up
-raceEventButton.onclick = () => {
+function swapToEvent(event) {
+  urlParams.delete("id");
+  history.replaceState(null, null, "?" + urlParams.toString());
   eventPickContainer.style.display = "none";
   backButton.style.display = "block";
-  dataDisplayContainer.style.display = "flex";
-  document.getElementById("eventTitle").innerText = "Latest Race Events";
-  getRaceData();
-};
+  eventListContainer.style.display = "flex";
+  if (event == "races")
+    document.getElementById("eventTitle").innerText = "Latest Race Events";
+  getData(event);
+}
+
+function main() {
+  urlEvent = urlParams.get("event");
+  urlID = urlParams.get("id");
+  if (urlID != null) {
+    fetch(`https://data.ninjakiwi.com/btd6/races/${urlID}/metadata?`)
+      .then((response) => response.json())
+      .then((metadata) => {
+        swapToEvent("races");
+        eventListContainer.style.display = "none";
+        displayInfo(metadata["body"]);
+      });
+  } else if (urlEvent != null) {
+    swapToEvent(urlEvent);
+  }
+  // event listener for race button. this needs to be cleaned up
+  raceEventButton.onclick = () => {
+    swapToEvent("races");
+  };
+  // event listener for the back button. this REALLY needs to be fucking cleaned up
+  backButton.onclick = () => {
+    eventPickContainer.style.display = "flex";
+    backButton.style.display = "none";
+    eventListContainer.style.display = "none";
+    raceMetaAndLB.style.display = "none";
+    while (mapContainer.hasChildNodes()) {
+      mapContainer.removeChild(mapContainer.firstChild);
+    }
+    while (specialModsContainer.hasChildNodes()) {
+      specialModsContainer.removeChild(specialModsContainer.firstChild);
+    }
+    while (enabledPrimary.hasChildNodes()) {
+      enabledPrimary.removeChild(enabledPrimary.firstChild);
+    }
+    while (enabledMilitary.hasChildNodes()) {
+      enabledMilitary.removeChild(enabledMilitary.firstChild);
+    }
+    while (enabledMagic.hasChildNodes()) {
+      enabledMagic.removeChild(enabledMagic.firstChild);
+    }
+    while (enabledSupport.hasChildNodes()) {
+      enabledSupport.removeChild(enabledSupport.firstChild);
+    }
+    while (enabledHeroes.hasChildNodes()) {
+      enabledHeroes.removeChild(enabledHeroes.firstChild);
+    }
+    window.history.replaceState(null, document.title, window.location.pathname);
+  };
+}
+
+main();
+
 /* Take Me Home, Country Roads by John Denver
 Almost heaven, West Virginia
 Blue Ridge Mountains, Shenandoah River
@@ -397,31 +464,3 @@ Take me home, country roads
 Take me home, (down) country roads
 Take me home, (down) country roads
 */
-// event listener for the back button. this REALLY needs to be fucking cleaned up
-backButton.onclick = () => {
-  eventPickContainer.style.display = "flex";
-  backButton.style.display = "none";
-  dataDisplayContainer.style.display = "none";
-  raceMetaAndLB.style.display = "none";
-  while (mapContainer.hasChildNodes()) {
-    mapContainer.removeChild(mapContainer.firstChild);
-  }
-  while (specialModsContainer.hasChildNodes()) {
-    specialModsContainer.removeChild(specialModsContainer.firstChild);
-  }
-  while (enabledPrimary.hasChildNodes()) {
-    enabledPrimary.removeChild(enabledPrimary.firstChild);
-  }
-  while (enabledMilitary.hasChildNodes()) {
-    enabledMilitary.removeChild(enabledMilitary.firstChild);
-  }
-  while (enabledMagic.hasChildNodes()) {
-    enabledMagic.removeChild(enabledMagic.firstChild);
-  }
-  while (enabledSupport.hasChildNodes()) {
-    enabledSupport.removeChild(enabledSupport.firstChild);
-  }
-  while (enabledHeroes.hasChildNodes()) {
-    enabledHeroes.removeChild(enabledHeroes.firstChild);
-  }
-};
