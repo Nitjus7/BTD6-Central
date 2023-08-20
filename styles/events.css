@@ -15,7 +15,7 @@
   width: 100%;
   max-width: 800px;
   height: 15vh;
-  max-height: 100px;
+  max-height: 75px;
   border-radius: 5px;
   border-style: none;
   font-size: 1.4rem;
@@ -39,11 +39,12 @@
     ),
     url("../media/race.png");
   background-position: right;
+
   background-repeat: no-repeat;
 }
 #raceEventButton:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 #eventTitle {
   display: flex;
@@ -92,7 +93,7 @@
 }
 .eventTitle:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 .live {
   background-color: var(--secondaryButton);
@@ -153,21 +154,68 @@ h2 {
   border-radius: 5px;
   box-shadow: 0px 0px 5px gray;
   margin-right: 10px;
+  margin-bottom: 25px;
   justify-content: space-evenly;
   background: white;
 }
 #modifiersContainer > * {
   margin-right: 1rem;
 }
-
-#enabledTowersContainer {
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+#specialModsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px gray;
+  margin-right: 10px;
+  justify-content: space-around;
+  background: white;
+}
+#specialModsContainer > * {
+  margin: 0.8rem;
 }
 
-#enabledTowers {
-  white-space: nowrap;
-  overflow-wrap: break-word;
+#enabledTowersContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: none;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 0px 3px gray;
+  margin-bottom: 10px;
+}
+#enabledTowersContainer > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+#enabledHeroes {
+  display: flex;
+  justify-content: center;
+}
+#enabledHeroes > * {
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px black solid;
+  margin: 1rem;
+  padding: 1rem;
+}
+#scrollInfo {
+  display: none;
+}
+@media only screen and (max-width: 600px) {
+  #scrollInfo {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .wip {
