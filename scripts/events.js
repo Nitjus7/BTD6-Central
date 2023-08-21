@@ -59,11 +59,11 @@ let raceData;
 let urlParams = new URLSearchParams(window.location.search);
 let urlEvent;
 let urlID;
+let urlType;
 let id;
 
-// fetches the race data from the nk api
+// fetches the data from the nk api
 function getData(event) {
-  urlID = null;
   urlParams.set("event", `${event}`);
   history.replaceState(null, null, "?" + urlParams.toString());
   if (event == "races" && raceData == null) {
@@ -96,24 +96,15 @@ function getData(event) {
 // and adds event listeners to each element
 function generateRaceTitles(data) {
   for (let i = 0; i < data.length; i++) {
-    let status = determineStatus(data[i]["start"], data[i]["end"]);
     // adds a new div for every race event
-    let docElem = document.createElement("div");
-    docElem.classList.add("eventTitle");
-    docElem.innerHTML = `<b>${data[i]["name"]}</b>&nbsp;${status}`;
+    const status = determineStatus(data[i]["start"], data[i]["end"]);
+    const docElem = document.createElement("div");
+    docElem.classList.add("eventTitleContainer");
     eventListContainer.appendChild(docElem);
-    if (status == "[LIVE]") {
-      docElem.classList.add("live");
-    }
-    generateTotalPlayers(data[i], eventListContainer);
-    generateTimestamps(data[i], eventListContainer);
-
-    // adds event listeners to each element
-    docElem.onclick = () => {
-      eventListContainer.style.display = "none";
-      id = data[i]["id"];
-      generateRaceMetadata(i, data);
-    };
+    generateRaceName(data[i], docElem, status);
+    generateButtons(data[i], docElem, status);
+    generateTotalPlayers(data[i], docElem);
+    generateTimestamps(data[i], docElem);
   }
 }
 
@@ -122,14 +113,51 @@ function generateRaceTitles(data) {
 function determineStatus(startDate, endDate) {
   let currentDate = Date.now();
   if (currentDate > endDate) {
-    return "[ended]";
+    return "Ended";
   } else if (currentDate < startDate) {
-    return "[not begun]";
+    return "Not Begun";
   } else {
-    return "[LIVE]";
+    return "LIVE";
   }
 }
 
+function generateRaceName(data, parentElem, status) {
+  const nameElem = document.createElement("p");
+  const statusElem = document.createElement("p");
+  nameElem.classList.add("eventName");
+  statusElem.classList.add("eventStatus");
+  nameElem.innerHTML = `<b>${data["name"]}</b>`;
+  statusElem.innerHTML = `${status}`;
+  if (status == "LIVE") {
+    parentElem.classList.add("live");
+  }
+  parentElem.appendChild(nameElem);
+  parentElem.appendChild(statusElem);
+}
+function generateButtons(data, parentElem, status) {
+  const chooseTypeButtonContainer = document.createElement("div");
+  const detailsButton = document.createElement("button");
+  detailsButton.classList.add("chooseTypeButton");
+  detailsButton.innerText = "Details";
+  detailsButton.onclick = () => {
+    eventListContainer.style.display = "none";
+    id = data["id"];
+    generateRaceMetadata(data);
+  };
+  chooseTypeButtonContainer.appendChild(detailsButton);
+  if (!(status == "Not Begun")) {
+    const lbButton = document.createElement("button");
+    lbButton.classList.add("chooseTypeButton");
+    lbButton.innerText = "Leaderboard";
+    lbButton.onclick = () => {
+      eventListContainer.style.display = "none";
+      id = data["id"];
+      generateLeaderboard("races", data);
+    };
+    chooseTypeButtonContainer.appendChild(lbButton);
+  }
+  parentElem.appendChild(chooseTypeButtonContainer);
+}
 function generateTimestamps(data, parentElem) {
   const dateFormatting = {
     month: "short",
@@ -140,27 +168,26 @@ function generateTimestamps(data, parentElem) {
   };
   const startDate = new Date(data["start"]);
   const endDate = new Date(data["end"]);
-  const timestampsElem = document.createElement("div");
-  timestampsElem.innerHTML += `${startDate.toLocaleDateString(
+  const timestampElem = document.createElement("p");
+  timestampElem.innerHTML += `${startDate.toLocaleDateString(
     [],
     dateFormatting
   )} to ${endDate.toLocaleDateString([], dateFormatting)}`;
-  timestampsElem.classList.add("timestamps");
-  parentElem.appendChild(timestampsElem);
+  parentElem.appendChild(timestampElem);
 }
 function generateTotalPlayers(data, parentElem) {
-  const totalPlayersElem = document.createElement("div");
+  const totalPlayersElem = document.createElement("p");
   totalPlayersElem.innerHTML += `<b>${data["totalScores"]}</b> submissions`;
   parentElem.appendChild(totalPlayersElem);
 }
 
 // fetches for the metadata for the specific race based on raceNum
-// calls displayInfo with the relevant metadata
-function generateRaceMetadata(raceNum, data) {
-  fetch(data[raceNum]["metadata"])
+// calls displayRaceInfo with the relevant metadata
+function generateRaceMetadata(data) {
+  fetch(data["metadata"])
     .then((response) => response.json())
     .then((metadata) => {
-      displayInfo(metadata["body"]);
+      displayRaceInfo(metadata["body"]);
     })
     .catch((error) => {
       alert(
@@ -172,7 +199,7 @@ function generateRaceMetadata(raceNum, data) {
 
 // uuuuugggggghhhhhh
 // kill me please
-function displayInfo(metadata) {
+function displayRaceInfo(metadata) {
   statTitle.innerText = `"${metadata["name"]}" Race Info`;
   statTitle.style.display = "flex";
   showMap(metadata);
@@ -218,9 +245,14 @@ function displayInfo(metadata) {
   if (enabledSupport.hasChildNodes()) {
     prependElement(enabledSupport, `Support`);
   }
+  if (!enabledHeroes.hasChildNodes()) {
+    appendElement(enabledHeroes, `None`, ``);
+  }
   document.getElementById("modifiersContainer").style.display = "flex";
   raceMetaAndLB.style.display = "flex";
   urlParams.set("id", `${id}`);
+  history.replaceState(null, null, "?" + urlParams.toString());
+  urlParams.set("type", "metadata");
   history.replaceState(null, null, "?" + urlParams.toString());
 }
 
@@ -277,7 +309,7 @@ function parseHeroes(hero, isSelectable) {
       const heroInfoDisplay = document.createElement("p");
       heroInfoDisplay.innerHTML = `<b>${hero["tower"]
         .replace(/([A-Z])/g, " $1")
-        .trim()}</b>`;
+        .trim()}</b>`; // magic code by AI that adds spaces do NOT fucking touch this
       heroInfoDisplay.classList.add("heroInfoDisplay");
       enabledHeroes.appendChild(heroInfoDisplay);
     }
@@ -311,6 +343,13 @@ function determineSpecialMods(metadata) {
       specialModsContainer,
       `Max Towers`,
       `${metadata["maxTowers"]}`
+    );
+  }
+  if (metadata["maxParagons"] !== 10) {
+    appendElement(
+      specialModsContainer,
+      `Max Paragons`,
+      `${metadata["maxParagons"]}`
     );
   }
   if (metadata["abilityCooldownReductionMultiplier"] !== 1) {
@@ -354,6 +393,13 @@ function determineSpecialMods(metadata) {
       `${bloonMods["moabSpeedMultiplier"]}x`
     );
   }
+  if (bloonMods["bossSpeedMultiplier"] !== 1) {
+    appendElement(
+      specialModsContainer,
+      `Boss Speed`,
+      `${bloonMods["bossSpeedMultiplier"]}x`
+    );
+  }
   if (bloonMods["regrowRateMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
@@ -368,11 +414,20 @@ function determineSpecialMods(metadata) {
   if (hpMods["moabs"] !== 1) {
     appendElement(specialModsContainer, `MOAB HP`, `${hpMods["moabs"]}x`);
   }
+  if (hpMods["boss"] !== 1) {
+    appendElement(specialModsContainer, `Boss HP`, `${hpMods["boss"]}x`);
+  }
+}
+
+function generateLeaderboard(event, data) {
+  console.log(event);
+  urlParams.set("id", `${id}`);
+  history.replaceState(null, null, "?" + urlParams.toString());
+  urlParams.set("type", "leaderboard");
+  history.replaceState(null, null, "?" + urlParams.toString());
 }
 
 function swapToEvent(event) {
-  urlParams.delete("id");
-  history.replaceState(null, null, "?" + urlParams.toString());
   eventPickContainer.style.display = "none";
   backButton.style.display = "block";
   eventListContainer.style.display = "flex";
@@ -384,19 +439,35 @@ function swapToEvent(event) {
 function main() {
   urlEvent = urlParams.get("event");
   urlID = urlParams.get("id");
+  urlType = urlParams.get("type");
+  // if the ID of the event is in the URL
   if (urlID != null) {
-    fetch(`https://data.ninjakiwi.com/btd6/races/${urlID}/metadata?`)
-      .then((response) => response.json())
-      .then((metadata) => {
-        swapToEvent("races");
-        eventListContainer.style.display = "none";
-        displayInfo(metadata["body"]);
-      });
+    // and the type is "metadata"
+    if (urlType == "metadata") {
+      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata?`)
+        .then((response) => response.json())
+        .then((metadata) => {
+          swapToEvent(`${urlEvent}`);
+          id = urlID;
+          eventListContainer.style.display = "none";
+          if (urlEvent == "races") displayRaceInfo(metadata["body"]);
+        });
+      // OR if the type is "leaderboard"
+    } else if (urlType == "leaderboard") {
+      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`)
+        .then((response) => response.json())
+        .then((leaderboard) => {
+          console.log(leaderboard);
+        });
+    }
   } else if (urlEvent != null) {
     swapToEvent(urlEvent);
   }
   // event listener for race button. this needs to be cleaned up
   raceEventButton.onclick = () => {
+    urlParams.delete("id");
+    urlParams.delete("type");
+    history.replaceState(null, null, "?" + urlParams.toString());
     swapToEvent("races");
   };
   // event listener for the back button. this REALLY needs to be fucking cleaned up

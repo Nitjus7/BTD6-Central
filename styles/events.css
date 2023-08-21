@@ -2,6 +2,10 @@
   list-style: none;
 }
 
+button {
+  color: black;
+}
+
 #eventPickContainer {
   display: flex;
   flex-direction: column;
@@ -58,61 +62,44 @@
   align-items: center;
   justify-content: center;
 }
-#takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia {
-  display: none;
-  cursor: pointer;
-  color: black;
-  background-color: white;
-  border-style: none;
-  padding: 0.5rem;
-  box-shadow: 0px 0px 7px gray;
-  border-radius: 3px;
-  font-weight: bold;
-  position: sticky;
-  top: 20px;
-  left: 20px;
-  transition: 0.15s;
-}
 
-#takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia:hover {
-  color: var(--secondaryButton);
-}
-
-.eventTitle {
+.eventTitleContainer {
   display: flex;
+  flex-direction: column;
+  background: white;
+  margin: 1.5rem;
+  padding: 0.75rem;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px gray;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  box-shadow: 0px 0px 3px gray;
-  height: 50px;
-  width: 100%;
-  max-width: 800px;
-  margin: 8px 0px 4px 0px;
-  border-radius: 15px;
-  transition: 0.5s;
 }
-.eventTitle:hover {
-  cursor: pointer;
-  transform: scale(1.02);
+.eventName {
+  font-size: 1.4rem;
+}
+.chooseTypeButton {
+  border-radius: 3px;
+  font-size: 1.2rem;
+  width: auto;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  box-shadow: 0px 0px 3px gray;
+  border-style: none;
+  background-color: var(--mainButton);
+  transition: all 0.5s ease;
+}
+.chooseTypeButton:hover {
+  transform: scale(1.05);
+}
+.eventStatus {
+  margin-top: 0px;
+  font-weight: bold;
 }
 .live {
-  background-color: var(--secondaryButton);
-  box-shadow: 0px 0px 3px rgb(84, 178, 209);
-  margin-bottom: 6px;
-  height: 65px;
-}
-.live:hover {
-  box-shadow: 0px 0px 10px rgb(84, 178, 209);
-}
-.timestamps {
-  display: flex;
-  justify-content: center;
-  margin-top: 0px;
-  margin-bottom: 25px;
-  padding-bottom: 5px;
-  width: 100%;
-  max-width: 800px;
-  border-bottom: 0.5px gray solid;
+  background-color: rgba(239, 193, 124, 0.39);
 }
 
 #mapImage {
@@ -127,6 +114,10 @@
   height: calc(80vw * 0.66);
   max-height: 317px;
   /* height = 0.6x width*/
+}
+
+.towerInfo {
+  margin: 0 auto;
 }
 
 #statTitle {
@@ -171,6 +162,7 @@ h2 {
   border-radius: 5px;
   box-shadow: 0px 0px 5px gray;
   margin-right: 10px;
+  margin-bottom: 20px;
   justify-content: space-around;
   background: white;
 }
@@ -189,6 +181,7 @@ h2 {
   background-color: white;
   box-shadow: 0px 0px 3px gray;
   margin-bottom: 10px;
+  margin-top: 1rem;
 }
 #enabledTowersContainer > * {
   display: flex;
@@ -204,7 +197,8 @@ h2 {
 #enabledHeroes > * {
   box-sizing: border-box;
   border-radius: 5px;
-  border: 1px black solid;
+  background-color: white;
+  box-shadow: 0px 0px 3px gray;
   margin: 1rem;
   padding: 1rem;
 }
@@ -216,6 +210,27 @@ h2 {
     display: flex;
     justify-content: center;
   }
+}
+
+/* this is the back button */
+#takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia {
+  display: none;
+  cursor: pointer;
+  color: black;
+  background-color: var(--mainButton);
+  border-style: none;
+  padding: 0.5rem;
+  box-shadow: 0px 0px 7px gray;
+  border-radius: 3px;
+  font-weight: bold;
+  position: sticky;
+  top: 20px;
+  left: 20px;
+  transition: 0.15s;
+}
+
+#takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia:hover {
+  transform: scale(1.05);
 }
 
 .wip {

@@ -2,8 +2,8 @@
 :root {
   --background: #e8e5e5;
   --textColor: #121212;
-  --mainButton: #5274af;
-  --secondaryButton: #7498e7;
+  --mainButton: #8caeeb;
+  --secondaryButton: #5985e5;
   --buttonBackground: #8a8c9b;
   --accent: #7e7e7e;
   --mainFont: "Nunito", sans-serif;
@@ -81,7 +81,7 @@ button {
 }
 .navList a:hover {
   opacity: 1;
-  color: var(--secondaryButton);
+  color: var(--mainButton);
   transition: 0.25s;
 }
 .websiteTitle {
@@ -89,7 +89,7 @@ button {
   margin-left: 30px;
 }
 .currentPage {
-  background-color: var(--secondaryButton);
+  background-color: lightgray;
   padding: 0.5rem;
   border-radius: 20px;
 }
