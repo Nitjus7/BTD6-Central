@@ -6,8 +6,8 @@ const eventListContainer = document.getElementById("eventListContainer");
 const backButton = document.getElementById(
   "takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia"
 );
-const statTitle = document.getElementById("statTitle");
-const raceMetaAndLB = document.getElementById("raceMetaAndLB");
+const raceTitle = document.getElementById("raceTitle");
+const raceDetails = document.getElementById("raceDetails");
 const specialModsContainer = document.getElementById("specialModsContainer");
 const enabledTowersContainer = document.getElementById(
   "enabledTowersContainer"
@@ -20,6 +20,9 @@ const enabledHeroes = document.getElementById("enabledHeroes");
 const eventDates = document.getElementById("eventDates");
 const mapContainer = document.getElementById("mapContainer");
 const mapImage = document.getElementById("mapImage");
+
+const leaderboardContainer = document.getElementById("leaderboardContainer");
+const raceLeaderboardTitle = document.getElementById("raceLeaderboardTitle");
 
 const primaryTowers = [
   "DartMonkey",
@@ -53,9 +56,10 @@ const supportTowers = [
   "BeastHandler",
 ];
 
-let raceContentLoaded = false;
-let bossContentLoaded = false;
+let eventName;
 let raceData;
+let raceLB;
+let bossData;
 let urlParams = new URLSearchParams(window.location.search);
 let urlEvent;
 let urlID;
@@ -64,17 +68,13 @@ let id;
 
 // fetches the data from the nk api
 function getData(event) {
-  urlParams.set("event", `${event}`);
-  history.replaceState(null, null, "?" + urlParams.toString());
   if (event == "races" && raceData == null) {
     fetch(`https://data.ninjakiwi.com/btd6/races?`)
       .then((response) => response.json())
       .then((data) => {
         if (data["error"] == null) {
           raceData = data["body"];
-          generateRaceTitles(raceData);
-
-          raceContentLoaded = true;
+          generateRaceTitles();
         } else {
           alert(
             "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
@@ -94,17 +94,17 @@ function getData(event) {
 
 // generates the title cards with the event names as the text
 // and adds event listeners to each element
-function generateRaceTitles(data) {
-  for (let i = 0; i < data.length; i++) {
+function generateRaceTitles() {
+  for (let i = 0; i < raceData.length; i++) {
     // adds a new div for every race event
-    const status = determineStatus(data[i]["start"], data[i]["end"]);
+    const status = determineStatus(raceData[i]["start"], raceData[i]["end"]);
     const docElem = document.createElement("div");
     docElem.classList.add("eventTitleContainer");
     eventListContainer.appendChild(docElem);
-    generateRaceName(data[i], docElem, status);
-    generateButtons(data[i], docElem, status);
-    generateTotalPlayers(data[i], docElem);
-    generateTimestamps(data[i], docElem);
+    generateRaceName(raceData[i], docElem, status);
+    generateButtons(raceData[i], docElem, status);
+    generateTotalPlayers(raceData[i], docElem);
+    generateTimestamps(raceData[i], docElem);
   }
 }
 
@@ -142,7 +142,7 @@ function generateButtons(data, parentElem, status) {
   detailsButton.onclick = () => {
     eventListContainer.style.display = "none";
     id = data["id"];
-    generateRaceMetadata(data);
+    getMetadata(data);
   };
   chooseTypeButtonContainer.appendChild(detailsButton);
   if (!(status == "Not Begun")) {
@@ -151,8 +151,9 @@ function generateButtons(data, parentElem, status) {
     lbButton.innerText = "Leaderboard";
     lbButton.onclick = () => {
       eventListContainer.style.display = "none";
+      eventName = data["name"];
       id = data["id"];
-      generateLeaderboard("races", data);
+      getLeaderboard("races", data);
     };
     chooseTypeButtonContainer.appendChild(lbButton);
   }
@@ -183,7 +184,7 @@ function generateTotalPlayers(data, parentElem) {
 
 // fetches for the metadata for the specific race based on raceNum
 // calls displayRaceInfo with the relevant metadata
-function generateRaceMetadata(data) {
+function getMetadata(data) {
   fetch(data["metadata"])
     .then((response) => response.json())
     .then((metadata) => {
@@ -200,8 +201,8 @@ function generateRaceMetadata(data) {
 // uuuuugggggghhhhhh
 // kill me please
 function displayRaceInfo(metadata) {
-  statTitle.innerText = `"${metadata["name"]}" Race Info`;
-  statTitle.style.display = "flex";
+  raceTitle.innerText = `"${metadata["name"]}" Race Info`;
+  raceTitle.style.display = "flex";
   showMap(metadata);
   document.getElementById(
     "startingCash"
@@ -249,7 +250,7 @@ function displayRaceInfo(metadata) {
     appendElement(enabledHeroes, `None`, ``);
   }
   document.getElementById("modifiersContainer").style.display = "flex";
-  raceMetaAndLB.style.display = "flex";
+  raceDetails.style.display = "flex";
   urlParams.set("id", `${id}`);
   history.replaceState(null, null, "?" + urlParams.toString());
   urlParams.set("type", "metadata");
@@ -419,12 +420,63 @@ function determineSpecialMods(metadata) {
   }
 }
 
-function generateLeaderboard(event, data) {
-  console.log(event);
+function getLeaderboard(event, data) {
+  fetch(`${data["leaderboard"]}`)
+    .then((response) => response.json())
+    .then((lb) => {
+      raceLB = lb["body"];
+      displayLeaderboard(lb["body"]);
+    })
+    .catch((error) => {
+      alert(
+        "There was an issue while getting the leaderboard. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
+      );
+      console.log(error);
+    });
   urlParams.set("id", `${id}`);
   history.replaceState(null, null, "?" + urlParams.toString());
   urlParams.set("type", "leaderboard");
   history.replaceState(null, null, "?" + urlParams.toString());
+}
+
+function displayLeaderboard(lb) {
+  if (lb[0]["scoreParts"][0]["type"] == "time") {
+    for (let i = 0; i < lb.length; i++) {
+      const playerElem = document.createElement("div");
+      const placementElem = document.createElement("p");
+      placementElem.innerText = `${i + 1}`;
+      playerElem.appendChild(placementElem);
+      const playerNameElem = document.createElement("p");
+      playerNameElem.innerText = `${lb[i]["displayName"].toUpperCase().trim()}`;
+      playerElem.appendChild(playerNameElem);
+      const scoreElem = document.createElement("p");
+      scoreElem.innerText = `${convertMS(lb[i]["score"])}`;
+      playerElem.appendChild(scoreElem);
+      playerElem.classList.add("playerElem");
+      leaderboardContainer.appendChild(playerElem);
+    }
+  }
+  raceLeaderboardTitle.innerHTML = `"${eventName}" Race LB`;
+  raceLeaderboardTitle.style.display = "flex";
+  leaderboardContainer.style.display = "flex";
+}
+
+function convertMS(milliseconds) {
+  // magic function by AI
+  let seconds = Math.floor(milliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let remainingSeconds = seconds % 60;
+  let remainingMilliseconds = milliseconds % 1000;
+
+  let formattedTime = `${minutes}:${padTo2Digits(
+    remainingSeconds
+  )}.${remainingMilliseconds}`;
+  return formattedTime;
+}
+
+function padTo2Digits(num) {
+  // magic function by AI
+  return num.toString().padStart(2, "0");
 }
 
 function swapToEvent(event) {
@@ -434,6 +486,8 @@ function swapToEvent(event) {
   if (event == "races")
     document.getElementById("eventTitle").innerText = "Latest Race Events";
   getData(event);
+  urlParams.set("event", `${event}`);
+  history.replaceState(null, null, "?" + urlParams.toString());
 }
 
 function main() {
@@ -456,8 +510,17 @@ function main() {
     } else if (urlType == "leaderboard") {
       fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`)
         .then((response) => response.json())
-        .then((leaderboard) => {
-          console.log(leaderboard);
+        .then((lb) => {
+          swapToEvent(`${urlEvent}`);
+          id = urlID;
+          eventListContainer.style.display = "none";
+          displayLeaderboard(lb["body"]);
+        })
+        .catch((error) => {
+          alert(
+            "There was an issue while getting the leaderboard. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
+          );
+          console.log(error);
         });
     }
   } else if (urlEvent != null) {
@@ -475,7 +538,8 @@ function main() {
     eventPickContainer.style.display = "flex";
     backButton.style.display = "none";
     eventListContainer.style.display = "none";
-    raceMetaAndLB.style.display = "none";
+    raceDetails.style.display = "none";
+    raceLeaderboardTitle.style.display = "none";
     while (mapContainer.hasChildNodes()) {
       mapContainer.removeChild(mapContainer.firstChild);
     }
@@ -496,6 +560,9 @@ function main() {
     }
     while (enabledHeroes.hasChildNodes()) {
       enabledHeroes.removeChild(enabledHeroes.firstChild);
+    }
+    while (leaderboardContainer.hasChildNodes()) {
+      leaderboardContainer.removeChild(leaderboardContainer.firstChild);
     }
     window.history.replaceState(null, document.title, window.location.pathname);
   };

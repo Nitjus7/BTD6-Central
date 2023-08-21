@@ -99,7 +99,7 @@ button {
   font-weight: bold;
 }
 .live {
-  background-color: rgba(239, 193, 124, 0.39);
+  background-color: rgba(232, 119, 88, 0.39);
 }
 
 #mapImage {
@@ -120,7 +120,7 @@ button {
   margin: 0 auto;
 }
 
-#statTitle {
+#raceTitle {
   display: none;
   font-size: 1.4rem;
   align-items: center;
@@ -132,7 +132,7 @@ h2 {
   justify-content: center;
   align-items: center;
 }
-#raceMetaAndLB {
+#raceDetails {
   display: none;
   flex-direction: column;
 }
@@ -210,6 +210,32 @@ h2 {
     display: flex;
     justify-content: center;
   }
+}
+#leaderboardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.playerElem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 85%;
+  max-width: 800px;
+  background-color: white;
+  box-shadow: 0px 0px 3px gray;
+  border-radius: 5px;
+  margin: 0.5rem;
+  padding: 0px 1rem 0px 1rem;
+}
+.playerElem:first-child {
+  /* margin-top: 1.5rem; */
+}
+#raceLeaderboardTitle {
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
 }
 
 /* this is the back button */
