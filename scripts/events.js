@@ -433,6 +433,9 @@ function determineSpecialMods(metadata) {
   if (hpMods["boss"] !== 1) {
     appendElement(specialModsContainer, `Boss HP`, `${hpMods["boss"]}x`);
   }
+  if (metadata["roundSets"].length > 1) {
+    appendElement(specialModsContainer, `Custom Rounds`, ``);
+  }
 }
 
 function getLeaderboard(event, data) {
