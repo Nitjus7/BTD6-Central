@@ -103,23 +103,13 @@ function generateRaceTitles() {
     eventListContainer.appendChild(docElem);
     generateRaceName(raceData[i], docElem, status);
     generateButtons(raceData[i], docElem, status);
-    generateTotalPlayers(raceData[i], docElem);
-    generateTimestamps(raceData[i], docElem);
+    if (status != "Not Begun") generateTotalPlayers(raceData[i], docElem);
+    generateTimestamps(raceData[i], docElem, status);
   }
 }
 
 // determines whether an event has ended, not begun, or is LIVE
 // returns a string value
-function determineStatus(startDate, endDate) {
-  let currentDate = Date.now();
-  if (currentDate > endDate) {
-    return "Ended";
-  } else if (currentDate < startDate) {
-    return "Not Begun";
-  } else {
-    return "LIVE";
-  }
-}
 
 function generateRaceName(data, parentElem, status) {
   const nameElem = document.createElement("p");
@@ -159,7 +149,17 @@ function generateButtons(data, parentElem, status) {
   }
   parentElem.appendChild(chooseTypeButtonContainer);
 }
-function generateTimestamps(data, parentElem) {
+function determineStatus(startDate, endDate) {
+  let currentDate = Date.now();
+  if (currentDate > endDate) {
+    return "Ended";
+  } else if (currentDate < startDate) {
+    return "Not Begun";
+  } else {
+    return "LIVE";
+  }
+}
+function generateTimestamps(data, parentElem, status) {
   const dateFormatting = {
     month: "short",
     day: "numeric",
@@ -170,11 +170,26 @@ function generateTimestamps(data, parentElem) {
   const startDate = new Date(data["start"]);
   const endDate = new Date(data["end"]);
   const timestampElem = document.createElement("p");
-  timestampElem.innerHTML += `${startDate.toLocaleDateString(
-    [],
-    dateFormatting
-  )} to ${endDate.toLocaleDateString([], dateFormatting)}`;
+  if (status == "LIVE") {
+    timestampElem.innerHTML += `${calculateTimeRemaining(endDate)}`;
+  } else {
+    timestampElem.innerHTML += `${startDate.toLocaleDateString(
+      [],
+      dateFormatting
+    )} to ${endDate.toLocaleDateString([], dateFormatting)}`;
+  }
   parentElem.appendChild(timestampElem);
+}
+function calculateTimeRemaining(end) {
+  const currentDate = new Date();
+  const timeDifference = end.getTime() - currentDate.getTime();
+  let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  let hours = Math.floor(
+    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `Remaining Time: ${days}d, ${hours}h, ${minutes}m`;
 }
 function generateTotalPlayers(data, parentElem) {
   const totalPlayersElem = document.createElement("p");
@@ -424,8 +439,10 @@ function getLeaderboard(event, data) {
   fetch(`${data["leaderboard"]}`)
     .then((response) => response.json())
     .then((lb) => {
-      raceLB = lb["body"];
-      displayLeaderboard(lb["body"]);
+      if (lb["error"] == null) {
+        raceLB = lb["body"];
+        displayLeaderboard(lb["body"]);
+      }
     })
     .catch((error) => {
       alert(
@@ -456,7 +473,7 @@ function displayLeaderboard(lb) {
       leaderboardContainer.appendChild(playerElem);
     }
   }
-  raceLeaderboardTitle.innerHTML = `"${eventName}" Race LB`;
+  raceLeaderboardTitle.innerHTML = `"${eventName}" Race: Top 50`;
   raceLeaderboardTitle.style.display = "flex";
   leaderboardContainer.style.display = "flex";
 }
@@ -508,6 +525,11 @@ function main() {
         });
       // OR if the type is "leaderboard"
     } else if (urlType == "leaderboard") {
+      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`)
+        .then((response) => response.json())
+        .then((data) => {
+          eventName = data["body"]["name"];
+        });
       fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`)
         .then((response) => response.json())
         .then((lb) => {
