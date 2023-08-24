@@ -536,6 +536,9 @@ function main() {
           swapToEvent(`${urlEvent}`);
           id = urlID;
           eventListContainer.style.display = "none";
+          if (lb["error"] == "No Scores Available")
+            raceLeaderboardTitle.innerText =
+              "nice try with the URL, but there's still nothing to display...";
           displayLeaderboard(lb["body"]);
         })
         .catch((error) => {
