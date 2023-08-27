@@ -2,6 +2,10 @@
   list-style: none;
 }
 
+body {
+  transition: all 0.5s;
+}
+
 button {
   color: black;
 }
@@ -46,7 +50,23 @@ button {
 
   background-repeat: no-repeat;
 }
+
+#bossEventButton {
+  background-image: linear-gradient(
+      to left,
+      rgba(40, 38, 38, 0.05),
+      var(--secondaryButton)
+    ),
+    url("../media/boss.png");
+  background-position: right;
+
+  background-repeat: no-repeat;
+}
 #raceEventButton:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+#bossEventButton:hover {
   cursor: pointer;
   transform: scale(1.02);
 }
@@ -56,7 +76,13 @@ button {
   font-size: 1.6rem;
 }
 
-#eventListContainer {
+#raceArchiveContainer {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#bossArchiveContainer {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -78,6 +104,25 @@ button {
 }
 .eventName {
   font-size: 1.2rem;
+}
+#difficultyButtonContainer {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+#difficultyButtonContainer > * {
+  border-style: none;
+  padding: 0.5rem;
+  font-size: 1.4rem;
+  border-radius: 3px;
+  box-shadow: 0px 0px 3px gray;
+  background-color: var(--mainButton);
+  transition: all 0.5s;
+}
+#difficultyButtonContainer > *:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 .chooseTypeButton {
   border-radius: 3px;
@@ -115,6 +160,10 @@ button {
   max-height: 317px;
   /* height = 0.6x width*/
 }
+#bossImage {
+  width: 150px;
+  margin: 0 auto;
+}
 
 .towerInfo {
   margin: 0 auto;
@@ -132,16 +181,15 @@ h2 {
   justify-content: center;
   align-items: center;
 }
-#raceDetails {
+#eventDetails {
   display: none;
   flex-direction: column;
 }
-#modifiersContainer {
+#raceModifiersContainer {
   display: none;
   flex-direction: row;
   align-items: center;
   height: fit-content;
-  width: 100%;
   border-radius: 5px;
   box-shadow: 0px 0px 5px gray;
   margin-right: 10px;
@@ -149,7 +197,7 @@ h2 {
   justify-content: space-evenly;
   background: white;
 }
-#modifiersContainer > * {
+#raceModifiersContainer > * {
   margin-right: 1rem;
 }
 #specialModsContainer {
@@ -158,7 +206,6 @@ h2 {
   flex-direction: row;
   align-items: center;
   height: fit-content;
-  width: 100%;
   border-radius: 5px;
   box-shadow: 0px 0px 5px gray;
   margin-right: 10px;
@@ -192,15 +239,17 @@ h2 {
 }
 #enabledHeroes {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-}
-#enabledHeroes > * {
   box-sizing: border-box;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0px 0px 3px gray;
   margin: 1rem;
-  padding: 1rem;
+}
+#enabledHeroes > * {
+  margin: 1rem;
+  padding: 0.5rem;
 }
 #scrollInfo {
   display: none;

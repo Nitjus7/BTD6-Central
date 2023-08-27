@@ -1,13 +1,17 @@
-const text = document.getElementById("eventDataContainer");
+const eventTitle = document.getElementById("eventTitle");
 const raceEventButton = document.getElementById("raceEventButton");
 const bossEventButton = document.getElementById("bossEventButton");
 const eventPickContainer = document.getElementById("eventPickContainer");
-const eventListContainer = document.getElementById("eventListContainer");
+const raceArchiveContainer = document.getElementById("raceArchiveContainer");
+const bossArchiveContainer = document.getElementById("bossArchiveContainer");
+const difficultyButtonContainer = document.getElementById(
+  "difficultyButtonContainer"
+);
 const backButton = document.getElementById(
   "takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia"
 );
 const raceTitle = document.getElementById("raceTitle");
-const raceDetails = document.getElementById("raceDetails");
+const eventDetails = document.getElementById("eventDetails");
 const specialModsContainer = document.getElementById("specialModsContainer");
 const enabledTowersContainer = document.getElementById(
   "enabledTowersContainer"
@@ -20,6 +24,8 @@ const enabledHeroes = document.getElementById("enabledHeroes");
 const eventDates = document.getElementById("eventDates");
 const mapContainer = document.getElementById("mapContainer");
 const mapImage = document.getElementById("mapImage");
+const bossImage = document.getElementById("bossImage");
+const bossImageContainer = document.getElementById("bossImageContainer");
 
 const leaderboardContainer = document.getElementById("leaderboardContainer");
 const raceLeaderboardTitle = document.getElementById("raceLeaderboardTitle");
@@ -55,17 +61,45 @@ const supportTowers = [
   "EngineerMonkey",
   "BeastHandler",
 ];
+const eventElems = [
+  eventTitle,
+  eventDetails,
+  raceLeaderboardTitle,
+  leaderboardContainer,
+];
+const dataContainers = [
+  mapContainer,
+  bossImageContainer,
+  enabledPrimary,
+  enabledMilitary,
+  enabledMagic,
+  enabledSupport,
+  enabledHeroes,
+  specialModsContainer,
+  leaderboardContainer,
+  difficultyButtonContainer,
+];
 
 let eventName;
 let raceData;
 let raceLB;
 let bossData;
+let bossStandardMetadata;
+let bossEliteMetadata;
+let bossStandardLB;
+let bossEliteLB;
 let urlParams = new URLSearchParams(window.location.search);
 let urlEvent;
 let urlID;
 let urlType;
+let urlDifficulty;
 let id;
 
+function catchError(error) {
+  alert(
+    `An Error Has Occured: \n ${error} \n Please report this to the BTD6 Central Discord Server.`
+  );
+}
 // fetches the data from the nk api
 function getData(event) {
   if (event == "races" && raceData == null) {
@@ -74,49 +108,75 @@ function getData(event) {
       .then((data) => {
         if (data["error"] == null) {
           raceData = data["body"];
-          generateRaceTitles();
+          generateRaces();
         } else {
-          alert(
-            "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
-          );
-          document.getElementById("eventTitle").innerText = "An Error Occured";
+          catchError(error);
         }
       })
       .catch((error) => {
-        alert(
-          "There was an issue while getting data. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
-        );
-        document.getElementById("eventTitle").innerText = "An Error Occured";
-        console.log(error);
+        catchError(error);
+      });
+  } else if (event == "bosses" && bossData == null) {
+    fetch(`https://data.ninjakiwi.com/btd6/bosses?`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data["error"] == null) {
+          bossData = data["body"];
+          generateBosses();
+        } else {
+          catchError(error);
+        }
+      })
+      .catch((error) => {
+        catchError(error);
       });
   }
 }
 
 // generates the title cards with the event names as the text
 // and adds event listeners to each element
-function generateRaceTitles() {
+function generateRaces() {
   for (let i = 0; i < raceData.length; i++) {
     // adds a new div for every race event
     const status = determineStatus(raceData[i]["start"], raceData[i]["end"]);
     const docElem = document.createElement("div");
     docElem.classList.add("eventTitleContainer");
-    eventListContainer.appendChild(docElem);
-    generateRaceName(raceData[i], docElem, status);
-    generateButtons(raceData[i], docElem, status);
+    raceArchiveContainer.appendChild(docElem);
+    generateEventName(raceData[i], docElem, status);
+    generateButtons("races", raceData[i], docElem, status);
     if (status != "Not Begun") generateTotalPlayers(raceData[i], docElem);
     generateTimestamps(raceData[i], docElem, status);
+  }
+}
+
+function generateBosses() {
+  for (let i = 0; i < bossData.length; i++) {
+    const status = determineStatus(bossData[i]["start"], bossData[i]["end"]);
+    const docElem = document.createElement("div");
+    docElem.classList.add("eventTitleContainer");
+    bossArchiveContainer.appendChild(docElem);
+    generateEventName(bossData[i], docElem, status);
+    generateButtons("bosses", bossData[i], docElem, status);
+    generateTimestamps(bossData[i], docElem, status);
   }
 }
 
 // determines whether an event has ended, not begun, or is LIVE
 // returns a string value
 
-function generateRaceName(data, parentElem, status) {
+function generateEventName(data, parentElem, status) {
   const nameElem = document.createElement("p");
   const statusElem = document.createElement("p");
   nameElem.classList.add("eventName");
   statusElem.classList.add("eventStatus");
-  nameElem.innerHTML = `<b>${data["name"]}</b>`;
+  if (data.hasOwnProperty("bossType")) {
+    nameElem.innerHTML = `<b>${data["name"].replace(
+      /([a-zA-Z])(\d)/g,
+      "$1 $2"
+    )}</b>`;
+  } else {
+    nameElem.innerHTML = `<b>${data["name"]}</b>`;
+  }
   statusElem.innerHTML = `${status}`;
   if (status == "LIVE") {
     parentElem.classList.add("live");
@@ -124,23 +184,23 @@ function generateRaceName(data, parentElem, status) {
   parentElem.appendChild(nameElem);
   parentElem.appendChild(statusElem);
 }
-function generateButtons(data, parentElem, status) {
+function generateButtons(event, data, parentElem, status) {
   const chooseTypeButtonContainer = document.createElement("div");
   const detailsButton = document.createElement("button");
   detailsButton.classList.add("chooseTypeButton");
   detailsButton.innerText = "Details";
   detailsButton.onclick = () => {
-    eventListContainer.style.display = "none";
+    document.body.style.opacity = 0.5;
     id = data["id"];
-    getMetadata(data);
+    getMetadata(event, data);
+    document.body.style.opacity = 1;
   };
   chooseTypeButtonContainer.appendChild(detailsButton);
-  if (!(status == "Not Begun")) {
+  if (data.hasOwnProperty("totalScores") && data["totalScores"] != 0) {
     const lbButton = document.createElement("button");
     lbButton.classList.add("chooseTypeButton");
     lbButton.innerText = "Leaderboard";
     lbButton.onclick = () => {
-      eventListContainer.style.display = "none";
       eventName = data["name"];
       id = data["id"];
       getLeaderboard("races", data);
@@ -181,6 +241,7 @@ function generateTimestamps(data, parentElem, status) {
   parentElem.appendChild(timestampElem);
 }
 function calculateTimeRemaining(end) {
+  // thx phind.com <3
   const currentDate = new Date();
   const timeDifference = end.getTime() - currentDate.getTime();
   let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -198,27 +259,71 @@ function generateTotalPlayers(data, parentElem) {
 }
 
 // fetches for the metadata for the specific race based on raceNum
-// calls displayRaceInfo with the relevant metadata
-function getMetadata(data) {
-  fetch(data["metadata"])
-    .then((response) => response.json())
-    .then((metadata) => {
-      displayRaceInfo(metadata["body"]);
-    })
-    .catch((error) => {
-      alert(
-        "There was an issue while getting detailed race info. Please send a screenshot of this error in the BTD6 Central Discord Server. Reload the page to continue."
-      );
-      console.log(error);
-    });
+// calls displayDetails with the relevant metadata
+function getMetadata(event, data) {
+  if (event == "races") {
+    fetch(data["metadata"])
+      .then((response) => response.json())
+      .then((metadata) => {
+        displayDetails(event, metadata["body"]);
+      })
+      .catch((error) => {
+        catchError(error);
+      });
+  } else {
+    fetch(data["metadataElite"])
+      .then((response) => response.json())
+      .then((metadata) => {
+        bossEliteMetadata = metadata["body"];
+      })
+      .catch((error) => {
+        catchError(error);
+      });
+    fetch(data["metadataStandard"])
+      .then((response) => response.json())
+      .then((metadata) => {
+        bossStandardMetadata = metadata["body"];
+        displayDetails(event, metadata["body"], "standard");
+      })
+      .catch((error) => {
+        catchError(error);
+      });
+  }
 }
 
 // uuuuugggggghhhhhh
 // kill me please
-function displayRaceInfo(metadata) {
-  raceTitle.innerText = `"${metadata["name"]}" Race Info`;
-  raceTitle.style.display = "flex";
-  showMap(metadata);
+function displayDetails(event, metadata, difficulty) {
+  bossImage.src = null;
+  while (difficultyButtonContainer.hasChildNodes()) {
+    difficultyButtonContainer.removeChild(difficultyButtonContainer.firstChild);
+  }
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+  eventTitle.style.display = "none";
+  raceArchiveContainer.style.display = "none";
+  bossArchiveContainer.style.display = "none";
+  switch (event) {
+    case "races":
+      raceTitle.innerText = `"${metadata["name"]}" Race Info`;
+      raceTitle.style.display = "flex";
+      break;
+    case "bosses":
+      raceTitle.innerText = `${metadata["name"].replace(
+        /([a-zA-Z])(\d)/g,
+        "$1 $2"
+      )} Boss Details (${
+        difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
+      })`;
+      raceTitle.style.display = "flex";
+      urlParams.set("difficulty", difficulty);
+      history.replaceState(null, null, "?" + urlParams.toString());
+      generateDifficultyButtons(event, difficulty);
+      break;
+  }
+  showImages(metadata, difficulty);
   document.getElementById(
     "startingCash"
   ).innerHTML = `<b>Cash</b><br>$${metadata["startingCash"]}`;
@@ -264,20 +369,74 @@ function displayRaceInfo(metadata) {
   if (!enabledHeroes.hasChildNodes()) {
     appendElement(enabledHeroes, `None`, ``);
   }
-  document.getElementById("modifiersContainer").style.display = "flex";
-  raceDetails.style.display = "flex";
+  document.getElementById("raceModifiersContainer").style.display = "flex";
+  eventDetails.style.display = "flex";
   urlParams.set("id", `${id}`);
   history.replaceState(null, null, "?" + urlParams.toString());
   urlParams.set("type", "metadata");
   history.replaceState(null, null, "?" + urlParams.toString());
 }
 
+function generateDifficultyButtons(event, selectedDifficulty) {
+  if (event == "bosses") {
+    const swapDifficultyButton = document.createElement("button");
+    swapDifficultyButton.classList.add("swapDifficultyButton");
+    if (selectedDifficulty == "standard") {
+      swapDifficultyButton.innerText = `Swap to Elite`;
+      swapDifficultyButton.onclick = () => {
+        for (const element of dataContainers) {
+          while (element.hasChildNodes()) {
+            element.removeChild(element.firstChild);
+          }
+        }
+        displayDetails(event, bossEliteMetadata, "elite");
+      };
+    } else {
+      swapDifficultyButton.innerText = `Swap to Normal`;
+      swapDifficultyButton.onclick = () => {
+        for (const element of dataContainers) {
+          while (element.hasChildNodes()) {
+            element.removeChild(element.firstChild);
+          }
+        }
+        displayDetails(event, bossStandardMetadata, "standard");
+      };
+    }
+    difficultyButtonContainer.appendChild(swapDifficultyButton);
+  }
+}
+
 // shows a map
-function showMap(metadata) {
+function showImages(metadata, difficulty) {
   mapImage.src = metadata["mapURL"];
   mapImage.alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
   mapImage.style.display = "block";
   mapContainer.appendChild(mapImage);
+  if (difficulty == "standard") {
+    if (metadata["name"].includes("Bloonarius")) {
+      bossImage.src =
+        "https://i.gyazo.com/be511c1e97575bd2c50943be77783a95.png";
+    } else if (metadata["name"].includes("Lych")) {
+      bossImage.src =
+        "https://i.gyazo.com/eee6e911abfebde7aa2b4935f01e741a.png";
+    } else if (metadata["name"].includes("Vortex")) {
+      bossImage.src =
+        "https://i.gyazo.com/d223e91b628adf7cb63cc42be7728180.png";
+    } else if (metadata["name"].includes("Dreadbloon")) {
+      bossImage.src =
+        "https://static.wikia.nocookie.net/b__/images/6/63/DreadbloonPortrait.png/revision/latest?cb=20221207232857&path-prefix=bloons";
+    } else if (metadata["name"].includes("Phayze")) {
+      bossImage.src = "../media/phayze.png";
+    }
+  } else if (difficulty == "elite") {
+    if (metadata["name"].includes("Phayze")) {
+      bossImage.src = "../media/elitePhayze.png";
+    }
+  }
+  if (bossImage.src != null) {
+    bossImage.style.display = "flex";
+    bossImageContainer.appendChild(bossImage);
+  }
 }
 
 // sorts out the tower upgrades
@@ -323,9 +482,9 @@ function parseHeroes(hero, isSelectable) {
   if (!isSelectable) {
     if (hero["max"] != 0) {
       const heroInfoDisplay = document.createElement("p");
-      heroInfoDisplay.innerHTML = `<b>${hero["tower"]
+      heroInfoDisplay.innerHTML = `${hero["tower"]
         .replace(/([A-Z])/g, " $1")
-        .trim()}</b>`; // magic code by AI that adds spaces do NOT fucking touch this
+        .trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
       heroInfoDisplay.classList.add("heroInfoDisplay");
       enabledHeroes.appendChild(heroInfoDisplay);
     }
@@ -335,17 +494,6 @@ function parseHeroes(hero, isSelectable) {
     heroInfoDisplay.classList.add("heroInfoDisplay");
     enabledHeroes.appendChild(heroInfoDisplay);
   }
-}
-
-function appendElement(parent, title, value) {
-  const element = document.createElement("p");
-  element.innerHTML = `<b>${title}</b><br>${value}`;
-  parent.appendChild(element);
-}
-function prependElement(parent, title) {
-  const element = document.createElement("p");
-  element.innerHTML = `<b>${title}</b>`;
-  parent.prepend(element);
 }
 
 /* 
@@ -448,11 +596,9 @@ function getLeaderboard(event, data) {
       }
     })
     .catch((error) => {
-      alert(
-        "There was an issue while getting the leaderboard. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
-      );
-      console.log(error);
+      catchError(error);
     });
+
   urlParams.set("id", `${id}`);
   history.replaceState(null, null, "?" + urlParams.toString());
   urlParams.set("type", "leaderboard");
@@ -460,6 +606,12 @@ function getLeaderboard(event, data) {
 }
 
 function displayLeaderboard(lb) {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+  eventTitle.style.display = "none";
+  raceArchiveContainer.style.display = "none";
   if (lb[0]["scoreParts"][0]["type"] == "time") {
     for (let i = 0; i < lb.length; i++) {
       const playerElem = document.createElement("div");
@@ -499,134 +651,128 @@ function padTo2Digits(num) {
   return num.toString().padStart(2, "0");
 }
 
+function appendElement(parent, title, value) {
+  const element = document.createElement("p");
+  element.innerHTML = `<b>${title}</b><br>${value}`;
+  parent.appendChild(element);
+}
+function prependElement(parent, title) {
+  const element = document.createElement("p");
+  element.innerHTML = `<b>${title}</b>`;
+  parent.prepend(element);
+}
+
 function swapToEvent(event) {
   eventPickContainer.style.display = "none";
+  eventTitle.style.display = "flex";
   backButton.style.display = "block";
-  eventListContainer.style.display = "flex";
-  if (event == "races")
-    document.getElementById("eventTitle").innerText = "Latest Race Events";
+  switch (event) {
+    case "races":
+      raceArchiveContainer.style.display = "flex";
+      eventTitle.innerText = "Latest Race Events";
+      break;
+    case "bosses":
+      bossArchiveContainer.style.display = "flex";
+      eventTitle.innerText = "Latest Boss Events";
+      break;
+    default:
+      catchError("That event does not exist.");
+  }
   getData(event);
   urlParams.set("event", `${event}`);
   history.replaceState(null, null, "?" + urlParams.toString());
 }
 
-function main() {
+async function main() {
   urlEvent = urlParams.get("event");
   urlID = urlParams.get("id");
   urlType = urlParams.get("type");
+  urlDifficulty = urlParams.get("difficulty");
   // if the ID of the event is in the URL
   if (urlID != null) {
     // and the type is "metadata"
     if (urlType == "metadata") {
-      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata?`)
-        .then((response) => response.json())
-        .then((metadata) => {
-          swapToEvent(`${urlEvent}`);
-          id = urlID;
-          eventListContainer.style.display = "none";
-          if (urlEvent == "races") displayRaceInfo(metadata["body"]);
-        });
-      // OR if the type is "leaderboard"
-    } else if (urlType == "leaderboard") {
-      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`)
-        .then((response) => response.json())
-        .then((data) => {
-          eventName = data["body"]["name"];
-        });
-      fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`)
-        .then((response) => response.json())
-        .then((lb) => {
-          swapToEvent(`${urlEvent}`);
-          id = urlID;
-          eventListContainer.style.display = "none";
-          if (lb["error"] == "No Scores Available")
-            raceLeaderboardTitle.innerText =
-              "nice try with the URL, but there's still nothing to display...";
-          displayLeaderboard(lb["body"]);
-        })
-        .catch((error) => {
-          alert(
-            "There was an issue while getting the leaderboard. Please try again later and report this issue in the BTD6 Central Discord server. Reload the page to continue."
-          );
-          console.log(error);
-        });
+      if (urlEvent == "races") {
+        const response = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}`
+        );
+        const metadata = await response.json();
+        swapToEvent(`${urlEvent}`);
+        id = urlID;
+        displayDetails(urlEvent, metadata["body"], urlDifficulty);
+      } else if (urlEvent == "bosses") {
+        const eliteResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/elite`
+        );
+        const standardResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/standard`
+        );
+
+        bossEliteMetadata = await eliteResponse.json();
+        bossStandardMetadata = await standardResponse.json();
+
+        swapToEvent(`${urlEvent}`);
+        bossEliteMetadata = bossEliteMetadata["body"];
+        bossStandardMetadata = bossStandardMetadata["body"];
+        id = urlID;
+        if (urlDifficulty == "standard")
+          displayDetails(urlEvent, bossStandardMetadata, urlDifficulty);
+        if (urlDifficulty == "elite")
+          displayDetails(urlEvent, bossEliteMetadata, urlDifficulty);
+      }
     }
+    // OR if the type is "leaderboard"
+  } else if (urlType == "leaderboard") {
+    const metadataResponse = await fetch(
+      `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`
+    );
+    const leaderboardResponse = await fetch(
+      `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`
+    );
+
+    const metadata = await metadataResponse.json();
+    const lb = await leaderboardResponse.json();
+
+    eventName = metadata["body"]["name"];
+    swapToEvent(`${urlEvent}`);
+    id = urlID;
+    if (lb["error"] == "No Scores Available")
+      raceLeaderboardTitle.innerText = "Easter Egg";
+    displayLeaderboard(lb["body"]);
   } else if (urlEvent != null) {
     swapToEvent(urlEvent);
-  }
-  // event listener for race button. this needs to be cleaned up
-  raceEventButton.onclick = () => {
+  } else {
     urlParams.delete("id");
     urlParams.delete("type");
+    urlParams.delete("difficulty");
     history.replaceState(null, null, "?" + urlParams.toString());
+  }
+  // event listener for race button.
+  raceEventButton.onclick = () => {
     swapToEvent("races");
   };
-  // event listener for the back button. this REALLY needs to be fucking cleaned up
+  bossEventButton.onclick = () => {
+    swapToEvent("bosses");
+  };
+  // event listener for the back button.
   backButton.onclick = () => {
     eventPickContainer.style.display = "flex";
     backButton.style.display = "none";
-    eventListContainer.style.display = "none";
-    raceDetails.style.display = "none";
-    raceLeaderboardTitle.style.display = "none";
-    while (mapContainer.hasChildNodes()) {
-      mapContainer.removeChild(mapContainer.firstChild);
+    raceArchiveContainer.style.display = "none";
+    bossArchiveContainer.style.display = "none";
+    for (const element of eventElems) {
+      element.style.display = "none";
     }
-    while (specialModsContainer.hasChildNodes()) {
-      specialModsContainer.removeChild(specialModsContainer.firstChild);
+    for (const element of dataContainers) {
+      while (element.hasChildNodes()) {
+        element.removeChild(element.firstChild);
+      }
     }
-    while (enabledPrimary.hasChildNodes()) {
-      enabledPrimary.removeChild(enabledPrimary.firstChild);
-    }
-    while (enabledMilitary.hasChildNodes()) {
-      enabledMilitary.removeChild(enabledMilitary.firstChild);
-    }
-    while (enabledMagic.hasChildNodes()) {
-      enabledMagic.removeChild(enabledMagic.firstChild);
-    }
-    while (enabledSupport.hasChildNodes()) {
-      enabledSupport.removeChild(enabledSupport.firstChild);
-    }
-    while (enabledHeroes.hasChildNodes()) {
-      enabledHeroes.removeChild(enabledHeroes.firstChild);
-    }
-    while (leaderboardContainer.hasChildNodes()) {
-      leaderboardContainer.removeChild(leaderboardContainer.firstChild);
-    }
+    urlParams.delete("id");
+    urlParams.delete("type");
+    urlParams.delete("difficulty");
     window.history.replaceState(null, document.title, window.location.pathname);
   };
 }
 
 main();
-
-/* Take Me Home, Country Roads by John Denver
-Almost heaven, West Virginia
-Blue Ridge Mountains, Shenandoah River
-Life is old there, older than the trees
-Younger than the mountains, growin' like a breeze
-Country roads, take me home
-To the place I belong
-West Virginia, mountain mama
-Take me home, country roads
-All my memories gather 'round her
-Miner's lady, stranger to blue water
-Dark and dusty, painted on the sky
-Misty taste of moonshine, teardrop in my eye
-Country roads, take me home
-To the place I belong
-West Virginia, mountain mama
-Take me home, country roads
-I hear her voice in the mornin' hour, she calls me
-The radio reminds me of my home far away
-Drivin' down the road, I get a feelin'
-That I should've been home yesterday, yesterday
-Country roads, take me home
-To the place I belong
-West Virginia, mountain mama
-Take me home, country roads
-Country roads, take me home
-To the place I belong
-West Virginia, mountain mama
-Take me home, country roads
-Take me home, (down) country roads
-Take me home, (down) country roads
-*/
