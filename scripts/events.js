@@ -854,39 +854,34 @@ async function main() {
       urlParams.delete("difficulty");
       history.replaceState(null, null, "?" + urlParams.toString());
     }
-    // event listener for race button.
-    raceEventButton.onclick = () => {
-      swapToEvent("races");
-    };
-    bossEventButton.onclick = () => {
-      swapToEvent("bosses");
-    };
-    // event listener for the back button.
-    backButton.onclick = () => {
-      eventPickContainer.style.display = "flex";
-      backButton.style.display = "none";
-      raceArchiveContainer.style.display = "none";
-      bossArchiveContainer.style.display = "none";
-      for (const element of eventElems) {
-        element.style.display = "none";
-      }
-      for (const element of dataContainers) {
-        while (element.hasChildNodes()) {
-          element.removeChild(element.firstChild);
-        }
-      }
-      urlParams.delete("id");
-      urlParams.delete("type");
-      urlParams.delete("difficulty");
-      window.history.replaceState(
-        null,
-        document.title,
-        window.location.pathname
-      );
-    };
   }
+  // event listener for race button.
+  raceEventButton.onclick = () => {
+    swapToEvent("races");
+  };
+  bossEventButton.onclick = () => {
+    swapToEvent("bosses");
+  };
+  // event listener for the back button.
+  backButton.onclick = () => {
+    eventPickContainer.style.display = "flex";
+    backButton.style.display = "none";
+    raceArchiveContainer.style.display = "none";
+    bossArchiveContainer.style.display = "none";
+    for (const element of eventElems) {
+      element.style.display = "none";
+    }
+    for (const element of dataContainers) {
+      while (element.hasChildNodes()) {
+        element.removeChild(element.firstChild);
+      }
+    }
+    urlParams.delete("id");
+    urlParams.delete("type");
+    urlParams.delete("difficulty");
+    window.history.replaceState(null, document.title, window.location.pathname);
+  };
 }
-
 main();
 // 1. Create a TXT record in your DNS configuration for the following hostname: _github-pages-challenge-Nitjus7.btd6central.com
 // 2. Use this code for the value of the TXT record: 9807ff08b9cfa141bc7fc5b97a5d4d
