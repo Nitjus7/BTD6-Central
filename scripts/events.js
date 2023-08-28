@@ -98,6 +98,7 @@ let urlType;
 let urlDifficulty;
 let id;
 
+// pass in the error message
 function catchError(error) {
   if (error == "TypeError: Failed to fetch") {
     alert("Check your internet connection, then try again.");
@@ -107,6 +108,7 @@ function catchError(error) {
     );
   }
 }
+
 // fetches the data from the nk api
 function getData(event) {
   if (event == "races" && raceData == null) {
@@ -886,3 +888,6 @@ async function main() {
 }
 
 main();
+// 1. Create a TXT record in your DNS configuration for the following hostname: _github-pages-challenge-Nitjus7.btd6central.com
+// 2. Use this code for the value of the TXT record: 9807ff08b9cfa141bc7fc5b97a5d4d
+// 3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
