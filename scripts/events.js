@@ -883,6 +883,3 @@ async function main() {
   };
 }
 main();
-// 1. Create a TXT record in your DNS configuration for the following hostname: _github-pages-challenge-Nitjus7.btd6central.com
-// 2. Use this code for the value of the TXT record: 9807ff08b9cfa141bc7fc5b97a5d4d
-// 3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
