@@ -28,7 +28,8 @@ const bossImage = document.getElementById("bossImage");
 const bossImageContainer = document.getElementById("bossImageContainer");
 
 const leaderboardContainer = document.getElementById("leaderboardContainer");
-const raceLeaderboardTitle = document.getElementById("raceLeaderboardTitle");
+const swapLBButtonContainer = document.getElementById("swapLBButtonContainer");
+const leaderboardTitle = document.getElementById("leaderboardTitle");
 
 const primaryTowers = [
   "DartMonkey",
@@ -64,8 +65,9 @@ const supportTowers = [
 const eventElems = [
   eventTitle,
   eventDetails,
-  raceLeaderboardTitle,
+  leaderboardTitle,
   leaderboardContainer,
+  swapLBButtonContainer,
 ];
 const dataContainers = [
   mapContainer,
@@ -78,6 +80,7 @@ const dataContainers = [
   specialModsContainer,
   leaderboardContainer,
   difficultyButtonContainer,
+  swapLBButtonContainer,
 ];
 
 let eventName;
@@ -86,8 +89,8 @@ let raceLB;
 let bossData;
 let bossStandardMetadata;
 let bossEliteMetadata;
-let bossStandardLB;
-let bossEliteLB;
+let bossStandardLB1P;
+let bossEliteLB1P;
 let urlParams = new URLSearchParams(window.location.search);
 let urlEvent;
 let urlID;
@@ -96,9 +99,13 @@ let urlDifficulty;
 let id;
 
 function catchError(error) {
-  alert(
-    `An Error Has Occured: \n ${error} \n Please report this to the BTD6 Central Discord Server.`
-  );
+  if (error == "TypeError: Failed to fetch") {
+    alert("Check your internet connection, then try again.");
+  } else {
+    alert(
+      `An Error Has Occured:\n${error}\nPlease report this to the BTD6 Central Discord Server.`
+    );
+  }
 }
 // fetches the data from the nk api
 function getData(event) {
@@ -143,7 +150,7 @@ function generateRaces() {
     docElem.classList.add("eventTitleContainer");
     raceArchiveContainer.appendChild(docElem);
     generateEventName(raceData[i], docElem, status);
-    generateButtons("races", raceData[i], docElem, status);
+    generateButtons("races", raceData[i], docElem);
     if (status != "Not Begun") generateTotalPlayers(raceData[i], docElem);
     generateTimestamps(raceData[i], docElem, status);
   }
@@ -184,7 +191,7 @@ function generateEventName(data, parentElem, status) {
   parentElem.appendChild(nameElem);
   parentElem.appendChild(statusElem);
 }
-function generateButtons(event, data, parentElem, status) {
+function generateButtons(event, data, parentElem) {
   const chooseTypeButtonContainer = document.createElement("div");
   const detailsButton = document.createElement("button");
   detailsButton.classList.add("chooseTypeButton");
@@ -196,7 +203,7 @@ function generateButtons(event, data, parentElem, status) {
     document.body.style.opacity = 1;
   };
   chooseTypeButtonContainer.appendChild(detailsButton);
-  if (data.hasOwnProperty("totalScores") && data["totalScores"] != 0) {
+  if (event == "races" && data["totalScores"] != 0) {
     const lbButton = document.createElement("button");
     lbButton.classList.add("chooseTypeButton");
     lbButton.innerText = "Leaderboard";
@@ -204,6 +211,16 @@ function generateButtons(event, data, parentElem, status) {
       eventName = data["name"];
       id = data["id"];
       getLeaderboard("races", data);
+    };
+    chooseTypeButtonContainer.appendChild(lbButton);
+  } else if (event == "bosses" && data["totalScores_standard"] != 0) {
+    const lbButton = document.createElement("button");
+    lbButton.classList.add("chooseTypeButton");
+    lbButton.innerText = "Leaderboards";
+    lbButton.onclick = () => {
+      eventName = data["name"].replace(/([a-zA-Z])(\d)/g, "$1 $2");
+      id = data["id"];
+      getLeaderboard("bosses", data);
     };
     chooseTypeButtonContainer.appendChild(lbButton);
   }
@@ -294,14 +311,9 @@ function getMetadata(event, data) {
 // uuuuugggggghhhhhh
 // kill me please
 function displayDetails(event, metadata, difficulty) {
-  bossImage.src = null;
   while (difficultyButtonContainer.hasChildNodes()) {
     difficultyButtonContainer.removeChild(difficultyButtonContainer.firstChild);
   }
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
   eventTitle.style.display = "none";
   raceArchiveContainer.style.display = "none";
   bossArchiveContainer.style.display = "none";
@@ -406,8 +418,9 @@ function generateDifficultyButtons(event, selectedDifficulty) {
   }
 }
 
-// shows a map
+// shows images
 function showImages(metadata, difficulty) {
+  bossImage.src = null;
   mapImage.src = metadata["mapURL"];
   mapImage.alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
   mapImage.style.display = "block";
@@ -423,8 +436,7 @@ function showImages(metadata, difficulty) {
       bossImage.src =
         "https://i.gyazo.com/d223e91b628adf7cb63cc42be7728180.png";
     } else if (metadata["name"].includes("Dreadbloon")) {
-      bossImage.src =
-        "https://static.wikia.nocookie.net/b__/images/6/63/DreadbloonPortrait.png/revision/latest?cb=20221207232857&path-prefix=bloons";
+      bossImage.src = null;
     } else if (metadata["name"].includes("Phayze")) {
       bossImage.src = "../media/phayze.png";
     }
@@ -586,51 +598,122 @@ function determineSpecialMods(metadata) {
   }
 }
 
-function getLeaderboard(event, data) {
-  fetch(`${data["leaderboard"]}`)
-    .then((response) => response.json())
-    .then((lb) => {
-      if (lb["error"] == null) {
-        raceLB = lb["body"];
-        displayLeaderboard(lb["body"]);
-      }
-    })
-    .catch((error) => {
-      catchError(error);
-    });
-
-  urlParams.set("id", `${id}`);
-  history.replaceState(null, null, "?" + urlParams.toString());
-  urlParams.set("type", "leaderboard");
-  history.replaceState(null, null, "?" + urlParams.toString());
+async function getLeaderboard(event, data) {
+  if (event == "races") {
+    fetch(`${data["leaderboard"]}`)
+      .then((response) => response.json())
+      .then((lb) => {
+        if (lb["error"] == null) {
+          raceLB = lb["body"];
+          displayLeaderboard(lb["body"], null);
+        }
+      })
+      .catch((error) => {
+        catchError(error);
+      });
+  } else if (event == "bosses") {
+    const bossStandardLB1PResponse = await fetch(
+      `${data["leaderboard_standard_players_1"]}`
+    );
+    bossStandardLB1P = await bossStandardLB1PResponse.json();
+    bossStandardLB1P = bossStandardLB1P["body"];
+    const bossEliteLB1PResponse = await fetch(
+      `${data["leaderboard_elite_players_1"]}`
+    );
+    bossEliteLB1P = await bossEliteLB1PResponse.json();
+    bossEliteLB1P = bossEliteLB1P["body"];
+    displayLeaderboard(bossStandardLB1P, "standard");
+  }
 }
 
-function displayLeaderboard(lb) {
+function displayLeaderboard(lb, difficulty) {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
+  let scoreType;
+  generateBossLBButtons(difficulty);
+  eventPickContainer.style.display = "none";
   eventTitle.style.display = "none";
   raceArchiveContainer.style.display = "none";
-  if (lb[0]["scoreParts"][0]["type"] == "time") {
-    for (let i = 0; i < lb.length; i++) {
-      const playerElem = document.createElement("div");
-      const placementElem = document.createElement("p");
-      placementElem.innerText = `${i + 1}`;
-      playerElem.appendChild(placementElem);
-      const playerNameElem = document.createElement("p");
-      playerNameElem.innerText = `${lb[i]["displayName"].toUpperCase().trim()}`;
-      playerElem.appendChild(playerNameElem);
-      const scoreElem = document.createElement("p");
-      scoreElem.innerText = `${convertMS(lb[i]["score"])}`;
-      playerElem.appendChild(scoreElem);
-      playerElem.classList.add("playerElem");
-      leaderboardContainer.appendChild(playerElem);
-    }
+  bossArchiveContainer.style.display = "none";
+  if (lb[0]["scoreParts"][0]["name"] == "Game Time") {
+    scoreType = "time";
+  } else if (lb[0]["scoreParts"][0]["name"] == "Tiers") {
+    scoreType = "tiers";
+  } else {
+    scoreType = "cash";
   }
-  raceLeaderboardTitle.innerHTML = `"${eventName}" Race: Top 50`;
-  raceLeaderboardTitle.style.display = "flex";
+  for (let i = 0; i < lb.length; i++) {
+    const playerElem = document.createElement("div");
+    createPlacementElem(i + 1, playerElem);
+    createNameElem(lb[i], playerElem);
+    createScoreElem(scoreType, lb[i], playerElem);
+    playerElem.classList.add("playerElem");
+    leaderboardContainer.appendChild(playerElem);
+  }
+
+  if (difficulty == null) {
+    leaderboardTitle.innerHTML = `"${eventName}" Race: Top ${lb.length}`;
+  } else {
+    leaderboardTitle.innerHTML = `${eventName}: Top ${lb.length} (${difficulty})`;
+  }
+
+  leaderboardTitle.style.display = "flex";
   leaderboardContainer.style.display = "flex";
+
+  urlParams.set("id", `${id}`);
+  urlParams.set("type", "leaderboard");
+  if (difficulty != null) urlParams.set("difficulty", difficulty);
+  history.replaceState(null, null, "?" + urlParams.toString());
+}
+
+function generateBossLBButtons(selectedDifficulty) {
+  const swapDifficultyButton = document.createElement("button");
+  swapDifficultyButton.classList.add("swapDifficultyButton");
+  if (selectedDifficulty == "standard") {
+    swapDifficultyButton.innerText = `Swap to Elite`;
+    swapDifficultyButton.onclick = () => {
+      for (const element of dataContainers) {
+        while (element.hasChildNodes()) {
+          element.removeChild(element.firstChild);
+        }
+      }
+      displayLeaderboard(bossEliteLB1P, "elite");
+    };
+    swapLBButtonContainer.style.display = "flex";
+  } else if (selectedDifficulty == "elite") {
+    swapDifficultyButton.innerText = `Swap to Normal`;
+    swapDifficultyButton.onclick = () => {
+      for (const element of dataContainers) {
+        while (element.hasChildNodes()) {
+          element.removeChild(element.firstChild);
+        }
+      }
+      displayLeaderboard(bossStandardLB1P, "standard");
+    };
+    swapLBButtonContainer.style.display = "flex";
+  }
+  swapLBButtonContainer.appendChild(swapDifficultyButton);
+}
+
+function createPlacementElem(placement, parent) {
+  const placementElem = document.createElement("p");
+  placementElem.innerText = placement;
+  parent.appendChild(placementElem);
+}
+function createNameElem(data, parent) {
+  const playerNameElem = document.createElement("p");
+  playerNameElem.innerText = `${data["displayName"].toUpperCase().trim()}`;
+  parent.appendChild(playerNameElem);
+}
+function createScoreElem(scoreType, data, parent) {
+  const scoreElem = document.createElement("p");
+  if (scoreType == "time") scoreElem.innerText = `${convertMS(data["score"])}`;
+  if (scoreType == "tiers") scoreElem.innerText = `${data["score"]} Tiers`;
+  if (scoreType == "cash")
+    scoreElem.innerText = `$${data["score"].toLocaleString()}`;
+  parent.appendChild(scoreElem);
 }
 
 function convertMS(milliseconds) {
@@ -720,59 +803,86 @@ async function main() {
         if (urlDifficulty == "elite")
           displayDetails(urlEvent, bossEliteMetadata, urlDifficulty);
       }
-    }
-    // OR if the type is "leaderboard"
-  } else if (urlType == "leaderboard") {
-    const metadataResponse = await fetch(
-      `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`
-    );
-    const leaderboardResponse = await fetch(
-      `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`
-    );
-
-    const metadata = await metadataResponse.json();
-    const lb = await leaderboardResponse.json();
-
-    eventName = metadata["body"]["name"];
-    swapToEvent(`${urlEvent}`);
-    id = urlID;
-    if (lb["error"] == "No Scores Available")
-      raceLeaderboardTitle.innerText = "Easter Egg";
-    displayLeaderboard(lb["body"]);
-  } else if (urlEvent != null) {
-    swapToEvent(urlEvent);
-  } else {
-    urlParams.delete("id");
-    urlParams.delete("type");
-    urlParams.delete("difficulty");
-    history.replaceState(null, null, "?" + urlParams.toString());
-  }
-  // event listener for race button.
-  raceEventButton.onclick = () => {
-    swapToEvent("races");
-  };
-  bossEventButton.onclick = () => {
-    swapToEvent("bosses");
-  };
-  // event listener for the back button.
-  backButton.onclick = () => {
-    eventPickContainer.style.display = "flex";
-    backButton.style.display = "none";
-    raceArchiveContainer.style.display = "none";
-    bossArchiveContainer.style.display = "none";
-    for (const element of eventElems) {
-      element.style.display = "none";
-    }
-    for (const element of dataContainers) {
-      while (element.hasChildNodes()) {
-        element.removeChild(element.firstChild);
+      // OR if the type is "leaderboard"
+    } else if (urlType == "leaderboard") {
+      let lb;
+      if (urlEvent == "races") {
+        const metadataResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`
+        );
+        const metadata = await metadataResponse.json();
+        const leaderboardResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`
+        );
+        const tempLB = await leaderboardResponse.json();
+        lb = tempLB["body"];
+        eventName = metadata["body"]["name"];
+      } else if (urlEvent == "bosses") {
+        const metadataResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata/${urlDifficulty}`
+        );
+        const metadata = await metadataResponse.json();
+        const standardLBResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard/standard/1?`
+        );
+        const eliteLBResponse = await fetch(
+          `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard/elite/1?`
+        );
+        const tempBossStandardLB1P = await standardLBResponse.json();
+        bossStandardLB1P = tempBossStandardLB1P["body"];
+        const tempBossEliteLB1P = await eliteLBResponse.json();
+        bossEliteLB1P = tempBossEliteLB1P["body"];
+        eventName =
+          metadata["body"]["name"].charAt(0).toUpperCase() +
+          urlDifficulty.slice(1);
+        if (urlDifficulty == "standard") {
+          lb = bossStandardLB1P;
+        } else {
+          lb = bossEliteLB1P;
+        }
       }
+      swapToEvent(urlEvent);
+      id = urlID;
+      displayLeaderboard(lb, urlDifficulty);
+    } else if (urlEvent != null) {
+      swapToEvent(urlEvent);
+    } else {
+      urlParams.delete("id");
+      urlParams.delete("type");
+      urlParams.delete("difficulty");
+      history.replaceState(null, null, "?" + urlParams.toString());
     }
-    urlParams.delete("id");
-    urlParams.delete("type");
-    urlParams.delete("difficulty");
-    window.history.replaceState(null, document.title, window.location.pathname);
-  };
+    // event listener for race button.
+    raceEventButton.onclick = () => {
+      swapToEvent("races");
+    };
+    bossEventButton.onclick = () => {
+      swapToEvent("bosses");
+    };
+    // event listener for the back button.
+    backButton.onclick = () => {
+      eventPickContainer.style.display = "flex";
+      backButton.style.display = "none";
+      raceArchiveContainer.style.display = "none";
+      bossArchiveContainer.style.display = "none";
+      for (const element of eventElems) {
+        element.style.display = "none";
+      }
+      for (const element of dataContainers) {
+        while (element.hasChildNodes()) {
+          element.removeChild(element.firstChild);
+        }
+      }
+      urlParams.delete("id");
+      urlParams.delete("type");
+      urlParams.delete("difficulty");
+      window.history.replaceState(
+        null,
+        document.title,
+        window.location.pathname
+      );
+    };
+  }
 }
 
 main();
