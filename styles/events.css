@@ -136,7 +136,7 @@ button {
   justify-content: center;
 }
 #swapLBButtonContainer {
-  display: flex;
+  display: none;
   margin-bottom: 1rem;
   align-items: center;
   justify-content: center;
@@ -194,6 +194,7 @@ button {
 }
 #bossImage {
   margin: 0 auto;
+  margin-bottom: 10px;
   width: 150px;
 }
 
