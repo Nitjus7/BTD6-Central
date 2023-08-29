@@ -69,7 +69,7 @@ button {
       rgba(40, 38, 38, 0.05),
       var(--secondaryButton)
     ),
-    url("../media/race.png");
+    url("../assets/race.png");
   background-position: right;
 
   background-repeat: no-repeat;
@@ -81,7 +81,7 @@ button {
       rgba(40, 38, 38, 0.05),
       var(--secondaryButton)
     ),
-    url("../media/boss.png");
+    url("../assets/boss.png");
   background-position: right;
 
   background-repeat: no-repeat;
@@ -143,6 +143,8 @@ button {
 }
 .swapDifficultyButton {
   border-style: none;
+  display: flex;
+  justify-content: center;
   padding: 0.5rem;
   font-size: 1.4rem;
   border-radius: 3px;
@@ -191,8 +193,8 @@ button {
   /* height = 0.6x width*/
 }
 #bossImage {
-  width: 150px;
   margin: 0 auto;
+  width: 150px;
 }
 
 .towerInfo {
@@ -284,7 +286,7 @@ h2 {
 #scrollInfo {
   display: none;
 }
-@media only screen and (max-width: 600px) {
+@assets only screen and (max-width: 600px) {
   #scrollInfo {
     display: flex;
     justify-content: center;
