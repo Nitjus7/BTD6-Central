@@ -196,6 +196,7 @@ function generateButtons(event, data, parentElem) {
   detailsButton.classList.add("chooseTypeButton");
   detailsButton.innerText = "Details";
   detailsButton.onclick = () => {
+    document.body.style.display = "none"
     id = data["id"];
     switch (event) {
       case "races": getRaceMetadata(data["metadata"]); break;
@@ -208,6 +209,7 @@ function generateButtons(event, data, parentElem) {
     lbButton.classList.add("chooseTypeButton");
     lbButton.innerText = "Leaderboard";
     lbButton.onclick = () => {
+      document.body.style.display = "none"
       eventName = data["name"];
       id = data["id"];
       getRaceLeaderboard(data);
@@ -218,6 +220,7 @@ function generateButtons(event, data, parentElem) {
     lbButton.classList.add("chooseTypeButton");
     lbButton.innerText = "Leaderboards";
     lbButton.onclick = () => {
+      document.body.style.display = "none"
       eventName = data["name"].replace(/([a-zA-Z])(\d)/g, "$1 $2");
       id = data["id"];
       getBossLeaderboard(data);
@@ -226,6 +229,7 @@ function generateButtons(event, data, parentElem) {
   }
   parentElem.appendChild(chooseTypeButtonContainer);
 }
+
 function determineStatus(startDate, endDate) {
   let currentDate = Date.now();
   if (currentDate > endDate) {
@@ -281,6 +285,7 @@ async function getRaceMetadata(URL) {
   try {
     raceMetadata = await (await fetch(URL)).json();
     raceMetadata = raceMetadata["body"]
+    document.body.style.display = "block"
     displayDetails("races", raceMetadata, null);
   } catch (error) {
     catchError(error)
@@ -292,6 +297,7 @@ async function getBossMetadata() {
     bossStandardMetadata = bossStandardMetadata["body"]
     bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/elite`)).json();
     bossEliteMetadata = bossEliteMetadata["body"]
+    document.body.style.display = "block"
     displayDetails("bosses", bossStandardMetadata, "standard")
   } catch (error) {
     catchError(error)
@@ -420,27 +426,27 @@ function showBoss(metadata, difficulty) {
   const name = metadata["name"];
   if (difficulty == "standard") {
     if (name.includes("Bloonarius")) {
-      bossImage.src = "../blob/main/asssets/bloonarius.png";
+      bossImage.src = "https://i.ibb.co/2hzPr5t/bloonarius.png";
     } else if (name.includes("Lych")) {
-      bossImage.src = "../blob/main/assets/lych.png";
+      bossImage.src = "https://i.ibb.co/w4t4dX8/lych.png";
     } else if (name.includes("Vortex")) {
-      bossImage.src = "../blob/main/assets/vortex.png";
+      bossImage.src = "https://i.ibb.co/w4Ng4nd/vortex.png";
     } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "../blob/main/assets/dreadbloon.png";
+      bossImage.src = "https://i.ibb.co/hVF5PnP/dreadbloon.webp";
     } else if (name.includes("Phayze")) {
-      bossImage.src = "../blob/main/assets/phayze.png";
+      bossImage.src = "https://i.ibb.co/3dGxcC2/phayze.png";
     }
   } else if (difficulty == "elite") {
     if (name.includes("Bloonarius")) {
-      bossImage.src = "../blob/main/assets/eliteBloonarius.png"
+      bossImage.src = "https://i.ibb.co/HnhcNz9/elite-Bloonarius.png"
     } else if (name.includes("Lych")) {
-      bossImage.src = "../blob/main/assets/eliteLych.png"
+      bossImage.src = "https://i.ibb.co/2h93hcJ/elite-Lych.png"
     } else if (name.includes("Vortex")) {
-      bossImage.src = "../blob/main/assets/eliteVortex.png"
+      bossImage.src = "https://i.ibb.co/j44bYsB/elite-Vortex.png"
     } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "../blob/main/assets/eliteDreadbloon.png"
+      bossImage.src = "https://i.ibb.co/BgLNDHg/elite-Dreadbloon.webp"
     } else if (name.includes("Phayze")) {
-      bossImage.src = "../blob/main/assets/elitePhayze.png";
+      bossImage.src = "https://i.ibb.co/JnjzyLQ/elite-Phayze.png";
     }
   }
   if (bossImage.src != null) {
@@ -452,6 +458,18 @@ function showBoss(metadata, difficulty) {
      }
   }
 }
+/* <img src="https://i.ibb.co/BgLNDHg/elite-Dreadbloon.webp" alt="elite-Dreadbloon" border="0">
+<img src="https://i.ibb.co/2h93hcJ/elite-Lych.png" alt="elite-Lych" border="0">
+<img src="https://i.ibb.co/HnhcNz9/elite-Bloonarius.png" alt="elite-Bloonarius" border="0">
+<img src="https://i.ibb.co/w4Ng4nd/vortex.png" alt="vortex" border="0">
+<img src="https://i.ibb.co/w4t4dX8/lych.png" alt="lych" border="0">
+<img src="https://i.ibb.co/2hzPr5t/bloonarius.png" alt="bloonarius" border="0">
+<img src="https://i.ibb.co/hVF5PnP/dreadbloon.webp" alt="dreadbloon" border="0">
+<img src="https://i.ibb.co/JnjzyLQ/elite-Phayze.png" alt="elite-Phayze" border="0">
+<img src="https://i.ibb.co/3dGxcC2/phayze.png" alt="phayze" border="0">
+<img src="https://i.ibb.co/NNrtLYk/race.webp" alt="race" border="0">
+<img src="https://i.ibb.co/j44bYsB/elite-Vortex.png" alt="elite-Vortex" border="0">
+<img src="https://i.ibb.co/7rKMr1k/victory.webp" alt="victory" border="0"></img> */
 
 // sorts out the tower upgrades
 // formats into something like "3x Monkey Sub [new line] (5-3-5)"
@@ -603,6 +621,7 @@ function determineSpecialMods(metadata) {
 async function getRaceLeaderboard(data) {
   raceLB = await (await fetch(data["leaderboard"])).json()
   raceLB = raceLB["body"];
+  document.body.style.display = "block"
   displayLeaderboard(raceLB, null);
 }
 async function getBossLeaderboard(data) {
@@ -610,6 +629,7 @@ async function getBossLeaderboard(data) {
   bossStandardLB1P = bossStandardLB1P["body"]
   bossEliteLB1P = await (await fetch(data["leaderboard_elite_players_1"])).json()
   bossEliteLB1P = bossEliteLB1P["body"]
+  document.body.style.display = "block"
   displayLeaderboard(bossStandardLB1P, "standard")
 }
 
@@ -770,7 +790,7 @@ async function main() {
           `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}`
         );
         const metadata = await response.json();
-        swapToEvent(`${urlEvent}`);
+        swapToEvent(urlEvent);
         id = urlID;
         displayDetails(urlEvent, metadata["body"], urlDifficulty);
       } else if (urlEvent == "bosses") {
