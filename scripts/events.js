@@ -420,27 +420,27 @@ function showBoss(metadata, difficulty) {
   const name = metadata["name"];
   if (difficulty == "standard") {
     if (name.includes("Bloonarius")) {
-      bossImage.src = "../asssets/bloonarius.png";
+      bossImage.src = "../blob/main/asssets/bloonarius.png";
     } else if (name.includes("Lych")) {
-      bossImage.src = "../assets/lych.png";
+      bossImage.src = "../blob/main/assets/lych.png";
     } else if (name.includes("Vortex")) {
-      bossImage.src = "../assets/vortex.png";
+      bossImage.src = "../blob/main/assets/vortex.png";
     } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "../assets/dreadbloon.png";
+      bossImage.src = "../blob/main/assets/dreadbloon.png";
     } else if (name.includes("Phayze")) {
-      bossImage.src = "../assets/phayze.png";
+      bossImage.src = "../blob/main/assets/phayze.png";
     }
   } else if (difficulty == "elite") {
     if (name.includes("Bloonarius")) {
-      bossImage.src = "../assets/eliteBloonarius.png"
+      bossImage.src = "../blob/main/assets/eliteBloonarius.png"
     } else if (name.includes("Lych")) {
-      bossImage.src = "../assets/eliteLych.png"
+      bossImage.src = "../blob/main/assets/eliteLych.png"
     } else if (name.includes("Vortex")) {
-      bossImage.src = "../assets/eliteVortex.png"
+      bossImage.src = "../blob/main/assets/eliteVortex.png"
     } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "../assets/eliteDreadbloon.png"
+      bossImage.src = "../blob/main/assets/eliteDreadbloon.png"
     } else if (name.includes("Phayze")) {
-      bossImage.src = "../assets/elitePhayze.png";
+      bossImage.src = "../blob/main/assets/elitePhayze.png";
     }
   }
   if (bossImage.src != null) {
