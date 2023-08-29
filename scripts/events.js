@@ -85,6 +85,7 @@ const dataContainers = [
 
 let eventName;
 let raceData;
+let raceMetadata;
 let raceLB;
 let bossData;
 let bossStandardMetadata;
@@ -110,35 +111,31 @@ function catchError(error) {
 }
 
 // fetches the data from the nk api
-function getData(event) {
-  if (event == "races" && raceData == null) {
-    fetch(`https://data.ninjakiwi.com/btd6/races?`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data["error"] == null) {
-          raceData = data["body"];
-          generateRaces();
-        } else {
-          catchError(error);
-        }
-      })
-      .catch((error) => {
-        catchError(error);
-      });
-  } else if (event == "bosses" && bossData == null) {
-    fetch(`https://data.ninjakiwi.com/btd6/bosses?`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data["error"] == null) {
-          bossData = data["body"];
-          generateBosses();
-        } else {
-          catchError(error);
-        }
-      })
-      .catch((error) => {
-        catchError(error);
-      });
+async function getRaceData() {
+  if (raceData == null) {
+    try {
+      raceData = await (
+        await fetch(`https://data.ninjakiwi.com/btd6/races`)
+      ).json();
+      raceData = raceData["body"];
+      generateRaces();
+    } catch (error) {
+      catchError(error);
+    }
+  }
+}
+
+async function getBossData() {
+  if (bossData == null) {
+    try {
+      bossData = await (
+        await fetch(`https://data.ninjakiwi.com/btd6/bosses`)
+      ).json();
+      bossData = bossData["body"];
+      generateBosses();
+    } catch (error) {
+      catchError(error);
+    }
   }
 }
 
@@ -199,10 +196,11 @@ function generateButtons(event, data, parentElem) {
   detailsButton.classList.add("chooseTypeButton");
   detailsButton.innerText = "Details";
   detailsButton.onclick = () => {
-    document.body.style.opacity = 0.5;
     id = data["id"];
-    getMetadata(event, data);
-    document.body.style.opacity = 1;
+    switch (event) {
+      case "races": getRaceMetadata(data["metadata"]); break;
+      case "bosses": getBossMetadata(); break;
+    }
   };
   chooseTypeButtonContainer.appendChild(detailsButton);
   if (event == "races" && data["totalScores"] != 0) {
@@ -212,7 +210,7 @@ function generateButtons(event, data, parentElem) {
     lbButton.onclick = () => {
       eventName = data["name"];
       id = data["id"];
-      getLeaderboard("races", data);
+      getRaceLeaderboard(data);
     };
     chooseTypeButtonContainer.appendChild(lbButton);
   } else if (event == "bosses" && data["totalScores_standard"] != 0) {
@@ -222,7 +220,7 @@ function generateButtons(event, data, parentElem) {
     lbButton.onclick = () => {
       eventName = data["name"].replace(/([a-zA-Z])(\d)/g, "$1 $2");
       id = data["id"];
-      getLeaderboard("bosses", data);
+      getBossLeaderboard(data);
     };
     chooseTypeButtonContainer.appendChild(lbButton);
   }
@@ -279,34 +277,24 @@ function generateTotalPlayers(data, parentElem) {
 
 // fetches for the metadata for the specific race based on raceNum
 // calls displayDetails with the relevant metadata
-function getMetadata(event, data) {
-  if (event == "races") {
-    fetch(data["metadata"])
-      .then((response) => response.json())
-      .then((metadata) => {
-        displayDetails(event, metadata["body"]);
-      })
-      .catch((error) => {
-        catchError(error);
-      });
-  } else {
-    fetch(data["metadataElite"])
-      .then((response) => response.json())
-      .then((metadata) => {
-        bossEliteMetadata = metadata["body"];
-      })
-      .catch((error) => {
-        catchError(error);
-      });
-    fetch(data["metadataStandard"])
-      .then((response) => response.json())
-      .then((metadata) => {
-        bossStandardMetadata = metadata["body"];
-        displayDetails(event, metadata["body"], "standard");
-      })
-      .catch((error) => {
-        catchError(error);
-      });
+async function getRaceMetadata(URL) {
+  try {
+    raceMetadata = await (await fetch(URL)).json();
+    raceMetadata = raceMetadata["body"]
+    displayDetails("races", raceMetadata, null);
+  } catch (error) {
+    catchError(error)
+  }
+}
+async function getBossMetadata() {
+  try {
+    bossStandardMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/standard`)).json();
+    bossStandardMetadata = bossStandardMetadata["body"]
+    bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/elite`)).json();
+    bossEliteMetadata = bossEliteMetadata["body"]
+    displayDetails("bosses", bossStandardMetadata, "standard")
+  } catch (error) {
+    catchError(error)
   }
 }
 
@@ -322,7 +310,6 @@ function displayDetails(event, metadata, difficulty) {
   switch (event) {
     case "races":
       raceTitle.innerText = `"${metadata["name"]}" Race Info`;
-      raceTitle.style.display = "flex";
       break;
     case "bosses":
       raceTitle.innerText = `${metadata["name"].replace(
@@ -331,13 +318,14 @@ function displayDetails(event, metadata, difficulty) {
       )} Boss Details (${
         difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
       })`;
-      raceTitle.style.display = "flex";
+      showBoss(metadata, difficulty);
+      generateDifficultyButtons(event, difficulty);
       urlParams.set("difficulty", difficulty);
       history.replaceState(null, null, "?" + urlParams.toString());
-      generateDifficultyButtons(event, difficulty);
       break;
   }
-  showImages(metadata, difficulty);
+  raceTitle.style.display = "flex";
+  showMap(metadata);
   document.getElementById(
     "startingCash"
   ).innerHTML = `<b>Cash</b><br>$${metadata["startingCash"]}`;
@@ -386,7 +374,6 @@ function displayDetails(event, metadata, difficulty) {
   document.getElementById("raceModifiersContainer").style.display = "flex";
   eventDetails.style.display = "flex";
   urlParams.set("id", `${id}`);
-  history.replaceState(null, null, "?" + urlParams.toString());
   urlParams.set("type", "metadata");
   history.replaceState(null, null, "?" + urlParams.toString());
 }
@@ -421,35 +408,48 @@ function generateDifficultyButtons(event, selectedDifficulty) {
 }
 
 // shows images
-function showImages(metadata, difficulty) {
-  bossImage.src = null;
+function showMap(metadata) {
   mapImage.src = metadata["mapURL"];
   mapImage.alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
   mapImage.style.display = "block";
   mapContainer.appendChild(mapImage);
+}
+
+function showBoss(metadata, difficulty) {
+  bossImage.src = null;
+  const name = metadata["name"];
   if (difficulty == "standard") {
-    if (metadata["name"].includes("Bloonarius")) {
-      bossImage.src =
-        "https://i.gyazo.com/be511c1e97575bd2c50943be77783a95.png";
-    } else if (metadata["name"].includes("Lych")) {
-      bossImage.src =
-        "https://i.gyazo.com/eee6e911abfebde7aa2b4935f01e741a.png";
-    } else if (metadata["name"].includes("Vortex")) {
-      bossImage.src =
-        "https://i.gyazo.com/d223e91b628adf7cb63cc42be7728180.png";
-    } else if (metadata["name"].includes("Dreadbloon")) {
-      bossImage.src = null;
-    } else if (metadata["name"].includes("Phayze")) {
-      bossImage.src = "../media/phayze.png";
+    if (name.includes("Bloonarius")) {
+      bossImage.src = "../asssets/bloonarius.png";
+    } else if (name.includes("Lych")) {
+      bossImage.src = "../assets/lych.png";
+    } else if (name.includes("Vortex")) {
+      bossImage.src = "../assets/vortex.png";
+    } else if (name.includes("Dreadbloon")) {
+      bossImage.src = "../assets/dreadbloon.png";
+    } else if (name.includes("Phayze")) {
+      bossImage.src = "../assets/phayze.png";
     }
   } else if (difficulty == "elite") {
-    if (metadata["name"].includes("Phayze")) {
-      bossImage.src = "../media/elitePhayze.png";
+    if (name.includes("Bloonarius")) {
+      bossImage.src = "../assets/eliteBloonarius.png"
+    } else if (name.includes("Lych")) {
+      bossImage.src = "../assets/eliteLych.png"
+    } else if (name.includes("Vortex")) {
+      bossImage.src = "../assets/eliteVortex.png"
+    } else if (name.includes("Dreadbloon")) {
+      bossImage.src = "../assets/eliteDreadbloon.png"
+    } else if (name.includes("Phayze")) {
+      bossImage.src = "../assets/elitePhayze.png";
     }
   }
   if (bossImage.src != null) {
-    bossImage.style.display = "flex";
-    bossImageContainer.appendChild(bossImage);
+    bossImage.style.display = "block";
+    bossImageContainer.appendChild(bossImage)
+  } else {
+     while (bossImageContainer.hasChildNodes()) {
+      bossImageContainer.removeChild(bossImageContainer.firstChild)
+     }
   }
 }
 
@@ -600,32 +600,17 @@ function determineSpecialMods(metadata) {
   }
 }
 
-async function getLeaderboard(event, data) {
-  if (event == "races") {
-    fetch(`${data["leaderboard"]}`)
-      .then((response) => response.json())
-      .then((lb) => {
-        if (lb["error"] == null) {
-          raceLB = lb["body"];
-          displayLeaderboard(lb["body"], null);
-        }
-      })
-      .catch((error) => {
-        catchError(error);
-      });
-  } else if (event == "bosses") {
-    const bossStandardLB1PResponse = await fetch(
-      `${data["leaderboard_standard_players_1"]}`
-    );
-    bossStandardLB1P = await bossStandardLB1PResponse.json();
-    bossStandardLB1P = bossStandardLB1P["body"];
-    const bossEliteLB1PResponse = await fetch(
-      `${data["leaderboard_elite_players_1"]}`
-    );
-    bossEliteLB1P = await bossEliteLB1PResponse.json();
-    bossEliteLB1P = bossEliteLB1P["body"];
-    displayLeaderboard(bossStandardLB1P, "standard");
-  }
+async function getRaceLeaderboard(data) {
+  raceLB = await (await fetch(data["leaderboard"])).json()
+  raceLB = raceLB["body"];
+  displayLeaderboard(raceLB, null);
+}
+async function getBossLeaderboard(data) {
+  bossStandardLB1P = await (await fetch(data["leaderboard_standard_players_1"])).json()
+  bossStandardLB1P = bossStandardLB1P["body"]
+  bossEliteLB1P = await (await fetch(data["leaderboard_elite_players_1"])).json()
+  bossEliteLB1P = bossEliteLB1P["body"]
+  displayLeaderboard(bossStandardLB1P, "standard")
 }
 
 function displayLeaderboard(lb, difficulty) {
@@ -763,7 +748,10 @@ function swapToEvent(event) {
     default:
       catchError("That event does not exist.");
   }
-  getData(event);
+  switch (event) {
+    case "races": getRaceData(); break;
+    case "bosses": getBossData(); break;
+  }
   urlParams.set("event", `${event}`);
   history.replaceState(null, null, "?" + urlParams.toString());
 }
@@ -836,7 +824,7 @@ async function main() {
         bossEliteLB1P = tempBossEliteLB1P["body"];
         eventName =
           metadata["body"]["name"].charAt(0).toUpperCase() +
-          urlDifficulty.slice(1);
+          metadata["body"]["name"].slice(1);
         if (urlDifficulty == "standard") {
           lb = bossStandardLB1P;
         } else {
