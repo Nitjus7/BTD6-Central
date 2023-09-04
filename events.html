@@ -7,47 +7,59 @@
     <title>BTD6 Central</title>
 
     <!--CUSTOM FONTS IMPORT BEGIN-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Roboto&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@500&display=swap" rel="stylesheet">
     <!--CUSTOM FONTS IMPORT END-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
 
     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
-    <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/events.css" />
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <div id="loadingAnimation"></div>
     <div class="navBarContainer">
       <nav>
         <ul class="navList">
-          <li class="navItem websiteTitle">
+          <li class="websiteTitle">
             <strong>BTD6 Central</strong>
           </li>
-          <li class="navItem">
-            <a href="index.html"> Home</a>
-          </li>
-          <li class="navItem">
-            <a class="wip"> Stats</a>
-          </li>
-          <li class="navItem">
-            <p class="currentPage">Events</p>
-          </li>
-          <li class="navItem wip">
-            <a href="#"> Blogs</a>
+          <li class="hamburgerButton">
+            <span class="material-symbols-outlined">
+              menu
+            </span>
           </li>
         </ul>
       </nav>
     </div>
+      <div class="hamburgerContainer">
+        <ul class="hamburgerMenu">
+          <li>
+            <span class="material-symbols-outlined closeButton">
+              close
+            </span>
+          </li>
+          <li class="navItem">
+            <button class="navButton goToHome">Home</button>
+          </li>
+          <li class="navItem wip">
+            <button class="navButton">Stats</button>
+          </li>
+          <li class="navItem">
+            <button class="navButton goToEvents">Events (Current Page)</button>
+          </li>
+          <li class="navItem wip">
+            <button href="#" class="navButton">Blogs</button>
+          </li>
+        </ul>
+      </div>
     <div id="eventPickContainer">
-      <button class="eventChoice" id="raceEventButton">Races</button>
-      <button class="eventChoice wip" id="odysseyEventButton">Odysseys</button>
-      <button class="eventChoice" id="bossEventButton">Bosses</button>
+      <button class="eventChoice" id="raceEventButton">RACES</button>
+      <button class="eventChoice wip" id="odysseyEventButton">ODYSSEYS</button>
+      <button class="eventChoice" id="bossEventButton">BOSSES</button>
       <button class="eventChoice wip" id="ctEventButton">
-        Contested Territory
+        CONTESTED TERRITORIES
       </button>
     </div>
     <button id="takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia">
@@ -77,7 +89,7 @@
       <h3 class="towerInfo">Heroes</h3>
       <div id="enabledHeroes"></div>
       <h3 class="towerInfo">Towers</h3>
-      <p id="scrollInfo">(scroll left and right to view all towers)</p>
+      <p id="scrollInfo">You may need to scroll left/right to view all towers.</p>
       <div id="enabledTowersContainer">
         <div id="enabledPrimary"></div>
         <div id="enabledMilitary"></div>
@@ -88,6 +100,9 @@
     <h1 id="leaderboardTitle"></h1>
     <div id="swapLBButtonContainer"></div>
     <div id="leaderboardContainer"></div>
+    <div class="popupOverlay"></div>
+    <div class="loadingOverlay"></div>
     <script src="scripts/events.js"></script>
+    <script src="scripts/hamburger.js"></script>
   </body>
 </html>
