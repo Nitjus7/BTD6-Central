@@ -25,7 +25,7 @@ const newsCards =
     {
       "title": "BTD6 Central is in Beta! Version 0.4.0",
       "description": "After lots of development time, BTD6 Central is finally ready for 'beta.' Check out the event archive using the menu in the top right.\nChanges for 0.4.0: New home page, added a hamburger, and dark mode support based on system settings.",
-      "imageSrc": "../assets/victory.png",
+      "imageSrc": null,
       "links": null,
       "dateInMilliseconds": 1693868984692,
       "big": true
