@@ -128,9 +128,7 @@ async function getRaceData() {
 async function getBossData() {
   if (bossData == null) {
     try {
-      bossData = await (
-        await fetch(`https://data.ninjakiwi.com/btd6/bosses`)
-      ).json();
+      bossData = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses`)).json();
       bossData = bossData["body"];
       generateBosses();
     } catch (error) {
@@ -176,10 +174,7 @@ function generateEventName(data, parentElem, status) {
   nameElem.classList.add("eventName");
   statusElem.classList.add("eventStatus");
   if (data.hasOwnProperty("bossType")) {
-    nameElem.innerHTML = `<b>${data["name"].replace(
-      /([a-zA-Z])(\d)/g,
-      "$1 $2"
-    )}</b>`;
+    nameElem.innerHTML = `<b>${data["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")}</b>`;
   } else {
     nameElem.innerHTML = `<b>${data["name"]}</b>`;
   }
@@ -258,10 +253,7 @@ function generateTimestamps(data, parentElem, status) {
   if (status == "LIVE") {
     timestampElem.innerHTML += `${calculateTimeRemaining(endDate)}`;
   } else {
-    timestampElem.innerHTML += `${startDate.toLocaleDateString(
-      [],
-      dateFormatting
-    )} to ${endDate.toLocaleDateString([], dateFormatting)}`;
+    timestampElem.innerHTML += `${startDate.toLocaleDateString([], dateFormatting)} to ${endDate.toLocaleDateString([], dateFormatting)}`;
   }
   parentElem.appendChild(timestampElem);
 }
@@ -297,15 +289,9 @@ async function getRaceMetadata(URL) {
 }
 async function getBossMetadata() {
   try {
-    bossStandardMetadata = await (
-      await fetch(
-        `https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/standard`
-      )
-    ).json();
+    bossStandardMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/standard`)).json();
     bossStandardMetadata = bossStandardMetadata["body"];
-    bossEliteMetadata = await (
-      await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/elite`)
-    ).json();
+    bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/elite`)).json();
     bossEliteMetadata = bossEliteMetadata["body"];
     disableLoading();
     displayDetails("bosses", bossStandardMetadata, "standard");
@@ -317,6 +303,10 @@ async function getBossMetadata() {
 // uuuuugggggghhhhhh
 // kill me please
 function displayDetails(event, metadata, difficulty) {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   while (difficultyButtonContainer.hasChildNodes()) {
     difficultyButtonContainer.removeChild(difficultyButtonContainer.firstChild);
   }
@@ -512,9 +502,7 @@ function parseHeroes(hero, isSelectable) {
   if (!isSelectable) {
     if (hero["max"] != 0) {
       const heroInfoDisplay = document.createElement("p");
-      heroInfoDisplay.innerHTML = `${hero["tower"]
-        .replace(/([A-Z])/g, " $1")
-        .trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
+      heroInfoDisplay.innerHTML = `${hero["tower"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
       heroInfoDisplay.classList.add("heroInfoDisplay");
       enabledHeroes.appendChild(heroInfoDisplay);
     }
@@ -732,9 +720,7 @@ function convertMS(milliseconds) {
   let remainingSeconds = seconds % 60;
   let remainingMilliseconds = milliseconds % 1000;
 
-  let formattedTime = `${minutes}:${padTo2Digits(
-    remainingSeconds
-  )}.${remainingMilliseconds}`;
+  let formattedTime = `${minutes}:${padTo2Digits(remainingSeconds)}.${remainingMilliseconds}`;
   return formattedTime;
 }
 
@@ -829,24 +815,12 @@ async function main() {
     // and the type is "metadata"
     if (urlType == "metadata") {
       if (urlEvent == "races") {
-        const metadata = await (
-          await fetch(
-            `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}`
-          )
-        ).json();
+        const metadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}`)).json();
         swapToEvent(urlEvent);
         displayDetails(urlEvent, metadata["body"], urlDifficulty);
       } else if (urlEvent == "bosses") {
-        bossEliteMetadata = await (
-          await fetch(
-            `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/elite`
-          )
-        ).json();
-        bossStandardMetadata = await (
-          await fetch(
-            `https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/standard`
-          )
-        ).json();
+        bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/elite`)).json();
+        bossStandardMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/standard`)).json();
         swapToEvent(`${urlEvent}`);
         bossEliteMetadata = bossEliteMetadata["body"];
         bossStandardMetadata = bossStandardMetadata["body"];

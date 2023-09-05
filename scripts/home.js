@@ -2,6 +2,14 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.4.2",
+      "description": "Added a resources section at the bottom of the home page. Additionally, several minor formatting changes, and added images to the news section. A full list of changes can be found in the Discord server linked in the new Resources section.",
+      "imageSrc": null,
+      "links": null,
+      "dateInMilliseconds": 1693956333401,
+      "big": false
+    },
+    {
       "title": "Website v0.4.1",
       "description": "Fixed some issues with formatting, mostly with mobile. View full details in the Discord server.",
       "imageSrc": null,
@@ -58,16 +66,22 @@ const newsCards =
   "title": "",
   "description": "",
   "imageSrc": "",
-  "links": null,
+  "links": [
+        {
+          "link": "",
+          "name": ""
+        }
+      ],
   "dateInMilliseconds": 0,
   "big": false
 },
 */
 function generateNewsCards() {
-  for (let i = 0; i < newsCards.length; i++) {
+  for (let i = 0; i < newsCards.length && i < 5; i++) {
     const newsElement = document.createElement("div")
     newsElement.classList.add("newsCard")
     let newsCard = newsCards[i]
+    generateNumber(i + 1, newsCards.length, newsElement)
     if (newsCard["title"] != null) generateTitle(newsCard, newsElement)
     if (newsCard["description"] != null) generateDescription(newsCard, newsElement)
     if (newsCard["imageSrc"] != null) generateImage(newsCard, newsElement)
@@ -76,6 +90,12 @@ function generateNewsCards() {
     if (newsCard["big"]) newsElement.classList.add("bigNews")
     newsContainer.appendChild(newsElement)
   }
+}
+function generateNumber(number, totalCards, newsElement) {
+  const numberElem = document.createElement("p")
+  numberElem.classList.add("newsCardNumber")
+  numberElem.innerText = `${number} out of ${totalCards}`
+  newsElement.appendChild(numberElem)
 }
 function generateTitle(newsCard, newsElement) {
   const titleElem = document.createElement("h2")
@@ -90,7 +110,10 @@ function generateDescription(newsCard, newsElement) {
   newsElement.appendChild(descElem)
 }
 function generateImage(newsCard, newsElement) {
-  console.log("news images coming later")
+  const imageElem = document.createElement("img")
+  imageElem.classList.add("newsImage")
+  imageElem.src = newsCard["imageSrc"]
+  newsElement.appendChild(imageElem)
 }
 function generateLinks(newsCard, newsElement) {
   for (const button of newsCard["links"]) {
@@ -119,7 +142,32 @@ function generateTimestamp(newsCard, newsElement) {
   newsElement.appendChild(timestampElem)
 }
 
+
+function generateResourceLinks() {
+  document.querySelector(".jumpToResourcesButton").onclick = () => {
+    document.querySelector(".resourcesContainer").scrollIntoView({ behavior: 'smooth' })
+  }
+  document.querySelector(".goToBTD6CentralDiscord").onclick = () => {
+    window.open("https://discord.com/invite/xNxjqXBp6B")
+  }
+  document.querySelector(".goToBTD6Index").onclick = () => {
+    window.open("https://btd6index.win/")
+  }
+  document.querySelector(".goToBTD6Popology").onclick = () => {
+    window.open("https://www.reddit.com/r/btd6/comments/atomg3/advanced_popology_vol_1_primary_towers/")
+  }
+  document.querySelector(".goToCyberQuincy").onclick = () => {
+    window.open("https://top.gg/bot/591922988832653313")
+  }
+  document.querySelector(".goToB2Popology").onclick = () => {
+    window.open("https://b2popology.com/")
+  }
+}
+
 function main() {
   generateNewsCards();
+  generateResourceLinks();
 }
+
+
 main()

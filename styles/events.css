@@ -41,6 +41,7 @@ button {
   font-family: var(--secondaryFont);
   letter-spacing: 0.5px;
   color: var(--textColor);
+  background: var(--contentBackground1);
   box-shadow: 0px 0px 3px var(--shadowColor);
   transition: all 0.5s;
 }
@@ -50,7 +51,7 @@ button {
       rgba(40, 38, 38, 0.25),
       var(--mainButton)
     ),
-    url("../assets/race.png");
+    url("../assets/races.png");
   background-position: right;
   margin-top: 100px;
   background-repeat: no-repeat;
@@ -59,10 +60,10 @@ button {
 #bossEventButton {
   background-image: linear-gradient(
       to left,
-      rgba(40, 38, 38, 0.05),
+      rgba(183, 36, 178, 0.25),
       var(--mainButton)
     ),
-    url("../assets/boss.png");
+    url("../assets/bosses.png");
   background-position: right;
 
   background-repeat: no-repeat;
