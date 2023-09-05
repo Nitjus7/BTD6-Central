@@ -2,11 +2,25 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.4.1",
+      "description": "Fixed some issues with formatting, mostly with mobile. View full details in the Discord server.",
+      "imageSrc": null,
+      "links": [
+        {
+          "link": "https://discord.com/invite/xNxjqXBp6B",
+          "name": "Join the BTD6 Central Discord Server"
+        }
+      ],
+      "dateInMilliseconds": 1693886071939,
+      "big": false
+    },
+    {
       "title": "BTD6 Central is in Beta! Version 0.4.0",
       "description": "After lots of development time, BTD6 Central is finally ready for 'beta.' Check out the event archive using the menu in the top right.\nChanges for 0.4.0: New home page, added a hamburger, and dark mode support based on system settings.",
       "imageSrc": "../assets/victory.png",
       "links": null,
-      "dateInMilliseconds": 1693868984692
+      "dateInMilliseconds": 1693868984692,
+      "big": true
     },
     {
       "title": "BTD6 is available for pre-order on Xbox",
@@ -18,7 +32,8 @@ const newsCards =
           "name": "Pre-order BTD6 on Xbox"
         }
       ],
-      "dateInMilliseconds": null
+      "dateInMilliseconds": null,
+      "big": false
     },
     {
       "title": "Website v0.3.3",
@@ -26,20 +41,28 @@ const newsCards =
       "imageSrc": null,
       "links": [
         {
-          "link": "../events.html?event=bosses",
+          "link": "https://nitjus7.github.io/BTD6-Central/events.html?event=bosses",
           "name": "Check out the Boss Archive"
         },
         {
           "link": "https://discord.com/invite/xNxjqXBp6B",
-          "name": "BTD6 Central Discord Server Link"
+          "name": "Join the BTD6 Central Discord Server"
         }
       ],
-      "dateInMilliseconds": null
+      "dateInMilliseconds": null,
+      "big": false
     }
   ]
-
-console.log(newsCards);
-
+/* formatting for news card
+{
+  "title": "",
+  "description": "",
+  "imageSrc": "",
+  "links": null,
+  "dateInMilliseconds": 0,
+  "big": false
+},
+*/
 function generateNewsCards() {
   for (let i = 0; i < newsCards.length; i++) {
     const newsElement = document.createElement("div")
@@ -50,6 +73,7 @@ function generateNewsCards() {
     if (newsCard["imageSrc"] != null) generateImage(newsCard, newsElement)
     if (newsCard["links"] != null) generateLinks(newsCard, newsElement)
     if (newsCard["dateInMilliseconds"] != null) generateTimestamp(newsCard, newsElement)
+    if (newsCard["big"]) newsElement.classList.add("bigNews")
     newsContainer.appendChild(newsElement)
   }
 }
@@ -72,7 +96,7 @@ function generateLinks(newsCard, newsElement) {
   for (const button of newsCard["links"]) {
     const linkElem = document.createElement("button")
     linkElem.classList.add("newsButton")
-    linkElem.innerText = (button["name"])
+    linkElem.innerText = button["name"]
     linkElem.onclick = () => {
       window.open(button["link"])
     }
