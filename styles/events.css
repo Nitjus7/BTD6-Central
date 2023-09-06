@@ -328,6 +328,7 @@ h2 {
   top: 100px;
   left: 25px;
   transition: 0.15s;
+  z-index: 1;
 }
 #takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia:hover {
   cursor: pointer;

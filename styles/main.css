@@ -51,9 +51,14 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 85vh;
+  height: 90vh;
   filter: blur(8px);
   z-index: -1;
+}
+@media only screen and (max-width: 768px) {
+  .heroContainer {
+    height: 650px;
+  }
 }
 .heroContainer {
   display: flex;
@@ -128,7 +133,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: 1;
+  z-index: 10;
 }
 .hamburgerMenu {
   list-style: none;
@@ -142,7 +147,7 @@ body {
   top: 0;
   right: 0;
   z-index: 100;
-  width: 75vw;
+  width: 100vw;
   justify-content: center;
   transform: translateX(100%);
   animation: slideIn 0.35s forwards;
@@ -161,10 +166,11 @@ body {
   background: var(--pageBackground);
   border-radius: 5px;
   box-shadow: 0px 0px 10px var(--shadowColor);
+  z-index: 100;
 }
 .navWebsiteTitle {
   font-family: var(--secondaryFont);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 .closeButton {
   display: flex;
@@ -177,7 +183,9 @@ body {
 .navButton {
   color: var(--textColor);
   width: 75%;
-  height: 2.5rem;
+  max-width: 600px;
+  height: 4rem;
+  font-size: 1.25rem;
   margin: 10px;
   background-color: var(--secondaryButton);
   border-style: none;

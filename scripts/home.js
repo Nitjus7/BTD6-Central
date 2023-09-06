@@ -2,6 +2,14 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.4.3",
+      "description": "Fixed jittery scroll on mobile google and made the burger menu wider and bigger.",
+      "imageSrc": "",
+      "links": null,
+      "dateInMilliseconds": 1693971028272,
+      "big": false
+    },
+    {
       "title": "Website v0.4.2",
       "description": "Added a resources section at the bottom of the home page. Additionally, several minor formatting changes, and added images to the news section. A full list of changes can be found in the Discord server linked in the new Resources section.",
       "imageSrc": null,
@@ -94,6 +102,7 @@ function generateNewsCards() {
 function generateNumber(number, totalCards, newsElement) {
   const numberElem = document.createElement("p")
   numberElem.classList.add("newsCardNumber")
+  if (totalCards > 5) totalCards = 5
   numberElem.innerText = `${number} out of ${totalCards}`
   newsElement.appendChild(numberElem)
 }
