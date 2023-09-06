@@ -55,11 +55,6 @@ body {
   filter: blur(8px);
   z-index: -1;
 }
-@media only screen and (max-width: 768px) {
-  .heroContainer::before, .heroContainer {
-    height: 650px;
-  }
-}
 .heroContainer {
   display: flex;
   margin: 0;
@@ -80,6 +75,17 @@ body {
   letter-spacing: 0.15px;
   font-size: 4rem;
   padding: 0;
+}
+@media only screen and (max-width: 768px) {
+  .heroContainer::before {
+    height: 650px;
+  }
+  .heroContainer {
+    height: 650px;
+  }
+  .title {
+    height: 650px;
+  }
 }
 
 
