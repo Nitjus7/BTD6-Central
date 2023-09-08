@@ -2,6 +2,40 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.4.4",
+      "description": "Some more minor fixes/changes, including that Least Tiers Bosses will now display tiebreaker information. Up Next: Bloon & Boss Stats",
+      "imageSrc": null,
+      "links": null,
+      "dateInMilliseconds": 1694145954627,
+      "big": false
+    },
+    {
+      "title": "Map Editor: First Look",
+      "description": "The Map Editor is releasing in Version 39.0, along with a brand new Hero: Spirit Walker! While we haven't seen the new Hero, the Map Editor just got its first sneak peek.",
+      "imageSrc": null,
+      "links": [
+        {
+          "link": "https://www.tiktok.com/@ninja.kiwi/video/7276225750125120769",
+          "name": "Check out the teaser!"
+        }
+      ],
+      "dateInMilliseconds": 1694142436483,
+      "big": true
+    },
+    {
+      "title": "BTD6 for Xbox has released!",
+      "description": "Important notes: BTD6 for Xbox is only updated to Version 32 without CT and does not support cross-play or the use of an NK account.",
+      "imageSrc": "https://store-images.s-microsoft.com/image/apps.29629.14229635734755630.9b4f3e48-c3b4-4fee-884b-786bc5aa9bce.145640e0-b12a-4dd7-ba38-5ddd4475f66e?q=90&w=480&h=270",
+      "links": [
+        {
+          "link": "https://www.xbox.com/en-US/games/store/bloons-td-6/9PHKZ9XT6F85",
+          "name": "Buy BTD6 on Xbox"
+        }
+      ],
+      "dateInMilliseconds": 1694008200868,
+      "big": false
+    },
+    {
       "title": "Website v0.4.3",
       "description": "Fixed jittery scroll on mobile google and made the burger menu wider and bigger.",
       "imageSrc": "",
@@ -33,40 +67,10 @@ const newsCards =
     {
       "title": "BTD6 Central is in Beta! Version 0.4.0",
       "description": "After lots of development time, BTD6 Central is finally ready for 'beta.' Check out the event archive using the menu in the top right.\nChanges for 0.4.0: New home page, added a hamburger, and dark mode support based on system settings.",
-      "imageSrc": null,
+      "imageSrc": "https://i.ibb.co/7rKMr1k/victory.webp",
       "links": null,
       "dateInMilliseconds": 1693868984692,
       "big": true
-    },
-    {
-      "title": "BTD6 is available for pre-order on Xbox",
-      "description": "Xbox BTD6 adds couch co-op, a new UI and controls, and larger map size for longer track length and more placement areas for towers. However, it costs about twice as much as BTD6 on Steam.",
-      "imageSrc": "https://store-images.s-microsoft.com/image/apps.29629.14229635734755630.9b4f3e48-c3b4-4fee-884b-786bc5aa9bce.145640e0-b12a-4dd7-ba38-5ddd4475f66e?q=90&w=480&h=270",
-      "links": [
-        {
-          "link": "https://www.xbox.com/en-US/games/store/bloons-td-6/9PHKZ9XT6F85",
-          "name": "Pre-order BTD6 on Xbox"
-        }
-      ],
-      "dateInMilliseconds": null,
-      "big": false
-    },
-    {
-      "title": "Website v0.3.3",
-      "description": "Fixed several issues, including an issue where boss icons weren't loading. Full details can be found in the Discord server.",
-      "imageSrc": null,
-      "links": [
-        {
-          "link": "https://nitjus7.github.io/BTD6-Central/events.html?event=bosses",
-          "name": "Check out the Boss Archive"
-        },
-        {
-          "link": "https://discord.com/invite/xNxjqXBp6B",
-          "name": "Join the BTD6 Central Discord Server"
-        }
-      ],
-      "dateInMilliseconds": null,
-      "big": false
     }
   ]
 /* formatting for news card
@@ -85,7 +89,7 @@ const newsCards =
 },
 */
 function generateNewsCards() {
-  for (let i = 0; i < newsCards.length && i < 5; i++) {
+  for (let i = 0; i < newsCards.length; i++) {
     const newsElement = document.createElement("div")
     newsElement.classList.add("newsCard")
     let newsCard = newsCards[i]
@@ -102,7 +106,6 @@ function generateNewsCards() {
 function generateNumber(number, totalCards, newsElement) {
   const numberElem = document.createElement("p")
   numberElem.classList.add("newsCardNumber")
-  if (totalCards > 5) totalCards = 5
   numberElem.innerText = `${number} out of ${totalCards}`
   newsElement.appendChild(numberElem)
 }
@@ -173,8 +176,9 @@ function generateResourceLinks() {
   }
 }
 
-function main() {
-  generateNewsCards();
+async function main() {
+
+  generateNewsCards()
   generateResourceLinks();
 }
 

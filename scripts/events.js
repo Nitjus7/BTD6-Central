@@ -83,6 +83,11 @@ const dataContainers = [
   swapLBButtonContainer,
 ];
 
+const popupContainer = document.querySelector(".popupContainer")
+const popupTitle = document.querySelector(".popupTitle")
+const popupContentContainer = document.querySelector(".popupContentContainer")
+const statsPopupOverlay = document.querySelector(".popupOverlay")
+
 let eventName;
 let raceData;
 let raceMetadata;
@@ -303,14 +308,11 @@ async function getBossMetadata() {
 // uuuuugggggghhhhhh
 // kill me please
 function displayDetails(event, metadata, difficulty) {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
   while (difficultyButtonContainer.hasChildNodes()) {
     difficultyButtonContainer.removeChild(difficultyButtonContainer.firstChild);
   }
   eventTitle.style.display = "none";
+  leaderboardTitle.style.display = "none";
   raceArchiveContainer.style.display = "none";
   bossArchiveContainer.style.display = "none";
   switch (event) {
@@ -318,12 +320,7 @@ function displayDetails(event, metadata, difficulty) {
       raceTitle.innerText = `"${metadata["name"]}" Race Info`;
       break;
     case "bosses":
-      raceTitle.innerText = `${metadata["name"].replace(
-        /([a-zA-Z])(\d)/g,
-        "$1 $2"
-      )} Boss Details (${
-        difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
-      })`;
+      raceTitle.innerText = `${metadata["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")} Boss Details (${difficulty.toUpperCase()})`;
       showBoss(metadata, difficulty);
       generateDifficultyButtons(event, difficulty);
       urlParams.set("difficulty", difficulty);
@@ -342,10 +339,10 @@ function displayDetails(event, metadata, difficulty) {
     "rounds"
   ).innerHTML = `<b>Rounds</b><br>${metadata["startRound"]} to ${metadata["endRound"]}`;
   let mode;
-  if (metadata["mode"] == "DoubleMoabHealth") {
-    mode = "Double HP MOABs";
-  } else {
-    mode = metadata["mode"];
+  switch (metadata["mode"]) {
+    case "DoubleMoabHealth": mode = "Double HP MOABs"; break;
+    case "AlternateBloonsRounds": mode = "Alternate Bloons Rounds"; break;
+    default: mode = metadata["mode"];
   }
   document.getElementById(
     "mode"
@@ -653,7 +650,7 @@ function displayLeaderboard(lb, difficulty) {
   if (difficulty == null) {
     leaderboardTitle.innerHTML = `"${eventName}" Race: Top ${lb.length}`;
   } else {
-    leaderboardTitle.innerHTML = `${eventName}: Top ${lb.length} (${difficulty})`;
+    leaderboardTitle.innerHTML = `${eventName}: Top ${lb.length} (${difficulty.toUpperCase()})`;
   }
 
   leaderboardTitle.style.display = "flex";
@@ -706,21 +703,36 @@ function createNameElem(data, parent) {
 }
 function createScoreElem(scoreType, data, parent) {
   const scoreElem = document.createElement("p");
-  if (scoreType == "time") scoreElem.innerText = `${convertMS(data["score"])}`;
-  if (scoreType == "tiers") scoreElem.innerText = `${data["score"]} Tiers`;
-  if (scoreType == "cash")
-    scoreElem.innerText = `$${data["score"].toLocaleString()}`;
+  switch (scoreType) {
+    case "time": scoreElem.innerText = `${convertMS(data["score"])}`; break;
+    case "tiers": 
+      scoreElem.innerText = `${data["score"]} Tiers`; 
+      scoreElem.onclick = () => {
+        popupHTML = `
+        <h3>Total Ranked Time: <b>${convertMS(data["scoreParts"][1]["score"])}</b></h3>
+        <p><b>About least tiers tiebreakers</b>: When scores are tied, the best Ranked time is used as a tiebreaker.</p>`
+        showPopup(`${data["displayName"].toUpperCase()}'s Tiebreaker`, popupHTML)
+      }
+      scoreElem.classList.add("tiebreakerElem")
+      break
+    case "cash": scoreElem.innerText = `$${data["score"].toLocaleString()}`; break;
+  }
+  scoreElem.classList.add("scoreElem")
   parent.appendChild(scoreElem);
 }
 
 function convertMS(milliseconds) {
   // magic function by AI
-  let seconds = Math.floor(milliseconds / 1000);
-  let minutes = Math.floor(seconds / 60);
-  let remainingSeconds = seconds % 60;
+  let hours = Math.floor(milliseconds / (1000 * 60 * 60));
+  let minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
   let remainingMilliseconds = milliseconds % 1000;
 
-  let formattedTime = `${minutes}:${padTo2Digits(remainingSeconds)}.${remainingMilliseconds}`;
+  let formattedTime = "";
+  if (hours > 0) {
+    formattedTime += `${hours}:`;
+  }
+  formattedTime += `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}.${remainingMilliseconds}`;
   return formattedTime;
 }
 
@@ -728,6 +740,7 @@ function padTo2Digits(num) {
   // magic function by AI
   return num.toString().padStart(2, "0");
 }
+
 
 function appendElement(parent, title, value) {
   const element = document.createElement("p");
@@ -768,6 +781,17 @@ function swapToEvent(event) {
   history.replaceState(null, null, "?" + urlParams.toString());
 }
 
+function showPopup(title, content) {
+  popupTitle.innerText = title
+  popupContentContainer.innerHTML = content
+  popupContainer.style.display = "block"
+  popupOverlay.style.display = "block"
+}
+document.querySelector(".closePopupButton").onclick = () => {
+  popupContainer.style.display = "none"
+  statsPopupOverlay.style.display = "none"
+}
+
 function displayLoading() {
   eventTitle.style.display = "none";
   backButton.style.display = "none";
@@ -805,6 +829,7 @@ backButton.onclick = () => {
 };
 
 async function main() {
+  window.addEventListener('offline', () => alert("NOTICE: You must be connected to the internet to browse the event archive.\nIt seems that your internet connection has been lost. Please report this to the BTD6 Central Discord Server if this is a bug."))
   urlEvent = urlParams.get("event");
   urlID = urlParams.get("id");
   urlType = urlParams.get("type");
@@ -843,9 +868,7 @@ async function main() {
         bossEliteLB1P = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard/elite/1?`)).json();
         bossStandardLB1P = bossStandardLB1P["body"];
         bossEliteLB1P = bossEliteLB1P["body"];
-        eventName =
-          metadata["body"]["name"].charAt(0).toUpperCase() +
-          metadata["body"]["name"].slice(1);
+        eventName = metadata["body"]["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")
         if (urlDifficulty == "standard") {
           lb = bossStandardLB1P;
         } else {

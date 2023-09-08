@@ -1,55 +1,92 @@
-:root {
-  --statsTitleBackgroundColor: #3c3c3c;
-  --statsDescriptionBackgroundColor: #757575;
-  --primaryTextMainColor: #38b6ff;
-  --primaryBannerColor: #000000;
-  --primaryBackgroundColor: #84c5db; /* opacity at 0.5 */
-  --militaryMainColor: #c3e406;
-  --militaryBannerColor: #000000;
-  --militaryBackgroundColor: #8fa414; /* opacity at 0.5 */
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-.statTypeSelection,
-#towerCategorySelection,
-.footlongSelection {
-  display: inline-block;
-  white-space: nowrap;
-  display: inline-block;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  width: 100%;
-}
-
-button {
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 0.35rem;
-  border: none;
-  margin: 0.2rem;
-  color: black;
-}
-
-.wip {
-  cursor: default !important;
-}
-
-.selected {
-  background-color: yellow;
-}
-
-.bloonStatsContainer {
+.categorySelectButtonContainer {
   display: flex;
+  margin: 100px 10px 0 10px;
+  justify-content: center;
+  background: var(--contentBackground1);
+}
+.categoryButton {
+  color: var(--textColor);
+  background: var(--mainButton)
+}
+.bloonStatsContainer {
+  display: none;
+  margin: 20px 10px 0 10px;
+  justify-content: center;
+  gap: 20px;
+  grid-template-columns: 30% 30% 30%;
+}
+@media only screen and (max-width: 768px) {
+  .bloonStatsContainer {
+    grid-template-columns: 45% 45%;
+  }
+}
+.bloonCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--contentBackground1);
+  justify-content: center;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0px 0px 5px var(--shadowColor);
+}
+.bloonName {
+  text-align: center;
+  font-family: var(--secondaryFont);
+  margin-bottom: 10px;
+}
+.layersElem {
+  background-color: var(--secondaryButton);
+  color: var(--textColor);
+  align-self: center;
   align-items: center;
-  flex-wrap: wrap;
-  width: 100vh;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-style: none;
+  border-radius: 5px;
+  width: 50%;
+}
+.speedElem {
+  align-self: center;
+}
+.layersElem:hover {
+  cursor: pointer;
+}
+.bloonImage {
+  max-width: 25px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid var(--textColor);
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.bloonStatsCard {
-  width: 50vh;
-  border: black solid;
+.popupContainer {
+  display: none;
+  position: fixed;
+  top: 25%; left: 25%;
+  width: 50vw; height: fit-content;
+  padding: 10px;
+  background: var(--contentBackground1);
+  box-shadow: 0px 0px 7px var(--shadowColor);
+  border-radius: 5px;
+  z-index: 100;
+}
+.popupTitleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.popupTitle {
+  background-color: var(--contentBackground2);
+  font-family: var(--secondaryFont);
+  padding: 10px;
+  border-radius: 4px;
+}
+.popupOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
 }

@@ -74,14 +74,14 @@
     <div id="eventDetails">
       <h1 id="raceTitle"></h1>
       <div class="upperLevelStats">
-        <div id="mapContainer">
-          <img src="" alt="" id="mapImage" />
-        </div>
         <div id="bossImageContainer">
           <img src="" alt="" id="bossImage" />
         </div>
+        <div id="difficultyButtonContainer"></div>
+        <div id="mapContainer">
+          <img src="" alt="" id="mapImage" />
+        </div>
       </div>
-      <div id="difficultyButtonContainer"></div>
       <div id="raceModifiersContainer">
         <p class="modifiers" id="startingCash"></p>
         <p class="modifiers" id="lives"></p>
@@ -103,8 +103,16 @@
     <h1 id="leaderboardTitle"></h1>
     <div id="swapLBButtonContainer"></div>
     <div id="leaderboardContainer"></div>
+    <div class="popupContainer">
+      <div class="popupTitleContainer">
+        <h2 class="popupTitle"></h2>
+        <span class="material-symbols-outlined closePopupButton">
+          close
+        </span>
+      </div>
+      <div class="popupContentContainer"></div>
+    </div>
     <div class="popupOverlay"></div>
-    <div class="loadingOverlay"></div>
     <script src="scripts/events.js"></script>
     <script src="scripts/hamburger.js"></script>
   </body>

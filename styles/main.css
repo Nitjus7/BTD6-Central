@@ -39,7 +39,6 @@ body {
   font-family: var(--mainFont);
   overflow-x: hidden;
   font-size: 1rem;
-  max-width: 100vw;
 }
 
 .heroContainer::before {
@@ -72,7 +71,6 @@ body {
   font-family: var(--secondaryFont);
   font-weight: bold;
   margin: 0 auto;
-  letter-spacing: 0.15px;
   font-size: 4rem;
   padding: 0;
 }
@@ -87,6 +85,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    letter-spacing: -0.5px;
     height: 650px;
   }
 }
