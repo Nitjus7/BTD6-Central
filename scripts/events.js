@@ -7,8 +7,8 @@ const bossArchiveContainer = document.getElementById("bossArchiveContainer");
 const difficultyButtonContainer = document.getElementById(
   "difficultyButtonContainer"
 );
-const backButton = document.getElementById(
-  "takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia"
+const backButton = document.querySelector(
+  ".takeMeHomeContainer"
 );
 const raceTitle = document.getElementById("raceTitle");
 const eventDetails = document.getElementById("eventDetails");
@@ -722,7 +722,6 @@ function createScoreElem(scoreType, data, parent) {
 }
 
 function convertMS(milliseconds) {
-  // magic function by AI
   let hours = Math.floor(milliseconds / (1000 * 60 * 60));
   let minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
   let seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
@@ -756,7 +755,7 @@ function prependElement(parent, title) {
 function swapToEvent(event) {
   eventPickContainer.style.display = "none";
   eventTitle.style.display = "flex";
-  backButton.style.display = "block";
+  backButton.style.display = "flex";
   switch (event) {
     case "races":
       raceArchiveContainer.style.display = "flex";
@@ -799,7 +798,7 @@ function displayLoading() {
   bossArchiveContainer.style.display = "none";
 }
 function disableLoading() {
-  backButton.style.display = "block";
+  backButton.style.display = "flex";
 }
 
 raceEventButton.onclick = () => {

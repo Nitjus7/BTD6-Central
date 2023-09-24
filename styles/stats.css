@@ -1,12 +1,85 @@
+button:hover {
+  cursor: pointer;
+}
 .categorySelectButtonContainer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 100px 10px 0 10px;
   justify-content: center;
-  background: var(--contentBackground1);
 }
 .categoryButton {
+  padding: 15px;
+  width: 100%;
+  margin: 20px;
+  height: 15vh;
+  max-width: 800px;
+  border-radius: 5px;
+  max-height: 75px;
+  font-size: 1.4rem;
+  border-style: none;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-family: var(--secondaryFont);
+  background: var(--contentBackground1);
   color: var(--textColor);
-  background: var(--mainButton)
+  transition: all 0.5s;
+  box-shadow: 0px 0px 3px var(--shadowColor);
+}
+.bloonButton {
+  background-image: linear-gradient(
+      to left,
+      rgba(183, 36, 178, 0.25),
+      var(--mainButton)
+    ),
+    url("../assets/bloonStats.png");
+  background-position: right;
+
+  background-repeat: no-repeat;
+}
+.bloonButton:hover {
+  transform: scale(1.02)
+}
+.roundInputContainer {
+  display: none;
+  justify-content: center;
+  margin-top: 20px;
+}
+.roundInput {
+  background: var(--contentBackground1);
+  color: var(--textColor);
+  height: 2rem;
+  width: 4rem;
+  text-align: center;
+  margin-right: 10px;
+  border-radius: 5px;
+  border-style: none;
+  transition: all 0.25s;
+  outline-style: none;
+}
+.roundInput:focus-visible {
+  outline-style: solid;
+  outline-color: var(--mainButton);
+}
+.roundInputConfirm {
+  background: var(--mainButton);
+  color: var(--textColor);
+  border-radius: 5px;
+  text-align: center;
+  border-style: none;
+  transition: all 0.25s;
+}
+.roundInputConfirm:hover {
+  cursor: pointer;
+  transform: scale(1.1)
+}
+.roundSelectionHeader {
+  display: none;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--secondaryFont);
 }
 .bloonStatsContainer {
   display: none;
@@ -20,27 +93,59 @@
     grid-template-columns: 45% 45%;
   }
 }
+.bloonTypeButtonContainer {
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  margin: 95px 10vw 0 10vw;
+}
+.bloonTypeButton {
+  border-style: none;
+  display: flex;
+  color: var(--textColor);
+  justify-content: center;
+  padding: 0.5rem;
+  font-size: 1.4rem;
+  border-radius: 3px;
+  box-shadow: 0px 0px 3px var(--shadowColor);
+  background-color: var(--mainButton);
+  transition: all 0.5s;
+}
+.bloonTypeButton:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.bloonTypeButton.selected {
+  background: rgb(207, 170, 46);
+  cursor: default !important;
+}
 .bloonCard {
   display: flex;
   flex-direction: column;
   background: var(--contentBackground1);
+  align-items: center;
+  text-align: center;
   justify-content: center;
   border-radius: 5px;
+  border: 0.5px var(--textColor) solid;
   width: 100%;
-  box-shadow: 0px 0px 5px var(--shadowColor);
+  box-shadow: 0px 0px 3px var(--shadowColor);
 }
 .bloonName {
   text-align: center;
   font-family: var(--secondaryFont);
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
-.layersElem {
+.fullNameElem {
+  margin-top: 0;
+}
+.layersElem, .speedElem {
   background-color: var(--secondaryButton);
   color: var(--textColor);
   align-self: center;
   align-items: center;
   padding: 5px;
-  margin-bottom: 5px;
+  margin: 10px 0 5px 0;
   border-style: none;
   border-radius: 5px;
   width: 50%;
@@ -48,28 +153,246 @@
 .speedElem {
   align-self: center;
 }
-.layersElem:hover {
+.layersElem:hover, .speedElem:hover {
   cursor: pointer;
 }
 .bloonImage {
   max-width: 25px;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 0;
   border: 1px solid var(--textColor);
   padding: 5px;
   border-radius: 5px;
+}
+.blimpStatsContainer {
+  display: none;
+  margin-top: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.blimpCard {
+  background: var(--contentBackground1);
+  margin: 15px;
+  border-radius: 5px;
+  border: 1px var(--textColor) solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  width: 45%;
+  box-shadow: 0px 0px 3px var(--shadowColor);
+}
+.immuneElem {
+  margin: 0.5rem 0.5rem 0 0.5rem;
+}
+@media only screen and (max-width: 768px) {
+  .blimpCard {
+    width: 95%;
+  }
+}
+
+.bossSelectionHeader {
+  display: none;
+  justify-content: center;
+  font-size: 2rem;
+  font-family: var(--secondaryFont);
+}
+@media only screen and (max-width: 768px) {
+  .bossSelectionHeader {
+    letter-spacing: -0.5px;
+  }
+}
+.eliteBossSelectionHeader {
+  border-top: 1px var(--textColor) solid;
+  padding-top: 15px;
+}
+.bossTypeDropdownContainer {
+  display: flex;
+  justify-content: center;
+}
+.bossTypeDropdown {
+  display: none;
+  text-align: center;
+  justify-content: center;
+  background: var(--mainButton);
+  color: var(--textColor);
+  font-family: var(--mainFont);
+  border-style: none;
+  border-radius: 4px;
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  transition: .25s all ease;
+}
+.bossTypeDropdown:hover {
+  cursor: pointer;
+}
+.jumpToEliteButton {
+  display: flex;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 10px;
+  background: var(--mainButton);
+  color: var(--textColor);
+  font-family: var(--mainFont);
+  border-style: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  width: fit-content;
+  transition: .25s all ease;
+}
+.jumpToEliteButton:hover {
+  transform: scale(1.05)
+}
+.bossDataContainer {
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.bossOverviewContainer {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.bossOverviewCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0; 
+  background: var(--contentBackground1);
+  border: 1px var(--textColor) solid;
+  width: 20vw;
+  min-width: 175px;
+  border-radius: 5px;
+  height: fit-content;
+  margin: 0 1rem 0.2rem 1rem;
+  transition: all 0.25s;
+}
+.bossOverviewCard.selected {
+  width: 25vw;
+  min-width: 225px;
+  background: var(--contentBackground2);
+  border: 1px var(--contentOutline2) solid;
+}
+.showMoreButton {
+  display: flex;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  background: var(--mainButton);
+  color: var(--textColor);
+  font-family: var(--mainFont);
+  border-style: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: fit-content;
+  transition: .25s all ease;
+}
+.showMoreButton:hover {
+  transform: scale(1.05);
+}
+.bossImage {
+  width: 50vw;
+  max-width: 400px;
+  border-radius: 25px;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.bossTierContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+}
+.selectedTierHeaderContainer {
+  background: var(--contentBackground2);
+  font-family: var(--secondaryFont);
+  border-radius: 5px;
+  border: 1px var(--contentOutline2) solid;
+  width: 85vw;
+  max-width: 800px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+.bossPassiveHeader {
+  font-family: var(--secondaryFont);
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.bossSpecialPropsContainer {
+  background: var(--contentBackground1);
+  width: 85vw;
+  max-width: 800px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px var(--textColor) solid;
+}
+.overviewTierHeader {
+  font-family: var(--secondaryFont)
+}
+.overviewBossHP {
+  margin: 0.25rem;
+}
+.bigAssSkullContainer {
+  margin-top: 20px;
+  background: var(--contentBackground1);
+  font-family: var(--secondaryFont);
+  border: 1px var(--textColor) solid;
+  width: 85vw;
+  max-width: 800px;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.bossSkullImageContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.bossSkullHeader {
+  font-family: var(--secondaryFont);
+  margin-left: 1rem;
+}
+.bossSkullDataContainer {
+  font-family: var(--mainFont);
+}
+.bossSkullDescriptionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.bossOnSkullImage {
+  width: 30%;
+  max-width: 200px;
 }
 
 .popupContainer {
   display: none;
   position: fixed;
-  top: 25%; left: 25%;
-  width: 50vw; height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw; height: fit-content;
   padding: 10px;
   background: var(--contentBackground1);
   box-shadow: 0px 0px 7px var(--shadowColor);
   border-radius: 5px;
   z-index: 100;
+  text-align: left;
 }
 .popupTitleContainer {
   display: flex;
@@ -88,5 +411,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 30;
   background: rgba(0, 0, 0, 0.65);
+}
+
+.roundInput[type=number]::-webkit-inner-spin-button,
+.roundInput[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

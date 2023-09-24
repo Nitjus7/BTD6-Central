@@ -43,17 +43,21 @@
           <li class="navItem">
             <p class="navWebsiteTitle">BTD6 Central</p>
           </li>
+          <select name="theme" class="pageTheme navItem">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+          </select>
           <li class="navItem">
             <button class="navButton goToHome">Home</button>
           </li>
-          <li class="navItem wip">
-            <button class="navButton">Stats</button>
+          <li class="navItem">
+            <button class="navButton goToStats">Stats</button>
           </li>
           <li class="navItem">
-            <button class="navButton goToEvents">Events (Current Page)</button>
+            <button class="navButton goToEvents currentPage">Events</button>
           </li>
           <li class="navItem wip">
-            <button href="#" class="navButton">Blogs</button>
+            <button href="#" class="navButton">Profile Lookup</button>
           </li>
         </ul>
       </div>
@@ -65,9 +69,11 @@
         CONTESTED TERRITORIES
       </button>
     </div>
-    <button id="takeMeHomeCountryRoadsToThePlaceIBelongWestVirginia">
-      BACK
-    </button>
+    <div class="takeMeHomeContainer">
+      <span class="material-symbols-outlined takeMeHome">
+        arrow_back
+      </span>
+    </div>
     <h1 id="eventTitle"></h1>
     <div id="raceArchiveContainer"></div>
     <div id="bossArchiveContainer"></div>

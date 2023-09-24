@@ -50,17 +50,21 @@
           <li class="navItem">
             <p class="navWebsiteTitle">BTD6 Central</p>
           </li>
+          <select name="theme" class="pageTheme navItem">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+          </select>
           <li class="navItem">
-            <button class="navButton goToHome">Home (Current Page)</button>
+            <button class="navButton goToHome currentPage">Home</button>
           </li>
-          <li class="navItem wip">
-            <button class="navButton">Stats</button>
+          <li class="navItem">
+            <button class="navButton goToStats">Stats</button>
           </li>
           <li class="navItem">
             <button class="navButton goToEvents">Events</button>
           </li>
           <li class="navItem wip">
-            <button href="#" class="navButton">Blogs</button>
+            <button href="#" class="navButton">Profile Lookup</button>
           </li>
         </ul>
       </div>
@@ -75,13 +79,35 @@
     </div>
      <h1 class="resourcesHeader">RESOURCES</h1>
      <div class="resourcesContainer">
-      <ul class="resourcesList">
-        <button class="resourceButton goToBTD6CentralDiscord">BTD6 Central Discord Server</button>
-        <button class="resourceButton goToBTD6Index">BTD6 Index</button>
-        <button class="resourceButton goToBTD6Popology">BTD6 Popology</button>
-        <button class="resourceButton goToCyberQuincy">Cyber Quincy Discord Bot</button>
-        <button class="resourceButton goToB2Popology">Battles 2 Popology</button>
-      </ul>
+      <div class="resourcesList">
+        <div class="resourceItemContainer">
+          <button class="resourceButton goToBTD6CentralDiscord">BTD6 Central Discord Server</button>
+          <p class="resourceDescription">The BTD6 Central Discord Server is where I give complete details about every new change to the website.
+            I also accept feedback and bug reports. If you find something wrong, the Discord server is the best way to get my attention about it!
+          </p>
+        </div>
+        <div class="resourceItemContainer">
+          <button class="resourceButton goToBTD6Popology">BTD6 Popology</button>
+          <p class="resourceDescription">Get detailed, in-depth stats about every Tower, Hero, and Paragon in the game. 
+            Credit to u/Topper64 on Reddit.</p>
+        </div>
+        <div class="resourceItemContainer">
+          <button class="resourceButton goToBTD6Index">BTD6 Index</button>
+          <p class="resourceDescription">Stay up to date on the biggest challenges players are taking on in Bloons TD 6.</p>
+        </div>
+        <div class="resourceItemContainer">
+          <button class="resourceButton goToCyberQuincy">Cyber Quincy Discord Bot</button>
+          <p class="resourceDescription">A frequently updated Discord bot that has everything you'd ever need with Bloons TD 6. 
+            With dozens upon dozens of commands, Cyber Quincy is the most in-depth BTD6 Discord bot. Credit to @hemidemisemipresent
+            and @rmlrmlrml on Discord.</p>
+        </div>
+        <div class="resourceItemContainer">
+          <button class="resourceButton goToB2Popology">Battles 2 Popology</button>
+          <p class="resourceDescription">Get Tower and Hero stats about Battles 2 and visit related sites from the Battles 2 Popology.
+            It is currently the most extensive resource for Bloons TD Battles 2. Credit to @emilplane on Discord.
+          </p>
+        </div>
+      </div>
      </div>
     <div class="popupOverlay"></div>
     <script src="scripts/hamburger.js"></script>

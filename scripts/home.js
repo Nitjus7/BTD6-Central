@@ -2,6 +2,36 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.5.0: BLOON STATS",
+      "description": "This update is finally out, giving you access to Bloon and Boss stats (excluding Vortex and Phayze which will be added in the near future). Page Themes have also been added, with plans to add more themes in the future. Several more changes have been made which can be found in the BTD6 Central Discord Server.",
+      "imageSrc": null,
+      "links": [
+        {
+          "link": "https://discord.com/invite/xNxjqXBp6B",
+          "name": "Join the BTD6 Central Discord Server"
+        }
+      ],
+      "dateInMilliseconds": 1695167580000,
+      "big": true
+    },
+    {
+      "title": "Bloons Card Storm is in Development!",
+      "description": "Bloons Card Storm is a turn-based card strategy game based around Heroes, Bloons, Monkeys, and Powers. Its planned release date is mid-2024, with a beta starting earlier in the year. Check out more details below.",
+      "imageSrc": "https://preview.redd.it/a7m7zzoeuapb1.png?width=2048&format=png&auto=webp&s=3acd4771d5d77072c76a4d82db6320fb0ebe1326",
+      "links": [
+        {
+          "link": "https://www.reddit.com/r/bloonscardstorm/comments/16n6b53/game_announcement_bloons_card_storm/",
+          "name": "Check out the official announcement"
+        },
+        {
+          "link": "https://www.reddit.com/r/bloonscardstorm/",
+          "name": "Join the new Bloons Card Storm subreddit"
+        }
+      ],
+      "dateInMilliseconds": 1695167580000,
+      "big": true
+    },
+    {
       "title": "Website v0.4.4",
       "description": "Some more minor fixes/changes, including that Least Tiers Bosses will now display tiebreaker information. Up Next: Bloon & Boss Stats",
       "imageSrc": null,
@@ -20,7 +50,7 @@ const newsCards =
         }
       ],
       "dateInMilliseconds": 1694142436483,
-      "big": true
+      "big": false
     },
     {
       "title": "BTD6 for Xbox has released!",
@@ -33,35 +63,6 @@ const newsCards =
         }
       ],
       "dateInMilliseconds": 1694008200868,
-      "big": false
-    },
-    {
-      "title": "Website v0.4.3",
-      "description": "Fixed jittery scroll on mobile google and made the burger menu wider and bigger.",
-      "imageSrc": "",
-      "links": null,
-      "dateInMilliseconds": 1693971028272,
-      "big": false
-    },
-    {
-      "title": "Website v0.4.2",
-      "description": "Added a resources section at the bottom of the home page. Additionally, several minor formatting changes, and added images to the news section. A full list of changes can be found in the Discord server linked in the new Resources section.",
-      "imageSrc": null,
-      "links": null,
-      "dateInMilliseconds": 1693956333401,
-      "big": false
-    },
-    {
-      "title": "Website v0.4.1",
-      "description": "Fixed some issues with formatting, mostly with mobile. View full details in the Discord server.",
-      "imageSrc": null,
-      "links": [
-        {
-          "link": "https://discord.com/invite/xNxjqXBp6B",
-          "name": "Join the BTD6 Central Discord Server"
-        }
-      ],
-      "dateInMilliseconds": 1693886071939,
       "big": false
     },
     {
@@ -118,7 +119,7 @@ function generateTitle(newsCard, newsElement) {
 function generateDescription(newsCard, newsElement) {
   const descElem = document.createElement("p")
   descElem.classList.add("newsDescription")
-  descElem.innerText = newsCard["description"]
+  descElem.innerHTML = newsCard["description"]
   newsElement.appendChild(descElem)
 }
 function generateImage(newsCard, newsElement) {

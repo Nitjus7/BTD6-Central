@@ -13,6 +13,7 @@
     <!--CUSTOM FONTS IMPORT END-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
 
     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
     <link rel="stylesheet" href="styles/stats.css" />
@@ -43,27 +44,149 @@
           <li class="navItem">
             <p class="navWebsiteTitle">BTD6 Central</p>
           </li>
+          <select name="theme" class="pageTheme navItem">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+          </select>
           <li class="navItem">
             <button class="navButton goToHome">Home</button>
           </li>
           <li class="navItem">
-            <button class="navButton">Stats (Current Page)</button>
+            <button class="navButton goToStats currentPage">Stats </button>
           </li>
           <li class="navItem">
             <button class="navButton goToEvents">Events</button>
           </li>
           <li class="navItem wip">
-            <button href="#" class="navButton">Blogs</button>
+            <button href="#" class="navButton">Profile Lookup</button>
           </li>
         </ul>
       </div>
     <div class="categorySelectButtonContainer">
-      <button class="categoryButton towerButton wip">Towers</button>
-      <button class="categoryButton bloonButton">Bloons</button>
-      <button class="categoryButton miscButton wip">Miscellaneous</button>
+      <button class="categoryButton towerButton wip">TOWERS</button>
+      <button class="categoryButton bloonButton">BLOONS</button>
+      <button class="categoryButton miscButton wip">MISC</button>
     </div>
-    <h1>Clever thinking... But this page is still a work in progress so</h1>
+    <div class="bloonTypeButtonContainer">
+      <button class="bloonTypeButton showBloonsButton">Bloons</button>
+      <button class="bloonTypeButton showBossesButton">Bosses</button>
+    </div>
+    <div class="takeMeHomeContainer">
+      <span class="material-symbols-outlined takeMeHome">
+        arrow_back
+      </span>
+    </div>
+    <div class="roundInputContainer">
+      <input class="roundInput" type="number" min="1" max="2147548" name="round" placeholder="round #" inputmode="numeric">
+      <button class="roundInputConfirm">Confirm</button>
+    </div>
+    <h2 class="roundSelectionHeader"></h2>
     <div class="bloonStatsContainer"></div>
+    <div class="blimpStatsContainer"></div>
+
+    <div class="bossTypeDropdownContainer">
+      <select name="boss" class="bossTypeDropdown">
+        <option value="bloonarius">Bloonarius</option>
+        <option value="lych">Lych</option>
+        <option value="dreadbloon">Dreadbloon</option>
+        <!-- <option value="vortex">Vortex</option>
+        <option value="phayze">Phayze</option> -->
+      </select>
+    </div>    
+    <div class= "bossDataContainer">
+      <button class="jumpToEliteButton">Jump to Elite</button>
+      <h2 class="bossSelectionHeader"></h2>
+      <div class="normalBossContainer">
+        <img src="" class="bossImage">
+        <div class="bossOverviewContainer normalBossOverviewContainer">
+          <div class="bossOverviewCardNT1 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 1</h4>
+            <p class="overviewBossHPNT1 overviewBossHP"></p>
+            <p class="overviewBossSpeedNT1 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardNT2 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 2</h4>
+            <p class="overviewBossHPNT2 overviewBossHP"></p>
+            <p class="overviewBossSpeedNT2 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardNT3 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 3</h4>
+            <p class="overviewBossHPNT3 overviewBossHP"></p>
+            <p class="overviewBossSpeedNT3 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardNT4 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 4</h4>
+            <p class="overviewBossHPNT4 overviewBossHP"></p>
+            <p class="overviewBossSpeedNT4 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardNT5 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 5</h4>
+            <p class="overviewBossHPNT5 overviewBossHP"></p>
+            <p class="overviewBossSpeedNT5 overviewBossSpeed"></p>
+          </div>
+        </div>
+        <div class="bossTierContainer">
+          <div class="selectedTierHeaderContainer">
+            <h3 class="bossSelectedTierHeader normalBossSelectedTierHeader">Placeholder</h3>
+          </div>
+          <div class="bossSpecialPropsContainer normalBossSpecialPropsContainer">
+            <p class="bossNumSkulls normalBossNumSkulls"></p>
+          </div>
+          <div class="bigAssSkullContainer">
+            <div class="bossSkullImageContainer">
+              <img src="https://i.ibb.co/PzCqCBq/boss-Skull.png" alt="boss-Skull" class="bossSkull">
+              <h3 class="bossSkullHeader">ON SKULL</h3>
+            </div>
+            <div class="bossSkullEffectsContainer normalBossSkullEffectsContainer"></div>
+          </div>
+        </div>
+      </div>
+      <h2 class="bossSelectionHeader eliteBossSelectionHeader"></h2>
+      <div class="eliteBossContainer">
+        <img src="" class="bossImage eliteBossImage">
+        <div class="bossOverviewContainer eliteBossOverviewContainer">
+          <div class="bossOverviewCardET1 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 1</h4>
+            <p class="overviewBossHPET1 overviewBossHP"></p>
+            <p class="overviewBossSpeedET1 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardET2 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 2</h4>
+            <p class="overviewBossHPET2 overviewBossHP"></p>
+            <p class="overviewBossSpeedET2 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardET3 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 3</h4>
+            <p class="overviewBossHPET3 overviewBossHP"></p>
+            <p class="overviewBossSpeedET3 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardET4 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 4</h4>
+            <p class="overviewBossHPET4 overviewBossHP"></p>
+            <p class="overviewBossSpeedET4 overviewBossSpeed"></p>
+          </div>
+          <div class="bossOverviewCardET5 bossOverviewCard">
+            <h4 class="overviewTierHeader">TIER 5</h4>
+            <p class="overviewBossHPET5 overviewBossHP"></p>
+            <p class="overviewBossSpeedET5 overviewBossSpeed"></p>
+          </div>
+        </div>
+        <div class="bossTierContainer">
+          <div class="selectedTierHeaderContainer">
+            <h3 class="bossSelectedTierHeader eliteBossSelectedTierHeader">Placeholder</h3>
+          </div>
+          <div class="bossSpecialPropsContainer eliteBossSpecialPropsContainer"></div>
+          <div class="bigAssSkullContainer">
+            <div class="bossSkullImageContainer">
+            <img src="https://i.ibb.co/PzCqCBq/boss-Skull.png" alt="boss-Skull" class="bossSkull">
+              <h3 class="bossSkullHeader">ON SKULL</h3>
+            </div>
+            <div class="bossSkullEffectsContainer eliteBossSkullEffectsContainer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bossCustomRoundsContainer"></div>
+    </div>
 
     <div class="popupContainer">
       <div class="popupTitleContainer">
