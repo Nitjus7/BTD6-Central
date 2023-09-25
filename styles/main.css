@@ -2,6 +2,7 @@
 :root {
   --mainFont: "Nunito", sans-serif;
   --secondaryFont: "Poppins", sans-serif;
+  --pageBackground: black;
   font-size: 15px;
 }
 
@@ -350,8 +351,9 @@ body {
   left: 4vw;
   background: var(--mainButton);
   box-shadow: 0px 0px 5px var(--shadowColor);
-  border-radius: 35px;
+  border-radius: 100%;
   transition: all 0.5s;
+  z-index: 5;
   user-select: none;
 }
 @media only screen and (max-width: 768px) {

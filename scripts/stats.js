@@ -845,18 +845,15 @@ function showLych(tier) {
   nbsdc.innerHTML = `
     <h4 class="bossPassiveHeader">Lych Soul - ${onSkull[0]["health"].toLocaleString()} HP</h4>
     <div class="bossSkullDescriptionContainer">
-      <img src="../assets/lychSoul.png" class="bossOnSkullImage">
+      <img src="https://i.ibb.co/NZmFCTZ/lychSoul.png" class="bossOnSkullImage">
       <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
       <b>While the Lych Soul is alive...</b><br><br>
       - Lych is completely invulnerable but moves slower.<br>
       - It takes away <b>${onSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.<br></p>
     </div>
     <h4 class="bossPassiveHeader">Reanimated Blimps</h4>
-    <div class="bossSkullDescriptionContainer">
-      <img src="../assets/reanimatedBlimp.png" class="bossOnSkullImage">
-      <p class="bossOnSkull">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
-      Reanimated Blimps at tier ${tier} Normal have <b>${onSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${onSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
-    </div>
+    <p class="bossPassiveDescription">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
+    Reanimated Blimps at tier ${tier} Normal have <b>${onSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${onSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
   `
   normalBossSkullEffectsContainer.appendChild(nbsdc)
   const ebsdc = document.createElement("div")
@@ -864,17 +861,15 @@ function showLych(tier) {
   ebsdc.innerHTML = `
   <h4 class="bossPassiveHeader">Lych Soul - ${eOnSkull[0]["health"].toLocaleString()} HP</h4>
   <div class="bossSkullDescriptionContainer">
-    <img src="../assets/lychSoul.png" class="bossOnSkullImage">
+    <img src="https://i.ibb.co/NZmFCTZ/lychSoul.png" class="bossOnSkullImage">
     <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
     <b>While the Lych Soul is alive...</b><br><br>
     - It takes away <b>${eOnSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.<br>
     - Lych is completely invulnerable but moves slower.</p>
   </div>
   <h4 class="bossPassiveHeader">Reanimated Blimps</h4>
-  <div class="bossSkullDescriptionContainer">
-    <img src="../assets/reanimatedBlimp.png" class="bossOnSkullImage">
-    <p class="bossOnSkull">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
-    Reanimated Blimps at tier ${tier} Elite have <b>${eOnSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${eOnSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
+  <p class="bossPassiveDescription">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
+  Reanimated Blimps at tier ${tier} Elite have <b>${eOnSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${eOnSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
   </div>
   `
   eliteBossSkullEffectsContainer.appendChild(ebsdc)
@@ -891,10 +886,15 @@ function showDreadbloon(tier) {
   <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
   the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
   <h4 class="bossPassiveHeader">Dreadrock Bloons - ${boss["onSkull"]["health"].toLocaleString()} HP</h4>
-  <ul class="bossPassiveDescription">While the Rock Shield is active, Dreadrock Bloons spawn.
-  Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has. 
-  Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br>
-  At tier ${tier} Normal, Dreadrock Bloons take <b>${boss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.</ul>
+  <div class="bossSkullDescriptionContainer">
+    <img src="https://i.ibb.co/3TS4wVR/dread-Rock-Normal.webp" class="bossOnSkullImage">
+    <p class="bossOnSkull">
+      While the Rock Shield is active, Dreadrock Bloons spawn.
+      Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.
+      Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br><br>
+      At tier ${tier} Normal, Dreadrock Bloons take <b>${boss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.
+    </p>
+  </div>
   </div>
   `
   eliteBossSpecialPropsContainer.innerHTML = `
@@ -904,10 +904,15 @@ function showDreadbloon(tier) {
   <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
   the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
   <h4 class="bossPassiveHeader">Dreadrock Bloons - ${eBoss["onSkull"]["health"].toLocaleString()} HP</h4>
-  <p class="bossOnSkull">While the Rock Shield is active, Dreadrock Bloons spawn.
-  Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.
-  Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br>
-  At tier ${tier} Elite, Dreadrock Bloons take <b>${eBoss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.</p>
+  <div class="bossSkullDescriptionContainer">
+  <img src="https://i.ibb.co/hC473mC/dread-Rock-Elite.webp" class="bossOnSkullImage">
+    <p class="bossOnSkull">
+      While the Rock Shield is active, Dreadrock Bloons spawn.
+      Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.
+      Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br><br>
+      At tier ${tier} Elite, Dreadrock Bloons take <b>${eBoss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.
+    </p>
+  </div>
   </div>
   `
   const nbsdc = document.createElement("div")
@@ -995,7 +1000,7 @@ bossTypeDropdown.addEventListener("change", () => {
   showBossStats(bossTypeDropdown.value, null)
 })
 document.querySelector(".jumpToEliteButton").onclick = () => {
-  eliteBossImage.scrollIntoView({behavior: "auto", block: "center"})
+  eliteBossImage.scrollIntoView({behavior: "smooth", block: "center"})
 }
 
 document.querySelector(".closePopupButton").onclick = () => {

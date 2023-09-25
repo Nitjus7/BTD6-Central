@@ -257,6 +257,9 @@ h2 {
   margin: 1rem;
   text-align: center;
 }
+#enabledTowersContainer:last-child {
+  padding-right: 1rem;
+}
 @media only screen and (min-width: 600px) {
   #enabledTowersContainer {
     justify-content: space-around;
@@ -378,7 +381,7 @@ h2 {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 150vh;
   background: rgba(0, 0, 0, 0.65);
 }
 
