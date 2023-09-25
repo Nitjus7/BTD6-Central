@@ -845,7 +845,7 @@ function showLych(tier) {
   nbsdc.innerHTML = `
     <h4 class="bossPassiveHeader">Lych Soul - ${onSkull[0]["health"].toLocaleString()} HP</h4>
     <div class="bossSkullDescriptionContainer">
-      <img src="https://i.ibb.co/NZmFCTZ/lychSoul.png" class="bossOnSkullImage">
+      <img src="https://i.ibb.co/WgFxgjW/lychSoul.png" class="bossOnSkullImage">
       <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
       <b>While the Lych Soul is alive...</b><br><br>
       - Lych is completely invulnerable but moves slower.<br>
@@ -861,7 +861,7 @@ function showLych(tier) {
   ebsdc.innerHTML = `
   <h4 class="bossPassiveHeader">Lych Soul - ${eOnSkull[0]["health"].toLocaleString()} HP</h4>
   <div class="bossSkullDescriptionContainer">
-    <img src="https://i.ibb.co/NZmFCTZ/lychSoul.png" class="bossOnSkullImage">
+    <img src="https://i.ibb.co/WgFxgjW/lychSoul.png" class="bossOnSkullImage">
     <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
     <b>While the Lych Soul is alive...</b><br><br>
     - It takes away <b>${eOnSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.<br>
