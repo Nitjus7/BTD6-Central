@@ -72,8 +72,8 @@ function meetGod() {
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");
     styles.style.setProperty("--textColor", "#121212");
-    styles.style.setProperty("--mainButton", "#8caeeb");
-    styles.style.setProperty("--secondaryButton", "#5985e5");
+    styles.style.setProperty("--secondaryButton", "#8caeeb");
+    styles.style.setProperty("--mainButton", "#5985e5");
     localStorage.setItem('themeMode', 'light');
 }
   

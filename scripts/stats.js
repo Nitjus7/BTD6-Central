@@ -175,13 +175,13 @@ const normalBossData = {
       "health": 750000,
       "speed": 0.06,
       "passive": "15 Zebra Bloons",
-      "skullSpawns": "10 MOABs"
+      "skullSpawns": "10 ZOMGs"
     },
     {
       "tier": 5,
       "health": 3000000,
       "speed": 0.06,
-      "passive": "100 Rainbow Bloons",
+      "passive": "25 Rainbow Bloons",
       "skullSpawns": "1 BAD"
     }
   ],
@@ -271,6 +271,58 @@ const normalBossData = {
         }
       ]
     }
+  ],
+  "vortex": [
+    {
+      "tier": 1,
+      "health": 20000,
+      "speed": 0.144,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 16,
+        "range": 60
+      }
+    },
+    {
+      "tier": 2,
+      "health": 62800,
+      "speed": 0.144,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 19,
+        "range": 65
+      }
+    },
+    {
+      "tier": 3,
+      "health": 294000,
+      "speed": 0.156,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 21,
+        "range": 70
+      }
+    },
+    {
+      "tier": 4,
+      "health": 628000,
+      "speed": 0.162,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 24,
+        "range": 75
+      }
+    },
+    {
+      "tier": 5,
+      "health": 2512000,
+      "speed": 0.168,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 27,
+        "range": 80
+      }
+    },
   ],
   "dreadbloon": [
     {
@@ -525,6 +577,58 @@ const eliteBossData = {
         }
       ]
     }
+  ],
+  "vortex": [
+    {
+      "tier": 1,
+      "health": 41800,
+      "speed": 0.144,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 18,
+        "range": 60
+      }
+    },
+    {
+      "tier": 2,
+      "health": 251000,
+      "speed": 0.162,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 21,
+        "range": 65
+      }
+    },
+    {
+      "tier": 3,
+      "health": 1675000,
+      "speed": 0.18,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 24,
+        "range": 70
+      }
+    },
+    {
+      "tier": 4,
+      "health": 6700000,
+      "speed": 0.186,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 27,
+        "range": 75
+      }
+    },
+    {
+      "tier": 5,
+      "health": 33500000,
+      "speed": 0.192,
+      "onSkull": {
+        "name": "most annoying boss mechanic ever",
+        "duration": 30,
+        "range": 80
+      }
+    },
   ],
   "dreadbloon": [
     {
@@ -859,7 +963,7 @@ function calculateSpeedMult(r) {
 }
 
 function showBossStats(boss, tier) {
-  if (boss != "bloonarius" && boss != "lych" && boss != "dreadbloon" && boss != "phayze") boss = "bloonarius"
+  if (boss != "bloonarius" && boss != "lych" && boss != "vortex" && boss != "dreadbloon" && boss != "phayze") boss = "bloonarius"
   for (const SOMEBODYONCETOLDME of document.querySelectorAll(".showMoreButton")) {
     SOMEBODYONCETOLDME.remove()
   }
@@ -1119,6 +1223,43 @@ function showBoss(bossName, tier) {
       <li>The Reality Shield has 1/4 the HP of the entire Boss, so at tier ${tier}, the Reality Shield has <b>${(eBoss["health"] / 4).toLocaleString()} HP</b></li>
       <li>At tier ${tier}, Phayze moves <b>${eOnSkull[1]["speedBonusPercent"]}% faster</b> (${(eBoss["speed"] * (eOnSkull[1]["speedBonusPercent"] + 100)/100).toLocaleString()}x Red Bloon speed) while the Reality Shield is up.</li>
     </ul>`
+  } else if (bossName == "vortex") {
+    normalBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Normal Vortex has 3 skulls.</p>
+    <h4 class="bossPassiveHeader">Projectile Destruction</h4>
+    <p class="bossPassiveDescription">Every 5 seconds, all projectiles within <b>60 range</b> are immediately destroyed.</p>
+    <h4 class="bossPassiveHeader">Slipstream</h4>
+    <p class="bossPassiveDescription">All Bloons behind Vortex and in other lanes get a <b>2.5x</b> movement speed increase.</p>
+    `
+    normalBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Lightning Shock</h4>
+    <p class="bossPassiveDescription">All Towers (including Paragons!) within ${onSkull["range"]} range are stunned for <b>${onSkull["duration"]} seconds</b></p>
+    <h4 class="bossPassiveHeader">RETREAT!</h4>
+    <p class="bossPassiveDescription">Vortex retreats a significant distance back on the track (by 100 units).</p>
+    <h4 class="bossPassiveHeader">Storm Shield</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Gains a Wind Shield on spawn and at each Skull which lasts for <b>6 seconds</b>.</li>
+      <li>Reflects <b>all</b> projectiles except instant-hitters (like a Sniper Monkey or First Strike).</li>
+    </ul>
+    `
+    eliteBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Elite Vortex has 7 skulls.</p>
+    <h4 class="bossPassiveHeader">Projectile Destruction</h4>
+    <p class="bossPassiveDescription">Every 5 seconds, all projectiles within <b>60 range</b> are immediately destroyed.</p>
+    <h4 class="bossPassiveHeader">Slipstream</h4>
+    <p class="bossPassiveDescription">All Bloons behind Vortex and in other lanes get a <b>2.5x</b> movement speed increase.</p>
+    `
+    eliteBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Lightning Shock</h4>
+    <p class="bossPassiveDescription">All Towers (including Paragons!) within ${eOnSkull["range"]} range are stunned for <b>${eOnSkull["duration"]} seconds</b></p>
+    <h4 class="bossPassiveHeader">RETREAT!</h4>
+    <p class="bossPassiveDescription">Vortex retreats a significant distance back on the track (by 100 units).</p>
+    <h4 class="bossPassiveHeader">Storm Shield</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Gains a Wind Shield on spawn and at each Skull which lasts for <b>6 seconds</b>.</li>
+      <li>Reflects <b>all</b> projectiles except instant-hitters (like a Sniper Monkey or First Strike).</li>
+    </ul>
+    `
   } else { // shows bloonarius
     normalBossPassiveHTML = `
     <p class="bossNumSkulls normalBossNumSkulls">Normal Bloonarius has 3 skulls.</p>
