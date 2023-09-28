@@ -1137,7 +1137,7 @@ function showBoss(bossName, tier) {
     the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
     <h4 class="bossPassiveHeader">Dreadrock Bloons - ${eBoss["onSkull"]["health"].toLocaleString()} HP</h4>
     <div class="bossSkullDescriptionContainer">
-      <img src="https://i.ibb.co/3TS4wVR/dread-Rock-Normal.webp" class="bossOnSkullImage">
+      <img src="https://i.ibb.co/hC473mC/dread-Rock-Elite.webp" class="bossOnSkullImage">
       <ul class="bossOnSkull bossPassiveDescriptionList">
         <li class="">While the Rock Shield is active, Dreadrock Bloons spawn.</li>
         <li class="">Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.</li>
