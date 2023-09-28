@@ -375,13 +375,23 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: left;
   margin: 0 0.5rem 0 0.5rem;
 }
 .bossOnSkullImage {
   width: 25%;
   max-width: 200px;
   margin-right: 0.5rem;
+}
+.bossPassiveDescriptionList {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.bossPassiveDescriptionList > * {
+  text-align: center;
+  list-style: none;
+  margin-bottom: 0.75rem;
 }
 
 .popupContainer {

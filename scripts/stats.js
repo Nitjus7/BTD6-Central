@@ -323,6 +323,82 @@ const normalBossData = {
         "lifeLossOnLeak": 25
       }
     }
+  ],
+  "phayze": [
+    {
+      "tier": 1,
+      "health": 10000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.2, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 30
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "health": 37500,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.2, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 35
+        }
+      ]
+    },{
+      "tier": 3,
+      "health": 175000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.2, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 40
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "health": 375000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.2, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 45
+        }
+      ]
+    },
+    {
+      "tier": 5,
+      "health": 1500000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.2, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 50
+        }
+      ]
+    }
   ]
 }
 const eliteBossData = {
@@ -500,6 +576,83 @@ const eliteBossData = {
         "health": 45000,
         "lifeLossOnLeak": 150
       }
+    }
+  ],
+  "phayze": [
+    {
+      "tier": 1,
+      "health": 20000 ,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.15, 1.2, 1.25, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 50
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "health": 120000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.1, 1.15, 1.2, 1.25, 1.3]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 55
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "health": 800000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.2, 1.3, 1.4, 1.5, 1.6]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 60
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "health": 3200000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.3, 1.45, 1.6, 1.75, 1.9]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 65
+        }
+      ]
+    },
+    {
+      "tier": 5,
+      "health": 16000000,
+      "speed": 0.036,
+      "onSkull": [
+        {
+          "name": "Tower Glitch",
+          "strength": [1.4, 1.6, 1.8, 2, 2.2]
+        },
+        {
+          "name": "the shield thing I guess I'll call it reality shield",
+          "speedBonusPercent": 70
+        }
+      ]
     }
   ]
 }
@@ -706,7 +859,7 @@ function calculateSpeedMult(r) {
 }
 
 function showBossStats(boss, tier) {
-  if (boss != "bloonarius" && boss != "lych" && boss != "dreadbloon") boss = "bloonarius"
+  if (boss != "bloonarius" && boss != "lych" && boss != "dreadbloon" && boss != "phayze") boss = "bloonarius"
   for (const SOMEBODYONCETOLDME of document.querySelectorAll(".showMoreButton")) {
     SOMEBODYONCETOLDME.remove()
   }
@@ -730,11 +883,7 @@ function showBossStats(boss, tier) {
     generateBossOverview(boss, currNormBoss, currEliteBoss, i + 1)
   }
   generateBossTierHeaders(tier, normalBossData[boss][tier - 1]["health"], eliteBossData[boss][tier - 1]["health"])
-  switch (boss) {
-    case "dreadbloon": showDreadbloon(tier); break;
-    case "lych": showLych(tier); break;
-    default: showBloonarius(tier); break;
-  }
+  showBoss(boss, tier)
   document.querySelector(".bossDataContainer").style.display = "flex";
   bloonTypeButtonContainer.style.display = "flex"
   bossTypeDropdown.style.display = "flex"
@@ -792,148 +941,206 @@ function generateBossTierHeaders(tier, hp, eHP) {
   document.querySelector(".normalBossSelectedTierHeader").innerText = `Tier ${tier} - ${hp.toLocaleString()} HP`
   document.querySelector(".eliteBossSelectedTierHeader").innerText = `Tier ${tier} - ${eHP.toLocaleString()} HP`
 }
-function showBloonarius(tier) {
-  const boss = normalBossData["bloonarius"][tier - 1]
-  const eBoss = eliteBossData["bloonarius"][tier - 1]
-  normalBossSpecialPropsContainer.innerHTML = `
-  <p class="bossNumSkulls normalBossNumSkulls">Normal Bloonarius has 3 skulls.</p>
-  <h4 class="bossPassiveHeader">Bloon Bleed</h4>
-  <p class="bossPassiveDescription">Scatters <b>${eBoss["passive"]}</b> across the track every 1% HP lost.</p>
-    `
-  eliteBossSpecialPropsContainer.innerHTML = `
-  <p class="bossNumSkulls normalBossNumSkulls">Elite Bloonarius has 7 skulls.</p>
-  <h4 class="bossPassiveHeader">Bloon Bleed</h4>
-  <p class="bossPassiveDescription">Scatters <b>${eBoss["passive"]}</b> across the track every 1% HP lost.</p>
-  `
-  const nbsdc = document.createElement("div")
-  nbsdc.classList.add("bossSkullDataContainer")
-  nbsdc.innerHTML = `
-  <p class="bossOnSkull bloonariusOnSkull">Spawns <b>${boss["skullSpawns"]}</b>
-  `
-  normalBossSkullEffectsContainer.appendChild(nbsdc)
-  const ebsdc = document.createElement("div")
-  ebsdc.classList.add("bossSkullDataContainer")
-  ebsdc.innerHTML = `
-  <p class="bossOnSkull bloonariusOnSkull">Spawns <b>${eBoss["skullSpawns"]}</b>
-  `
-  eliteBossSkullEffectsContainer.appendChild(ebsdc)
-}
-function showLych(tier) {
-  const boss = normalBossData["lych"][tier - 1]
-  const eBoss = eliteBossData["lych"][tier - 1]
-  const stealRange = tier < 5 ? "100" : "infinite"
-  normalBossSpecialPropsContainer.innerHTML = `
-  <p class="bossNumSkulls normalBossNumSkulls">Normal Lych has 5 skulls.</p>
-  <h4 class="lychBuffSteal bossPassiveHeader"><b>Buff Life Leech</b></h4>
-  <p class="bossPassiveDescription">Heals <b>2% max HP</b> for each buff stolen and stuns affected towers for <b>5 seconds</b>. At tier ${tier}, the life steal has <b>${stealRange} range.</b></p>
-  <h4 class="lychBuffSteal bossPassiveHeader"><b>Sell Life Leech</b></h4>
-  <p class="bossPassiveDescription">Lych heals <b>1% max HP</b> per highest tier on the tower. Crosspathing does not affect the sell steal.<br>
-  For example, selling a 5-2-0 Dart Monkey heals Lych by 5%, and selling a 5-0-0 Dart Monkey will also heal Lych by 5%.</p>
-  `
-  eliteBossSpecialPropsContainer.innerHTML = `
-  <p class="bossNumSkulls normalBossNumSkulls">Elite Lych has 7 skulls.</p>
-  <h4 class="lychBuffSteal bossPassiveHeader"><b>Buff Life Leech</b></h4>
-  <p class="bossPassiveDescription">Heals <b>4% max HP</b> for each buff stolen and stuns affected towers for <b>5 seconds</b>. At tier ${tier}, the life steal has <b>${stealRange} range.</b></p>
-  <h4 class="lychBuffSteal bossPassiveHeader"><b>Sell Life Leech</b></h4>
-  <p class="bossPassiveDescription">Lych heals <b>1% max HP</b> per highest tier on the tower. Crosspathing does not affect the sell steal.<br>
-  For example, selling a 5-2-0 Dart Monkey heals Lych by 5%, and selling a 5-0-0 Dart Monkey will also heal Lych by 5%.</p>
-  `
+function showBoss(bossName, tier) {
+  let normalBossPassiveHTML;
+  let normalBossOnSkullHTML;
+  let eliteBossPassiveHTML;
+  let eliteBossOnSkullHTML;
+  const boss = normalBossData[bossName][tier - 1]
+  const eBoss = eliteBossData[bossName][tier - 1]
   const onSkull = boss["onSkull"]
   const eOnSkull = eBoss["onSkull"]
-  const nbsdc = document.createElement("div")
-  nbsdc.classList.add("bossSkullDataContainer")
-  nbsdc.innerHTML = `
+  if (bossName == "lych") {
+    const stealRange = tier < 5 ? "100" : "infinite"
+    normalBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Normal Lych has 5 skulls.</p>
+    <h4 class="lychBuffSteal bossPassiveHeader"><b>Buff Life Leech</b></h4>
+    <p class="bossPassiveDescription">Heals <b>2% max HP</b> for each buff stolen and stuns affected towers for <b>5 seconds</b>. At tier ${tier}, the life steal has <b>${stealRange} range.</b></p>
+    <h4 class="lychBuffSteal bossPassiveHeader"><b>Sell Life Leech</b></h4>
+    <p class="bossPassiveDescription">Lych heals <b>1% max HP</b> per highest tier on the tower. Crosspathing does not affect the sell steal.<br>
+    For example, selling a 5-2-0 Dart Monkey heals Lych by 5%, and selling a 5-0-0 Dart Monkey will also heal Lych by 5%.</p>
+    `
+    normalBossOnSkullHTML = `
     <h4 class="bossPassiveHeader">Lych Soul - ${onSkull[0]["health"].toLocaleString()} HP</h4>
     <div class="bossSkullDescriptionContainer">
       <img src="https://i.ibb.co/WgFxgjW/lychSoul.png" class="bossOnSkullImage">
-      <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
-      <b>While the Lych Soul is alive...</b><br><br>
-      - Lych is completely invulnerable but moves slower.<br>
-      - It takes away <b>${onSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.<br></p>
+      <ul class="bossOnSkull bossPassiveDescriptionList">
+        <li class="">Spawns a Lych Soul that moves at the same speed as a Red Bloon.</li>
+        <li class="">It takes away <b>${onSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.</li>
+        <li class="">While alive, Lych is completely invulnerable but moves slower.</li></ul>
     </div>
     <h4 class="bossPassiveHeader">Reanimated Blimps</h4>
     <p class="bossPassiveDescription">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
     Reanimated Blimps at tier ${tier} Normal have <b>${onSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${onSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
-  `
-  normalBossSkullEffectsContainer.appendChild(nbsdc)
-  const ebsdc = document.createElement("div")
-  ebsdc.classList.add("bossSkullDataContainer")
-  ebsdc.innerHTML = `
-  <h4 class="bossPassiveHeader">Lych Soul - ${eOnSkull[0]["health"].toLocaleString()} HP</h4>
-  <div class="bossSkullDescriptionContainer">
-    <img src="https://i.ibb.co/WgFxgjW/lychSoul.png" class="bossOnSkullImage">
-    <p class="bossOnSkull">Spawns a Lych Soul that moves at the same speed as a Red Bloon.<br>
-    <b>While the Lych Soul is alive...</b><br><br>
-    - It takes away <b>${eOnSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.<br>
-    - Lych is completely invulnerable but moves slower.</p>
-  </div>
+    `
+    eliteBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Elite Lych has 7 skulls.</p>
+    <h4 class="lychBuffSteal bossPassiveHeader"><b>Buff Life Leech</b></h4>
+    <p class="bossPassiveDescription">Heals <b>4% max HP</b> for each buff stolen and stuns affected towers for <b>5 seconds</b>. At tier ${tier}, the life steal has <b>${stealRange} range.</b></p>
+    <h4 class="lychBuffSteal bossPassiveHeader"><b>Sell Life Leech</b></h4>
+    <p class="bossPassiveDescription">Lych heals <b>1% max HP</b> per highest tier on the tower. Crosspathing does not affect the sell steal.<br>
+    For example, selling a 5-2-0 Dart Monkey heals Lych by 5%, and selling a 5-0-0 Dart Monkey will also heal Lych by 5%.</p>
+    `
+    eliteBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Lych Soul - ${eOnSkull[0]["health"].toLocaleString()} HP</h4>
+    <div class="bossSkullDescriptionContainer">
+      <img src="https://i.ibb.co/WgFxgjW/lychSoul.png" class="bossOnSkullImage">
+      <ul class="bossOnSkull bossPassiveDescriptionList">
+        <li class="">Spawns a Lych Soul that moves at the same speed as a Red Bloon.</li>
+        <li class="">It takes away <b>${eOnSkull[0]["lifeSteal"]}</b> live(s) every 4 seconds.</li>
+        <li class="">Lych is completely invulnerable but moves slower.</li></ul>
+    </div>
   <h4 class="bossPassiveHeader">Reanimated Blimps</h4>
   <p class="bossPassiveDescription">Resurrects all Blimps popped within the <b>last 20 seconds</b> with increased stats.<br>
   Reanimated Blimps at tier ${tier} Elite have <b>${eOnSkull[1]["healthMultiplier"]}x more HP</b> and are <b>${eOnSkull[1]["speedMultiplier"]}x faster</b> than normal.</p>
   </div>
   `
-  eliteBossSkullEffectsContainer.appendChild(ebsdc)
-}
-function showDreadbloon(tier) {
-  const boss = normalBossData["dreadbloon"][tier - 1]
-  const eBoss = eliteBossData["dreadbloon"][tier - 1]
-  document.querySelector(".normalBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(boss["health"] * 3).toLocaleString()} HP including Shield</h4>`
-  document.querySelector(".eliteBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(eBoss["health"] * 3).toLocaleString()} HP including Shield</h4>`
-  normalBossSpecialPropsContainer.innerHTML = `
-  <p class="bossPassiveDescription">Normal Dreadbloon has 3 skulls.</p>
-  <h4 class="bossPassiveHeader">Immunities</h4>
-  <p class="bossPassiveDescription"><b>Without Shield</b>: Has Lead properties.
-  <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
-  the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
-  <h4 class="bossPassiveHeader">Dreadrock Bloons - ${boss["onSkull"]["health"].toLocaleString()} HP</h4>
-  <div class="bossSkullDescriptionContainer">
-    <img src="https://i.ibb.co/3TS4wVR/dread-Rock-Normal.webp" class="bossOnSkullImage">
-    <p class="bossOnSkull">
-      While the Rock Shield is active, Dreadrock Bloons spawn.
-      Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.
-      Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br><br>
-      At tier ${tier} Normal, Dreadrock Bloons take <b>${boss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.
-    </p>
-  </div>
-  </div>
-  `
-  eliteBossSpecialPropsContainer.innerHTML = `
-  <p class=bossPassiveDescription>Elite Dreadbloon has 3 skulls.</p>
-  <h4 class="bossPassiveHeader">Immunities</h4>
-  <p class="bossPassiveDescription"><b>Without Shield</b>: Has Lead properties.
-  <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
-  the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
-  <h4 class="bossPassiveHeader">Dreadrock Bloons - ${eBoss["onSkull"]["health"].toLocaleString()} HP</h4>
-  <div class="bossSkullDescriptionContainer">
-  <img src="https://i.ibb.co/hC473mC/dread-Rock-Elite.webp" class="bossOnSkullImage">
-    <p class="bossOnSkull">
-      While the Rock Shield is active, Dreadrock Bloons spawn.
-      Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.
-      Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.<br><br>
-      At tier ${tier} Elite, Dreadrock Bloons take <b>${eBoss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.
-    </p>
-  </div>
-  </div>
-  `
+  } else if (bossName == "dreadbloon") {
+    document.querySelector(".normalBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(boss["health"] * 3).toLocaleString()} HP including Shield</h4>`
+    document.querySelector(".eliteBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(eBoss["health"] * 3).toLocaleString()} HP including Shield</h4>`
+    normalBossPassiveHTML = `
+    <p class="bossPassiveDescription">Normal Dreadbloon has 3 skulls.</p>
+    <h4 class="bossPassiveHeader">Immunities</h4>
+    <p class="bossPassiveDescription"><b>Without Shield</b>: Has Lead properties.
+    <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
+    the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
+    <h4 class="bossPassiveHeader">Dreadrock Bloons - ${boss["onSkull"]["health"].toLocaleString()} HP</h4>
+    <div class="bossSkullDescriptionContainer">
+      <img src="https://i.ibb.co/3TS4wVR/dread-Rock-Normal.webp" class="bossOnSkullImage">
+      <ul class="bossOnSkull bossPassiveDescriptionList">
+        <li class="">While the Rock Shield is active, Dreadrock Bloons spawn.</li>
+        <li class="">Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.</li>
+        <li class="">Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.</li>
+        <li class="">At tier ${tier}, Dreadrock Bloons take <b>${boss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.</li>
+      </ul>
+    </div>
+    </div>
+    `
+    normalBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Rock Shield - ${(boss["health"] / 2).toLocaleString()} HP</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li class="">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.</li>
+      <li class="">Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
+        health of tier ${tier} Elite Dreadbloon <b>${(eBoss["health"] * 3).toLocaleString()} HP</b>.</li>
+      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 0.35).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</li>
+    </ul>
+    `
+    eliteBossPassiveHTML = `
+    <p class="bossPassiveDescription">Elite Dreadbloon has 3 skulls.</p>
+    <h4 class="bossPassiveHeader">Immunities</h4>
+    <p class="bossPassiveDescription"><b>Without Shield</b>: Has Lead properties.
+    <p class="bossPassiveDescription"><b>Category Immunities</b>: Begins with an immunity to
+    the Primary category. At each skull, the immunity cycles to Military, then Magic, then finally Support.</p>
+    <h4 class="bossPassiveHeader">Dreadrock Bloons - ${eBoss["onSkull"]["health"].toLocaleString()} HP</h4>
+    <div class="bossSkullDescriptionContainer">
+      <img src="https://i.ibb.co/3TS4wVR/dread-Rock-Normal.webp" class="bossOnSkullImage">
+      <ul class="bossOnSkull bossPassiveDescriptionList">
+        <li class="">While the Rock Shield is active, Dreadrock Bloons spawn.</li>
+        <li class="">Dreadrock Bloons spawn with the same category immunity Dreadbloon currently has.</li>
+        <li class="">Dreadrock Bloons have Boss properties, so they'll take extra damage from Towers with a MOAB or Boss damage bonus.</li>
+        <li class="">At tier ${tier}, Dreadrock Bloons take <b>${eBoss["onSkull"]["lifeLossOnLeak"]} lives</b> when they leak.</li>
+      </ul>
+    </div>
+    </div>
+    `
+    eliteBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Rock Shield - ${(eBoss["health"] / 2).toLocaleString()} HP</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li class="">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.</li>
+      <li class="">Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
+        health of tier ${tier} Elite Dreadbloon <b>${(eBoss["health"] * 3).toLocaleString()} HP</b>.</li>
+      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 0.35).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</li>
+    </ul>
+    `
+  } else if (bossName == "phayze") {
+    document.querySelector(".normalBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(boss["health"] * 2).toLocaleString()} HP including Shield</h4>`
+    document.querySelector(".eliteBossSelectedTierHeader").innerHTML += `<h4 class="bossPassiveHeader">${(eBoss["health"] * 2.5).toLocaleString()} HP including Shield</h4>`
+    normalBossPassiveHTML = `
+    <p class="bossNumSkulls">Normal Phayze has 3 skulls.</p>
+    <p>Phayze spawns with the Camo property.</p>
+    <h4 class="bossPassiveHeader">Radar Jam</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Applies every <b>24 seconds</b> and the effects last for <b>12 seconds</b>.</li>
+      <li>Disables all Camo-granting buffs on screen and becomes immune to Camo removal.</li>
+      <li>Warps all Bloons behind Phayze directly below Phayze and gives them Camo (does not apply Camo to Blimps).</li>
+      <li>Regains the Camo property if it was removed.</li>
+    </ul>
+    <h4 class="bossPassiveHeader">Tower Glitch</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Slows the attack speed of all Towers on the entire screen based on the Skull.</li>
+      <li>After 1st skull: <b>${onSkull[0]["strength"][0]}x</b> attack delay</li>
+      <li>After 2nd skull: <b>${onSkull[0]["strength"][1]}x</b> attack delay</li>
+      <li>After 3rd skull: <b>${onSkull[0]["strength"][2]}x</b> attack delay</li>
+    </ul>
+      `
+    normalBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Hyper Warp</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Phayze warps forward <b>8%</b> of the total track length.</li>
+      <li>Phayze is immune to all damage during the warp.</li>
+      <li>Opens a tear in reality where its dash started, causing all new Bloons to spawn at that location instead.</li>
+    </ul>
+    <h4 class="bossPassiveHeader">Reality Shield - ${(boss["health"] / 4).toLocaleString()} HP</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Gains a Reality Shield once at spawn and at each Skull.</li>
+      <li>The Reality Shield has 1/4 the HP of the entire Boss, so at tier ${tier}, the Reality Shield has <b>${(boss["health"] / 4).toLocaleString()} HP</b></li>
+      <li>At tier ${tier}, Phayze moves <b>${onSkull[1]["speedBonusPercent"]}% faster</b> (${(boss["speed"] * (onSkull[1]["speedBonusPercent"] + 100)/100).toLocaleString()}x Red Bloon speed) while the Reality Shield is up.</li>
+    </ul>`
+    eliteBossPassiveHTML = `
+    <p class="bossNumSkulls">Elite Phayze has 5 skulls.</p>
+    <p>Phayze spawns with the Camo property.</p>
+    <h4 class="bossPassiveHeader">Radar Jam</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Applies every <b>24 seconds</b> and the effects last for <b>12 seconds</b>.</li>
+      <li>Disables all Camo-granting buffs on screen and becomes immune to Camo removal.</li>
+      <li>Warps all Bloons behind Phayze directly below Phayze and gives them Camo (does not apply Camo to Blimps).</li>
+      <li>Regains the Camo property if it was removed.</li>
+    </ul>
+    <h4 class="bossPassiveHeader">Tower Glitch</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Slows the attack speed of all Towers on the entire screen based on the Skull.</li>
+      <li>After 1st skull: <b>${eOnSkull[0]["strength"][0]}x</b> attack delay</li>
+      <li>After 2nd skull: <b>${eOnSkull[0]["strength"][1]}x</b> attack delay</li>
+      <li>After 3rd skull: <b>${eOnSkull[0]["strength"][2]}x</b> attack delay</li>
+      <li>After 4th skull: <b>${eOnSkull[0]["strength"][3]}x</b> attack delay</li>
+      <li>After 5th skull: <b>${eOnSkull[0]["strength"][4]}x</b> attack delay</li>
+    </ul>
+      `
+    eliteBossOnSkullHTML = `
+    <h4 class="bossPassiveHeader">Hyper Warp</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Phayze warps forward <b>8%</b> of the total track length.</li>
+      <li>Phayze is immune to all damage during the warp.</li>
+      <li>Opens a tear in reality where its dash started, causing all new Bloons to spawn at that location instead.</li>
+    </ul>
+    <h4 class="bossPassiveHeader">Reality Shield - ${(eBoss["health"] / 4).toLocaleString()} HP</h4>
+    <ul class="bossPassiveDescriptionList">
+      <li>Gains a Reality Shield once at spawn and at each Skull.</li>
+      <li>The Reality Shield has 1/4 the HP of the entire Boss, so at tier ${tier}, the Reality Shield has <b>${(eBoss["health"] / 4).toLocaleString()} HP</b></li>
+      <li>At tier ${tier}, Phayze moves <b>${eOnSkull[1]["speedBonusPercent"]}% faster</b> (${(eBoss["speed"] * (eOnSkull[1]["speedBonusPercent"] + 100)/100).toLocaleString()}x Red Bloon speed) while the Reality Shield is up.</li>
+    </ul>`
+  } else { // shows bloonarius
+    normalBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Normal Bloonarius has 3 skulls.</p>
+    <h4 class="bossPassiveHeader">Bloon Bleed</h4>
+    <p class="bossPassiveDescription">Scatters <b>${eBoss["passive"]}</b> across the track every 1% HP lost.</p>
+      `
+    normalBossOnSkullHTML = `<p class="bossOnSkull bloonariusOnSkull">Spawns <b>${boss["skullSpawns"]}</b>`
+    eliteBossPassiveHTML = `
+    <p class="bossNumSkulls normalBossNumSkulls">Elite Bloonarius has 7 skulls.</p>
+    <h4 class="bossPassiveHeader">Bloon Bleed</h4>
+    <p class="bossPassiveDescription">Scatters <b>${eBoss["passive"]}</b> across the track every 1% HP lost.</p>`
+    eliteBossOnSkullHTML = `<p class="bossOnSkull bloonariusOnSkull">Spawns <b>${eBoss["skullSpawns"]}</b>`
+  }
+  normalBossSpecialPropsContainer.innerHTML = normalBossPassiveHTML
+  eliteBossSpecialPropsContainer.innerHTML = eliteBossPassiveHTML
   const nbsdc = document.createElement("div")
   nbsdc.classList.add("bossSkullDataContainer")
-  nbsdc.innerHTML = `
-  <h4 class="bossPassiveHeader">Rock Shield - ${(boss["health"] / 2).toLocaleString()} HP</h4>
-  <p class="bossPassiveDescription">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.
-  Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
-  health of tier ${tier} Normal Dreadbloon <b>${(boss["health"] * 3).toLocaleString()} HP</b>.<br><br>
-  <b>WHILE ACTIVE</b>: Dreadbloon moves at 30% normal speed (<b>${((boss["speed"] * 0.3).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</p>
-  `
-  normalBossSkullEffectsContainer.appendChild(nbsdc)
+  nbsdc.innerHTML = normalBossOnSkullHTML
   const ebsdc = document.createElement("div")
   ebsdc.classList.add("bossSkullDataContainer")
-  ebsdc.innerHTML = `
-  <h4 class="bossPassiveHeader">Rock Shield - ${(eBoss["health"] / 2).toLocaleString()} HP</h4>
-  <p class="bossPassiveDescription">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.
-  Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
-  health of tier ${tier} Elite Dreadbloon <b>${(eBoss["health"] * 3).toLocaleString()} HP</b>.<br><br>
-  <b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 0.35).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</p>
-  `
+  ebsdc.innerHTML = eliteBossOnSkullHTML
+  normalBossSkullEffectsContainer.appendChild(nbsdc)
   eliteBossSkullEffectsContainer.appendChild(ebsdc)
 }
 
