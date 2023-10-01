@@ -535,14 +535,14 @@ function determineSpecialMods(metadata) {
     appendElement(
       specialModsContainer,
       `Ability Cooldowns`,
-      `${metadata["abilityCooldownReductionMultiplier"]}x duration`
+      `${metadata["abilityCooldownReductionMultiplier"] * 100}% duration`
     );
   }
   if (metadata["removeableCostMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Obstacle Removal`,
-      `${metadata["removeableCostMultiplier"]}x cost`
+      `${metadata["removeableCostMultiplier"] * 100}% cost`
     );
   }
   if (metadata["disableMK"] == true) {
@@ -562,39 +562,39 @@ function determineSpecialMods(metadata) {
     appendElement(
       specialModsContainer,
       `Bloon Speed`,
-      `${bloonMods["speedMultiplier"]}x`
+      `${bloonMods["speedMultiplier"] * 100}%`
     );
   }
   if (bloonMods["moabSpeedMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `MOAB Speed`,
-      `${bloonMods["moabSpeedMultiplier"]}x`
+      `${bloonMods["moabSpeedMultiplier"] * 100}%`
     );
   }
   if (bloonMods["bossSpeedMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Boss Speed`,
-      `${bloonMods["bossSpeedMultiplier"]}x`
+      `${bloonMods["bossSpeedMultiplier"] * 100}%`
     );
   }
   if (bloonMods["regrowRateMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Regrow Rate`,
-      `${bloonMods["regrowRateMultiplier"]}x`
+      `${bloonMods["regrowRateMultiplier"] * 100}%`
     );
   }
   const hpMods = bloonMods["healthMultipliers"];
   if (hpMods["bloons"] !== 1) {
-    appendElement(specialModsContainer, `Ceramic HP`, `${hpMods["bloons"]}x`);
+    appendElement(specialModsContainer, `Ceramic HP`, `${hpMods["bloons"] * 100}%`);
   }
   if (hpMods["moabs"] !== 1) {
-    appendElement(specialModsContainer, `MOAB HP`, `${hpMods["moabs"]}x`);
+    appendElement(specialModsContainer, `MOAB HP`, `${hpMods["moabs"] * 100}%`);
   }
   if (hpMods["boss"] !== 1) {
-    appendElement(specialModsContainer, `Boss HP`, `${hpMods["boss"]}x`);
+    appendElement(specialModsContainer, `Boss HP`, `${hpMods["boss"] * 100}%`);
   }
   if (metadata["roundSets"].length > 1) {
     appendElement(specialModsContainer, `Custom Rounds`, ``);
@@ -785,10 +785,12 @@ function showPopup(title, content) {
   popupContentContainer.innerHTML = content
   popupContainer.style.display = "block"
   popupOverlay.style.display = "block"
+  document.body.classList.add("no-scroll")
 }
 document.querySelector(".closePopupButton").onclick = () => {
   popupContainer.style.display = "none"
   statsPopupOverlay.style.display = "none"
+  document.body.classList.remove("no-scroll")
 }
 
 function displayLoading() {

@@ -2,14 +2,6 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
-      "title": "Website v0.5.1",
-      "description": "Bug fixes, including text alignment with Dreadbloon and fixing the popup overlay. Full details can be found in the BTD6 Central Discord Server.",
-      "imageSrc": null,
-      "links": null,
-      "dateInMilliseconds": 1695606874895,
-      "big": false
-    },
-    {
       "title": "Website v0.5.0: BLOON STATS",
       "description": "This update is finally out, giving you access to Bloon and Boss stats (excluding Vortex and Phayze which will be added in the near future). Page Themes have also been added, with plans to add more themes in the future. Several more changes have been made which can be found in the BTD6 Central Discord Server.",
       "imageSrc": null,
@@ -184,12 +176,14 @@ function generateResourceLinks() {
     window.open("https://b2popology.com/")
   }
 }
-
-async function main() {
-
+function main() {
   generateNewsCards()
   generateResourceLinks();
 }
 
-
+const navList = document.querySelector(".navList")
+window.addEventListener('scroll', function() {
+  if (window.scrollY <= 125) navList.classList.add("navBeforeScroll")
+  else navList.classList.remove("navBeforeScroll")
+})
 main()

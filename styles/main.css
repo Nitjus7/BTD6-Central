@@ -4,6 +4,10 @@
   --secondaryFont: "Poppins", sans-serif;
   --pageBackground: black;
   font-size: 15px;
+  box-sizing: border-box;
+}
+.no-scroll {
+  overflow: hidden;
 }
 
 /* format everything */
@@ -47,7 +51,7 @@ body {
   font-family: var(--secondaryFont);
   font-weight: bold;
   margin: 0 auto;
-  font-size: 4rem;
+  font-size: 3rem;
   padding: 0;
 }
 @media only screen and (max-width: 768px) {
@@ -79,14 +83,23 @@ body {
 .navList {
   display: flex;
   color: var(--textColor);
-  background: var(--pageBackground);
+  background-color: var(--pageBackground);
+  box-shadow: 0px 0px 6px var(--shadowColor);
   flex-direction: row;
   list-style: none;
   margin: 0;
-  height: 5rem;
+  height: 3rem;
   padding: 0;
+  border-bottom: 0.5px var(--textColor) solid;
   justify-content: space-between;
   box-sizing: border-box;
+  transition: 0.15s ease-in-out background-color;
+}
+.navList.navBeforeScroll {
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 0.5px rgba(0, 0, 0, 0) solid;
+  color: white;
+  box-shadow: none;
 }
 .hamburgerButton {
   display: flex;
@@ -96,10 +109,17 @@ body {
   margin-right: 1.2rem;
 }
 .material-symbols-outlined {
-  font-size: 3rem;
+  display: flex;
+  font-size: 2rem;
 }
 .material-symbols-outlined:hover {
   cursor: pointer;
+}
+.hamburgerTop {
+  display: flex;
+}
+.hamburgerTop:first-child {
+  justify-content: flex-start
 }
 .pageTheme {
   display: block;
@@ -111,8 +131,8 @@ body {
   border-style: none;
   border-radius: 4px;
   padding: 0.25rem;
-  font-size: 1.2rem;
-  padding: 10px;
+  font-size: 1rem;
+  padding: 5px;
   margin-bottom: 25px;
   width: 25vw;
   margin-top: 20px;
@@ -155,20 +175,20 @@ body {
   background: rgba(0, 0, 0, 0.45);
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: auto;
   z-index: 10;
 }
 .hamburgerMenu {
   list-style: none;
+  overflow-y: auto;
   width: 100%;
-  height: 100%;
   padding: 10px;
 }
 .hamburgerContainer {
   display: none;
   position: fixed;
+  overflow-y: auto;
   top: 0;
-  right: 0;
   z-index: 100;
   width: 100vw;
   justify-content: center;
@@ -207,9 +227,9 @@ body {
 .navButton {
   color: var(--textColor);
   font-family: var(--secondaryFont);
-  width: 85%;
+  width: 65%;
   max-width: 600px;
-  height: 5rem;
+  height: 3.5rem;
   font-size: 1.25rem;
   margin: 10px;
   background: linear-gradient(90deg, var(--mainButton) 0%, var(--secondaryButton) 100%);
@@ -363,6 +383,9 @@ body {
 }
 .takeMeHomeContainer:hover {
   transform: scale(1.2);
+}
+.takeMeHome {
+  font-size: 3rem;
 }
 
 /* removes text decoration from visited or unviisted links */

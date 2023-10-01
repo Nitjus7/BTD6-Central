@@ -904,7 +904,7 @@ function generateHealthElem(bloon, round, parent) {
 function generateSpeedElem(bloon, round, parent) {
   const speedElem = document.createElement("button")
   speedElem.classList.add("speedElem")
-  speedElem.innerHTML = `<b>${bloon["speed"]}x</b> Red Bloon speed`
+  speedElem.innerHTML = `<b>${bloon["speed"] * 100}%</b> Red Bloon speed`
   let speedMult = calculateSpeedMult(round)
   let totalSpeed = Number((bloon["speed"] * 25 * speedMult).toFixed(2))
   speedElem.onclick = () => {
@@ -973,6 +973,7 @@ function showBossStats(boss, tier) {
   for (const IAINTTHESHARPESTTOOLINTHESHED of document.querySelectorAll(".bossSkullDataContainer")) {
     while (IAINTTHESHARPESTTOOLINTHESHED.hasChildNodes()) IAINTTHESHARPESTTOOLINTHESHED.removeChild(IAINTTHESHARPESTTOOLINTHESHED.firstChild)
   }
+  
   let shit = tier == null ? tier = 1 : tier
   bossSelectionHeader.innerText = `NORMAL ${boss.toUpperCase()}`
   eliteBossSelectionHeader.innerText = `ELITE ${boss.toUpperCase()}`
@@ -1018,7 +1019,7 @@ function getBossImage(name) {
 // getting creative with variable names
 function generateBossOverview(bn, nb, eb, t) {
   document.querySelector(`.overviewBossHPET${t}`).innerText = `${eb["health"].toLocaleString()} HP`
-  document.querySelector(`.overviewBossSpeedET${t}`).innerText = `${eb["speed"]}x Red Bloon speed`
+  document.querySelector(`.overviewBossSpeedET${t}`).innerText = `${(eb["speed"] * 100).toFixed(2).toLocaleString()}% Red Bloon speed`
   if (!document.querySelector(`.bossOverviewCardET${t}`).classList.contains("selected")) {
     const showMoreButton = document.createElement("button")
     showMoreButton.classList.add("showMoreButton")
@@ -1029,7 +1030,7 @@ function generateBossOverview(bn, nb, eb, t) {
     document.querySelector(`.bossOverviewCardET${t}`).appendChild(showMoreButton)
   }
   document.querySelector(`.overviewBossHPNT${t}`).innerText = `${nb["health"].toLocaleString()} HP`
-  document.querySelector(`.overviewBossSpeedNT${t}`).innerText = `${nb["speed"]}x Red Bloon speed`
+  document.querySelector(`.overviewBossSpeedNT${t}`).innerText = `${(nb["speed"] * 100).toFixed(2).toLocaleString()}% Red Bloon speed`
   if (!document.querySelector(`.bossOverviewCardNT${t}`).classList.contains("selected")) {
     const showMoreButton = document.createElement("button")
     showMoreButton.classList.add("showMoreButton")
@@ -1125,8 +1126,8 @@ function showBoss(bossName, tier) {
     <ul class="bossPassiveDescriptionList">
       <li class="">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.</li>
       <li class="">Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
-        health of tier ${tier} Elite Dreadbloon <b>${(eBoss["health"] * 3).toLocaleString()} HP</b>.</li>
-      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 0.35).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</li>
+        health of tier ${tier} Normal Dreadbloon <b>${(boss["health"] * 3).toLocaleString()} HP</b>.</li>
+      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${(boss["speed"] * 0.35 * 100).toFixed(2).toLocaleString()}%</b> Red Bloon speed)</li>
     </ul>
     `
     eliteBossPassiveHTML = `
@@ -1153,7 +1154,7 @@ function showBoss(bossName, tier) {
       <li class="">Summons a Rock Shield on spawn and at each skull which does <b>not</b> have Lead properties.</li>
       <li class="">Each shield has half the HP of the entire tier and has the same category immunity as Dreadbloon. This makes the total effective 
         health of tier ${tier} Elite Dreadbloon <b>${(eBoss["health"] * 3).toLocaleString()} HP</b>.</li>
-      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 0.35).toFixed(3)).toLocaleString()}x</b> Red Bloon speed)</li>
+      <li class=""><b>WHILE ACTIVE</b>: Dreadbloon moves at 35% normal speed (<b>${((boss["speed"] * 100 * 0.35).toFixed(2)).toLocaleString()}%</b> Red Bloon speed)</li>
     </ul>
     `
   } else if (bossName == "phayze") {
@@ -1187,8 +1188,8 @@ function showBoss(bossName, tier) {
     <h4 class="bossPassiveHeader">Reality Shield - ${(boss["health"] / 4).toLocaleString()} HP</h4>
     <ul class="bossPassiveDescriptionList">
       <li>Gains a Reality Shield once at spawn and at each Skull.</li>
-      <li>The Reality Shield has 1/4 the HP of the entire Boss, so at tier ${tier}, the Reality Shield has <b>${(boss["health"] / 4).toLocaleString()} HP</b></li>
-      <li>At tier ${tier}, Phayze moves <b>${onSkull[1]["speedBonusPercent"]}% faster</b> (${(boss["speed"] * (onSkull[1]["speedBonusPercent"] + 100)/100).toLocaleString()}x Red Bloon speed) while the Reality Shield is up.</li>
+      <li>The Reality Shield has 1/4 the HP of the entire Boss.</li>
+      <li>At tier ${tier}, Phayze moves <b>${onSkull[1]["speedBonusPercent"]}% faster</b> (${(boss["speed"] * ((onSkull[1]["speedBonusPercent"] + 100)/100) * 100).toLocaleString()}% Red Bloon speed) while the Reality Shield is up.</li>
     </ul>`
     eliteBossPassiveHTML = `
     <p class="bossNumSkulls">Elite Phayze has 5 skulls.</p>
@@ -1220,8 +1221,8 @@ function showBoss(bossName, tier) {
     <h4 class="bossPassiveHeader">Reality Shield - ${(eBoss["health"] / 4).toLocaleString()} HP</h4>
     <ul class="bossPassiveDescriptionList">
       <li>Gains a Reality Shield once at spawn and at each Skull.</li>
-      <li>The Reality Shield has 1/4 the HP of the entire Boss, so at tier ${tier}, the Reality Shield has <b>${(eBoss["health"] / 4).toLocaleString()} HP</b></li>
-      <li>At tier ${tier}, Phayze moves <b>${eOnSkull[1]["speedBonusPercent"]}% faster</b> (${(eBoss["speed"] * (eOnSkull[1]["speedBonusPercent"] + 100)/100).toLocaleString()}x Red Bloon speed) while the Reality Shield is up.</li>
+      <li>The Reality Shield has 1/4 the HP of the entire Boss.</li>
+      <li>At tier ${tier}, Phayze moves <b>${eOnSkull[1]["speedBonusPercent"]}% faster</b> (${(eBoss["speed"] * ((eOnSkull[1]["speedBonusPercent"] + 100)/100) * 100).toLocaleString()}% Red Bloon speed) while the Reality Shield is up.</li>
     </ul>`
   } else if (bossName == "vortex") {
     normalBossPassiveHTML = `
@@ -1264,7 +1265,7 @@ function showBoss(bossName, tier) {
     normalBossPassiveHTML = `
     <p class="bossNumSkulls normalBossNumSkulls">Normal Bloonarius has 3 skulls.</p>
     <h4 class="bossPassiveHeader">Bloon Bleed</h4>
-    <p class="bossPassiveDescription">Scatters <b>${eBoss["passive"]}</b> across the track every 1% HP lost.</p>
+    <p class="bossPassiveDescription">Scatters <b>${boss["passive"]}</b> across the track every 1% HP lost.</p>
       `
     normalBossOnSkullHTML = `<p class="bossOnSkull bloonariusOnSkull">Spawns <b>${boss["skullSpawns"]}</b>`
     eliteBossPassiveHTML = `
@@ -1319,6 +1320,7 @@ function showPopup(title, content) {
   popupContentContainer.innerHTML = content
   popupContainer.style.display = "block"
   popupOverlay.style.display = "block"
+  document.body.classList.add("no-scroll")
 }
 
 function editURL(name, value) {
@@ -1352,6 +1354,10 @@ document.querySelector(".jumpToEliteButton").onclick = () => {
 }
 
 document.querySelector(".closePopupButton").onclick = () => {
+  closePopup()
+}
+function closePopup() {
+  document.body.classList.remove("no-scroll")
   popupContainer.style.display = "none"
   statsPopupOverlay.style.display = "none"
 }

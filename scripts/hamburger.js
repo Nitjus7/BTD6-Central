@@ -12,10 +12,12 @@ const styles = document.documentElement
 hamburgerButton.onclick = () => {
     hamburgerContainer.classList.add("openFaceBurger");
     popupOverlay.style.display = "block";
+    document.body.classList.add("no-scroll")
 }
 closeButton.onclick = () => {
     hamburgerContainer.classList.remove("openFaceBurger")
     popupOverlay.style.display = "none";
+    document.body.classList.remove("no-scroll")
 }
 goToEvents.onclick = () => {
     window.location.replace("events.html")
