@@ -219,7 +219,7 @@ function parsePlayerData() {
             <div class="popupImageContainer">
                 <img src="../assets/vetLevelIcon.png" class="vetLevelIcon popupImage"/>
                 <p class="colorMePurple">Veteran Levels are levels that exist beyond the normal levels that you can get after reaching Level 155. 
-                Veteran Levels are purely cosmetic and won't unlock anything new, but it takes <b>10 million XP</b> for each new Veteran Level. 
+                Veteran Levels are purely cosmetic and won't unlock anything new, but it takes <b>20 million XP</b> for each new Veteran Level. 
                 A player with Veteran Levels has some true dedication to the game.</p>
             </div>`
             showPopup("Veteran Levels", popupHTML)
