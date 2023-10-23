@@ -536,14 +536,14 @@ function determineSpecialMods(metadata) {
     appendElement(
       specialModsContainer,
       `Ability Cooldowns`,
-      `${metadata["abilityCooldownReductionMultiplier"] * 100}% duration`
+      `${(metadata["abilityCooldownReductionMultiplier"] * 100).toLocaleString()}% duration`
     );
   }
   if (metadata["removeableCostMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Obstacle Removal`,
-      `${metadata["removeableCostMultiplier"] * 100}% cost`
+      `${(metadata["removeableCostMultiplier"] * 100).toLocaleString()}% cost`
     );
   }
   if (metadata["disableMK"] == true) {
@@ -563,39 +563,39 @@ function determineSpecialMods(metadata) {
     appendElement(
       specialModsContainer,
       `Bloon Speed`,
-      `${bloonMods["speedMultiplier"] * 100}%`
+      `${(bloonMods["speedMultiplier"] * 100).toLocaleString()}%`
     );
   }
   if (bloonMods["moabSpeedMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `MOAB Speed`,
-      `${bloonMods["moabSpeedMultiplier"] * 100}%`
+      `${(bloonMods["moabSpeedMultiplier"] * 100).toLocaleString()}%`
     );
   }
   if (bloonMods["bossSpeedMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Boss Speed`,
-      `${bloonMods["bossSpeedMultiplier"] * 100}%`
+      `${(bloonMods["bossSpeedMultiplier"] * 100).toLocaleString()}%`
     );
   }
   if (bloonMods["regrowRateMultiplier"] !== 1) {
     appendElement(
       specialModsContainer,
       `Regrow Rate`,
-      `${bloonMods["regrowRateMultiplier"] * 100}%`
+      `${(bloonMods["regrowRateMultiplier"] * 100).toLocaleString()}%`
     );
   }
   const hpMods = bloonMods["healthMultipliers"];
   if (hpMods["bloons"] !== 1) {
-    appendElement(specialModsContainer, `Ceramic HP`, `${hpMods["bloons"] * 100}%`);
+    appendElement(specialModsContainer, `Ceramic HP`, `${(hpMods["bloons"] * 100).toLocaleString()}%`);
   }
   if (hpMods["moabs"] !== 1) {
-    appendElement(specialModsContainer, `MOAB HP`, `${hpMods["moabs"] * 100}%`);
+    appendElement(specialModsContainer, `MOAB HP`, `${(hpMods["moabs"] * 100).toLocaleString()}%`);
   }
   if (hpMods["boss"] !== 1) {
-    appendElement(specialModsContainer, `Boss HP`, `${hpMods["boss"] * 100}%`);
+    appendElement(specialModsContainer, `Boss HP`, `${(hpMods["boss"] * 100).toLocaleString()}%`);
   }
   if (metadata["roundSets"].length > 1) {
     appendElement(specialModsContainer, `Custom Rounds`, ``);
