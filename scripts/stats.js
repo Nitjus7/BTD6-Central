@@ -2,7 +2,7 @@ const bloonData = {
   "bloons": [
       {
           "name": "Red Bloon",
-          //"image": "https://i.ibb.co/Y3k4svr/redtemp.webp",
+          "image": "https://i.ibb.co/Y3k4svr/redtemp.webp",
           "layers": 1,
           "rbe": 1,
           "speed": 1,
@@ -11,7 +11,7 @@ const bloonData = {
       },
       {
           "name": "Blue Bloon",
-          //"image": "https://i.ibb.co/tQh2HHr/tempBlue.webp",
+          "image": "https://i.ibb.co/tQh2HHr/tempBlue.webp",
           "layers": 2,
           "rbe": 2,
           "speed": 1.4,
@@ -20,6 +20,7 @@ const bloonData = {
       },
       {
           "name": "Green Bloon",
+          "image": "https://i.ibb.co/M1F34zs/green-Bloon.webp",
           "layers": 3,
           "rbe": 3,
           "speed": 1.8,
@@ -27,63 +28,71 @@ const bloonData = {
           "immuneTo": null
       },
       {
-          "name": "Yellow Bloon",
-          "layers": 4,
-          "rbe": 4,
-          "speed": 3.2,
-          "spawns": "1x Green",
-          "immuneTo": null
-      },
-      {
-          "name": "Pink Bloon",
-          "layers": 5,
-          "rbe": 5,
-          "speed": 3.5,
-          "spawns": "1x Yellow",
-          "immuneTo": null
-      },
-      {
-          "name": "Black Bloon",
-          "layers": 6,
-          "rbe": 11,
-          "speed": 1.8,
-          "spawns": "2x Pink",
-          "immuneTo": "Explosive projectiles"
-      },
-      {
-          "name": "White Bloon",
-          "layers": 6,
-          "rbe": 11,
-          "speed": 2,
-          "spawns": "2x Pink",
-          "immuneTo": "Freezing projectiles"
-      },
-      {
-          "name": "Purple Bloon",
-          "layers": 6,
-          "rbe": 11,
-          "speed": 3,
-          "spawns": "2x Pink",
-          "immuneTo": "Energy, fire, and plasma projectiles"
-      },
-      {
-          "name": "Lead Bloon",
-          "layers": 7,
-          "rbe": 23,
-          "speed": 1,
-          "spawns": "2x Black",
-          "immuneTo": "Sharp projectiles"
-      },
-      {
-          "name": "Zebra Bloon",
-          "layers": 7,
-          "rbe": 23,
-          "speed": 1.8,
-          "spawns": "1x Black, 1x White",
+        "name": "Yellow Bloon",
+        "image": "https://i.ibb.co/L9mwMVZ/yellow-Bloon.webp",
+        "layers": 4,
+        "rbe": 4,
+        "speed": 3.2,
+        "spawns": "1x Green",
+        "immuneTo": null
+    },
+    {
+        "name": "Pink Bloon",
+        "image": "https://i.ibb.co/3fGFkwj/pink-Bloon.webp",
+        "layers": 5,
+        "rbe": 5,
+        "speed": 3.5,
+        "spawns": "1x Yellow",
+        "immuneTo": null
+    },
+    {
+        "name": "Black Bloon",
+        "image": "https://i.ibb.co/kDgsV06/black-Bloon.webp",
+        "layers": 6,
+        "rbe": 11,
+        "speed": 1.8,
+        "spawns": "2x Pink",
+        "immuneTo": "Explosive projectiles"
+    },
+    {
+        "name": "White Bloon",
+        "image": "https://i.ibb.co/Q8F46kc/white-Bloon.webp",
+        "layers": 6,
+        "rbe": 11,
+        "speed": 2,
+        "spawns": "2x Pink",
+        "immuneTo": "Freezing projectiles"
+    },
+    {
+        "name": "Purple Bloon",
+        "image": "https://i.ibb.co/LtPry6q/purple-Bloon.webp",
+        "layers": 6,
+        "rbe": 11,
+        "speed": 3,
+        "spawns": "2x Pink",
+        "immuneTo": "Energy, fire, and plasma projectiles"
+    },
+    {
+        "name": "Lead Bloon",
+        "image": "https://i.ibb.co/6mb6QPj/lead-Bloon.webp",
+        "layers": 7,
+        "rbe": 23,
+        "speed": 1,
+        "spawns": "2x Black",
+        "immuneTo": "Sharp projectiles"
+    },
+    {
+        "name": "Zebra Bloon",
+        "image": "https://i.ibb.co/kQGr72g/zebra-Bloon.webp",
+        "layers": 7,
+        "rbe": 23,
+        "speed": 1.8,
+        "spawns": "1x Black, 1x White",
           "immuneTo": "Explosive and freezing projectiles"
       },
       {
           "name": "Rainbow Bloon",
+          "image": "https://i.ibb.co/YdKTWWN/rainbow-Bloon.webp",
           "layers": 8,
           "rbe": 47,
           "speed": 2.2,
@@ -92,6 +101,7 @@ const bloonData = {
       },
       {
           "name": "Ceramic Bloon",
+          "image": "https://i.ibb.co/85CxKBh/ceramic-Bloon.webp",
           "health": 10,
           "rbe": 104,
           "speed": 2.5,
@@ -103,6 +113,7 @@ const bloonData = {
       {
           "name": "MOAB",
           "fullName": "Massive Ornary Air Blimp",
+          "image": "https://i.ibb.co/T2LWhpZ/moab.webp",
           "health": 200,
           "rbe": 616,
           "speed": 1,
@@ -112,6 +123,7 @@ const bloonData = {
       {
           "name": "BFB",
           "fullName": "Brutal Floating Behemoth",
+          "image": "https://i.ibb.co/YWzGym2/bfb.webp",
           "health": 700,
           "rbe": 3164,
           "speed": 0.25,
@@ -121,6 +133,7 @@ const bloonData = {
       {
           "name": "ZOMG",
           "fullName": "Zeppelin of Mighty Gargantuaness",
+          "image": "https://i.ibb.co/7Yk4vbh/zomg.webp",
           "health": 4000,
           "rbe": 16656,
           "speed": 0.18,
@@ -130,6 +143,7 @@ const bloonData = {
       {
           "name": "DDT",
           "fullName": "Dark Dirigible Titan",
+          "image": "https://i.ibb.co/7jkRwFw/ddt.webp",
           "health": 400,
           "rbe": 816,
           "speed": 2.64,
@@ -139,6 +153,7 @@ const bloonData = {
       {
           "name": "BAD",
           "fullName": "Big Airship of Doom",
+          "image": "https://i.ibb.co/7jCBcgr/bad.webp",
           "health": 20000,
           "rbe": 55760,
           "speed": 0.18,
@@ -798,6 +813,7 @@ const popupContainer = document.querySelector(".popupContainer")
 const popupTitle = document.querySelector(".popupTitle")
 const popupContentContainer = document.querySelector(".popupContentContainer")
 const statsPopupOverlay = document.querySelector(".popupOverlay")
+const towerButton = document.querySelector(".towerButton")
 
 const backButtonContainer = document.querySelector(".takeMeHomeContainer")
 
@@ -828,6 +844,7 @@ function showBloonStats(round) {
       blimpCard.classList.add("blimpCard")
       generateNameElem(blimp["name"], blimpCard)
       generateFullNameElem(blimp["fullName"], blimpCard)
+      if (blimp.hasOwnProperty("image")) generateImageElem(blimp["image"], blimpCard)
       generateHealthElem(blimp, round, blimpCard)
       generateSpeedElem(blimp, round, blimpCard)
       if (blimp["name"] == "DDT") generateImmuneElem(blimp, blimpCard)
@@ -1318,8 +1335,8 @@ function hideLayers(maxLayer) {
 function showPopup(title, content) {
   popupTitle.innerText = title
   popupContentContainer.innerHTML = content
-  popupContainer.style.display = "block"
-  popupOverlay.style.display = "block"
+  popupContainer.showModal()
+  popupContainer.classList.add("open")
   document.body.classList.add("no-scroll")
 }
 
@@ -1340,6 +1357,9 @@ function clearBloonStats() {
 bloonButton.onclick = () => {
   swapSelection(null, null, false)
 }
+/* towerButton.onclick = () => {
+  window.location.replace("/stats/towers.html")
+} */
 showBloonsButton.onclick = () => {
   swapSelection("bloons", 1, false)
 }
@@ -1354,12 +1374,11 @@ document.querySelector(".jumpToEliteButton").onclick = () => {
 }
 
 document.querySelector(".closePopupButton").onclick = () => {
-  closePopup()
-}
-function closePopup() {
+  popupContainer.classList.remove("open")
   document.body.classList.remove("no-scroll")
-  popupContainer.style.display = "none"
-  statsPopupOverlay.style.display = "none"
+  setTimeout(() => {
+    popupContainer.close();
+  }, 300);
 }
 backButtonContainer.onclick = () => {
   hideLayers(2)

@@ -1,0 +1,277 @@
+h2, h3 {
+  font-family: var(--secondaryFont)
+}
+body {
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+button:not(.wip):hover {
+  cursor: pointer;
+}
+.mapInfoContainer {
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.mapDetails {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.mapDetails > * {
+  margin: 1rem;
+  width: 25%;
+  max-width: 500px;
+}
+.detailsHeader {
+  border-bottom: 1px var(--textColor) solid;
+}
+.selection, .name, .mapDetails > * {
+  font-family: var(--secondaryFont);
+  text-align: center;
+}
+.detailsContent {
+  font-family: var(--mainFont)
+}
+.name {
+  color: var(--textColor2);
+}
+.name, .followers {
+  padding: 0 1rem;
+  text-align: left;
+}
+.playerNameContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.playerIcon {
+  aspect-ratio: 1 / 1;
+  width: 150px;
+}
+.medalsSinglePlayerContainer, .medalsMultiPlayerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+}
+.medalContainer {
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+}
+.medalContainer {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 650px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  background: var(--contentBackground1);
+  border: 1px var(--textColor) solid;
+}
+@media only screen and (max-width: 768px) {
+  .medalContainer {
+    width: 300px;
+  }
+}
+.medalLabel {
+  margin: 0.5rem;
+}
+.easyModeWrapper, .mediumModeWrapper, .hardModeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.bossHeaderContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.bossIcon {
+  aspect-ratio: 1 / 1;
+  height: 150px;
+  margin-right: 1rem;
+}
+
+.playerInfoContainer {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.vetLevelIcon, .levelIcon {
+  aspect-ratio: 1 / 1;
+  height: 75px;
+}
+.followers {
+  opacity: 0.75;
+}
+.levelContainer, .regLevelContainer, .vetLevelContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.levelContainer {
+  margin-top: 1rem;
+}
+.regLevelContainer {
+  margin-right: 2.5rem;
+}
+.regLevel, .vetLevel {
+  margin-left: 1rem;
+}
+.vetLevel {
+  color: var(--textColor3);
+  text-decoration: underline;
+}
+.vetLevel:hover {
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  .levelContainer {
+    flex-direction: column;
+  }
+  .regLevelContainer {
+    margin-right: 0;
+  }
+  .vetLevelContainer {
+    margin-top: 1rem;
+  }
+}
+
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.IDInputContainer:first-child {
+  margin-bottom: 1rem;
+}
+.IDInputContainer > * {
+  padding: 0.75rem;
+}
+.IDInputContainer > button {
+  background-color: var(--buttonColor1);
+  color: var(--textColor);
+  width: 150px;
+  border: 1px var(--textColor) solid;
+  border-radius: 5px;
+  transition: background-color 0.25s;
+}
+.IDInputContainer > button:hover {
+  background-color: var(--buttonColor2);
+}
+.IDInputContainer > input {
+  font-family: var(--mainFont);
+  width: 150px;
+  background-color: var(--contentBackground1);
+  color: var(--textColor);
+  outline: 1px var(--textColor) solid;
+  border: none;
+  border-radius: 5px;
+  transition: outline 0.6s;
+}
+.IDInputContainer > input:focus {
+  outline: 1px var(--textColor2) solid;
+}
+.playMap, .mapCredit {
+  user-select: none;
+  padding: 0.5rem;
+  margin: 0.25rem;
+  margin-top: 0.75rem;
+  background-color: var(--buttonColor1);
+  color: var(--textColor);
+  border-radius: 5px;
+  border: 1px var(--textColor) solid;
+  transition: background-color 0.25s
+}
+.playMap:hover, .mapCredit:hover {
+  background: var(--buttonColor2);
+}
+
+.firstElem {
+    margin-top: 75px;
+}
+.idHelperContainer > * {
+    max-width: 500px;
+}
+.mapImage {
+  aspect-ratio: 1.5 / 1;
+  max-width: 500px;
+  width: 60%;
+  border-radius: 15px;
+}
+
+
+
+.popupContainer {
+  position: fixed;
+  color: var(--textColor);
+  width: 75vw; height: fit-content;
+  padding: 10px;
+  background: var(--contentBackground1);
+  box-shadow: 0px 0px 7px var(--shadowColor);
+  border-radius: 5px;
+  z-index: 100;
+  text-align: left;
+}
+.popupContainer::backdrop {
+  background: rgb(28,115,222);
+  background: radial-gradient(circle, rgba(28,115,222,0.6) 0%, rgba(0,0,0,0.2679665616246498) 100%);
+}
+.popupContainer.open {
+  animation: expandIn 0.5s cubic-bezier(0.47, -0.01, 0.1, 0.99) forwards;
+}
+.popupContainer:not(.open) {
+  animation: expandOut 0.3s cubic-bezier(0.58, 0.02, 0.8, 0.87) forwards;
+}
+  .popupTitleContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+  .popupTitle {
+    font-family: var(--secondaryFont);
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .popupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 150vh;
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.65);
+  }
+  .popupImageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .popupImage {
+    margin-right: 1rem;
+  }
+
+  @keyframes expandIn {
+    0% {
+      transform: scale(0)
+    }
+    100% {
+      transform: scale(1)
+    }
+  }
+  @keyframes expandOut {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }

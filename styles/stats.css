@@ -32,7 +32,7 @@ button:hover {
   background-image: linear-gradient(
       to left,
       rgba(183, 36, 178, 0.25),
-      var(--mainButton)
+      var(--buttonColor1)
     ),
     url("../assets/bloonStats.png");
   background-position: right;
@@ -61,10 +61,10 @@ button:hover {
 }
 .roundInput:focus-visible {
   outline-style: solid;
-  outline-color: var(--mainButton);
+  outline-color: var(--buttonColor1);
 }
 .roundInputConfirm {
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   border-radius: 5px;
   text-align: center;
@@ -108,7 +108,7 @@ button:hover {
   font-size: 1.4rem;
   border-radius: 3px;
   box-shadow: 0px 0px 3px var(--shadowColor);
-  background-color: var(--mainButton);
+  background-color: var(--buttonColor1);
   transition: all 0.5s;
 }
 .bloonTypeButton:hover {
@@ -140,7 +140,7 @@ button:hover {
   margin-top: 0;
 }
 .layersElem, .speedElem {
-  background-color: var(--secondaryButton);
+  background-color: var(--buttonColor2);
   color: var(--textColor);
   align-self: center;
   align-items: center;
@@ -156,8 +156,16 @@ button:hover {
 .layersElem:hover, .speedElem:hover {
   cursor: pointer;
 }
-.bloonImage {
+.bloonCard .bloonImage {
   max-width: 25px;
+  margin: 0 auto;
+  margin: 10px 0 10px 0;
+  border: 1px solid var(--textColor);
+  padding: 5px;
+  border-radius: 5px;
+}
+.blimpCard .bloonImage {
+  max-width: 100px;
   margin: 0 auto;
   margin: 10px 0 10px 0;
   border: 1px solid var(--textColor);
@@ -216,7 +224,7 @@ button:hover {
   display: none;
   text-align: center;
   justify-content: center;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--mainFont);
   border-style: none;
@@ -234,7 +242,7 @@ button:hover {
   text-align: center;
   margin: 0 auto;
   margin-top: 10px;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--mainFont);
   border-style: none;
@@ -290,7 +298,7 @@ button:hover {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 5px;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--mainFont);
   border-style: none;
@@ -395,11 +403,8 @@ button:hover {
 }
 
 .popupContainer {
-  display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  color: var(--textColor);
   width: 75vw; height: fit-content;
   padding: 10px;
   background: var(--contentBackground1);
@@ -408,12 +413,21 @@ button:hover {
   z-index: 100;
   text-align: left;
 }
+.popupContainer::backdrop {
+  background: rgb(28,115,222);
+  background: radial-gradient(circle, rgba(28,115,222,0.6) 0%, rgba(0,0,0,0.2679665616246498) 100%);
+}
+.popupContainer.open {
+  animation: expandIn 0.5s cubic-bezier(0.47, -0.01, 0.1, 0.99) forwards;
+}
+.popupContainer:not(.open) {
+  animation: expandOut 0.3s cubic-bezier(0.58, 0.02, 0.8, 0.87) forwards;
+}
 .popupTitleContainer {
   display: flex;
   justify-content: space-between;
 }
 .popupTitle {
-  background-color: var(--contentBackground2);
   font-family: var(--secondaryFont);
   padding: 10px;
   border-radius: 4px;
@@ -433,4 +447,21 @@ button:hover {
 .roundInput[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+@keyframes expandIn {
+  0% {
+    transform: scale(0)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+@keyframes expandOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }

@@ -2,6 +2,23 @@ const newsContainer = document.querySelector(".newsContainer")
 const newsCards = 
   [
     {
+      "title": "Website v0.6.0: PLAYER AND CUSTOM MAP LOOKUP",
+      "description": "This update adds the new Community page to the website with Map Lookup and User Lookup. Along with this, many more small changes have been made to various pages on the website. If you see an issue, report it to the BTD6 Central Discord Server linked below.",
+      "imageSrc": null,
+      "links": [
+            {
+              "link": "https://discord.com/invite/xNxjqXBp6B",
+              "name": "Join the BTD6 Central Discord Server"
+            },
+            {
+              "link": "https://nitjus7.github.io/BTD6-Central/community.html",
+              "name": "Use the new features!"
+            }
+          ],
+      "dateInMilliseconds": 1698033757452,
+      "big": true
+    },
+    {
       "title": "Website v0.5.0: BLOON STATS",
       "description": "This update is finally out, giving you access to Bloon and Boss stats (excluding Vortex and Phayze which will be added in the near future). Page Themes have also been added, with plans to add more themes in the future. Several more changes have been made which can be found in the BTD6 Central Discord Server.",
       "imageSrc": null,
@@ -29,40 +46,6 @@ const newsCards =
         }
       ],
       "dateInMilliseconds": 1695167580000,
-      "big": true
-    },
-    {
-      "title": "Website v0.4.4",
-      "description": "Some more minor fixes/changes, including that Least Tiers Bosses will now display tiebreaker information. Up Next: Bloon & Boss Stats",
-      "imageSrc": null,
-      "links": null,
-      "dateInMilliseconds": 1694145954627,
-      "big": false
-    },
-    {
-      "title": "Map Editor: First Look",
-      "description": "The Map Editor is releasing in Version 39.0, along with a brand new Hero: Spirit Walker! While we haven't seen the new Hero, the Map Editor just got its first sneak peek.",
-      "imageSrc": null,
-      "links": [
-        {
-          "link": "https://www.tiktok.com/@ninja.kiwi/video/7276225750125120769",
-          "name": "Check out the teaser!"
-        }
-      ],
-      "dateInMilliseconds": 1694142436483,
-      "big": false
-    },
-    {
-      "title": "BTD6 for Xbox has released!",
-      "description": "Important notes: BTD6 for Xbox is only updated to Version 32 without CT and does not support cross-play or the use of an NK account.",
-      "imageSrc": "https://store-images.s-microsoft.com/image/apps.29629.14229635734755630.9b4f3e48-c3b4-4fee-884b-786bc5aa9bce.145640e0-b12a-4dd7-ba38-5ddd4475f66e?q=90&w=480&h=270",
-      "links": [
-        {
-          "link": "https://www.xbox.com/en-US/games/store/bloons-td-6/9PHKZ9XT6F85",
-          "name": "Buy BTD6 on Xbox"
-        }
-      ],
-      "dateInMilliseconds": 1694008200868,
       "big": false
     },
     {

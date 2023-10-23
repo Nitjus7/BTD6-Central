@@ -3,7 +3,7 @@
   --mainFont: "Nunito", sans-serif;
   --secondaryFont: "Poppins", sans-serif;
   --pageBackground: black;
-  font-size: 15px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 .no-scroll {
@@ -101,6 +101,9 @@ body {
   color: white;
   box-shadow: none;
 }
+.navList.navBeforeScroll .websiteTitle > * {
+  color: white;
+}
 .hamburgerButton {
   display: flex;
   justify-content: center;
@@ -125,7 +128,7 @@ body {
   display: block;
   margin: 0 auto;
   text-align: center;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--secondaryFont);
   border-style: none;
@@ -156,7 +159,7 @@ body {
   background: rgba(0, 0, 0, 0);
 }
 *::-webkit-scrollbar-thumb {
-  background-color: var(--secondaryButton);
+  background-color: var(--buttonColor2);
   opacity: 0.5;
   border-radius: 10px;
 }
@@ -167,6 +170,8 @@ body {
   margin-left: 1.2rem;
   font-size: 1.6rem;
   font-family: var(--secondaryFont);
+}
+.popupContainer::backdrop {
 }
 .popupOverlay {
   display: none;
@@ -232,7 +237,7 @@ body {
   height: 3.5rem;
   font-size: 1.25rem;
   margin: 10px;
-  background: linear-gradient(90deg, var(--mainButton) 0%, var(--secondaryButton) 100%);
+  background: linear-gradient(90deg, var(--buttonColor1) 0%, var(--buttonColor2) 100%);
   border-style: none;
   border-radius: 3px;
   transition: all 0.5s;
@@ -247,7 +252,7 @@ body {
   padding: 10px;
   font-size: 1.2rem;
   margin: 0 auto;
-  background-color: var(--mainButton);
+  background-color: var(--buttonColor1);
   border-style: none;
   border-radius: 3px;
   transition: all 0.5s;
@@ -299,7 +304,7 @@ body {
 .newsButton {
   padding: 0.5rem;
   margin: 10px 10px 0 0;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   border-style: none;
   border-radius: 5px;
@@ -341,7 +346,7 @@ body {
   width: 100%;
   max-width: 500px;
   height: fit-content;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   color: var(--textColor);
   border-style: none;
   border-radius: 5px;
@@ -369,7 +374,7 @@ body {
   transform: scale(1.05);
   top: 100px;
   left: 4vw;
-  background: var(--mainButton);
+  background: var(--buttonColor1);
   box-shadow: 0px 0px 5px var(--shadowColor);
   border-radius: 100%;
   transition: all 0.5s;
@@ -408,6 +413,10 @@ a:visited {
 
 button {
   font-family: var(--mainFont);
+}
+
+.colorMePurple {
+  color: var(--textColor3);
 }
 
 .wip {

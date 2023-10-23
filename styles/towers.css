@@ -1,0 +1,38 @@
+button:not(.wip):hover {
+    cursor: pointer;
+}
+.optionsBar {
+    margin-top: 75px;
+}
+.towerPickContainer > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.monkeyListContainer > *, .heroListContainer > *, .paragonListContainer > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.towerPickContainer button {
+    color: var(--textColor);
+    height: 2rem;
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px var(--textColor) solid;
+    width: 85%;
+    max-width: 850px;
+}
+.towerPickContainer button:not(.wip) {
+    background-color: var(--buttonColor1);
+    height: 4rem;
+    transition: 0.5s ease;
+}
+.towerPickContainer button:not(.wip):hover {
+    transform: scale(1.02)
+}
+.towerPickContainer button.wip {
+    background-color: var(--contentBackground1);
+}

@@ -318,6 +318,7 @@ function displayDetails(event, metadata, difficulty) {
   switch (event) {
     case "races":
       raceTitle.innerText = `"${metadata["name"]}" Race Info`;
+      generateDifficultyButtons(event, null);
       break;
     case "bosses":
       raceTitle.innerText = `${metadata["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")} Boss Details (${difficulty.toUpperCase()})`;
@@ -626,7 +627,7 @@ function displayLeaderboard(lb, difficulty) {
     behavior: "smooth",
   });
   let scoreType;
-  generateBossLBButtons(difficulty);
+  generateLBButtons(difficulty);
   eventPickContainer.style.display = "none";
   eventTitle.style.display = "none";
   raceArchiveContainer.style.display = "none";
@@ -662,7 +663,7 @@ function displayLeaderboard(lb, difficulty) {
   history.replaceState(null, null, "?" + urlParams.toString());
 }
 
-function generateBossLBButtons(selectedDifficulty) {
+function generateLBButtons(selectedDifficulty) {
   const swapDifficultyButton = document.createElement("button");
   swapDifficultyButton.classList.add("swapDifficultyButton");
   if (selectedDifficulty == "standard") {
@@ -698,7 +699,13 @@ function createPlacementElem(placement, parent) {
 }
 function createNameElem(data, parent) {
   const playerNameElem = document.createElement("p");
+  playerNameElem.classList.add("tiebreakerElem")
   playerNameElem.innerText = `${data["displayName"].toUpperCase().trim()}`;
+  let urlParts = data["profile"].split("/");
+  let userID = urlParts[urlParts.length - 1];
+  playerNameElem.onclick = () => {
+    window.open(`community.html?type=player&id=${userID}`)
+  }
   parent.appendChild(playerNameElem);
 }
 function createScoreElem(scoreType, data, parent) {
@@ -783,14 +790,16 @@ function swapToEvent(event) {
 function showPopup(title, content) {
   popupTitle.innerText = title
   popupContentContainer.innerHTML = content
-  popupContainer.style.display = "block"
-  popupOverlay.style.display = "block"
+  popupContainer.showModal()
+  popupContainer.classList.add("open")
   document.body.classList.add("no-scroll")
 }
 document.querySelector(".closePopupButton").onclick = () => {
-  popupContainer.style.display = "none"
-  statsPopupOverlay.style.display = "none"
+  popupContainer.classList.remove("open")
   document.body.classList.remove("no-scroll")
+  setTimeout(() => {
+    popupContainer.close();
+  }, 300);
 }
 
 function displayLoading() {
@@ -830,6 +839,7 @@ backButton.onclick = () => {
 };
 
 async function main() {
+  displayLoading()
   window.addEventListener('offline', () => alert("NOTICE: You must be connected to the internet to browse the event archive.\nIt seems that your internet connection has been lost. Please report this to the BTD6 Central Discord Server if this is a bug."))
   urlEvent = urlParams.get("event");
   urlID = urlParams.get("id");
@@ -838,6 +848,7 @@ async function main() {
   // if the ID of the event is in the URL
   if (urlID != null) {
     id = urlID;
+    displayLoading()
     // and the type is "metadata"
     if (urlType == "metadata") {
       if (urlEvent == "races") {
@@ -879,6 +890,7 @@ async function main() {
       swapToEvent(urlEvent);
       displayLeaderboard(lb, urlDifficulty);
     }
+    disableLoading()
   } else if (urlEvent != null) {
     swapToEvent(urlEvent);
   } else {
@@ -887,6 +899,8 @@ async function main() {
     urlParams.delete("difficulty");
     history.replaceState(null, null, "?" + urlParams.toString());
   }
+  disableLoading()
+  backButton.style.display = "none"
 }
 // event listener for race button.
 

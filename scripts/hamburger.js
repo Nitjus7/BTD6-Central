@@ -1,3 +1,8 @@
+
+if (/MSIE|Trident/.test(navigator.userAgent)) {
+    alert("You are using an outdated search engine. Some features may not work as intended or at all. Consider switching to Chrome, Safari, Firefox, or Edge to avoid any issues.")
+} 
+
 const hamburgerButton = document.querySelector(".hamburgerButton")
 const hamburgerMenu = document.querySelector(".hamburgerMenu")
 const hamburgerContainer = document.querySelector(".hamburgerContainer")
@@ -6,6 +11,7 @@ const closeButton = document.querySelector(".closeButton")
 const goToEvents = document.querySelector(".goToEvents")
 const goToStats = document.querySelector(".goToStats")
 const goToHome = document.querySelector(".goToHome")
+const goToCommunity = document.querySelector(".goToCommunity")
 const pageTheme = document.querySelector(".pageTheme")
 const styles = document.documentElement
 
@@ -20,13 +26,16 @@ closeButton.onclick = () => {
     document.body.classList.remove("no-scroll")
 }
 goToEvents.onclick = () => {
-    window.location.replace("events.html")
+    window.location.replace("../events.html")
 }
 goToStats.onclick = () => {
-    window.location.replace("stats.html")
+    window.location.replace("../stats.html")
 }
 goToHome.onclick = () => {
-    window.location.replace("index.html")
+    window.location.replace("../index.html")
+}
+goToCommunity.onclick = () => {
+    window.location.replace("../community.html")
 }
 pageTheme.addEventListener("change", () => {
     if (pageTheme.value == "light") meetGod()
@@ -43,9 +52,9 @@ function checkPreferredTheme() {
 switch (localStorage.getItem("themeMode")) {
     case "light": meetGod(); break;
     case "dark": swapToDark(); break;
+    case "spirit": swapToSpirit(); break;
     default: checkPreferredTheme(); break;
 }
-
 function swapToDark() {
     pageTheme.value = "dark"
     styles.style.setProperty("--pageBackground", "black");
@@ -58,8 +67,11 @@ function swapToDark() {
     styles.style.setProperty("--shadowColor", "rgb(32, 31, 31)");
     styles.style.setProperty("--wip", "0.5");
     styles.style.setProperty("--textColor", "#dce0e7");
-    styles.style.setProperty("--mainButton", "#1d5cd1");
-    styles.style.setProperty("--secondaryButton", "#5985e5");
+    styles.style.setProperty("--textColor2", "rgb(243, 176, 110)")
+    styles.style.setProperty("--textColor3", "rgb(195 168 232)")
+    styles.style.setProperty("--buttonColor1", "#1d5cd1");
+    styles.style.setProperty("--buttonColor2", "#5985e5");
+    styles.style.setProperty("--buttonColor3", "")
     localStorage.setItem('themeMode', 'dark');
 }
   
@@ -74,9 +86,14 @@ function meetGod() {
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");
     styles.style.setProperty("--textColor", "#121212");
-    styles.style.setProperty("--secondaryButton", "#8caeeb");
-    styles.style.setProperty("--mainButton", "#5985e5");
+    styles.style.setProperty("--textColor2", "rgb(203 108 4)");
+    styles.style.setProperty("--textColor3", "rgb(107 26 219)")
+    styles.style.setProperty("--buttonColor2", "#8caeeb");
+    styles.style.setProperty("--buttonColor1", "#5985e5");
     localStorage.setItem('themeMode', 'light');
 }
   
-
+function swapToSpirit() {
+    pageTheme.value = "spirit"
+    styles.style.setProperty("--pageBackground", "")
+}
