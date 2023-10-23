@@ -26,16 +26,16 @@ closeButton.onclick = () => {
     document.body.classList.remove("no-scroll")
 }
 goToEvents.onclick = () => {
-    window.location.replace("../events.html")
+    window.location.replace("events.html")
 }
 goToStats.onclick = () => {
-    window.location.replace("../stats.html")
+    window.location.replace("stats.html")
 }
 goToHome.onclick = () => {
-    window.location.replace("../index.html")
+    window.location.replace("index.html")
 }
 goToCommunity.onclick = () => {
-    window.location.replace("../community.html")
+    window.location.replace("community.html")
 }
 pageTheme.addEventListener("change", () => {
     if (pageTheme.value == "light") meetGod()
