@@ -32,7 +32,6 @@ button:not(.wip):hover {
 .selection, .name, .mapDetails > * {
   font-family: var(--secondaryFont);
   text-align: center;
-  padding: 0 0.5rem;
 }
 .detailsContent {
   font-family: var(--mainFont)
@@ -40,12 +39,9 @@ button:not(.wip):hover {
 .name {
   color: var(--textColor2);
 }
-.playerName, .followers {
+.name, .followers {
   padding: 0 1rem;
   text-align: left;
-}
-.playerName {
-  color: var(--textColor2);
 }
 .playerNameContainer {
   display: flex;
@@ -86,10 +82,6 @@ button:not(.wip):hover {
 }
 .medalLabel {
   margin: 0.5rem;
-}
-.easyModeHeader, .mediumModeHeader, .hardModeHeader {
-  margin-bottom: 0;
-  padding-bottom: 0;
 }
 .easyModeWrapper, .mediumModeWrapper, .hardModeWrapper {
   display: flex;
