@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower Stats | BTD6 Central</title>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+
+     <!--CUSTOM FONTS IMPORT BEGIN-->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@500&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+     <!--CUSTOM FONTS IMPORT END-->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
+ 
+     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
+     <link rel="stylesheet" href="styles/main.css" />
+     <link rel="stylesheet" href="styles/towers.css" />
+</head>
+<body>
+    <div class="navBarContainer">
+        <nav>
+          <ul class="navList">
+            <li class="websiteTitle">
+              <a href="index.html"><strong>BTD6 Central</strong></a>
+            </li>
+            <li class="hamburgerButton">
+              <span class="material-symbols-outlined">
+                menu
+              </span>
+            </li>
+          </ul>
+        </nav>
+      </div>
+        <div class="hamburgerContainer">
+          <ul class="hamburgerMenu">
+            <li class="hamburgerTop">
+              <span class="material-symbols-outlined closeButton">
+                close
+              </span>
+            </li>
+            <select name="theme" class="pageTheme navItem">
+              <option value="light">Light Theme</option>
+              <option value="dark">Dark Theme</option>
+            </select>
+            <li class="navItem">
+              <button class="navButton goToHome">Home</button>
+            </li>
+            <li class="navItem">
+              <button class="navButton goToStats currentPage">Stats</button>
+            </li>
+            <li class="navItem">
+              <button class="navButton goToEvents">Events</button>
+            </li>
+            <li class="navItem">
+              <button href="#" class="navButton goToCommunity">Community</button>
+            </li>
+          </ul>
+      </div>
+      <div class="optionsBar">
+        <select name="Filter" class="filterSelect">
+          <option value="noWIP">All Available Stats</option>
+          <option value="primary">Primary</option>
+          <option value="military">Military</option>
+          <option value="magic">Magic</option>
+          <option value="support">Support</option>
+          <option value="hero">Heroes</option>
+          <option value="paragon">Paragons</option>
+          <option value="noFilter">Disable Filter</option>
+        </select>
+      </div>
+      <div class="towerPickContainer">
+        <!--PRIMARY-->
+        <button id="dartButton" class="wip primary monkey">Dart Monkey</button>
+        <button id="ApexPlasmaMaster" class="primary paragon">Apex Plasma Master</button>
+        <button id="boomerButton" class="wip primary monkey">Boomerang Monkey</button>
+        <button id="GlaiveDominus" class="primary paragon">Glaive Dominus</button>
+        <button id="bombButton" class="wip primary monkey">Bomb Shooter</button>
+        <button id="tackButton" class="wip primary monkey">Tack Shooter</button>
+        <button id="iceButton" class="wip primary monkey">Ice Monkey</button>
+        <!--MILITARY-->
+        <button id="subButton" class="wip military monkey">Monkey Sub</button>
+        <button id="sniperButton" class="wip military monkey">Sniper Monkey</button>
+        <button id="aceButton" class="wip military monkey">Monkey Ace</button>
+        <button id="GoliathDoomship" class="military paragon wip">Goliath Doomship</button>
+        <button id="buccaneerButton" class="wip military monkey">Monkey Buccaneer</button>
+        <button id="NavarchOfTheSeas" class="military paragon wip">Navarch of the Seas</button>
+        <button id="mortarButton" class="wip military monkey">Mortar Monkey</button>
+        <button id="heliButton" class="wip military monkey">Heli Pilot</button>
+        <button id="dartlingButton" class="wip military monkey">Dartling Gunner</button>
+        <!--MAGIC-->
+        <button id="wizardButton" class="wip magic monkey">Wizard Monkey</button>
+        <button id="MagusPerfectus" class="magic paragon wip">Magus Perfectus</button>
+        <button id="superButton" class="wip magic monkey">Super Monkey</button>
+        <button id="ninjaButton" class="wip magic monkey">Ninja Monkey</button>
+        <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
+        <button id="alchemistButton" class="wip magic monkey">Alchemist</button>
+        <button id="druidButton" class="wip magic monkey">Druid</button>
+        <!--SUPPORT-->
+        <button id="farmButton" class="wip support monkey">Banana Farm</button>
+        <button id="villageButton" class="wip support monkey">Monkey Village</button>
+        <button id="spikeButton" class="wip support monkey">Spike Factory</button>
+        <button id="beastButton" class="wip support monkey">Beast Handler</button>
+        <button id="engineerButton" class="wip support monkey">Engineer Monkey</button>
+        <button id="MasterBuilder" class="support paragon wip">Master Builder</button>
+        <!--HERO-->
+        <button id="quincyButton" class="hero wip">Quincy</button>
+        <button id="gwenButton" class="hero wip">Gwendolin</button>
+        <button id="jonesButton" class="hero wip">Striker Jones</button>
+        <button id="obynButton" class="hero wip">Obyn Greenfoot</button>
+        <button id="churchButton" class="hero wip">Captain Churchill</button>
+        <button id="benButton" class="hero wip">Benjamin</button>
+        <button id="eziliButton" class="hero wip">Ezili</button>
+        <button id="patButton" class="hero wip">Pat Fusty</button>
+        <button id="adoraButton" class="hero wip">Adora</button>
+        <button id="brickButton" class="hero wip">Brickell</button>
+        <button id="etiButton" class="hero wip">Etienne</button>
+        <button id="psiButton" class="hero wip">Psi</button>
+        <button id="geraldoButton" class="hero wip">Geraldo</button>
+        <button id="corvusButton" class="hero wip">Corvus</button>
+      </div>
+      <div class="paragonDataContainer">
+        <input type="range" min="1" max="100" value="1" step="1" class="paragonDegreeSlider">
+      </div>
+      <div class="popupOverlay"></div>
+    <script src="scripts/hamburger.js"></script>
+    <script src="scripts/towers.js"></script>
+</body>
+</html>

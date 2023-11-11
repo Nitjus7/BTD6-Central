@@ -343,6 +343,7 @@ function displayDetails(event, metadata, difficulty) {
   switch (metadata["mode"]) {
     case "DoubleMoabHealth": mode = "Double HP MOABs"; break;
     case "AlternateBloonsRounds": mode = "Alternate Bloons Rounds"; break;
+    case "HalfCash": mode = "Half Cash"; break;
     default: mode = metadata["mode"];
   }
   document.getElementById(
@@ -592,11 +593,12 @@ if (metadata["removeableCostMultiplier"] !== 1) {
     appendElement(specialModsContainer, `Ceramic HP`, `${(hpMods["bloons"] * 100).toLocaleString()}%`);
   }
   if (hpMods["moabs"] !== 1) {
-    appendElement(specialModsContainer, `MOAB HP`, `${(hpMods["moabs"] * 100).toLocaleString}%`);
+    appendElement(specialModsContainer, `MOAB HP`, `${(hpMods["moabs"] * 100).toLocaleString()}%`);
   }
   if (hpMods["boss"] !== 1) {
-    appendElement(specialModsContainer, `Boss HP`, `${(hpMods["boss"] * 100).toLocaleString}%`);
+    appendElement(specialModsContainer, `Boss HP`, `${(hpMods["boss"] * 100).toLocaleString()}%`);
   }
+
   if (metadata["roundSets"].length > 1) {
     appendElement(specialModsContainer, `Custom Rounds`, ``);
   }

@@ -596,7 +596,7 @@ bloonButton.onclick = () => {
   swapSelection(null, null, false)
 }
 /* towerButton.onclick = () => {
-  window.location.replace("/stats/towers.html")
+  window.location.replace("towers.html")
 } */
 showBloonsButton.onclick = () => {
   swapSelection("bloons", 1, false)

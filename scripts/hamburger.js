@@ -63,6 +63,7 @@ function swapToDark() {
     styles.style.setProperty("--contentBackground3", "#5a5a5a6a")
     styles.style.setProperty("--contentAccent", "rgba(75, 55, 90, 0.35)")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
+    styles.style.setProperty("--contentOutline3", "#d382e7")
     styles.style.setProperty("--itemSelectedBackground", "rgb(116, 109, 109)");
     styles.style.setProperty("--shadowColor", "rgb(32, 31, 31)");
     styles.style.setProperty("--wip", "0.5");
@@ -71,7 +72,7 @@ function swapToDark() {
     styles.style.setProperty("--textColor3", "rgb(195 168 232)")
     styles.style.setProperty("--buttonColor1", "#1d5cd1");
     styles.style.setProperty("--buttonColor2", "#5985e5");
-    styles.style.setProperty("--buttonColor3", "")
+    styles.style.setProperty("--buttonColor3", "#691e82")
     localStorage.setItem('themeMode', 'dark');
 }
   
@@ -83,6 +84,7 @@ function meetGod() {
     styles.style.setProperty("--contentBackground3", "rgba(163, 124, 231, 0.5)")
     styles.style.setProperty("--itemSelectedBackground", "lightgray");
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
+    styles.style.setProperty("--contentOutline3", "#914ba2")
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");
     styles.style.setProperty("--textColor", "#121212");
@@ -90,6 +92,7 @@ function meetGod() {
     styles.style.setProperty("--textColor3", "rgb(107 26 219)")
     styles.style.setProperty("--buttonColor2", "#8caeeb");
     styles.style.setProperty("--buttonColor1", "#5985e5");
+    styles.style.setProperty("--buttonColor3", "#b873cf")
     localStorage.setItem('themeMode', 'light');
 }
   
