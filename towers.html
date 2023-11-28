@@ -10,11 +10,12 @@
 
      <!--CUSTOM FONTS IMPORT BEGIN-->
      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@500&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@500&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
      <!--CUSTOM FONTS IMPORT END-->
      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
  
      <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
      <link rel="stylesheet" href="styles/main.css" />
@@ -72,6 +73,18 @@
           <option value="noFilter">Disable Filter</option>
         </select>
       </div>
+      <div class="takeMeHomeContainer">
+        <span class="material-symbols-outlined takeMeHome">
+          arrow_back
+        </span>
+      </div>
+      <div class="actuallyTakeMeHomeContainer">
+        <a href="stats.html">
+          <span class="material-symbols-outlined actuallyTakeMeHome">
+            home
+            </span>
+        </a>
+      </div>
       <div class="towerPickContainer">
         <!--PRIMARY-->
         <button id="dartButton" class="wip primary monkey">Dart Monkey</button>
@@ -82,18 +95,18 @@
         <button id="tackButton" class="wip primary monkey">Tack Shooter</button>
         <button id="iceButton" class="wip primary monkey">Ice Monkey</button>
         <!--MILITARY-->
-        <button id="subButton" class="wip military monkey">Monkey Sub</button>
         <button id="sniperButton" class="wip military monkey">Sniper Monkey</button>
-        <button id="aceButton" class="wip military monkey">Monkey Ace</button>
-        <button id="GoliathDoomship" class="military paragon wip">Goliath Doomship</button>
+        <button id="subButton" class="wip military monkey">Monkey Sub</button>
         <button id="buccaneerButton" class="wip military monkey">Monkey Buccaneer</button>
-        <button id="NavarchOfTheSeas" class="military paragon wip">Navarch of the Seas</button>
-        <button id="mortarButton" class="wip military monkey">Mortar Monkey</button>
+        <button id="NavarchOfTheSeas" class="military paragon">Navarch of the Seas</button>
+        <button id="aceButton" class="wip military monkey">Monkey Ace</button>
+        <button id="GoliathDoomship" class="military paragon">Goliath Doomship</button>
         <button id="heliButton" class="wip military monkey">Heli Pilot</button>
+        <button id="mortarButton" class="wip military monkey">Mortar Monkey</button>
         <button id="dartlingButton" class="wip military monkey">Dartling Gunner</button>
         <!--MAGIC-->
         <button id="wizardButton" class="wip magic monkey">Wizard Monkey</button>
-        <button id="MagusPerfectus" class="magic paragon wip">Magus Perfectus</button>
+        <button id="MagusPerfectus" class="magic paragon">Magus Perfectus</button>
         <button id="superButton" class="wip magic monkey">Super Monkey</button>
         <button id="ninjaButton" class="wip magic monkey">Ninja Monkey</button>
         <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
@@ -105,7 +118,7 @@
         <button id="spikeButton" class="wip support monkey">Spike Factory</button>
         <button id="beastButton" class="wip support monkey">Beast Handler</button>
         <button id="engineerButton" class="wip support monkey">Engineer Monkey</button>
-        <button id="MasterBuilder" class="support paragon wip">Master Builder</button>
+        <button id="MasterBuilder" class="support paragon">Master Builder</button>
         <!--HERO-->
         <button id="quincyButton" class="hero wip">Quincy</button>
         <button id="gwenButton" class="hero wip">Gwendolin</button>
@@ -122,8 +135,35 @@
         <button id="geraldoButton" class="hero wip">Geraldo</button>
         <button id="corvusButton" class="hero wip">Corvus</button>
       </div>
-      <div class="paragonDataContainer">
-        <input type="range" min="1" max="100" value="1" step="1" class="paragonDegreeSlider">
+      <div class="paragonContainer">
+        <div class="paragonStatsContainer">
+          <h1 class="name paragonName"></h1>
+          <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
+          <div class="degreeEditorContainer">
+            <div class="degreeSelectorContainer editorOptionContainer">
+              <input type="radio" name="Billy" id="pikachuIChooseYou" class="checkmark" checked>
+              <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br><br>
+              <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
+            </div>
+            <div class="degreeCalculatorContainer editorOptionContainer unchecked">
+              <input type="radio" name="Bob" id="charizardIChooseYou" class="checkmark">
+              <b><label for="charizardIChooseYou" class="degreeEditorHeader">Calculate Degree</label></b><br><br>
+              <label for="paragonPops">Total Pops</label>
+              <input type="number" value="0" class="valueInput wider calcInput" id="paragonPops"><br>
+              <label for="paragonTiersSacced">Tiers in Sacrifices</label>
+              <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSacced"><br>
+              <label for="paragonCashSacced">Cash in Sacrifices</label>
+              <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSacced"><br>
+              <label for="paragonCashSlider">Cash Slider</label>
+              <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSlider"><br>
+              <label for="paragonT5Sacced">Extra Tier 5s</label>
+              <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5Sacced"><br>
+              <button class="calculateParagonDegreeButton" id="calculateParagonDegreeButton">Calculate</button>
+              <label for="calculateParagonDegreeButton" class="result"></label>
+            </div>
+          </div>
+          <h2 class="tier paragonDegree"></h2>
+        </div>
       </div>
       <div class="popupOverlay"></div>
     <script src="scripts/hamburger.js"></script>

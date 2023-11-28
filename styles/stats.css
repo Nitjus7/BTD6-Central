@@ -39,7 +39,18 @@ button:hover {
 
   background-repeat: no-repeat;
 }
-.bloonButton:hover {
+.towerButton {
+  background-image: linear-gradient(
+      to left,
+      rgba(213, 75, 208, 0.193),
+      var(--buttonColor1)
+    ),
+    url("../assets/towersPage.png");
+  background-position: right;
+
+  background-repeat: no-repeat;
+}
+.bloonButton:hover, .towerButton:hover {
   transform: scale(1.02)
 }
 .roundInputContainer {

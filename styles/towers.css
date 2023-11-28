@@ -1,8 +1,117 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.noMarginTop {
+    margin-top: 0;
+}
 button:not(.wip):hover {
     cursor: pointer;
 }
 .optionsBar {
     margin-top: 75px;
+}
+.actuallyTakeMeHomeContainer {
+    position: fixed;
+    transform: scale(1.05);
+    top: 80px;
+    left: 3vw;
+    padding: 0.4rem;
+    background: var(--buttonColor1);
+    box-shadow: 0px 0px 5px var(--shadowColor);
+    border-radius: 100%;
+    transition: all 0.5s;
+    z-index: 5;
+    user-select: none;
+}
+.actuallyTakeMeHomeContainer:hover {
+    transform: scale(1.2);
+  }
+.actuallyTakeMeHome {
+    font-size: 2rem;
+}
+h1, h2, .attackName {
+    font-family: var(--secondaryFont);
+}
+.name {
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.paragonName, .paragonDegree {
+    color: var(--textColor3)
+}
+.degreeEditorContainer {
+    border-bottom: 1px var(--textColor) solid;
+}
+.editorOptionContainer {
+    background-color: var(--contentBackground1);
+    border-radius: 5px;
+    padding: 1rem;
+    border: 1px var(--textColor) solid;
+}
+.editorOptionContainer.unchecked > *:not(.checkmark) {
+    opacity: 0.25
+}
+#pikachuIChooseYou, #charizardIChooseYou {
+    opacity: 1
+}
+#pikachuIChooseYou:hover, #charizardIChooseYou:hover {
+    cursor: pointer
+}
+.calculateParagonDegreeButton {
+    background-color: var(--buttonColor1);
+    border-radius: 5px;
+    color: var(--textColor);
+    border: 1px var(--textColor) solid;
+    padding: 0.5rem;
+    margin: 0.5rem 0 0 0;
+    transition: background-color 0.5s;
+}
+.calculateParagonDegreeButton:hover {
+    background-color: var(--buttonColor2);
+}
+.result {
+    margin-left: 0.5rem;
+}
+@media only screen and (max-width: 768px) {
+    .result {
+        margin: 0
+    }
+}
+.tier {
+    text-align: center;
+}
+.degreeEditorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.degreeEditorContainer > * {
+    margin: 1.5rem;
+}
+.degreeCalculatorContainer {
+    display: block;
+}
+.valueInput {
+    width: 40px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--textColor);
+    outline: 1px var(--textColor) solid;
+    background-color: var(--contentBackground3);
+    border: none;
+    transition: all 0.25s;
+}
+.valueInput.wider {
+    width: 65px;
+}
+.valueInput:focus {
+    outline: 1px var(--textColor2) solid;
 }
 .towerPickContainer {
     display: flex;
@@ -16,7 +125,10 @@ button:not(.wip):hover {
     justify-content: center;
     align-items: center;
 }
-
+.finalEmission {
+    margin-bottom: 2rem;
+    border-bottom: 1px var(--textColor) dotted;
+}
 .towerPickContainer button {
     color: var(--textColor);
     height: 2rem;
@@ -45,4 +157,51 @@ button:not(.wip):hover {
 }
 .towerPickContainer button.wip {
     background-color: var(--contentBackground1);
+}
+
+.paragonContainer {
+    margin-top: 5rem;
+}
+.attackName {
+    text-align: center;
+    margin: 0.5rem 0 0 0;
+}
+.attackType {
+    text-align: center;
+    opacity: 0.7;
+    margin: 0;
+    padding: 0;
+}
+.attackDiv {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.filterSelect {
+    display: none;
+}
+.attackDiv > * {
+    margin: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--contentBackground1);
+    border-radius: 5px;
+    border: 1px solid var(--textColor)
+}
+.special {
+    background-color: var(--contentBackground2);
+    border: 1px var(--contentOutline2) solid;
+}
+.description, .special {
+    max-width: 800px;
+}
+.frequency, .emitsFrom {
+    width: 45%
+}
+@media only screen and (max-width: 760px) {
+    .frequency, .emitsFrom {
+        width: 35%
+    }
 }

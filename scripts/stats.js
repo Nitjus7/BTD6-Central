@@ -595,9 +595,9 @@ function clearBloonStats() {
 bloonButton.onclick = () => {
   swapSelection(null, null, false)
 }
-/* towerButton.onclick = () => {
+towerButton.onclick = () => {
   window.location.replace("towers.html")
-} */
+}
 showBloonsButton.onclick = () => {
   swapSelection("bloons", 1, false)
 }

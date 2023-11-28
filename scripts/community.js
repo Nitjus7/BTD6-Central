@@ -253,6 +253,7 @@ function parseMapData() {
     const mapDetails = document.querySelector(".mapDetails");
     const playMap = document.querySelector(".playMap")
     const upvotes = mapDetails.querySelector(".upvotes");
+    const upvoteRate = mapDetails.querySelector(".upvoteRate")
     const plays = mapDetails.querySelector(".plays");
     const playsUnique = mapDetails.querySelector(".playsUnique");
     const wins = mapDetails.querySelector(".wins");
@@ -272,6 +273,7 @@ function parseMapData() {
     userID = urlParts[urlParts.length - 1]
     mapCode.innerText = `Code: ${mapID}`;
     upvotes.innerText = mapData["upvotes"].toLocaleString();
+    upvoteRate.innerText = mapData["playsUnique"] > 0 ? `${(mapData["upvotes"] / mapData["playsUnique"] * 100).toFixed(2).toLocaleString()}%` : "no plays yet"
     plays.innerText = mapData["plays"].toLocaleString();
     playsUnique.innerText = mapData["playsUnique"].toLocaleString();
     wins.innerText = mapData["wins"].toLocaleString();

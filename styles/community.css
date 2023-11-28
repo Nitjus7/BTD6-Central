@@ -27,20 +27,34 @@ button:not(.wip):hover {
   max-width: 500px;
 }
 .detailsHeader {
-  border-bottom: 1px var(--textColor) solid;
+  border-right: 1px var(--textColor) solid;
+  padding-right: 10px;
 }
 .selection, .name, .mapDetails > * {
   font-family: var(--secondaryFont);
   text-align: center;
 }
+.selection {
+  padding-top: 25px;
+  border-top: 1px var(--textColor) solid;
+  width: 100%;
+}
+.detailsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .detailsContent {
-  font-family: var(--mainFont)
+  font-family: var(--mainFont);
+  margin-left: 10px;
 }
 .name {
   color: var(--textColor2);
+  margin: 0 0 1rem 0;
 }
 .name, .followers {
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   text-align: left;
 }
 .playerNameContainer {
@@ -82,6 +96,10 @@ button:not(.wip):hover {
 }
 .medalLabel {
   margin: 0.5rem;
+}
+.mapMedalsHeader {
+  margin: 2.5rem 0 0 0;
+  text-align: left;
 }
 .easyModeWrapper, .mediumModeWrapper, .hardModeWrapper {
   display: flex;
@@ -206,6 +224,28 @@ button:not(.wip):hover {
   max-width: 500px;
   width: 60%;
   border-radius: 15px;
+}
+.idHelperHeader {
+  padding-top: 50px;
+  border-top: 1px var(--textColor) solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.idHelperImage {
+  border-radius: 10px;
+  border: 2px solid var(--textColor);
+  margin: 0px 5px 20px 5px;
+  width: 85%;
+  max-width: 500px;
+}
+.idHelperContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 

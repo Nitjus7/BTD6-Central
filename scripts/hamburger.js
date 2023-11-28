@@ -60,7 +60,7 @@ function swapToDark() {
     styles.style.setProperty("--pageBackground", "black");
     styles.style.setProperty("--contentBackground1", "#33373f");
     styles.style.setProperty("--contentBackground2", "#ff56286a");
-    styles.style.setProperty("--contentBackground3", "#5a5a5a6a")
+    styles.style.setProperty("--contentBackground3", "#6648906a")
     styles.style.setProperty("--contentAccent", "rgba(75, 55, 90, 0.35)")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#d382e7")
@@ -81,7 +81,7 @@ function meetGod() {
     styles.style.setProperty("--pageBackground", "#e8e5e5");
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");
-    styles.style.setProperty("--contentBackground3", "rgba(163, 124, 231, 0.5)")
+    styles.style.setProperty("--contentBackground3", "#b095e047")
     styles.style.setProperty("--itemSelectedBackground", "lightgray");
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#914ba2")

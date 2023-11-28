@@ -92,7 +92,7 @@ function generateTimestamp(newsCard, newsElement) {
 
 function generateResourceLinks() {
   document.querySelector(".jumpToResourcesButton").onclick = () => {
-    document.querySelector(".resourcesContainer").scrollIntoView({ behavior: 'smooth' })
+    document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
   }
   document.querySelector(".goToBTD6CentralDiscord").onclick = () => {
     window.open("https://discord.com/invite/xNxjqXBp6B")

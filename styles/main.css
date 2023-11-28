@@ -1,6 +1,6 @@
 /* variables */
 :root {
-  --mainFont: "Nunito", sans-serif;
+  --mainFont: "Quicksand", sans-serif;
   --secondaryFont: "Poppins", sans-serif;
   --pageBackground: black;
   font-size: 16px;
@@ -372,8 +372,8 @@ body {
   display: none;
   position: fixed;
   transform: scale(1.05);
-  top: 100px;
-  left: 4vw;
+  top: 80px;
+  left: 3vw;
   background: var(--buttonColor1);
   box-shadow: 0px 0px 5px var(--shadowColor);
   border-radius: 100%;
@@ -384,6 +384,7 @@ body {
 @media only screen and (max-width: 768px) {
   .takeMeHomeContainer {
     top: 125px;
+    left: 4vw;
   }
 }
 .takeMeHomeContainer:hover {
