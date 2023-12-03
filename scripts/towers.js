@@ -232,28 +232,31 @@ function createAttackDivs(p, emitsFrom) {
             if (attackModel.hasOwnProperty("frequency")) createElem(attackModel["frequency"], "Frequency", attackDiv)
         }
         if (attackModel.hasOwnProperty("description")) createElem(attackModel["description"], "Description", attackDiv)
-        if (attackModel.hasOwnProperty("type") && (attackModel["type"] == "projectile" || attackModel["type"] == "attack")) {
+        if (attackModel.hasOwnProperty("dmg")) {
+            const damageDiv = document.createElement("div")
+            damageDiv.classList.add("damageDiv")
             let dmgModel = attackModel["dmg"]
-            createElem(dmgModel["base"], "Damage", attackDiv)
-            if (dmgModel.hasOwnProperty("bonusCeram")) createElem(`${formatNumber(Number(dmgModel["bonusCeram"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCeram"])})`, "Ceramic Damage", attackDiv)
-            if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusMOAB"])})`, "MOAB Damage", attackDiv)
-            if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCamo"])})`, "Camo Damage", attackDiv)
+            createElem(dmgModel["base"], "Base", damageDiv, "Damage")
+            if (dmgModel.hasOwnProperty("bonusCeram")) createElem(`${formatNumber(Number(dmgModel["bonusCeram"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCeram"])})`, "Ceramic", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusMOAB"])})`, "MOAB", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCamo"])})`, "Camo", damageDiv)
             if (dmgModel.hasOwnProperty("bonusBoss")) {
                 let totalBossDmg = 0
                 if (!dmgModel.hasOwnProperty("bonusMOAB")) totalBossDmg = Number(dmgModel["bonusBoss"]) + Number(dmgModel["base"])
                 else totalBossDmg =  Number(dmgModel["bonusBoss"]) + Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"])
-                createElem(`${formatNumber(totalBossDmg)} (+${formatNumber(dmgModel["bonusBoss"])})`, "Boss Damage", attackDiv)
-                createElem(`${formatNumber(totalBossDmg * 2)}`, "Elite Boss Damage", attackDiv)
+                createElem(`${formatNumber(totalBossDmg)} (+${formatNumber(dmgModel["bonusBoss"])})`, "Boss", damageDiv)
+                createElem(`${formatNumber(totalBossDmg * 2)}`, "Elite Boss", damageDiv)
             } else if (dmgModel.hasOwnProperty("bonusMOAB")){
-                createElem(`${formatNumber((Number(dmgModel["base"]) + Number(dmgModel["bonusMOAB"])) * 2)}`, "Elite Boss Damage", attackDiv)
+                createElem(`${formatNumber((Number(dmgModel["base"]) + Number(dmgModel["bonusMOAB"])) * 2)}`, "Elite Boss", damageDiv)
             } else {
-                createElem(`${formatNumber(dmgModel["base"] * 2)}`, "Elite Boss Damage", attackDiv)
+                createElem(`${formatNumber(dmgModel["base"] * 2)}`, "Elite Boss", damageDiv)
             }
-            createElem(attackModel["pierce"], "Pierce", attackDiv)
-            if (attackModel.hasOwnProperty("rate")) createElem(`${attackModel["rate"]}sec`, "Attack Rate", attackDiv)
-            if (attackModel["projectiles"] > 1) createElem(attackModel["projectiles"], "Projectiles", attackDiv)
-            if (attackModel.hasOwnProperty("range")) createElem(attackModel["range"], "Range", attackDiv)
+            attackDiv.appendChild(damageDiv)
         }
+        if (attackModel.hasOwnProperty("pierce")) createElem(attackModel["pierce"], "Pierce", attackDiv)
+        if (attackModel.hasOwnProperty("rate")) createElem(`${attackModel["rate"]}sec`, "Attack Rate", attackDiv)
+        if (attackModel.hasOwnProperty("projectiles")) createElem(attackModel["projectiles"], "Projectiles", attackDiv)
+        if (attackModel.hasOwnProperty("range")) createElem(attackModel["range"], "Range", attackDiv)
         if (attackModel.hasOwnProperty("special")) createElem(attackModel["special"], "Special", attackDiv)
         paragonContainer.appendChild(attackDiv)
         if (attackModel.hasOwnProperty("emits")) {
@@ -277,10 +280,18 @@ function createSupportDivs(p) {
     }
 }
 
-function createElem(value, type, parent) {
+function createElem(value, type, parent, st) {
+    if (st) {
+        const sectionTitle = document.createElement("h3")
+        sectionTitle.classList.add("sectionTitle")
+        sectionTitle.innerText = st
+        parent.appendChild(sectionTitle)
+    }
     const elem = document.createElement("div")
+    if (type.includes("Damage")) elem.classList.add("damageElem")
     if (!type.includes(" ")) elem.classList.add(`${type.toString().toLowerCase()}`)
     else if (type == "Emitted From") elem.classList.add("emitsFrom")
+    
     const title = document.createElement("h4")
     title.innerText = type
     elem.appendChild(title)

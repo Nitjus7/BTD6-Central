@@ -171,8 +171,6 @@ body {
   font-size: 1.6rem;
   font-family: var(--secondaryFont);
 }
-.popupContainer::backdrop {
-}
 .popupOverlay {
   display: none;
   position: fixed;
@@ -197,14 +195,13 @@ body {
   z-index: 100;
   width: 100vw;
   justify-content: center;
-  transform: translateX(100%);
-  animation: slideIn 0.5s forwards;
+  animation: slideIn 0.35s forwards ease-out;
 }
 @keyframes slideIn {
-  from {
+  0% {
     transform: translateX(100%);
   }
-  to {
+  100% {
     transform: translateX(0);
   }
 }
@@ -377,19 +374,26 @@ body {
   background: var(--buttonColor1);
   box-shadow: 0px 0px 5px var(--shadowColor);
   border-radius: 100%;
-  transition: all 0.5s;
+  transition: all 0.25s;
   z-index: 5;
   user-select: none;
 }
+.takeMeHomeContainer:not(.showYourself) {
+  left: -100px
+}
+.takeMeHomeContainer.showYourself {
+  left: 3vw;
+}
 @media only screen and (max-width: 768px) {
-  .takeMeHomeContainer {
+  .takeMeHomeContainer.showYourself {
     top: 125px;
     left: 4vw;
   }
 }
 .takeMeHomeContainer:hover {
-  transform: scale(1.2);
+  background-color: var(--buttonColor2)
 }
+
 .takeMeHome {
   font-size: 3rem;
 }

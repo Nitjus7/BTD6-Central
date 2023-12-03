@@ -30,6 +30,17 @@ button:not(.wip):hover {
   border-right: 1px var(--textColor) solid;
   padding-right: 10px;
 }
+@media only screen and (max-width: 768px) {
+  .detailsHeader {
+    border-right: none;
+    border-bottom: 1px var(--textColor) solid;
+    margin: 0;
+    padding: 0;
+  }
+  .detailsContainer {
+    flex-direction: column;
+  }
+}
 .selection, .name, .mapDetails > * {
   font-family: var(--secondaryFont);
   text-align: center;
@@ -44,10 +55,19 @@ button:not(.wip):hover {
   align-items: center;
   justify-content: center;
   text-align: center;
+  background-color: var(--contentBackground1);
+  border-radius: 5px;
+  border: 1px var(--textColor) solid;
+  padding: 1rem;
 }
 .detailsContent {
   font-family: var(--mainFont);
   margin-left: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .detailsContent {
+    margin-left: 0;
+  }
 }
 .name {
   color: var(--textColor2);

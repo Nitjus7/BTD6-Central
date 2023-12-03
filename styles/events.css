@@ -31,8 +31,7 @@ button {
   margin: 20px;
   width: 100%;
   max-width: 800px;
-  height: 15vh;
-  max-height: 75px;
+  height: 100px;
   border-radius: 5px;
   border-style: none;
   font-size: 1.4rem;

@@ -28,11 +28,8 @@ button:not(.wip):hover {
     user-select: none;
 }
 .actuallyTakeMeHomeContainer:hover {
-    transform: scale(1.2);
+    background-color: var(--buttonColor2);
   }
-.actuallyTakeMeHome {
-    font-size: 2rem;
-}
 h1, h2, .attackName {
     font-family: var(--secondaryFont);
 }
@@ -40,6 +37,9 @@ h1, h2, .attackName {
     text-align: center;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+.tier {
+    text-align: center
 }
 .paragonName, .paragonDegree {
     color: var(--textColor3)
@@ -81,9 +81,6 @@ h1, h2, .attackName {
     .result {
         margin: 0
     }
-}
-.tier {
-    text-align: center;
 }
 .degreeEditorContainer {
     display: flex;
@@ -127,7 +124,7 @@ h1, h2, .attackName {
 }
 .finalEmission {
     margin-bottom: 2rem;
-    border-bottom: 1px var(--textColor) dotted;
+    border-bottom: 2px var(--textColor) dotted;
 }
 .towerPickContainer button {
     color: var(--textColor);
@@ -164,32 +161,67 @@ h1, h2, .attackName {
 }
 .attackName {
     text-align: center;
-    margin: 0.5rem 0 0 0;
+    padding: 0;
+    margin: 0;
 }
 .attackType {
     text-align: center;
     opacity: 0.7;
-    margin: 0;
     padding: 0;
+    margin-top: 0;
 }
 .attackDiv {
     display: flex;
     flex-wrap: wrap;
-    padding: 1rem;
     text-align: center;
     justify-content: center;
     align-items: center;
+    padding-bottom: 1.5rem;
+}
+.attackDiv > * {
+    background-color: var(--contentBackground1);
+    margin: 1rem;
+    padding: 0 0.5rem;
+    border-radius: 5px;
+    border: 1px var(--textColor) solid;
+}
+.damageDiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    width: 800px;
+    background-color: var(--contentBackground1);
+    border-radius: 5px;
+    border: 1px var(--textColor) solid;
+    margin: 0 2rem 0.5rem 2rem;
+}
+.sectionTitle {
+    border-right: 1px var(--textColor) solid;
+    padding-right: 1rem;
+}
+@media only screen and (max-width: 768px) {
+    .damageDiv {
+        width: auto;
+        justify-content: auto;
+    }
+}
+.damageDiv > * {
+    margin: 0.5rem;
 }
 .filterSelect {
     display: none;
 }
-.attackDiv > * {
+/* .attackDiv > * {
     margin: 0.75rem;
     padding: 0.25rem 0.5rem;
     background-color: var(--contentBackground1);
     border-radius: 5px;
     border: 1px solid var(--textColor)
-}
+} */
 .special {
     background-color: var(--contentBackground2);
     border: 1px var(--contentOutline2) solid;
@@ -198,7 +230,7 @@ h1, h2, .attackName {
     max-width: 800px;
 }
 .frequency, .emitsFrom {
-    width: 45%
+    flex-basis: 40%;
 }
 @media only screen and (max-width: 760px) {
     .frequency, .emitsFrom {

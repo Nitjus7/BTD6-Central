@@ -100,3 +100,18 @@ function swapToSpirit() {
     pageTheme.value = "spirit"
     styles.style.setProperty("--pageBackground", "")
 }
+
+if (document.getElementsByClassName("takeMeHomeContainer").length > 0) {
+    let lastScrollPos = 0
+    window.addEventListener('scroll', function() {
+    let currentScrollPos = window.pageYOffset;
+    if (currentScrollPos > lastScrollPos) {
+        // User is scrolling down
+        document.querySelector(".takeMeHomeContainer").classList.remove("showYourself")
+    } else {
+        // User is scrolling up
+        document.querySelector(".takeMeHomeContainer").classList.add("showYourself")
+    }
+    lastScrollPos = currentScrollPos;
+    }, { passive: true })
+}
