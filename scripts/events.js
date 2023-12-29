@@ -531,7 +531,7 @@ function parseHeroes(hero, container) {
   if (hero["tower"] != "ChosenPrimaryHero") {
     if (hero["max"] != 0) {
       const heroIcon = document.createElement("img");
-      heroIcon.src = `../assets/${hero["tower"]}.png`
+      heroIcon.src = `assets/${hero["tower"]}.png`
       heroIcon.alt = hero["tower"]
       heroIcon.classList.add("heroIcon");
       container.appendChild(heroIcon);

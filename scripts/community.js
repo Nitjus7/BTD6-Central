@@ -221,7 +221,7 @@ function parsePlayerData() {
         const heroValue = document.createElement("h3")
         element.classList.add("heroUsageElem")
         heroImage.classList.add("heroImage")
-        heroImage.src = `../assets/${key}.png`
+        heroImage.src = `assets/${key}.png`
         heroImage.alt = key
         heroValue.innerText = value
         element.appendChild(heroImage)
