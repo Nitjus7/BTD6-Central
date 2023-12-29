@@ -1,6 +1,65 @@
-const newsContainer = document.querySelector(".newsContainer")
+const link1Name = "goToParagons"
+const link2Name = "goToMaps"
+const link3Name = "goToBosses"
+const link4Name = "goToRaces"
+
+function generateResourceLinks() {
+  /* document.querySelector(".jumpToResourcesButton").onclick = () => {
+    document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
+  } */
+  document.querySelector(".goToBTD6CentralDiscord").onclick = () => {
+    window.open("https://discord.com/invite/xNxjqXBp6B")
+  }
+  document.querySelector(".goToBTD6Index").onclick = () => {
+    window.open("https://btd6index.win/")
+  }
+  document.querySelector(".goToBTD6Popology").onclick = () => {
+    window.open("https://www.reddit.com/r/btd6/comments/atomg3/advanced_popology_vol_1_primary_towers/")
+  }
+  document.querySelector(".goToCyberQuincy").onclick = () => {
+    window.open("https://top.gg/bot/591922988832653313")
+  }
+  document.querySelector(".goToB2Popology").onclick = () => {
+    window.open("https://b2popology.com/")
+  }
+}
+function generateFeaturedPagesLinks() {
+  const links1 = Array.from(document.querySelectorAll(".goToLink1"))
+  const links2 = Array.from(document.querySelectorAll(".goToLink2"))
+  const links3 = Array.from(document.querySelectorAll(".goToLink3"))
+  const links4 = Array.from(document.querySelectorAll(".goToLink4"))
+  for (const link of links1) {
+    link.onclick = () => {
+      window.location.replace("https://nitjus7.github.io/BTD6-Central/")
+    }
+  }
+  for (const link of links2) {
+    link.onclick = () => {
+      window.location.replace("https://nitjus7.github.io/BTD6-Central/community.html")
+    }
+  }
+  for (const link of links3) {
+    link.onclick = () => {
+      window.location.replace("https://nitjus7.github.io/BTD6-Central/events.html?event=bosses")
+    }
+  }
+  for (const link of links4) {
+    link.onclick = () => {
+      window.location.replace("events.html?event=races") // testing this for when I push to github to see if it still works
+    }
+  }
+}
+const navList = document.querySelector(".navList")
+window.addEventListener('scroll', function() {
+  if (window.scrollY <= 60) navList.classList.add("navBeforeScroll")
+  else navList.classList.remove("navBeforeScroll")
+})
+generateResourceLinks()
+generateFeaturedPagesLinks()
+// main() 
+/* const newsContainer = document.querySelector(".newsContainer")
 let newsCards
-/* formatting for news card
+formatting for news card
 {
   "title": "",
   "description": "",
@@ -15,7 +74,7 @@ let newsCards
   "big": false
 },
 */
-async function getData() {
+/* async function getData() {
   try {
     newsData = await(await fetch("https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/news.json")).json()
     newsCards = newsData["body"]
@@ -89,35 +148,8 @@ function generateTimestamp(newsCard, newsElement) {
   newsElement.appendChild(timestampElem)
 }
 
-
-function generateResourceLinks() {
-  document.querySelector(".jumpToResourcesButton").onclick = () => {
-    document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
-  }
-  document.querySelector(".goToBTD6CentralDiscord").onclick = () => {
-    window.open("https://discord.com/invite/xNxjqXBp6B")
-  }
-  document.querySelector(".goToBTD6Index").onclick = () => {
-    window.open("https://btd6index.win/")
-  }
-  document.querySelector(".goToBTD6Popology").onclick = () => {
-    window.open("https://www.reddit.com/r/btd6/comments/atomg3/advanced_popology_vol_1_primary_towers/")
-  }
-  document.querySelector(".goToCyberQuincy").onclick = () => {
-    window.open("https://top.gg/bot/591922988832653313")
-  }
-  document.querySelector(".goToB2Popology").onclick = () => {
-    window.open("https://b2popology.com/")
-  }
-}
 async function main() {
   generateResourceLinks()
   if (await getData() != "oops") generateNewsCards()
 }
-
-const navList = document.querySelector(".navList")
-window.addEventListener('scroll', function() {
-  if (window.scrollY <= 125) navList.classList.add("navBeforeScroll")
-  else navList.classList.remove("navBeforeScroll")
-})
-main()
+*/

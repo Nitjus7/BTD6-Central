@@ -320,10 +320,11 @@ button:hover {
   transform: scale(1.05);
 }
 .bossImage {
-  width: 50vw;
-  max-width: 400px;
+  width: 25vw;
+  max-width: 200px;
   border-radius: 25px;
   margin: 0 0.5rem 0 0.5rem;
+  image-rendering: crisp-edges;
 }
 .bossTierContainer {
   display: flex;

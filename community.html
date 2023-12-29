@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Admire your BTD6 player profile in all its glory, or find a published custom map in Bloons TD 6 using just its map code."
+    />
     <title>Community | BTD6 Central</title>
 
     <!--CUSTOM FONTS IMPORT BEGIN-->
@@ -14,6 +18,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> <!--Profile Icon-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,-25" /> <!--Play Icon-->
 
     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
     <link rel="stylesheet" href="styles/community.css" />
@@ -73,14 +79,13 @@
       <p class="idHelperText"></p>
     </div>
     <div class="playerInfoContainer">
-      <h1 class="selection">Player Info</h1>
+      <h1 class="selection">Player Profile</h1>
       <div class="playerNameContainer">
         <img class="playerIcon" src="" alt="">
         <div class="nameAndFollowerContainer">
-          <h2 class="playerName name">Placeholder</h2>
+          <h2 class="playerName name">[placeholder]</h2>
           <p class="followers">0 followers</p>
         </div>
-        <!-- <div class="playerBanner"></div> -->
       </div>
       <div class="levelContainer">
         <div class="regLevelContainer">
@@ -92,193 +97,223 @@
           <h3 class="vetLevel">999</h3>
         </div>
       </div>
-      <!-- <h2 class="rankedMedalsHeader">Competitive Event Medals</h2>
+      <h2 class="favoriteHeroHeader">Most Used Heroes</h2>
+      <button class="viewAllHeroesButton">View All Heroes</button>
+      <div class="favoriteHeroContainer"></div>
+      <h2 class="rankedMedalsHeader">Competitive Event Medals</h2>
       <div class="rankedMedalsContainer">
-         <div class="bossRankedMedalsContainer">
-          <div class="bossHeaderContainer">
-            <img src="/assets/bloonarius.png" alt="" class="bossIcon">
-            <h3 class="bossHeader">Normal Ranked Boss Medals</h3>
+        <div class="raceMedalsWrapper">
+          <div class="rankedHeaderContainer">
+            <h3 class="rankedHeader">Race</h3>
+            <span class="material-symbols-outlined toggleRaceView">menu</span>
           </div>
-          <div class="normalBossContainer"></div>
-          <div class="bossHeaderContainer">
-            <img src="/assets/bosses.png" alt="" class="bossIcon">
-            <h3 class="eliteBossHeader bossHeader">Elite Ranked Boss Medals</h3>
-          </div>
-          <div class="eliteBossContainer"></div>
-         </div>
-         <div class="raceMedalsContainer"></div>
-         <div class="ctMedalsContainer"></div>
-      </div> -->
-      <h2 class="mapMedalsHeader">Map Medals</h2>
-      <div class="medalsSinglePlayerContainer">
-        <div class="easyModeWrapper">
-          <h3 class="easyModeHeader">Solo Easy Mode</h3>
-          <div class="easyMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Easy Standard</h4>
-              <p class="Easy">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Primary Only</h4>
-              <p class="PrimaryOnly">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Deflation</h4>
-              <p class="Deflation">0</p>
-            </div>
-          </div>
+          <div class="raceContainer"></div>
         </div>
-        <div class="mediumModeWrapper">
-          <h3 class="mediumModeHeader">Solo Medium Mode</h3>
-          <div class="mediumMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Medium Standard</h4>
-              <p class="Medium">0</p>
+        <div class="rankedBossContainer">
+          <div class="normalBossWrapper">
+            <div class="rankedHeaderContainer">
+              <h3 class="rankedHeader">Normal Ranked Boss</h3>
+              <span class="material-symbols-outlined toggleNormalBossView">menu</span>
             </div>
-            <div>
-              <h4 class="medalLabel">Military Only</h4>
-              <p class="MilitaryOnly">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Apopalypse</h4>
-              <p class="Apopalypse">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Reverse</h4>
-              <p class="Reverse">0</p>
-            </div>
+            <div class="normalBossContainer"></div>
           </div>
-        </div>
-        <div class="hardModeWrapper">
-          <h3 class="hardModeHeader">Solo Hard Mode</h3>
-          <div class="hardMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Hard Standard</h4>
-              <p class="Hard">0</p>
+          <div class="eliteBossWrapper">
+            <div class="rankedHeaderContainer">
+              <h3 class="rankedHeader">Elite Ranked Boss</h3>
+              <span class="material-symbols-outlined toggleEliteBossView">menu</span>
             </div>
-            <div>
-              <h4 class="medalLabel">Magic Only</h4>
-              <p class="MagicOnly">0</p>
+            <div class="eliteBossContainer"></div>
+          </div>
+          <div class="ctGlobalWrapper">
+            <div class="rankedHeaderContainer">
+              <h3 class="rankedHeader">Global Contested Territory</h3>
+              <span class="material-symbols-outlined toggleCTGlobalView">menu</span>
             </div>
-            <div>
-              <h4 class="medalLabel">Double HP MOABs</h4>
-              <p class="DoubleMoabHealth">0</p>
+            <div class="ctGlobalContainer rankedContentHidden"></div>
+          </div>
+          <div class="ctGlobalWrapper">
+            <div class="rankedHeaderContainer">
+              <h3 class="rankedHeader">Local Contested Territory</h3>
+              <span class="material-symbols-outlined toggleCTLocalView">menu</span>
             </div>
-            <div>
-              <h4 class="medalLabel">Half Cash</h4>
-              <p class="HalfCash">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Alternate Bloons Rounds</h4>
-              <p class="AlternateBloonsRounds">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Impoppable</h4>
-              <p class="Impoppable">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">CHIMPS</h4>
-              <p class="Clicks">0</p>
-            </div>
+            <div class="ctLocalContainer rankedContentHidden"></div>
           </div>
         </div>
       </div>
-      <div class="medalsMultiPlayerContainer">
-        <div class="easyModeWrapper">
-          <h3 class="easyModeHeader">Co-Op Easy Mode</h3>
-          <div class="easyMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Easy Standard</h4>
-              <p class="Easy">0</p>
+      <h2 class="mapMedalsHeader">Map Medals</h2>
+      <div class="allMedalsContainer">
+        <div class="medalsSinglePlayerContainer">
+          <div class="easyModeWrapper">
+            <h3 class="easyModeHeader">Solo Easy Mode</h3>
+            <div class="easyMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Easy Standard</h4>
+                <p class="Easy">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Primary Only</h4>
+                <p class="PrimaryOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Deflation</h4>
+                <p class="Deflation">0</p>
+              </div>
             </div>
-            <div>
-              <h4 class="medalLabel">Primary Only</h4>
-              <p class="PrimaryOnly">0</p>
+          </div>
+          <div class="mediumModeWrapper">
+            <h3 class="mediumModeHeader">Solo Medium Mode</h3>
+            <div class="mediumMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Medium Standard</h4>
+                <p class="Medium">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Military Only</h4>
+                <p class="MilitaryOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Apopalypse</h4>
+                <p class="Apopalypse">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Reverse</h4>
+                <p class="Reverse">0</p>
+              </div>
             </div>
-            <div>
-              <h4 class="medalLabel">Deflation</h4>
-              <p class="Deflation">0</p>
+          </div>
+          <div class="hardModeWrapper">
+            <h3 class="hardModeHeader">Solo Hard Mode</h3>
+            <div class="hardMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Hard Standard</h4>
+                <p class="Hard">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Magic Only</h4>
+                <p class="MagicOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Double HP MOABs</h4>
+                <p class="DoubleMoabHealth">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Half Cash</h4>
+                <p class="HalfCash">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Alternate Bloons Rounds</h4>
+                <p class="AlternateBloonsRounds">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Impoppable</h4>
+                <p class="Impoppable">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">CHIMPS</h4>
+                <p class="Clicks">0</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="mediumModeWrapper">
-          <h3 class="mediumModeHeader">Co-Op Medium Mode</h3>
-          <div class="mediumMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Medium Standard</h4>
-              <p class="Medium">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Military Only</h4>
-              <p class="MilitaryOnly">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Apopalypse</h4>
-              <p class="Apopalypse">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Reverse</h4>
-              <p class="Reverse">0</p>
+        <div class="medalsMultiPlayerContainer">
+          <div class="easyModeWrapper">
+            <h3 class="easyModeHeader">Co-Op Easy Mode</h3>
+            <div class="easyMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Easy Standard</h4>
+                <p class="Easy">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Primary Only</h4>
+                <p class="PrimaryOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Deflation</h4>
+                <p class="Deflation">0</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="hardModeWrapper">
-          <h3 class="hardModeHeader">Co-Op Hard Mode</h3>
-          <div class="hardMedalsContainer medalContainer">
-            <div>
-              <h4 class="medalLabel">Hard Standard</h4>
-              <p class="Hard">0</p>
+          <div class="mediumModeWrapper">
+            <h3 class="mediumModeHeader">Co-Op Medium Mode</h3>
+            <div class="mediumMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Medium Standard</h4>
+                <p class="Medium">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Military Only</h4>
+                <p class="MilitaryOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Apopalypse</h4>
+                <p class="Apopalypse">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Reverse</h4>
+                <p class="Reverse">0</p>
+              </div>
             </div>
-            <div>
-              <h4 class="medalLabel">Magic Only</h4>
-              <p class="MagicOnly">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Double HP MOABs</h4>
-              <p class="DoubleMoabHealth">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Half Cash</h4>
-              <p class="HalfCash">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Alternate Bloons Rounds</h4>
-              <p class="AlternateBloonsRounds">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">Impoppable</h4>
-              <p class="Impoppable">0</p>
-            </div>
-            <div>
-              <h4 class="medalLabel">CHIMPS</h4>
-              <p class="Clicks">0</p>
+          </div>
+          <div class="hardModeWrapper">
+            <h3 class="hardModeHeader">Co-Op Hard Mode</h3>
+            <div class="hardMedalsContainer medalContainer">
+              <div>
+                <h4 class="medalLabel">Hard Standard</h4>
+                <p class="Hard">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Magic Only</h4>
+                <p class="MagicOnly">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Double HP MOABs</h4>
+                <p class="DoubleMoabHealth">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Half Cash</h4>
+                <p class="HalfCash">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Alternate Bloons Rounds</h4>
+                <p class="AlternateBloonsRounds">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">Impoppable</h4>
+                <p class="Impoppable">0</p>
+              </div>
+              <div>
+                <h4 class="medalLabel">CHIMPS</h4>
+                <p class="Clicks">0</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="teamInfoContainer">
-      <h1 class="selection">Team Info</h1>
+      <h1 class="selection">Team Profile</h1>
     </div>
     <div class="challengeInfoContainer">
       <h1 class="selection">Custom Challenge</h1>
     </div>
     <div class="mapInfoContainer">
       <h1 class="selection">Custom Map</h1>
-      <h2 class="mapName name">Placeholder</h2>
-      <img class="mapImage" src="" alt="">
-      <div class="creditAndPlayMapButtonContainer">
-        <button class="mapCredit">Map Creator's Profile</button>
-        <button class="playMap">Play Map</button>
+      <h2 class="mapName">Placeholder</h2>
+      <div class="mapAndButtonsContainer">
+        <img class="mapImage" src="" alt="">
+        <div class="creditAndPlayMapButtonContainer">
+          <button class="mapCredit"><span class="material-symbols-outlined">person</span></button>
+          <button class="playMap"><span class="material-symbols-outlined">play_arrow</span></button>
+        </div>
       </div>
       <p class="mapCode">Placeholder</p>
       <div class="mapDetails">
         <div class="detailsContainer">
-          <p class="detailsHeader">Upvotes</p>
+          <p class="detailsHeader">Likes</p>
           <h3 class="upvotes detailsContent">Placeholder</h3>
         </div>
         <div class="detailsContainer">
-          <p class="detailsHeader">Upvote Rate</p>
+          <p class="detailsHeader">Like Rate</p>
           <h3 class="upvoteRate detailsContent">Placeholder</h3>
         </div>
         <div class="detailsContainer">

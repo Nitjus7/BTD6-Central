@@ -1,6 +1,9 @@
 #eventPickList {
   list-style: none;
 }
+h1 {
+  font-family: var(--secondaryFont)
+}
 
 body {
   text-align: center;
@@ -30,11 +33,11 @@ button {
   padding: 15px;
   margin: 20px;
   width: 100%;
+  font-size: 1.4rem;
   max-width: 800px;
   height: 100px;
   border-radius: 5px;
   border-style: none;
-  font-size: 1.4rem;
   font-weight: bold;
   text-align: left;
   font-family: var(--secondaryFont);
@@ -75,45 +78,21 @@ button {
   cursor: pointer;
   transform: scale(1.02);
 }
+
 #eventTitle {
   margin-top: 75px;
-  display: flex;
-  justify-content: center;
-  font-size: 1.6rem;
-  font-family: var(--secondaryFont)
+  text-align: center;
+  font-family: var(--secondaryFont);
 }
 
-#raceArchiveContainer {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-#bossArchiveContainer {
+#raceArchiveContainer, #bossArchiveContainer, #ctArchiveContainer {
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.eventTitleContainer {
-  display: flex;
-  flex-direction: column; 
-  border: 1px var(--textColor) solid;
-  background: var(--contentBackground1);
-  margin: 1.5rem;
-  padding: 0.75rem;
-  width: 80%;
-  max-width: 800px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 3px var(--shadowColor);
-  align-items: center;
-  justify-content: center;
-}
-.eventName {
-  font-size: 1.2rem;
-  font-family: var(--secondaryFont)
-}
+
 #difficultyButtonContainer {
   display: flex;
   margin-bottom: 1rem;
@@ -126,51 +105,106 @@ button {
   align-items: center;
   justify-content: center;
 }
-.swapDifficultyButton {
-  border-style: none;
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem;
-  font-size: 1.4rem;
-  border-radius: 3px;
-  box-shadow: 0px 0px 3px var(--shadowColor);
-  background-color: var(--buttonColor1);
-  transition: all 0.5s;
+
+.eventOverviewContainer {
+  background-color: var(--contentBackground1);
+  border-radius: 10px;
+  margin: 0px 0px 2rem 0px;
+  padding: 0 1rem 0 1rem;
+  width: 80%;
+  max-width: 650px;
+  border: 1px var(--textColor) solid;
 }
-.swapDifficultyButton:hover {
-  cursor: pointer;
-  transform: scale(1.05);
+.eventOverviewTitle {
+  font-family: var(--secondaryFont);
 }
-.chooseTypeButton {
-  border-radius: 3px;
-  font-size: 1.2rem;
-  width: auto;
-  padding: 0.5rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  box-shadow: 0px 0px 3px var(--shadowColor);
-  border-style: none;
-  background-color: var(--buttonColor1);
-  transition: all 0.5s ease;
-}
-.chooseTypeButton:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
-.eventStatus {
-  margin-top: 0px;
-  font-weight: bold;
-}
-.live {
+.Live {
   background-color: var(--contentBackground2);
   border: 2px solid var(--contentOutline2);
 }
+.Yet {  /* lmao this is so stupid*/
+  background-color: var(--contentBackground3);
+  border: 2px solid var(--contentOutline3);
+} 
+.overviewNavButtonContainer {
+  display: flex;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0px;
+}
 
-#mapImage {
+.overviewNavButton {
+  background-color: var(--buttonColor1);
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: background-color 0.25s;
+  transform: scale(1.1);
+}
+.overviewNavButton:hover {
+  background-color: var(--buttonColor2)
+}
+/* targets the trophy icon if the info button is also there, just for spacing */
+.overviewNavButton:nth-child(2) { 
+  margin-left: 1rem;
+}
+.totalScoresContainer {
+  display: flex;
+  justify-content: center;
+}
+.eventScoresContainer {
+  margin: 0px 1rem;
+  background-color: var(--contentBackground4);
+  border: 1px var(--contentOutline4) solid;
+  padding: 0px 1rem;
+  border-radius: 10px;
+}
+
+#racesEventDetails, #bossesEventDetails {
+  display: none;
+}
+
+.detailsHeader {
+  font-family: var(--secondaryFont);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.allModifiersContainer {
+  display: flex;
+  background-color: var(--contentBackground1);
+  border: 1px var(--textColor) solid;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin: 0.5rem auto;
+}
+.singleModContainer {
+  padding: 0px 1rem;
+  margin: 0px 1rem 1rem 1rem;
+}
+.singleModContainer.withImage {
+  padding: 1rem 1rem 0px 1rem;
+}
+@media only screen and (max-width: 768px) {
+  .singleModContainer {
+    padding: 0px 0.5rem;
+  }
+  .singleModContainer.withImage {
+    padding: 0.5rem 0.35rem 0px 0.35rem;
+  }
+}
+.modImage {
+  width: 10vw;
+  max-width: 75px;
+  image-rendering: pixelated;
+}
+
+.mapImage {
   display: block;
   margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 25px;
+  margin-right: 1rem;
   box-shadow: 0px 0px 3px var(--shadowColor);
   border-radius: 25px;
   width: 80vw;
@@ -179,76 +213,111 @@ button {
   max-height: 317px;
   /* height = 0.6x width*/
 }
-#bossImage {
-  margin: 0 auto;
-  margin-bottom: 10px;
-  width: 150px;
+.mapImage.noDifficultyButtons {
+  margin-right: auto;
 }
-
-.towerInfo {
-  margin: 0 auto;
-  font-family: var(--secondaryFont)
-}
-
-#raceTitle {
-  margin-top: 75px;
-  display: none;
-  font-size: 1.4rem;
-  font-family: var(--secondaryFont);
+.widescreenFormattingBossDifficulty {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
 }
+.bossDifficultyButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#bossDifficultyButtonContainerLB {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#bossDifficultyButtonContainerLB > * {
+  margin: 0 0.5rem;
+}
+.difficultyImage {
+  width: 25vw;
+  max-width: 150px;
+  background-color: var(--buttonColor1);
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 15px;
+  transition: all 0.25s;
+}
+@media only screen and (max-width: 768px) {
+  .widescreenFormattingBossDifficulty {
+    flex-direction: column;
+  }
+  .bossDifficultyButtonContainer {
+    flex-direction: row;
+  }
+  .difficultyImage {
+    margin: 0.5rem 1rem;
+  }
+  .mapImage {
+    margin-right: auto;
+  }
+}
+.difficultyImage.inactive {
+  filter: grayscale(85%);
+}
+.difficultyImage.inactive:hover {
+  cursor: pointer;
+  filter: grayscale(50%);
+}
+.enabledHeroes {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 15%;
+  justify-content: center;
+}
+.heroIcon {
+  height: 15vw;
+  max-height: 125px;
+  background-color: var(--contentBackground4);
+  border: 1px var(--contentOutline4) solid;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.headerHeroDisplay {
+  border-radius: 7px;
+  padding: 1rem;
+}
+.anyHeroDisplay {
+  background-color: var(--contentBackground4);
+  border: 1px var(--contentOutline4) solid;
+}
+.noHeroDisplay {
+  background-color: var(--contentBackground1);
+  border: 1px var(--textColor) solid;
+}
+.specialModsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: var(--contentBackground1);
+  border: 1px var(--textColor) solid;
+  border-radius: 5px;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0;
+}
+.specialModsContainer > * {
+  margin: 1rem;
+}
+
 h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-#eventDetails {
-  display: none;
-  flex-direction: column;
-  margin: 0 1rem;
-}
-#raceModifiersContainer {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-  height: fit-content;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px var(--shadowColor);
-  margin-right: 10px;
-  margin-bottom: 25px;
-  justify-content: space-evenly;
-  border: 0.6px var(--textColor) solid;
-  background: var(--contentBackground1);
-}
-#raceModifiersContainer > * {
-  margin-right: 1rem;
-}
-#specialModsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  height: fit-content;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px var(--shadowColor);
-  border: 0.6px var(--textColor) solid;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  justify-content: space-around;
-  background: var(--contentBackground1);
-}
-#specialModsContainer:empty {
-  display: none;
-}
-#specialModsContainer > * {
-  margin: 0.8rem;
+  font-family: var(--secondaryFont);
 }
 
-#enabledTowersContainer {
+.enabledTowersContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow-x: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -259,78 +328,106 @@ h2 {
   margin: 1rem;
   text-align: center;
 }
-#enabledTowersContainer:last-child {
+.enabledTowersContainer:last-child {
   padding-right: 1rem;
 }
 @media only screen and (min-width: 600px) {
-  #enabledTowersContainer {
+  .enabledTowersContainer {
     justify-content: space-around;
   }
 }
-#enabledTowersContainer > * {
+.enabledTowersContainer > * {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0 1rem 0 1rem;
   justify-content: flex-start;
 }
-#scrollInfo {
+.enabledTowersContainer > * > * { /* this is also so stupid */
+  margin: 2rem 1rem;
+  padding-right: 0.5rem;
+}
+.scrollInfo {
   display: none;
   text-align: center;
   justify-content: center;
 }
 @media only screen and (max-width: 600px) {
-  #scrollInfo {
+  .scrollInfo {
     display: flex;
   }
 }
-#enabledHeroes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  border: 0.6px var(--textColor) solid;
-  border-radius: 5px;
-  background-color: var(--contentBackground1);
-  box-shadow: 0px 0px 3px var(--shadowColor);
-  margin: 1rem;
-}
-#enabledHeroes > * {
-  margin: 1rem;
-  padding: 0.5rem;
-}
-
-#leaderboardContainer {
+.leaderboardContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.playerElem {
+.playerDiv {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  background: var(--contentBackground1);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  border: 1px var(--textColor) solid;
+  width: 80vw;
+  max-width: 750px;
   justify-content: space-between;
-  border: 0.25px var(--textColor) solid;
-  width: 85%;
-  max-width: 800px;
-  background-color: var(--contentBackground1);
-  box-shadow: 0px 0px 3px var(--shadowColor);
-  border-radius: 5px;
-  margin: 0.5rem;
-  padding: 0px 1rem 0px 1rem;
 }
-.tiebreakerElem {
-  background: var(--buttonColor2);
-  padding: 3px;
-  border-radius: 5px;
+.placementNumber {
+  margin-right: 1rem;
 }
-.tiebreakerElem:hover {
-  cursor: pointer;
-}
-#leaderboardTitle {
-  margin-top: 75px;
-  font-size: 1.4rem;
-  font-family: var(--secondaryFont);
+.playerTitleContainer {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  background-color: var(--contentBackground4);
+  border: 1px var(--contentOutline4) solid;
+  border-radius: 5px;
+  padding: 0 1rem;
+  flex-shrink: 1;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.playerName {
+  margin-left: 1rem;
+}
+.goToProfile {
+  user-select: none;
+  background-color: var(--buttonColor1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: background-color 0.25s;
+}
+.placementAndNameWrapper {
+  display: flex;
+}
+.goToProfile:hover {
+  background-color: var(--buttonColor2);
+}
+.allPlayerScoresContainer {
+  display: flex;
+  align-items: center;
+}
+.mainScore {
+  background-color: var(--contentBackground2);
+  border: 1px var(--contentOutline2) solid;
+  padding: 0 1rem;
+  margin: 0 1rem;
+  border-radius: 5px;
+} 
+@media only screen and (max-width: 768px) {
+  .placementAndNameWrapper {
+    display: flex;
+  }
+  .playerDiv {
+    flex-direction: column
+  }
+  .placementNumber, .playerName {
+    font-size: 1.2rem;
+  }
+  .allPlayerScoresContainer {
+    margin-top: 1rem;
+  }
 }
 
 /* this is the back button */

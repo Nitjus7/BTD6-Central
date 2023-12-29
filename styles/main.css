@@ -23,15 +23,15 @@ body {
 
 .heroContainer::before {
   content: "";
-  background-image: url("../assets/hero.png");
+  background-image: url("../assets/christmasHero.jpg");
   background-size: cover;
   position: absolute;
-  top: 0;
+  top: 0px;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 90vh;
-  filter: blur(8px);
+  height: 60vh;
+  filter: blur(5px);
   z-index: -1;
 }
 .heroContainer {
@@ -41,9 +41,14 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  height: 90vh;
+  height: 60vh;
 }
-.title {
+.heroTextContainer {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 15px;
+  width: fit-content;
+}
+.heroTitle {
   display: block;
   height: 100%;
   width: 85%;
@@ -56,21 +61,85 @@ body {
 }
 @media only screen and (max-width: 768px) {
   .heroContainer::before {
-    height: 650px;
+    height: 350px;
   }
   .heroContainer {
-    height: 650px;
+    height: 350px;
   }
-  .title {
+  .heroTitle {
     display: flex;
     align-items: center;
     justify-content: center;
     letter-spacing: -0.65px;
-    height: 650px;
+    font-size: 2.5rem;
+  }
+  .heroTextContainer {
+    width: 75%;
+  }
+}
+
+.featuredPagesListContainer {
+  display: flex;
+  justify-content: center;
+  flex-basis: 50%;
+  flex-wrap: wrap;
+}
+.featuredPageContainer {
+  width: 40%;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: var(--contentBackground3);
+  border: 2px var(--contentOutline3) solid;
+}
+.goToFeaturedPageButton {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  background-color: var(--buttonColor1);
+  border: 1px var(--textColor) solid;
+  color: var(--textColor);
+  border-radius: 5px;
+  padding: 0.5rem;
+  transition: background-color 0.35s;
+}
+.goToFeaturedPageButton:hover {
+  cursor: pointer;
+  background-color: var(--buttonColor2)
+}
+.imageAndHeaderContainer {
+  display: flex;
+  align-items: center;
+}
+.featuredPageHeader {
+  font-family: var(--secondaryFont);
+}
+.featuredPageImage {
+  width: 20vw;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  margin-right: 1rem;
+}
+.featuredPageImage:hover {
+  cursor: pointer;
+  /* transform: scale(1.05);
+  box-shadow: 0px 0px 15px black; */
+}
+.goToFeaturedPage {
+  display: flex;
+  align-items: center;
+}
+@media only screen and (max-width: 768px) {
+  .featuredPagesListContainer {
+    flex-basis: 80%;
+  }
+  .featuredPageContainer { 
+    width: 80%;
   }
 }
 
 
+/********************************************************************/
 .navBarContainer {
   width: 100%;
   margin: 0;
@@ -195,14 +264,14 @@ body {
   z-index: 100;
   width: 100vw;
   justify-content: center;
-  animation: slideIn 0.35s forwards ease-out;
+  animation: slideIn 0.35s forwards;
 }
 @keyframes slideIn {
   0% {
-    transform: translateX(100%);
+    transform: translateY(-100%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 .openFaceBurger {
@@ -263,12 +332,21 @@ body {
 }
 
 
-.newsHeader, .resourcesHeader {
-  display: flex;
-  justify-content: center;
+
+.featuredPagesHeader, .resourcesHeader {
+  text-align: center;
   font-family: var(--secondaryFont);
-  font-size: 2.5rem;
+  margin: 2rem 0px 0px 0px;
+}
+
+
+
+
+/* .newsHeader, .resourcesHeader {
+  text-align: center;
+  font-family: var(--secondaryFont);
   padding: 0;
+  margin-bottom: 0px;
 }
 .newsContainer {
   display: flex;
@@ -315,7 +393,7 @@ body {
 .bigNews {
   background: var(--contentBackground2);
   border: 2px solid var(--contentOutline2);
-}
+} */
 
 .resourcesList {
   display: flex;
@@ -374,20 +452,14 @@ body {
   background: var(--buttonColor1);
   box-shadow: 0px 0px 5px var(--shadowColor);
   border-radius: 100%;
-  transition: all 0.25s;
+  transition: background-color 0.25s;
   z-index: 5;
   user-select: none;
 }
-.takeMeHomeContainer:not(.showYourself) {
-  left: -100px
-}
-.takeMeHomeContainer.showYourself {
-  left: 3vw;
-}
 @media only screen and (max-width: 768px) {
-  .takeMeHomeContainer.showYourself {
-    top: 125px;
-    left: 4vw;
+  .takeMeHomeContainer {
+    transform: scale(0.85);
+    top: 60px;
   }
 }
 .takeMeHomeContainer:hover {

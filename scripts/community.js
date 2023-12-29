@@ -154,60 +154,110 @@ function parsePlayerData() {
     const playerIcon = document.querySelector(".playerIcon")
     const normalBossContainer = document.querySelector(".normalBossContainer")
     const eliteBossContainer = document.querySelector(".eliteBossContainer")
-    const raceMedalsContainer = document.querySelector('.raceMedalsContainer');
-    const ctMedalsContainer = document.querySelector('.ctMedalsContainer');
+    const raceContainer = document.querySelector('.raceContainer')
+    const ctGlobalContainer = document.querySelector('.ctGlobalContainer')
+    const ctLocalContainer = document.querySelector('.ctLocalContainer')
+    const toggleRaceView = document.querySelector(".toggleRaceView")
+    const toggleNormalBossView = document.querySelector(".toggleNormalBossView")
+    const toggleEliteBossView = document.querySelector(".toggleEliteBossView")
+    const toggleCTGlobalView = document.querySelector('.toggleCTGlobalView')
+    const toggleCTLocalView = document.querySelector('.toggleCTLocalView')
+    const viewAllHeroesButton = document.querySelector('.viewAllHeroesButton')
+    const favoriteHeroContainer = document.querySelector(".favoriteHeroContainer")
+    const containerList = [raceContainer, normalBossContainer, eliteBossContainer, ctLocalContainer, ctGlobalContainer]
 
-    const medalsSinglePlayerContainer = document.querySelector('.medalsSinglePlayerContainer');
-    const medalsMultiPlayerContainer = document.querySelector(".medalsMultiPlayerContainer");
+    const medalsSinglePlayerContainer = document.querySelector('.medalsSinglePlayerContainer')
+    const medalsMultiPlayerContainer = document.querySelector(".medalsMultiPlayerContainer")
     const singlePlayerKeys = Object.keys(playerData["_medalsSinglePlayer"])
     const singlePlayerValues = Object.values(playerData["_medalsSinglePlayer"])
     const multiPlayerKeys = Object.keys(playerData["_medalsSinglePlayer"])
     const multiPlayerValues = Object.values(playerData["_medalsMultiplayer"])
+    viewAllHeroesButton.classList.remove("showing")
+    for (const child of [...Array.from(raceContainer.children), ...Array.from(normalBossContainer.children), ...Array.from(eliteBossContainer.children), ...Array.from(favoriteHeroContainer.children)]) {
+        child.remove()
+    }
+    for (const container of containerList) {
+        container.innerText = ""
+    }
+    toggleRaceView.onclick = () => {
+        raceContainer.classList.toggle("rankedContentHidden")
+    }
+    toggleNormalBossView.onclick = () => {
+        normalBossContainer.classList.toggle("rankedContentHidden")
+    }
+    toggleEliteBossView.onclick = () => {
+        eliteBossContainer.classList.toggle("rankedContentHidden")
+    }
+    toggleCTGlobalView.onclick = () => {
+        ctGlobalContainer.classList.toggle("rankedContentHidden")
+    }
+    toggleCTLocalView.onclick = () => {
+        ctLocalContainer.classList.toggle("rankedContentHidden")
+    }
     // i = 1 intentionally to skip CHIMPS-BLACK
     for (let i = 1; i < singlePlayerKeys.length; i++) {
         let element = medalsSinglePlayerContainer.querySelector(`.${singlePlayerKeys[i]}`);
         if (element) {
-            element.textContent = singlePlayerValues[i];
+            element.textContent = singlePlayerValues[i]
         }
     }
     // i = 1 intentionally to skip CHIMPS-BLACK
     for (let i = 1; i < multiPlayerKeys.length; i++) {
         let element = medalsMultiPlayerContainer.querySelector(`.${multiPlayerKeys[i]}`);
         if (element) {
-            element.textContent = multiPlayerValues[i];
+            element.textContent = multiPlayerValues[i]
         }
     }
-    /* const normBossKeyList = Object.keys(playerData["_medalsBoss"])
-    const normBossValueList = Object.values(playerData["_medalsBoss"])
-    for (let i = 0; i < Object.keys(playerData["_medalsBoss"]).length; i++) {
-        const key = normBossKeyList[i]
-        const value = normBossValueList[i]
+    let heroEntries = Object.entries(playerData["heroesPlaced"])
+    heroEntries.sort((a, b) => b[1] - a[1])
+    const sortedHeroEntries = Object.fromEntries(heroEntries)
+    const heroKeys = Object.keys(sortedHeroEntries)
+    const heroValues = Object.values(sortedHeroEntries)
+    for (let i = 0; i < heroKeys.length; i++) {
+        const key = heroKeys[i]
+        const value = heroValues[i]
         const element = document.createElement("div")
-        const childHeader = document.createElement("h4")
-        const childBody = document.createElement("p")
-        childHeader.innerText = decipherNKTerms(key, "boss")
-        childBody.innerText = value
-        element.appendChild(childHeader)
-        element.appendChild(childBody)
-        normalBossContainer.appendChild(element)
+        const heroImage = document.createElement("img")
+        const heroValue = document.createElement("h3")
+        element.classList.add("heroUsageElem")
+        heroImage.classList.add("heroImage")
+        heroImage.src = `../assets/${key}.png`
+        heroImage.alt = key
+        heroValue.innerText = value
+        element.appendChild(heroImage)
+        element.appendChild(heroValue)
+        favoriteHeroContainer.appendChild(element)
     }
-     const eliteBossKeyList = Object.keys(playerData["_medalsBossElite"])
-    const eliteBossValueList = Object.values(playerData["_medalsBossElite"])
-    for (let i = 0; i < Object.keys(playerData["_medalsBossElite"]).length; i++) {
-        const key = eliteBossKeyList[i]
-        const value = eliteBossValueList[i]
-        const element = document.createElement("div")
-        const childHeader = document.createElement("h4")
-        const childBody = document.createElement("p")
-        childHeader.innerText = decipherNKTerms(key, "boss")
-        childBody.innerText = value
-        element.appendChild(childHeader)
-        element.appendChild(childBody)
-        eliteBossContainer.appendChild(element)
-    } 
-    if (playerData["_medalsBoss"].length == 0) */
+    const heroElems = Array.from(favoriteHeroContainer.children)
+    for (let i = 3; i < heroElems.length; i++) {
+        heroElems[i].style.display = "none"
+    }
+    viewAllHeroesButton.onclick = () => {
+        if (!viewAllHeroesButton.classList.contains("showing")) {
+            for (const heroElem of heroElems) {
+                heroElem.style.display = "block"
+            }
+            viewAllHeroesButton.classList.add("showing")
+            viewAllHeroesButton.innerText = "Hide All Heroes"
+        } else {
+            for (let i = 3; i < heroElems.length; i++) {
+                heroElems[i].style.display = "none"
+            }
+            viewAllHeroesButton.classList.remove("showing")
+            viewAllHeroesButton.innerText = "Show All Heroes"
+        }
+    }    
+    parseRankedMedals("race", raceContainer)
+    parseRankedMedals("normalBoss", normalBossContainer)
+    parseRankedMedals("eliteBoss", eliteBossContainer)
+    parseRankedMedals("ctGlobal", ctGlobalContainer)
+    parseRankedMedals("ctLocal", ctLocalContainer)
+    
     playerName.innerText = playerData["displayName"]
     playerIcon.src = playerData["avatarURL"]
+    const bannerURL = playerData["bannerURL"]
+
+    document.documentElement.style.setProperty(`--player-banner-bg-image`, `url(${bannerURL})`)
     const whyDoPluralsHaveToExist = playerData["followers"] == 1 ? "follower" : "followers"
     document.querySelector(".followers").innerText = `${playerData["followers"]} ${whyDoPluralsHaveToExist}`
     document.querySelector(".regLevel").innerText = `Level ${playerData["rank"]}`
@@ -218,7 +268,7 @@ function parsePlayerData() {
             let popupHTML = `
             <div class="popupImageContainer">
                 <img src="assets/vetLevelIcon.png" class="vetLevelIcon popupImage"/>
-                <p class="colorMePurple">Veteran Levels are levels that exist beyond the normal levels that you can get after reaching Level 155. 
+                <p>Veteran Levels are levels that exist beyond the normal levels that you can get after reaching Level 155. 
                 Veteran Levels are purely cosmetic and won't unlock anything new, but it takes <b>20 million XP</b> for each new Veteran Level. 
                 A player with Veteran Levels has some true dedication to the game.</p>
             </div>`
@@ -229,9 +279,61 @@ function parsePlayerData() {
     }
     window.scrollTo(playerIcon, {behavior: "smooth"})
 } 
+function parseRankedMedals(event, containerToAppendTo) {
+    let keyList
+    let valueList
+    if (event == "race") {
+        keyList = Object.keys(playerData["_medalsRace"])
+        valueList = Object.values(playerData["_medalsRace"])
+    } else if (event == "normalBoss") {
+        keyList = Object.keys(playerData["_medalsBoss"])
+        valueList = Object.values(playerData["_medalsBoss"])
+    } else if (event == "eliteBoss") {
+        keyList = Object.keys(playerData["_medalsBossElite"])
+        valueList = Object.values(playerData["_medalsBossElite"])
+    } else if (event == "ctLocal") {
+        keyList = Object.keys(playerData["_medalsCTLocal"])
+        valueList = Object.values(playerData["_medalsCTLocal"])
+    } else {
+        keyList = Object.keys(playerData["_medalsCTGlobal"])
+        valueList = Object.values(playerData["_medalsCTGlobal"])
+    }
+    let total = 0
+    for (let i = 0; i < keyList.length; i++) {
+        const key = keyList[i]
+        const value = valueList[i]
+        const element = document.createElement("div")
+        const childHeader = document.createElement("h4")
+        const childBody = document.createElement("p")
+        total += Number(value)
+        childHeader.innerText = decipherNKTerms(key, event)
+        childBody.innerText = value
+        element.classList.add("competitiveMedalElem")
+        element.appendChild(childHeader)
+        element.appendChild(childBody)
+        containerToAppendTo.appendChild(element)
+    }
+    if (keyList.length > 0) {
+        const element = document.createElement("div")
+        element.classList.add("competitiveMedalElem")
+        element.classList.add("totalMedalElem")
+        const childHeader = document.createElement("h4")
+        const childBody = document.createElement("p")
+        childHeader.innerText = "Total"
+        childBody.innerText = total
+        element.appendChild(childHeader)
+        element.appendChild(childBody)
+        containerToAppendTo.appendChild(element)
+    } else {
+        containerToAppendTo.innerText = "None"
+    }
+}
 function decipherNKTerms(whyDoesItHaveToBeThisHardNK, event) {
-    if (event == "boss" || event == "race") {
+    if (event == "normalBoss" || event == "eliteBoss" || event == "race") {
         switch (whyDoesItHaveToBeThisHardNK) {
+            case "BlackDiamond": return "1st Place"
+            case "RedDiamond": return "2nd Place"
+            case "Diamond": return "3rd Place"
             case "GoldDiamond": return "Top 50"
             case "DoubleGold": return "Top 1%"
             case "GoldSilver": return "Top 10%"
@@ -240,8 +342,29 @@ function decipherNKTerms(whyDoesItHaveToBeThisHardNK, event) {
             case "Bronze": return "Top 75%"
             default: return "no idea what this medal is but this person has it"
         }
+    } else if (event == "ctLocal") {
+        switch (whyDoesItHaveToBeThisHardNK) {
+            case "BlackDiamond": return "1st Place"
+            case "RedDiamond": return "2nd Place"
+            case "Diamond": return "3rd Place"
+            case "GoldDiamond": return "Top 10"
+            case "DoubleGold": return "Top 20"
+            case "Silver": return "Top 40"
+            case "Bronze": return "Top 60"
+            default: return "no idea what this medal is but this person has it"
+        }
+    } else /* event is hopefully ct global */ {
+        switch (whyDoesItHaveToBeThisHardNK) {
+            case "Diamond": return "Top 25"
+            case "GoldDiamond": return "Top 100"
+            case "DoubleGold": return "Top 1%"
+            case "GoldSilver": return "Top 10%"
+            case "DoubleSilver": return "Top 25%"
+            case "Silver": return "Top 50%"
+            case "Bronze": return "Top 75%"
+            default: return "no idea what this medal is but this person has it"
+        }
     }
-    return "no idea what this medal is but this person has it"
 }
 
 
@@ -267,6 +390,7 @@ function parseMapData() {
     playMap.onclick = () => {
         window.open(`https://join.btd6.com/Map/${mapID}`)
     }
+    // rgb(255 238 67)
     mapName.innerText = mapData["name"]
     mapImage.src = mapData["mapURL"]
     let urlParts = mapData["creator"].split("/")
@@ -286,6 +410,7 @@ function parseMapData() {
 
 function showPopup(title, content) {
   popupTitle.innerText = title
+  if (title == "Veteran Levels") popupTitle.classList.add("colorMePurple")
   popupContentContainer.innerHTML = content
   popupContainer.showModal()
   popupContainer.classList.add("open")

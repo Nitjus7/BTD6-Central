@@ -1,35 +1,8 @@
-const eventTitle = document.getElementById("eventTitle");
-const raceEventButton = document.getElementById("raceEventButton");
-const bossEventButton = document.getElementById("bossEventButton");
-const eventPickContainer = document.getElementById("eventPickContainer");
-const raceArchiveContainer = document.getElementById("raceArchiveContainer");
-const bossArchiveContainer = document.getElementById("bossArchiveContainer");
-const difficultyButtonContainer = document.getElementById(
-  "difficultyButtonContainer"
-);
-const backButton = document.querySelector(
-  ".takeMeHomeContainer"
-);
-const raceTitle = document.getElementById("raceTitle");
-const eventDetails = document.getElementById("eventDetails");
-const specialModsContainer = document.getElementById("specialModsContainer");
-const enabledTowersContainer = document.getElementById(
-  "enabledTowersContainer"
-);
-const enabledPrimary = document.getElementById("enabledPrimary");
-const enabledMilitary = document.getElementById("enabledMilitary");
-const enabledMagic = document.getElementById("enabledMagic");
-const enabledSupport = document.getElementById("enabledSupport");
-const enabledHeroes = document.getElementById("enabledHeroes");
-const eventDates = document.getElementById("eventDates");
-const mapContainer = document.getElementById("mapContainer");
-const mapImage = document.getElementById("mapImage");
-const bossImage = document.getElementById("bossImage");
-const bossImageContainer = document.getElementById("bossImageContainer");
-
-const leaderboardContainer = document.getElementById("leaderboardContainer");
-const swapLBButtonContainer = document.getElementById("swapLBButtonContainer");
-const leaderboardTitle = document.getElementById("leaderboardTitle");
+const popupContainer = document.querySelector(".popupContainer")
+const popupTitle = document.querySelector(".popupTitle")
+const popupContentContainer = document.querySelector(".popupContentContainer")
+const statsPopupOverlay = document.querySelector(".popupOverlay")
+const backButton = document.querySelector(".takeMeHomeContainer")
 
 const primaryTowers = [
   "DartMonkey",
@@ -62,283 +35,423 @@ const supportTowers = [
   "EngineerMonkey",
   "BeastHandler",
 ];
-const eventElems = [
-  eventTitle,
-  eventDetails,
-  leaderboardTitle,
-  leaderboardContainer,
-  swapLBButtonContainer,
-];
-const dataContainers = [
-  mapContainer,
-  bossImageContainer,
-  enabledPrimary,
-  enabledMilitary,
-  enabledMagic,
-  enabledSupport,
-  enabledHeroes,
-  specialModsContainer,
-  leaderboardContainer,
-  difficultyButtonContainer,
-  swapLBButtonContainer,
-];
 
-const popupContainer = document.querySelector(".popupContainer")
-const popupTitle = document.querySelector(".popupTitle")
-const popupContentContainer = document.querySelector(".popupContentContainer")
-const statsPopupOverlay = document.querySelector(".popupOverlay")
+const eventPickContainer = document.getElementById("eventPickContainer")
+const raceEventButton = document.getElementById("raceEventButton")
+const odysseyEventButton = document.getElementById("odysseyEventButton")
+const bossEventButton = document.getElementById("bossEventButton")
+const ctEventButton = document.getElementById("ctEventButton")
+const raceArchiveContainer = document.getElementById("raceArchiveContainer")
+const bossArchiveContainer = document.getElementById("bossArchiveContainer")
+const ctArchiveContainer = document.getElementById("ctArchiveContainer")
+const bossDifficultyButtonContainer = document.getElementById("bossDifficultyButtonContainer")
 
+
+const eventDetailsContainers = [
+  document.getElementById("bossesEventDetails"),
+  document.getElementById("racesEventDetails")
+]
+const removeTheseDetailContainers = [
+  Array.from(document.querySelectorAll(".enabledHeroes")),
+  Array.from(document.querySelectorAll(".specialModsContainer")),
+  Array.from(document.querySelectorAll(".enabledPrimary")),
+  Array.from(document.querySelectorAll(".enabledMilitary")),
+  Array.from(document.querySelectorAll(".enabledMagic")),
+  Array.from(document.querySelectorAll(".enabledSupport"))
+]
+const leaderboardContainers = Array.from(document.querySelectorAll(".leaderboardContainer"))
+
+let isRaceGenerated = false; 
+let isBossGenerated = false;
+let isCTGenerated = false;
 let eventName;
-let raceData;
+let raceOverview;
 let raceMetadata;
 let raceLB;
-let bossData;
+let bossOverview;
 let bossStandardMetadata;
 let bossEliteMetadata;
 let bossStandardLB1P;
 let bossEliteLB1P;
+let ctOverview;
+let ctTeamLB;
+let ctPlayerLB;
 let urlParams = new URLSearchParams(window.location.search);
 let urlEvent;
 let urlID;
 let urlType;
 let urlDifficulty;
+let urlName;
 let id;
 
-// pass in the error message
+class Race {
+  constructor(name, timestamp) {
+    this.name = name
+    this.timestamp = timestamp
+  }
+  setName(v) {
+    this.name = v
+  }
+  getName() {
+    return this.name
+  }
+}
+class RaceMetadata extends Race {
+  constructor(name, timestamp, metadata) {
+    super(name, timestamp)
+    this.metadata = metadata
+  }
+  getTimestamp() {
+    return this.timestamp
+  }
+  getMetadata() {
+    return this.metadata
+  }
+}
+class RaceLeaderboard extends Race {
+  constructor(name, timestamp, leaderboard) {
+    super(name, timestamp)
+    this.leaderboard = leaderboard
+  }
+  getTimestamp() {
+    return this.timestamp
+  }
+  getLeaderboard() {
+    return this.leaderboard
+  }
+}
+class Boss {
+  constructor(name, timestamp) {
+    this.name = name
+    this.timestamp = timestamp
+  }
+  setName(v) {
+    this.name = v
+  }
+  getName() {
+    return this.name
+  }
+}
+class BossMetadata extends Boss {
+  constructor(name, timestamp, metadata) {
+    super(name, timestamp)
+    this.metadata = metadata
+  }
+  getTimestamp() {
+    return this.timestamp
+  }
+  getMetadata() {
+    return this.metadata
+  }
+}
+class BossLeaderboard extends Boss {
+  constructor(name, timestamp, leaderboard) {
+    super(name, timestamp)
+    this.leaderboard = leaderboard
+    this.scoringType = this.leaderboard["body"][0]["scoreParts"][0]["name"]
+  }
+  getTimestamp() {
+    return this.timestamp
+  }
+  getLeaderboard() {
+    return this.leaderboard
+  }
+  getScoringType() {
+    return this.scoringType
+  }
+}
+class CT {
+  constructor(timestamp) {
+    this.timestamp = timestamp
+  }
+}
+class CTLeaderboard extends CT {
+  constructor(timestamp, leaderboard) {
+    super(timestamp)
+    this.leaderboard = leaderboard
+  }
+  getTimestamp() {
+    return this.timestamp
+  }
+  getLeaderboard() {
+    return this.leaderboard
+  }
+}
+
 function catchError(error) {
-  if (error == "TypeError: Failed to fetch") {
+  if (error === "Failed to fetch" || error === "Network request failed") {
     alert("Check your internet connection, then try again.");
   } else {
     alert(
-      `An Error Has Occured:\n${error}\nPlease report this to the BTD6 Central Discord Server.`
+      `An error has occured:\n${error.message}`
     );
   }
 }
 
-// fetches the data from the nk api
-async function getRaceData() {
-  if (raceData == null) {
-    try {
-      raceData = await (
-        await fetch(`https://data.ninjakiwi.com/btd6/races`)
-      ).json();
-      raceData = raceData["body"];
-      generateRaces();
-    } catch (error) {
-      catchError(error);
-    }
-  }
-}
-
+/*** LAYER 1: EVENT OVERVIEW ***/
 async function getBossData() {
-  if (bossData == null) {
+  if (bossOverview == null) {
     try {
-      bossData = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses`)).json();
-      bossData = bossData["body"];
-      generateBosses();
-    } catch (error) {
-      catchError(error);
+      const bossResponse = await fetch("https://data.ninjakiwi.com/btd6/bosses")
+      if (bossResponse.ok) {
+        bossOverview = await bossResponse.json()
+      } else {
+        throw new Error("An error occured while gathering Boss data.")
+      }
+    } catch(error) {
+      console.log(error.message)
+    }
+  }
+}
+async function getRaceData() {
+  if (raceOverview == null) {
+    try {
+      const raceResponse = await fetch("https://data.ninjakiwi.com/btd6/races")
+      if (raceResponse.ok) {
+        raceOverview = await raceResponse.json()
+      } else {
+        throw new Error("An error occured while gathering Race data.")
+      }
+    } catch(error) {
+      console.log(error.message)
+    }
+  }
+}
+async function getCTData() {
+  if (ctOverview == null) {
+    try {
+      const ctResponse = await fetch("https://data.ninjakiwi.com/btd6/ct")
+      if (ctResponse.ok) {
+        ctOverview = await ctResponse.json()
+      } else {
+        throw new Error("An error occured while gathering Contested Territory data.")
+      }
+    } catch(error) {
+      console.log(error.message)
     }
   }
 }
 
-// generates the title cards with the event names as the text
-// and adds event listeners to each element
-function generateRaces() {
-  for (let i = 0; i < raceData.length; i++) {
-    // adds a new div for every race event
-    const status = determineStatus(raceData[i]["start"], raceData[i]["end"]);
-    const docElem = document.createElement("div");
-    docElem.classList.add("eventTitleContainer");
-    raceArchiveContainer.appendChild(docElem);
-    generateEventName(raceData[i], docElem, status);
-    generateButtons("races", raceData[i], docElem);
-    if (status != "Not Begun") generateTotalPlayers(raceData[i], docElem);
-    generateTimestamps(raceData[i], docElem, status);
-  }
-}
-
-function generateBosses() {
-  for (let i = 0; i < bossData.length; i++) {
-    const status = determineStatus(bossData[i]["start"], bossData[i]["end"]);
-    const docElem = document.createElement("div");
-    docElem.classList.add("eventTitleContainer");
-    bossArchiveContainer.appendChild(docElem);
-    generateEventName(bossData[i], docElem, status);
-    generateButtons("bosses", bossData[i], docElem, status);
-    generateTimestamps(bossData[i], docElem, status);
-  }
-}
-
-// determines whether an event has ended, not begun, or is LIVE
-// returns a string value
-
-function generateEventName(data, parentElem, status) {
-  const nameElem = document.createElement("p");
-  const statusElem = document.createElement("p");
-  nameElem.classList.add("eventName");
-  statusElem.classList.add("eventStatus");
-  if (data.hasOwnProperty("bossType")) {
-    nameElem.innerHTML = `<b>${data["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")}</b>`;
-  } else {
-    nameElem.innerHTML = `<b>${data["name"]}</b>`;
-  }
-  statusElem.innerHTML = `${status}`;
-  if (status == "LIVE") {
-    parentElem.classList.add("live");
-  }
-  parentElem.appendChild(nameElem);
-  parentElem.appendChild(statusElem);
-}
-function generateButtons(event, data, parentElem) {
-  const chooseTypeButtonContainer = document.createElement("div");
-  const detailsButton = document.createElement("button");
-  detailsButton.classList.add("chooseTypeButton");
-  detailsButton.innerText = "Details";
-  detailsButton.onclick = () => {
-    displayLoading();
-    id = data["id"];
-    switch (event) {
-      case "races":
-        getRaceMetadata(data["metadata"]);
-        break;
-      case "bosses":
-        getBossMetadata();
-        break;
+function generateRaceList() {
+  if (raceOverview != null && isRaceGenerated == false) {
+    for (const race of raceOverview["body"]) {
+      const status = determineStatus(race["start"], race["end"])
+      const timestamp = generateTimestamp(race, status)
+      const container = document.createElement("div")
+      container.className = `eventOverviewContainer raceOverviewContainer ${status}`
+      let raceHTML = `
+        <h3 class="eventOverviewTitle">${race["name"]}</h3>
+        <p class="status raceStatus">${status}</p>
+      `
+      if (race["totalScores"] > 0) {
+        raceHTML += `
+        <p class="totalScores raceTotalScores"><b>${race["totalScores"]}</b> submissions</p>
+        <p class="overviewTimestamp">${timestamp}</p>
+        <div class="overviewNavButtonContainer">
+          <span class="material-symbols-outlined overviewNavButton goToRaceDetails">info</span>
+          <span class="material-symbols-outlined overviewNavButton goToRaceLeaderboard">trophy</span>
+        </div>
+        `
+      } else {
+        raceHTML += `
+        <p class="overviewTimestamp">${timestamp}</p>
+        <div class="overviewNavButtonContainer">
+          <span class="material-symbols-outlined overviewNavButton goToRaceDetails">info</span>
+        </div>
+        `
+      }
+      container.innerHTML = raceHTML
+      container.querySelector(".goToRaceDetails").onclick = () => {
+        swapToEventDetails(race["id"], "races", race["name"], timestamp, race["metadata"])
+      }
+      if (container.querySelector(".goToRaceLeaderboard")) {
+        container.querySelector(".goToRaceLeaderboard").onclick = () => {
+          swapToEventLeaderboard(race["id"], "races", race["name"], timestamp, race["leaderboard"])
+        }
+      }
+      raceArchiveContainer.appendChild(container)
     }
-  };
-  chooseTypeButtonContainer.appendChild(detailsButton);
-  if (event == "races" && data["totalScores"] != 0) {
-    const lbButton = document.createElement("button");
-    lbButton.classList.add("chooseTypeButton");
-    lbButton.innerText = "Leaderboard";
-    lbButton.onclick = () => {
-      displayLoading();
-      eventName = data["name"];
-      id = data["id"];
-      getRaceLeaderboard(data);
-    };
-    chooseTypeButtonContainer.appendChild(lbButton);
-  } else if (event == "bosses" && data["totalScores_standard"] != 0) {
-    const lbButton = document.createElement("button");
-    lbButton.classList.add("chooseTypeButton");
-    lbButton.innerText = "Leaderboards";
-    lbButton.onclick = () => {
-      displayLoading();
-      eventName = data["name"].replace(/([a-zA-Z])(\d)/g, "$1 $2");
-      id = data["id"];
-      getBossLeaderboard(data);
-    };
-    chooseTypeButtonContainer.appendChild(lbButton);
-  }
-  parentElem.appendChild(chooseTypeButtonContainer);
-}
-
-function determineStatus(startDate, endDate) {
-  let currentDate = Date.now();
-  if (currentDate > endDate) {
-    return "Ended";
-  } else if (currentDate < startDate) {
-    return "Not Begun";
-  } else {
-    return "LIVE";
+    isRaceGenerated = true
   }
 }
-function generateTimestamps(data, parentElem, status) {
-  const dateFormatting = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    /*hour: "numeric",
-    minute: "2-digit",*/
-  };
-  const startDate = new Date(data["start"]);
-  const endDate = new Date(data["end"]);
-  const timestampElem = document.createElement("p");
-  if (status == "LIVE") {
-    timestampElem.innerHTML += `${calculateTimeRemaining(endDate)}`;
-  } else {
-    timestampElem.innerHTML += `${startDate.toLocaleDateString([], dateFormatting)} to ${endDate.toLocaleDateString([], dateFormatting)}`;
+function generateBossList() {
+  if (bossOverview != null && isBossGenerated == false) {
+    for (const boss of bossOverview["body"]) {
+      const status = determineStatus(boss["start"], boss["end"])
+      const timestamp = generateTimestamp(boss, status)
+      const name = boss["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")
+      let scoringTypeReadable
+      if (boss["scoringType"] == "GameTime") scoringTypeReadable = "Timed"
+      else if (boss["scoringType"] == "LeastTiers") scoringTypeReadable = "Least Tiers"
+      else scoringTypeReadable = "Least Cash"
+
+      const container = document.createElement("div")
+      container.className = `eventOverviewContainer bossOverviewContainer ${status}`
+      let bossHTML = `
+        <h3 class="eventOverviewTitle">${name}</h3>
+        <p class="status bossStatus">${status}&nbsp;&nbsp;|&nbsp;&nbsp;${scoringTypeReadable}</p>
+      ` // the crazy regex just adds a space before the number in the name, thx phind.com <3
+      if (boss["totalScores_standard"] > 0) {
+        bossHTML += `
+        <div class="totalScoresContainer">
+          <div class="eventScoresContainer">
+            <h4 class="totalScoresHeader">Normal</h4>
+            <p class="totalScores bossTotalScores"><b>${boss["totalScores_standard"]}</b> submissions</p>
+          </div>
+          <div class="eventScoresContainer">
+            <h4 class="totalScoresHeader">Elite</h4>
+            <p class="totalScores bossTotalScores"><b>${boss["totalScores_elite"]}</b> submissions</p>
+          </div>
+        </div>
+        <p class="overviewTimestamp">${timestamp}</p>
+        <div class="overviewNavButtonContainer">
+          <span class="material-symbols-outlined overviewNavButton goToBossDetails">info</span>
+          <span class="material-symbols-outlined overviewNavButton goToBossLeaderboard">trophy</span>
+        </div>
+        `
+      } else {
+        bossHTML += `
+        <p class="overviewTimestamp">${timestamp}</p>
+        <div class="overviewNavButtonContainer">
+          <span class="material-symbols-outlined overviewNavButton goToBossDetails">info</span>
+        </div>
+        `
+      }
+      container.innerHTML = bossHTML
+      container.querySelector(".goToBossDetails").onclick = () => {
+        swapToEventDetails(boss["id"], "bosses", name, timestamp, boss["metadataStandard"], boss["metadataElite"])
+      }
+      if (container.querySelector(".goToBossLeaderboard")) {
+        container.querySelector(".goToBossLeaderboard").onclick = () => {
+          swapToEventLeaderboard(boss["id"], "bosses", name, timestamp, boss["leaderboard_standard_players_1"], boss["leaderboard_elite_players_1"])
+        }
+      }
+      bossArchiveContainer.appendChild(container)
+      
+    }
+    isBossGenerated = true
   }
-  parentElem.appendChild(timestampElem);
 }
-function calculateTimeRemaining(end) {
-  // thx phind.com <3
-  const currentDate = new Date();
-  const timeDifference = end.getTime() - currentDate.getTime();
-  let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  let hours = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+function generateCTList() {
+  if (ctOverview != null && isCTGenerated == false) {
+    for (const ct of ctOverview["body"]) {
+      const status = determineStatus(ct["start"], ct["end"])
+      const timestamp = generateTimestamp(ct, status)
+      const container = document.createElement("div")
+      container.className = `eventOverviewContainer ctOverviewContainer ${status}`
+      let ctHTML = `
+        <h3 class="eventOverviewTitle">${timestamp}</h3>
+        <p class="status ctStatus">${status}</p>
+      `
+      if (ct["totalScores_player"] > 0) {
+        ctHTML += `
+        <div class="totalScoresContainer">
+          <div class="eventScoresContainer">
+            <h4 class="totalScoresHeader">Players</h4>
+            <p class="totalScores bossTotalScores"><b>${ct["totalScores_player"]}</b> submissions</p>
+          </div>
+          <div class="eventScoresContainer">
+            <h4 class="totalScoresHeader">Teams</h4>
+            <p class="totalScores bossTotalScores"><b>${ct["totalScores_team"]}</b> submissions</p>
+          </div>
+        </div>
+        <div class="overviewNavButtonContainer">
+          <span class="material-symbols-outlined overviewNavButton goToCTLeaderboard">trophy</span>
+        </div>
+        `
+      } 
+      container.innerHTML = ctHTML
+      if (container.querySelector(".goToCTLeaderboard")) {
+        container.querySelector(".goToCTLeaderboard").onclick = () => {
+          swapToEventLeaderboard(ct["id"], "ct", null, timestamp, ct["leaderboard_team"], ct["leaderboard_player"])
+        }
+      }
+      ctArchiveContainer.appendChild(container)
+    }
+    isCTGenerated = true
+  }
+}
 
-  return `Remaining Time: ${days}d, ${hours}h, ${minutes}m`;
-}
-function generateTotalPlayers(data, parentElem) {
-  const totalPlayersElem = document.createElement("p");
-  totalPlayersElem.innerHTML += `<b>${data["totalScores"]}</b> submissions`;
-  parentElem.appendChild(totalPlayersElem);
-}
+/*** LAYER 2: METADATA AND LEADERBOARDS, THIS IS WHERE SHIT GETS REAL ***/
 
-// fetches for the metadata for the specific race based on raceNum
-// calls displayDetails with the relevant metadata
-async function getRaceMetadata(URL) {
+/** STEP 1: GETTERS */
+// url2 and url3 are optional: url2 for elite boss or medium odyssey, url3 for hard odyssey
+async function getMetadata(id, event, name, timestamp, url, url2 = null, url3 = null) {
   try {
-    raceMetadata = await (await fetch(URL)).json();
-    raceMetadata = raceMetadata["body"];
-    disableLoading();
-    displayDetails("races", raceMetadata, null);
-  } catch (error) {
-    catchError(error);
+    const response1 = await fetch(url)
+    const response2 = url2 ? await fetch(url2) : null
+    const response3 = url3 ? await fetch(url3) : null
+    if (!response1.ok || (url2 && !response2.ok) || (url3 && !response3.ok)) {
+      throw new Error(response1.status)
+    }
+    if (event == "bosses") {
+      if (!response2) throw new Error("An unexpected error occured!")
+      bossStandardMetadata = new BossMetadata(name, timestamp, await response1.json())
+      bossEliteMetadata = new BossMetadata(name, timestamp, await response2.json())
+    } else {
+      raceMetadata = new RaceMetadata(name, timestamp, await response1.json())
+    }
+  } catch(error) {
+    catchError(error)
   }
 }
-async function getBossMetadata() {
+// url2 is optional: either elite boss leaderboard or global player leaderboard for CT
+async function getLeaderboard(id, event, name, timestamp, url, url2 = null) {
   try {
-    bossStandardMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/standard`)).json();
-    bossStandardMetadata = bossStandardMetadata["body"];
-    bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/bosses/${id}/metadata/elite`)).json();
-    bossEliteMetadata = bossEliteMetadata["body"];
-    disableLoading();
-    displayDetails("bosses", bossStandardMetadata, "standard");
-  } catch (error) {
-    catchError(error);
+    const response1 = await fetch(url)
+    const response2 = url2 ? await fetch(url2) : null
+    if (!response1.ok || (url2 && !response2.ok)) {
+      throw new Error(response1.status)
+    }
+    if (event == "bosses") {
+      if (!response2) throw new Error("An unexpected error occured!")
+      bossStandardLB1P = new BossLeaderboard(name, timestamp, await response1.json())
+      bossEliteLB1P = new BossLeaderboard(name, timestamp, await response2.json())
+    } else if (event == "ct") {
+      if (!response2) throw new Error("An unexpected error occured!")
+      ctTeamLB = new CTLeaderboard(timestamp, await response1.json())
+      ctPlayerLB = new CTLeaderboard(timestamp, await response2.json())
+    } else {
+      raceLB = new RaceLeaderboard(name, timestamp, await response1.json())
+    };
+  } catch(error) {
+    catchError(error)
   }
 }
 
-// uuuuugggggghhhhhh
-// kill me please
-function displayDetails(event, metadata, difficulty) {
-  while (difficultyButtonContainer.hasChildNodes()) {
-    difficultyButtonContainer.removeChild(difficultyButtonContainer.firstChild);
+/** STEP 2: SETTERS **/
+// ughhhhh kill me again
+// difficulty is optional: only applies to bosses and odysseys, and will always be null 
+// except for calling itself within this function
+function displayDetails(event, difficulty = "normal") {
+  for (const please of removeTheseDetailContainers) {
+    for (const bruh of please) {
+      for (const thisIsSOSTUPID of Array.from(bruh.querySelectorAll("*"))) {
+        thisIsSOSTUPID.remove()
+      }
+    }
   }
-  eventTitle.style.display = "none";
-  leaderboardTitle.style.display = "none";
-  raceArchiveContainer.style.display = "none";
-  bossArchiveContainer.style.display = "none";
-  switch (event) {
-    case "races":
-      raceTitle.innerText = `"${metadata["name"]}" Race Info`;
-      generateDifficultyButtons(event, null);
-      break;
-    case "bosses":
-      raceTitle.innerText = `${metadata["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")} Boss Details (${difficulty.toUpperCase()})`;
-      showBoss(metadata, difficulty);
-      generateDifficultyButtons(event, difficulty);
-      urlParams.set("difficulty", difficulty);
-      history.replaceState(null, null, "?" + urlParams.toString());
-      break;
+  const container = document.querySelector(`#${event}EventDetails`)
+  let metadata
+  let name
+  let timestamp
+  if (event == "bosses") {
+    if (difficulty == "elite") metadata = bossEliteMetadata.getMetadata()["body"]
+    else metadata = bossStandardMetadata.getMetadata()["body"]
+    name = bossStandardMetadata.getName()
+    timestamp = bossStandardMetadata.getTimestamp()
+  } else {
+    metadata = raceMetadata.getMetadata()["body"]
+    name = raceMetadata.getName()
+    timestamp = raceMetadata.getTimestamp()
   }
-  raceTitle.style.display = "flex";
-  showMap(metadata);
-  document.getElementById(
-    "startingCash"
-  ).innerHTML = `<b>Cash</b><br>$${metadata["startingCash"]}`;
-  document.getElementById(
-    "lives"
-  ).innerHTML = `<b>Lives</b><br>${metadata["lives"]}`;
-  document.getElementById(
-    "rounds"
-  ).innerHTML = `<b>Rounds</b><br>${metadata["startRound"]} to ${metadata["endRound"]}`;
+  if (event == "bosses") addDifficultyButtons("bosses", name, container.querySelector(".bossDifficultyButtonContainer"), "metadata", difficulty)
+  container.querySelector(".detailsHeader").innerText = name
+  container.querySelector(".mapImage").src = metadata["mapURL"]
+  container.querySelector(".mapImage").alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`
+  container.querySelector(".startingCash").innerText = `${metadata["startingCash"]}`;
+  container.querySelector(".lives").innerText = `${metadata["lives"]}`;
+  container.querySelector(".rounds").innerText = `${metadata["startRound"]} to ${metadata["endRound"]}`;
   let mode;
   switch (metadata["mode"]) {
     case "DoubleMoabHealth": mode = "Double HP MOABs"; break;
@@ -346,125 +459,46 @@ function displayDetails(event, metadata, difficulty) {
     case "HalfCash": mode = "Half Cash"; break;
     default: mode = metadata["mode"];
   }
-  document.getElementById(
-    "mode"
-  ).innerHTML = `<b>${metadata["difficulty"]}</b><br>${mode}`;
-  determineSpecialMods(metadata);
+  container.querySelector(".modeHeader").innerText = metadata["difficulty"]
+  container.querySelector(".mode").innerText = mode
+  const enabledPrimary = container.querySelector(".enabledPrimary")
+  const enabledMilitary = container.querySelector(".enabledMilitary")
+  const enabledMagic = container.querySelector(".enabledMagic")
+  const enabledSupport = container.querySelector('.enabledSupport')
+  appendElement(enabledPrimary, "Primary", "")
+  appendElement(enabledMilitary, "Military", "")
+  appendElement(enabledMagic, "Magic", "")
+  appendElement(enabledSupport, "Support", "")
+  determineSpecialMods(metadata, container.querySelector(".specialModsContainer"))
   for (const tower of metadata["_towers"]) {
-    if (tower["isHero"]) {
-      if (tower["tower"] == "ChosenPrimaryHero" && tower["max"] != 0) {
-        parseHeroes(tower, true);
-      } else {
-        parseHeroes(tower, false);
-      }
-    } else {
-      if (tower["max"] != 0) parseTowerUpgrades(tower);
-    }
+    if (tower["isHero"] && tower["max"] != 0) parseHeroes(tower, container.querySelector('.enabledHeroes'))
+    else if (tower["max"] != 0) parseTowerUpgrades(tower, container.querySelector(".enabledTowersContainer"))
   }
-  if (enabledPrimary.hasChildNodes()) {
-    prependElement(enabledPrimary, `Primary`);
+  if (!container.querySelector(".enabledHeroes").hasChildNodes()) {
+    container.querySelector(".enabledHeroes").innerHTML = `<h3 class="headerHeroDisplay noHeroDisplay">No Heroes</h3>`
   }
-  if (enabledMilitary.hasChildNodes()) {
-    prependElement(enabledMilitary, `Military`);
+  if (enabledPrimary.childElementCount == 1) {
+    appendElement(enabledPrimary, "None", "")
   }
-  if (enabledMagic.hasChildNodes()) {
-    prependElement(enabledMagic, `Magic`);
+  if (enabledMilitary.childElementCount == 1) {
+    appendElement(enabledMilitary, "None", "")
   }
-  if (enabledSupport.hasChildNodes()) {
-    prependElement(enabledSupport, `Support`);
+  if (enabledMagic.childElementCount == 1) {
+    appendElement(enabledMagic, "None", "")
   }
-  if (!enabledHeroes.hasChildNodes()) {
-    appendElement(enabledHeroes, `None`, ``);
+  if (enabledSupport.childElementCount == 1) {
+    appendElement(enabledSupport, "None", "")
   }
-  document.getElementById("raceModifiersContainer").style.display = "flex";
-  eventDetails.style.display = "flex";
-  urlParams.set("id", `${id}`);
-  urlParams.set("type", "metadata");
-  history.replaceState(null, null, "?" + urlParams.toString());
+  editURL("difficulty", difficulty)
 }
-
-function generateDifficultyButtons(event, selectedDifficulty) {
-  if (event == "bosses") {
-    const swapDifficultyButton = document.createElement("button");
-    swapDifficultyButton.classList.add("swapDifficultyButton");
-    if (selectedDifficulty == "standard") {
-      swapDifficultyButton.innerText = `Swap to Elite`;
-      swapDifficultyButton.onclick = () => {
-        for (const element of dataContainers) {
-          while (element.hasChildNodes()) {
-            element.removeChild(element.firstChild);
-          }
-        }
-        displayDetails(event, bossEliteMetadata, "elite");
-      };
-    } else {
-      swapDifficultyButton.innerText = `Swap to Normal`;
-      swapDifficultyButton.onclick = () => {
-        for (const element of dataContainers) {
-          while (element.hasChildNodes()) {
-            element.removeChild(element.firstChild);
-          }
-        }
-        displayDetails(event, bossStandardMetadata, "standard");
-      };
-    }
-    difficultyButtonContainer.appendChild(swapDifficultyButton);
-  }
-}
-
-// shows images
-function showMap(metadata) {
-  mapImage.src = metadata["mapURL"];
-  mapImage.alt = `Map: ${metadata["map"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
-  mapImage.style.display = "block";
-  mapContainer.appendChild(mapImage);
-}
-
-function showBoss(metadata, difficulty) {
-  bossImage.src = null;
-  const name = metadata["name"];
-  if (difficulty == "standard") {
-    if (name.includes("Bloonarius")) {
-      bossImage.src = "https://i.ibb.co/2hzPr5t/bloonarius.png";
-    } else if (name.includes("Lych")) {
-      bossImage.src = "https://i.ibb.co/w4t4dX8/lych.png";
-    } else if (name.includes("Vortex")) {
-      bossImage.src = "https://i.ibb.co/w4Ng4nd/vortex.png";
-    } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "https://i.ibb.co/hVF5PnP/dreadbloon.webp";
-    } else if (name.includes("Phayze")) {
-      bossImage.src = "https://i.ibb.co/3dGxcC2/phayze.png";
-    }
-  } else if (difficulty == "elite") {
-    if (name.includes("Bloonarius")) {
-      bossImage.src = "https://i.ibb.co/HnhcNz9/elite-Bloonarius.png";
-    } else if (name.includes("Lych")) {
-      bossImage.src = "https://i.ibb.co/2h93hcJ/elite-Lych.png";
-    } else if (name.includes("Vortex")) {
-      bossImage.src = "https://i.ibb.co/j44bYsB/elite-Vortex.png";
-    } else if (name.includes("Dreadbloon")) {
-      bossImage.src = "https://i.ibb.co/BgLNDHg/elite-Dreadbloon.webp";
-    } else if (name.includes("Phayze")) {
-      bossImage.src = "https://i.ibb.co/JnjzyLQ/elite-Phayze.png";
-    }
-  }
-  if (bossImage.src != null) {
-    bossImage.style.display = "block";
-    bossImageContainer.appendChild(bossImage);
-  } else {
-    while (bossImageContainer.hasChildNodes()) {
-      bossImageContainer.removeChild(bossImageContainer.firstChild);
-    }
-  }
-}
-
-// sorts out the tower upgrades
-// formats into something like "3x Monkey Sub [new line] (5-3-5)"
-// adds spaces via magic code generated by phind.com
-function parseTowerUpgrades(tower) {
+function parseTowerUpgrades(tower, container) {
+  const enabledPrimary = container.querySelector(".enabledPrimary")
+  const enabledMilitary = container.querySelector(".enabledMilitary")
+  const enabledMagic = container.querySelector(".enabledMagic")
+  const enabledSupport = container.querySelector(".enabledSupport")
   let enabledUpgrades;
   let badName = tower["tower"];
-  let name = badName.replace(/([A-Z])/g, " $1").trim(); // magic code by AI that adds spaces do NOT fucking touch this
+  let name = badName.replace(/([A-Z])/g, " $1").trim(); // magic code by AI that adds fairy dust and magic sprinkles
   let path1Tiers = 5;
   let path2Tiers = 5;
   let path3Tiers = 5;
@@ -483,7 +517,6 @@ function parseTowerUpgrades(tower) {
   } else if (tower["max"] == -1) {
     towerInfoDisplay.innerText = `${name}\n${enabledUpgrades}`;
   }
-
   if (primaryTowers.includes(tower["tower"])) {
     enabledPrimary.appendChild(towerInfoDisplay);
   } else if (militaryTowers.includes(tower["tower"])) {
@@ -494,59 +527,35 @@ function parseTowerUpgrades(tower) {
     enabledSupport.appendChild(towerInfoDisplay);
   }
 }
-
-// same thing as parseTowers but we don't need to worry about upgrades or max tower count
-// (still sucks)
-function parseHeroes(hero, isSelectable) {
-  if (!isSelectable) {
+function parseHeroes(hero, container) {
+  if (hero["tower"] != "ChosenPrimaryHero") {
     if (hero["max"] != 0) {
-      const heroInfoDisplay = document.createElement("p");
-      heroInfoDisplay.innerHTML = `${hero["tower"].replace(/([A-Z])/g, " $1").trim()}`; // magic code by AI that adds spaces do NOT fucking touch this
-      heroInfoDisplay.classList.add("heroInfoDisplay");
-      enabledHeroes.appendChild(heroInfoDisplay);
+      const heroIcon = document.createElement("img");
+      heroIcon.src = `../assets/${hero["tower"]}.png`
+      heroIcon.alt = hero["tower"]
+      heroIcon.classList.add("heroIcon");
+      container.appendChild(heroIcon);
     }
   } else {
-    const heroInfoDisplay = document.createElement("p");
-    heroInfoDisplay.innerHTML = `<b>Any Hero</b>`;
-    heroInfoDisplay.classList.add("heroInfoDisplay");
-    enabledHeroes.appendChild(heroInfoDisplay);
+    const heroInfoDisplay = document.createElement("h3");
+    heroInfoDisplay.innerText = `Any Hero`;
+    heroInfoDisplay.className = "headerHeroDisplay anyHeroDisplay"
+    container.appendChild(heroInfoDisplay);
   }
 }
-
-/* 
-if (mentalHealth < adequate) {
-  die("now");
-}
-*/
-function determineSpecialMods(metadata) {
+function determineSpecialMods(metadata, specialModsContainer) {
   if (metadata["maxTowers"] != 9999 && metadata["maxTowers"] != 0) {
-    appendElement(
-      specialModsContainer,
-      `Max Towers`,
-      `${metadata["maxTowers"]}`
-    );
+    appendElement(specialModsContainer, `Max Towers`, `${metadata["maxTowers"]}`);
   }
   if (metadata["maxParagons"] !== 10) {
-    appendElement(
-      specialModsContainer,
-      `Max Paragons`,
-      `${metadata["maxParagons"]}`
-    );
+      appendElement(specialModsContainer, `Max Paragons`, `${metadata["maxParagons"]}`);
   }
   if (metadata["abilityCooldownReductionMultiplier"] !== 1) {
-    appendElement(
-      specialModsContainer,
-      `Ability Cooldowns`,
-      `${(metadata["abilityCooldownReductionMultiplier"] * 100).toLocaleString()}% duration`
-    );
-}
-if (metadata["removeableCostMultiplier"] !== 1) {
-    appendElement(
-      specialModsContainer,
-      `Obstacle Removal`,
-      `${(metadata["removeableCostMultiplier"] * 100).toLocaleString()}% cost`
-    );
-}
+      appendElement(specialModsContainer, `Ability Cooldowns`, `${(metadata["abilityCooldownReductionMultiplier"] * 100).toLocaleString()}% duration`);
+  }
+  if (metadata["removeableCostMultiplier"] !== 1) {
+      appendElement(specialModsContainer, `Obstacle Removal`, `${(metadata["removeableCostMultiplier"] * 100).toLocaleString()}% cost`);
+  }
   if (metadata["disableMK"] == true) {
     appendElement(specialModsContainer, `No Monkey Knowledge`, ``);
   }
@@ -568,24 +577,13 @@ if (metadata["removeableCostMultiplier"] !== 1) {
     );
   }
   if (bloonMods["moabSpeedMultiplier"] !== 1) {
-    appendElement(
-      specialModsContainer,
-      `MOAB Speed`,
-      `${(bloonMods["moabSpeedMultiplier"] * 100).toLocaleString()}%`
-    );
+    appendElement(specialModsContainer,`MOAB Speed`,`${(bloonMods["moabSpeedMultiplier"] * 100).toLocaleString()}%`);
   }
   if (bloonMods["bossSpeedMultiplier"] !== 1) {
-    appendElement(
-      specialModsContainer,
-      `Boss Speed`,
-      `${(bloonMods["bossSpeedMultiplier"] * 100).toLocaleString()}%`
-    );
+    appendElement(specialModsContainer,`Boss Speed`,`${(bloonMods["bossSpeedMultiplier"] * 100).toLocaleString()}%`);
   }
   if (bloonMods["regrowRateMultiplier"] !== 1) {
-    appendElement(
-      specialModsContainer,
-      `Regrow Rate`,
-      `${(bloonMods["regrowRateMultiplier"] * 100).toLocaleString()}%`
+    appendElement(specialModsContainer,`Regrow Rate`,`${(bloonMods["regrowRateMultiplier"] * 100).toLocaleString()}%`
     );
   }
   const hpMods = bloonMods["healthMultipliers"];
@@ -598,197 +596,236 @@ if (metadata["removeableCostMultiplier"] !== 1) {
   if (hpMods["boss"] !== 1) {
     appendElement(specialModsContainer, `Boss HP`, `${(hpMods["boss"] * 100).toLocaleString()}%`);
   }
-
   if (metadata["roundSets"].length > 1) {
     appendElement(specialModsContainer, `Custom Rounds`, ``);
   }
 }
-
-async function getRaceLeaderboard(data) {
-  raceLB = await (await fetch(data["leaderboard"])).json();
-  raceLB = raceLB["body"];
-  disableLoading();
-  displayLeaderboard(raceLB, null);
-}
-async function getBossLeaderboard(data) {
-  bossStandardLB1P = await (
-    await fetch(data["leaderboard_standard_players_1"])
-  ).json();
-  bossStandardLB1P = bossStandardLB1P["body"];
-  bossEliteLB1P = await (
-    await fetch(data["leaderboard_elite_players_1"])
-  ).json();
-  bossEliteLB1P = bossEliteLB1P["body"];
-  disableLoading();
-  displayLeaderboard(bossStandardLB1P, "standard");
-}
-
-function displayLeaderboard(lb, difficulty) {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-  let scoreType;
-  generateLBButtons(difficulty);
-  eventPickContainer.style.display = "none";
-  eventTitle.style.display = "none";
-  raceArchiveContainer.style.display = "none";
-  bossArchiveContainer.style.display = "none";
-  if (lb[0]["scoreParts"][0]["name"] == "Game Time") {
-    scoreType = "time";
-  } else if (lb[0]["scoreParts"][0]["name"] == "Tiers") {
-    scoreType = "tiers";
-  } else {
-    scoreType = "cash";
-  }
-  for (let i = 0; i < lb.length; i++) {
-    const playerElem = document.createElement("div");
-    createPlacementElem(i + 1, playerElem);
-    createNameElem(lb[i], playerElem);
-    createScoreElem(scoreType, lb[i], playerElem);
-    playerElem.classList.add("playerElem");
-    leaderboardContainer.appendChild(playerElem);
-  }
-
-  if (difficulty == null) {
-    leaderboardTitle.innerHTML = `"${eventName}" Race: Top ${lb.length}`;
-  } else {
-    leaderboardTitle.innerHTML = `${eventName}: Top ${lb.length} (${difficulty.toUpperCase()})`;
-  }
-
-  leaderboardTitle.style.display = "flex";
-  leaderboardContainer.style.display = "flex";
-
-  urlParams.set("id", `${id}`);
-  urlParams.set("type", "leaderboard");
-  if (difficulty != null) urlParams.set("difficulty", difficulty);
-  history.replaceState(null, null, "?" + urlParams.toString());
-}
-
-function generateLBButtons(selectedDifficulty) {
-  const swapDifficultyButton = document.createElement("button");
-  swapDifficultyButton.classList.add("swapDifficultyButton");
-  if (selectedDifficulty == "standard") {
-    swapDifficultyButton.innerText = `Swap to Elite`;
-    swapDifficultyButton.onclick = () => {
-      for (const element of dataContainers) {
-        while (element.hasChildNodes()) {
-          element.removeChild(element.firstChild);
-        }
-      }
-      displayLeaderboard(bossEliteLB1P, "elite");
-    };
-    swapLBButtonContainer.style.display = "flex";
-  } else if (selectedDifficulty == "elite") {
-    swapDifficultyButton.innerText = `Swap to Normal`;
-    swapDifficultyButton.onclick = () => {
-      for (const element of dataContainers) {
-        while (element.hasChildNodes()) {
-          element.removeChild(element.firstChild);
-        }
-      }
-      displayLeaderboard(bossStandardLB1P, "standard");
-    };
-    swapLBButtonContainer.style.display = "flex";
-  }
-  swapLBButtonContainer.appendChild(swapDifficultyButton);
-}
-
-function createPlacementElem(placement, parent) {
-  const placementElem = document.createElement("p");
-  placementElem.innerText = placement;
-  parent.appendChild(placementElem);
-}
-function createNameElem(data, parent) {
-  const playerNameElem = document.createElement("p");
-  playerNameElem.classList.add("tiebreakerElem")
-  playerNameElem.innerText = `${data["displayName"].toUpperCase().trim()}`;
-  let urlParts = data["profile"].split("/");
-  let userID = urlParts[urlParts.length - 1];
-  playerNameElem.onclick = () => {
-    window.open(`community.html?type=player&id=${userID}`)
-  }
-  parent.appendChild(playerNameElem);
-}
-function createScoreElem(scoreType, data, parent) {
-  const scoreElem = document.createElement("p");
-  switch (scoreType) {
-    case "time": scoreElem.innerText = `${convertMS(data["score"])}`; break;
-    case "tiers": 
-      scoreElem.innerText = `${data["score"]} Tiers`; 
-      scoreElem.onclick = () => {
-        popupHTML = `
-        <h3>Total Ranked Time: <b>${convertMS(data["scoreParts"][1]["score"])}</b></h3>
-        <p><b>About least tiers tiebreakers</b>: When scores are tied, the best Ranked time is used as a tiebreaker.</p>`
-        showPopup(`${data["displayName"].toUpperCase()}'s Tiebreaker`, popupHTML)
-      }
-      scoreElem.classList.add("tiebreakerElem")
-      break
-    case "cash": scoreElem.innerText = `$${data["score"].toLocaleString()}`; break;
-  }
-  scoreElem.classList.add("scoreElem")
-  parent.appendChild(scoreElem);
-}
-
-function convertMS(milliseconds) {
-  let hours = Math.floor(milliseconds / (1000 * 60 * 60));
-  let minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
-  let remainingMilliseconds = milliseconds % 1000;
-
-  let formattedTime = "";
-  if (hours > 0) {
-    formattedTime += `${hours}:`;
-  }
-  formattedTime += `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}.${remainingMilliseconds}`;
-  return formattedTime;
-}
-
-function padTo2Digits(num) {
-  // magic function by AI
-  return num.toString().padStart(2, "0");
-}
-
-
 function appendElement(parent, title, value) {
   const element = document.createElement("p");
   element.innerHTML = `<b>${title}</b><br>${value}`;
   parent.appendChild(element);
 }
-function prependElement(parent, title) {
-  const element = document.createElement("p");
-  element.innerHTML = `<b>${title}</b>`;
-  parent.prepend(element);
+
+// LEADERBOARD TIME
+/* 
+Hark! Behold, mine eyes hath glimpsed the beacon, the radiant luminescence amidst the harrowing labyrinthine 
+travail! O, the heart swelleth with rapture, as though emerging from the stygian depths, to bask in the effulgent
+embrace of triumphant respite, whence erstwhile darkness did reign supreme. Thus, with fervent elation, doth my 
+spirit soar, reveling in the celestial aureole that heralds the cessation of yon relentless tribulation!
+*/
+// already said this but whoever wrote this code is a dumbass so that guy probably needs a refresher
+// difficulty is optional: only applies to bosses and odysseys, and will always be null 
+// unless coming from this function
+function displayLeaderboard(event, difficulty = "normal") {
+  window.scrollTo({top: 0})
+  for (const ye of leaderboardContainers) {
+    for (const thisIsSOSTUPID of Array.from(ye.querySelectorAll("*"))) {
+      thisIsSOSTUPID.remove()
+    }
+  }
+  let leaderboard
+  let scoringType
+  let name
+  let timestamp
+  const container = document.querySelector(`.${event}LeaderboardContainer`)
+  if (event == "bosses") {
+    if (difficulty == "elite") {
+      leaderboard = bossEliteLB1P.getLeaderboard()
+      scoringType = bossEliteLB1P.getScoringType()
+      name = bossEliteLB1P.getName()
+      timestamp = bossEliteLB1P.getTimestamp()
+    } else {
+      leaderboard = bossStandardLB1P.getLeaderboard()
+      scoringType = bossStandardLB1P.getScoringType()
+      name = bossStandardLB1P.getName()
+      timestamp = bossStandardLB1P.getTimestamp()
+    }
+  } else { /* event is hopefully "races" */
+    leaderboard = raceLB.getLeaderboard()
+    scoringType = "Game Time"
+    name = raceLB.getName()
+    timestamp = raceLB.getTimestamp()
+  }
+  if (!leaderboard["success"]) {
+    appendElement(container, "No Scores Available", "")
+  } else {
+    let formattedScoringType = formatScoringType(scoringType)
+    if (event == "bosses") {
+      addDifficultyButtons("bosses", name, document.getElementById("bossDifficultyButtonContainerLB"), "leaderboard", difficulty)
+      document.getElementById("bossDifficultyButtonContainerLB").style.display = "flex"
+    }
+    for (let i = 0; i < leaderboard["body"].length; i++) {
+      const player = leaderboard["body"][i]
+      let score = formatLBScore(player["score"], scoringType)
+      const playerDiv = document.createElement("div")
+      playerDiv.classList.add("playerDiv")
+      let playerHTML = `
+      <div class="placementAndNameWrapper">
+        <h2 class="placementNumber">#${i + 1}</h2>
+        <div class="playerTitleContainer">
+          <span class="material-symbols-outlined goToProfile">person</span>
+          <h3 class="playerName">${player["displayName"]}</h3>
+        </div>
+      </div>
+      <div class="allPlayerScoresContainer">
+        <div class="playerScoreContainer mainScore">
+          <h4 class="scoringType">${formattedScoringType}</h4>
+          <p class="playerScore">${score}</p>
+        </div>`
+      // i intentionally at 1 to skip the first score part which is already in the html
+      for (let i = 1; i < player["scoreParts"].length; i++) {
+        const scoreObj = player["scoreParts"][i]
+        if (scoreObj["name"] == "Time after event start") break
+
+        const formattedSubscore = formatLBScore(scoreObj["score"], scoreObj["name"])
+        const formattedSubscoringType = formatScoringType(scoreObj["name"])
+        playerHTML += `
+        <div class="playerScoreContainer">
+          <h4 class="scoringType">Tiebreaker: ${formattedSubscoringType}</h4>
+          <p class="playerScore">${formattedSubscore}</p>
+        </div>
+        `
+      }
+      playerHTML += `</div>`
+      playerDiv.innerHTML = playerHTML
+      playerDiv.querySelector(".goToProfile").onclick = () => {
+        let urlParts = player["profile"].split("/")
+        let userID = urlParts[urlParts.length - 1]
+        window.open(`https://nitjus7.github.io/BTD6-Central/community.html?type=player&id=${userID}`)
+      }
+      container.appendChild(playerDiv)
+    }
+  }
+  editURL("difficulty", difficulty)
+}
+function formatLBScore(score, scoreType){
+  if (scoreType == "Game Time") {
+    let hours = Math.floor(score / (1000 * 60 * 60))
+    let minutes = Math.floor((score % (1000 * 60 * 60)) / (1000 * 60))
+    let seconds = Math.floor((score % (1000 * 60)) / 1000)
+    let remainingMilliseconds = score % 1000
+    let formattedTime = ""
+    if (hours > 0) {
+      formattedTime += `${hours}:`
+    }
+    formattedTime += `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}.${remainingMilliseconds}`
+    return formattedTime
+  } else if (scoreType == "Tiers") {
+      return `${score}`; 
+  } else {
+    return `$${score.toLocaleString()}`
+  }
+}
+function padTo2Digits(num) {
+  // magic function by AI that adds 3 magical wishes granted by a powerful genie to the parameter passed in
+  return num.toString().padStart(2, "0");
+}
+function formatScoringType(type) {
+  if (type == "Game Time") return "Time"
+  else if (type == "Tiers") return "Tiers"
+  else return "Cash"
+}
+ 
+/**************************************************/
+/**************************************************/
+/**************************************************/
+/**************************************************/
+/**************************************************/
+
+function addDifficultyButtons(event, name, container, type, difficulty) {
+  if (event == "bosses") {
+    const norm = container.querySelector(".difficultyImageStandard")
+    const L = container.querySelector(".difficultyImageElite")
+    if (name.includes("Bloonarius")) {
+      norm.src = "https://i.ibb.co/2hzPr5t/bloonarius.png";
+      L.src = "https://i.ibb.co/HnhcNz9/elite-Bloonarius.png";
+    } else if (name.includes("Lych")) {
+      norm.src = "https://i.ibb.co/w4t4dX8/lych.png";
+      L.src = "https://i.ibb.co/2h93hcJ/elite-Lych.png";
+    } else if (name.includes("Vortex")) {
+      norm.src = "https://i.ibb.co/w4Ng4nd/vortex.png";
+      L.src = "https://i.ibb.co/j44bYsB/elite-Vortex.png";
+    } else if (name.includes("Dreadbloon")) {
+      norm.src = "https://i.ibb.co/hVF5PnP/dreadbloon.webp";
+      L.src = "https://i.ibb.co/BgLNDHg/elite-Dreadbloon.webp";
+    } else if (name.includes("Phayze")) {
+      norm.src = "https://i.ibb.co/3dGxcC2/phayze.png";
+      L.src = "https://i.ibb.co/JnjzyLQ/elite-Phayze.png";
+    }     
+    if (difficulty == "normal") {
+      norm.classList.remove("inactive")
+      L.classList.add("inactive")
+    }
+    if (norm.classList.contains("inactive")) {
+      norm.onclick = () => {
+        norm.classList.remove("inactive")
+        L.classList.add("inactive")
+        if (type == "leaderboard") displayLeaderboard(event, "normal")
+        else displayDetails(event, "normal")
+      }
+    } else {
+      L.onclick = () => {
+        L.classList.remove("inactive")
+        norm.classList.add("inactive")
+        if (type == "leaderboard") displayLeaderboard(event, "elite")
+        else displayDetails(event, "elite")
+      }
+    }
+  }
 }
 
-function swapToEvent(event) {
-  eventPickContainer.style.display = "none";
-  eventTitle.style.display = "flex";
-  backButton.style.display = "flex";
-  switch (event) {
-    case "races":
-      raceArchiveContainer.style.display = "flex";
-      eventTitle.innerText = "Latest Race Events";
-      break;
-    case "bosses":
-      bossArchiveContainer.style.display = "flex";
-      eventTitle.innerText = "Latest Boss Events";
-      break;
-    default:
-      catchError("That event does not exist.");
+function determineStatus(startDate, endDate) {
+  let currentDate = Date.now();
+  if (currentDate > endDate) {
+    return "Ended";
+  } else if (currentDate < startDate) {
+    return "Not Started Yet";
+  } else {
+    return "Live";
   }
-  switch (event) {
-    case "races":
-      getRaceData();
-      break;
-    case "bosses":
-      getBossData();
-      break;
+}
+function generateTimestamp(data, status) {
+  const dateFormatting = { month: "short", day: "numeric", year: "numeric" };
+  const startDate = new Date(data["start"]);
+  const endDate = new Date(data["end"]);
+  if (status == "LIVE") {
+    return calculateTimeRemaining(endDate)
+  } else {
+    return `${startDate.toLocaleDateString([], dateFormatting)} to ${endDate.toLocaleDateString([], dateFormatting)}`
   }
-  urlParams.set("event", `${event}`);
-  history.replaceState(null, null, "?" + urlParams.toString());
+}
+function calculateTimeRemaining(end) {
+  // thx phind.com <3
+  const currentDate = new Date();
+  const timeDifference = end.getTime() - currentDate.getTime();
+  let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  let hours = Math.floor(
+    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `Remaining Time: ${days}d, ${hours}h, ${minutes}m`;
 }
 
+
+function editURL(name, value) {
+  if (value != null) { 
+    urlParams.set(name, value) 
+    history.replaceState(null, null, "?" + urlParams.toString())
+  } else { 
+    urlParams.delete(name) 
+    window.history.replaceState(null, document.title, window.location.pathname)
+  }
+}
+
+function enableLoading() {
+  statsPopupOverlay.style.display = "block"
+  document.body.classList.add("no-scroll")
+}
+function disableLoading() {
+  statsPopupOverlay.style.display = "none"
+  document.body.classList.remove("no-scroll")
+}
 function showPopup(title, content) {
   popupTitle.innerText = title
   popupContentContainer.innerHTML = content
@@ -804,106 +841,135 @@ document.querySelector(".closePopupButton").onclick = () => {
   }, 300);
 }
 
-function displayLoading() {
-  eventTitle.style.display = "none";
-  backButton.style.display = "none";
-  raceArchiveContainer.style.display = "none";
-  bossArchiveContainer.style.display = "none";
+async function swapToEventOverview(event) {
+  enableLoading()
+  if (event == "races") {
+    if (raceOverview == null) await getRaceData()
+    if (!isRaceGenerated) generateRaceList()
+    eventTitle.innerText = "Races"
+    raceArchiveContainer.style.display = "flex"
+    editURL("event", "races")
+  } else if (event == "bosses") {
+    if (bossOverview == null) await getBossData()
+    if (!isBossGenerated) generateBossList()
+    eventTitle.innerText = "Bosses"
+    bossArchiveContainer.style.display = "flex"
+    editURL("event", "bosses")
+  } else {
+    if (ctOverview == null) await getCTData()
+    if (!isCTGenerated) generateCTList()
+    eventTitle.innerText = "Contested Territory"
+    ctArchiveContainer.style.display = "flex"
+    editURL("event", "ct")
+  }
+  eventPickContainer.style.display = "none"
+  backButton.style.display = "block"
+  disableLoading()
 }
-function disableLoading() {
-  backButton.style.display = "flex";
+// url2 and url3 are optional: url2 for elite boss or medium odyssey, url3 for hard odyssey
+async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, url3 = null, difficulty = null) {
+  enableLoading()
+  eventTitle.innerText = ""
+  await getMetadata(id, event, name, timestamp, url, url2, url3)
+  raceArchiveContainer.style.display = "none"
+  bossArchiveContainer.style.display = "none"
+  ctArchiveContainer.style.display = "none"
+  if (!difficulty) displayDetails(event)
+  else displayDetails(event, difficulty)
+  document.getElementById(`${event}EventDetails`).style.display = "block"
+  editURL("type", "metadata")
+  editURL("id", id)
+  editURL("name", name)
+  disableLoading()
+}
+// url2 is optional: either elite boss or player CT
+async function swapToEventLeaderboard(id, event, name, timestamp, url, url2 = null, difficulty = null) {
+  enableLoading()
+  eventTitle.innerText = ""
+  await getLeaderboard(id, event, name, timestamp, url, url2)
+  document.querySelector(".leaderboardTitle").innerText = name
+  raceArchiveContainer.style.display = "none"
+  bossArchiveContainer.style.display = "none"
+  ctArchiveContainer.style.display = "none"
+  if (!difficulty) displayLeaderboard(event)
+  else displayLeaderboard(event, difficulty)
+  editURL("type", "leaderboard")
+  editURL("id", id)
+  editURL("name", name)
+  disableLoading()
+}
+
+
+function thanosSnap() {
+  eventTitle.innerText = ""
+  document.querySelector(".leaderboardTitle").innerText = ""
+  raceArchiveContainer.style.display = "none"
+  bossArchiveContainer.style.display = "none"
+  ctArchiveContainer.style.display = "none"
+  eventPickContainer.style.display = "block"
+  backButton.style.display = "none"
+  for (const why of eventDetailsContainers) {
+    why.style.display = "none"
+  }
+  for (const please of removeTheseDetailContainers) {
+    for (const bruh of please) {
+      for (const thisIsSOSTUPID of Array.from(bruh.querySelectorAll("*"))) {
+        thisIsSOSTUPID.remove()
+      }
+    }
+  }
+  for (const ye of leaderboardContainers) {
+    for (const thisIsSOSTUPID of Array.from(ye.querySelectorAll("*"))) {
+      thisIsSOSTUPID.remove()
+    }
+  }
+  document.querySelector(".difficultyImageStandard").classList.remove("inactive")
+  document.querySelector(".difficultyImageElite").classList.add("inactive")
+  const scopeItDown = document.getElementById("bossDifficultyButtonContainerLB")
+  scopeItDown.querySelector(".difficultyImageStandard").classList.remove("inactive")
+  scopeItDown.querySelector(".difficultyImageElite").classList.add("inactive")
+  document.getElementById("bossDifficultyButtonContainerLB").style.display = "none"
+  editURL("event", null)
+  editURL("type", null)
+  editURL("id", null)
+  editURL("difficulty", null)
+  editURL("name", null)
 }
 
 raceEventButton.onclick = () => {
-  swapToEvent("races");
-};
-bossEventButton.onclick = () => {
-  swapToEvent("bosses");
-};
-// event listener for the back button.
-backButton.onclick = () => {
-  eventPickContainer.style.display = "flex";
-  backButton.style.display = "none";
-  raceArchiveContainer.style.display = "none";
-  bossArchiveContainer.style.display = "none";
-  for (const element of eventElems) {
-    element.style.display = "none";
-  }
-  for (const element of dataContainers) {
-    while (element.hasChildNodes()) {
-      element.removeChild(element.firstChild);
-    }
-  }
-  urlParams.delete("id");
-  urlParams.delete("type");
-  urlParams.delete("difficulty");
-  window.history.replaceState(null, document.title, window.location.pathname);
-};
-
-async function main() {
-  displayLoading()
-  window.addEventListener('offline', () => alert("NOTICE: You must be connected to the internet to browse the event archive.\nIt seems that your internet connection has been lost. Please report this to the BTD6 Central Discord Server if this is a bug."))
-  urlEvent = urlParams.get("event");
-  urlID = urlParams.get("id");
-  urlType = urlParams.get("type");
-  urlDifficulty = urlParams.get("difficulty");
-  // if the ID of the event is in the URL
-  if (urlID != null) {
-    id = urlID;
-    displayLoading()
-    // and the type is "metadata"
-    if (urlType == "metadata") {
-      if (urlEvent == "races") {
-        const metadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}`)).json();
-        swapToEvent(urlEvent);
-        displayDetails(urlEvent, metadata["body"], urlDifficulty);
-      } else if (urlEvent == "bosses") {
-        bossEliteMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/elite`)).json();
-        bossStandardMetadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/${urlType}/standard`)).json();
-        swapToEvent(`${urlEvent}`);
-        bossEliteMetadata = bossEliteMetadata["body"];
-        bossStandardMetadata = bossStandardMetadata["body"];
-        if (urlDifficulty == "standard")
-          displayDetails(urlEvent, bossStandardMetadata, urlDifficulty);
-        if (urlDifficulty == "elite")
-          displayDetails(urlEvent, bossEliteMetadata, urlDifficulty);
-      }
-      // OR if the type is "leaderboard"
-    } else if (urlType == "leaderboard") {
-      let lb;
-      if (urlEvent == "races") {
-        const metadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata`)).json();
-        const tempLB = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard?`)).json();
-        lb = tempLB["body"];
-        eventName = metadata["body"]["name"];
-      } else if (urlEvent == "bosses") {
-        const metadata = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/metadata/${urlDifficulty}`)).json();
-        bossStandardLB1P = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard/standard/1?`)).json();
-        bossEliteLB1P = await (await fetch(`https://data.ninjakiwi.com/btd6/${urlEvent}/${urlID}/leaderboard/elite/1?`)).json();
-        bossStandardLB1P = bossStandardLB1P["body"];
-        bossEliteLB1P = bossEliteLB1P["body"];
-        eventName = metadata["body"]["name"].replace(/([a-zA-Z])(\d)/g,"$1 $2")
-        if (urlDifficulty == "standard") {
-          lb = bossStandardLB1P;
-        } else {
-          lb = bossEliteLB1P;
-        }
-      }
-      swapToEvent(urlEvent);
-      displayLeaderboard(lb, urlDifficulty);
-    }
-    disableLoading()
-  } else if (urlEvent != null) {
-    swapToEvent(urlEvent);
-  } else {
-    urlParams.delete("id");
-    urlParams.delete("type");
-    urlParams.delete("difficulty");
-    history.replaceState(null, null, "?" + urlParams.toString());
-  }
-  disableLoading()
-  backButton.style.display = "none"
+  swapToEventOverview("races")
 }
-// event listener for race button.
+bossEventButton.onclick = () => {
+  swapToEventOverview("bosses")
+}
+/* ctEventButton.onclick = () => {
+  swapToEventOverview("ct")
+} */
 
-main();
+backButton.onclick = () => {
+  thanosSnap()
+}
+async function main() {
+  window.addEventListener('offline', () => alert("NOTICE: You must be connected to the internet to browse BTD6 events.\nIt seems that your internet connection has been lost."))
+  urlEvent = urlParams.get("event")
+  urlName = urlParams.get("name")
+  urlID = urlParams.get("id")
+  urlType = urlParams.get("type")
+  urlDifficulty = urlParams.get("difficulty")
+  if (urlEvent) {
+    backButton.style.display = "block"
+    eventPickContainer.style.display = "none"
+    if (!urlType) {
+      swapToEventOverview(urlEvent)
+    } else if (urlEvent == "bosses"){
+      if (urlType == "metadata" && urlID && urlDifficulty && urlName) swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/standard`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/elite`, null, urlDifficulty)
+      else if (urlType == "leaderboard" && urlID && urlDifficulty && urlName) swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/standard/1`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/elite/1`, urlDifficulty)
+    } else if (urlEvent == "races") {
+      if (urlType == "metadata" && urlID && urlName) swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/metadata`)
+      else if (urlType == "leaderboard" && urlID && urlName) swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/leaderboard`)
+    }
+  } else {
+    thanosSnap()
+  }
+}
+main()

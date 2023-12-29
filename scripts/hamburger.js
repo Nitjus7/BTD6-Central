@@ -22,7 +22,7 @@ hamburgerButton.onclick = () => {
 }
 closeButton.onclick = () => {
     hamburgerContainer.classList.remove("openFaceBurger")
-    popupOverlay.style.display = "none";
+    popupOverlay.style.display = "none"
     document.body.classList.remove("no-scroll")
 }
 goToEvents.onclick = () => {
@@ -57,13 +57,15 @@ switch (localStorage.getItem("themeMode")) {
 }
 function swapToDark() {
     pageTheme.value = "dark"
-    styles.style.setProperty("--pageBackground", "black");
-    styles.style.setProperty("--contentBackground1", "#33373f");
-    styles.style.setProperty("--contentBackground2", "#ff56286a");
+    styles.style.setProperty("--pageBackground", "#212121")
+    styles.style.setProperty("--contentBackground1", "#3c4048")
+    styles.style.setProperty("--contentBackground2", "#ff56286a")
     styles.style.setProperty("--contentBackground3", "#6648906a")
+    styles.style.setProperty("--contentBackground4", "#074059")
     styles.style.setProperty("--contentAccent", "rgba(75, 55, 90, 0.35)")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#d382e7")
+    styles.style.setProperty("--contentOutline4", "#4dbbe0")
     styles.style.setProperty("--itemSelectedBackground", "rgb(116, 109, 109)");
     styles.style.setProperty("--shadowColor", "rgb(32, 31, 31)");
     styles.style.setProperty("--wip", "0.5");
@@ -82,9 +84,11 @@ function meetGod() {
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");
     styles.style.setProperty("--contentBackground3", "#b095e047")
+    styles.style.setProperty("--contentBackground4", "#61c9c8")
     styles.style.setProperty("--itemSelectedBackground", "lightgray");
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#914ba2")
+    styles.style.setProperty("--contentOutline4", "#079285")
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");
     styles.style.setProperty("--textColor", "#121212");
@@ -101,17 +105,22 @@ function swapToSpirit() {
     styles.style.setProperty("--pageBackground", "")
 }
 
-if (document.getElementsByClassName("takeMeHomeContainer").length > 0) {
-    let lastScrollPos = 0
+/* if (document.getElementsByClassName("takeMeHomeContainer").length > 0) {
+    let lastScrollPos = 0;
     window.addEventListener('scroll', function() {
-    let currentScrollPos = window.pageYOffset;
-    if (currentScrollPos > lastScrollPos) {
+        let currentScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+        let takeMeHomeContainer = document.querySelector(".takeMeHomeContainer");
+ 
         // User is scrolling down
-        document.querySelector(".takeMeHomeContainer").classList.remove("showYourself")
-    } else {
-        // User is scrolling up
-        document.querySelector(".takeMeHomeContainer").classList.add("showYourself")
-    }
-    lastScrollPos = currentScrollPos;
-    }, { passive: true })
-}
+        if (currentScrollPos > lastScrollPos) {
+            takeMeHomeContainer.classList.remove("showYourself");
+        } 
+        // User is scrolling up or at the top of the page
+        else {
+            takeMeHomeContainer.classList.add("showYourself");
+        }
+ 
+        lastScrollPos = currentScrollPos;
+    }, { passive: true });
+ } */
+ 

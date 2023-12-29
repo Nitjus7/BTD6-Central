@@ -1,3 +1,6 @@
+:root {
+  --player-banner-bg-image: url("../assets/hero.png");
+}
 h2, h3 {
   font-family: var(--secondaryFont)
 }
@@ -41,6 +44,15 @@ button:not(.wip):hover {
     flex-direction: column;
   }
 }
+.nameAndFollowerContainer {
+  background-color: rgba(0, 0, 0, 0.45);
+  padding: 0.75rem;
+  margin: 0.5rem;
+  border-radius: 15px;
+}
+.followers {
+  color: rgb(220, 224, 231);
+}
 .selection, .name, .mapDetails > * {
   font-family: var(--secondaryFont);
   text-align: center;
@@ -58,7 +70,7 @@ button:not(.wip):hover {
   background-color: var(--contentBackground1);
   border-radius: 5px;
   border: 1px var(--textColor) solid;
-  padding: 1rem;
+  padding: 0rem;
 }
 .detailsContent {
   font-family: var(--mainFont);
@@ -68,23 +80,139 @@ button:not(.wip):hover {
   .detailsContent {
     margin-left: 0;
   }
+  .detailsContainer {
+    padding: 0.5rem;
+  }
 }
 .name {
-  color: var(--textColor2);
+  color: rgb(220, 224, 231);
   margin: 0 0 1rem 0;
 }
+.playerName {
+  color: white;
+}
 .name, .followers {
-  padding: 0 0 0 1rem;
   text-align: left;
 }
 .playerNameContainer {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  width: 100vw;
+}
+.playerNameContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--player-banner-bg-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  image-rendering: pixelated;
+  z-index: -1; 
+  filter: blur(5px); 
 }
 .playerIcon {
   aspect-ratio: 1 / 1;
   width: 150px;
+}
+.favoriteHeroContainer {
+  display: flex;
+  width: 100vw;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.heroUsageElem {
+  flex-basis: 20%;
+  background: var(--contentBackground4);
+  margin: 0px 1rem 1rem 1rem;
+  padding: 1rem 1rem 0px 1rem;
+  border-radius: 10px;
+  border: 1px var(--contentOutline4) solid;
+}
+@media only screen and (max-width: 768px) {
+  .heroUsageElem {
+    flex-basis: 30%;
+  }
+}
+.heroImage {
+  height: 20vw;
+  max-height: 150px;
+}
+.viewAllHeroesButton {
+  background-color: var(--buttonColor1);
+  color: var(--textColor);
+  border: 1px var(--textColor) solid;;
+  border-radius: 7px;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: background-color 0.35s;
+}
+.viewAllHeroesButton:hover {
+  background-color: var(--buttonColor2)
+}
+.rankedBossContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.normalBossWrapper, .eliteBossWrapper, .raceWrapper, .ctLocalWrapper, .ctGlobalWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 80vw;
+}
+.normalBossContainer, .eliteBossContainer, .raceContainer, .ctLocalContainer, .ctGlobalContainer {
+  display: flex;
+  width: 80vw;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  background: var(--contentBackground1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px var(--textColor) solid;
+}
+.totalMedalElem {
+  color: var(--textColor2)
+}
+.rankedMedalsHeader {
+  margin: 1.5rem 0px 0px 0px;
+}
+.rankedHeader {
+  margin-right: 1rem;
+}
+.rankedContentHidden {
+  display: none;
+}
+.rankedHeaderContainer {
+  display: flex;
+  align-items: center;
+}
+.competitiveMedalElem {
+  padding: 0px 3vw 0px 3vw;
+}
+
+.allMedalsContainer {
+  display: flex;
+}
+.medalsSinglePlayerContainer {
+  margin-right: 3rem;
+}
+@media only screen and (max-width: 1200px) {
+  .allMedalsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .medalsSinglePlayerContainer {
+    margin-right: 0rem;
+  }
 }
 .medalsSinglePlayerContainer, .medalsMultiPlayerContainer {
   display: flex;
@@ -102,7 +230,7 @@ button:not(.wip):hover {
   margin-bottom: 1.5rem;
   padding: 0.5rem;
   border-radius: 4px;
-  width: 650px;
+  width: 550px;
   overflow-x: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -145,9 +273,6 @@ button:not(.wip):hover {
 .vetLevelIcon, .levelIcon {
   aspect-ratio: 1 / 1;
   height: 75px;
-}
-.followers {
-  opacity: 0.75;
 }
 .levelContainer, .regLevelContainer, .vetLevelContainer {
   display: flex;
@@ -218,9 +343,24 @@ button:not(.wip):hover {
 .IDInputContainer > input:focus {
   outline: 1px var(--textColor2) solid;
 }
+.mapAndButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  padding-right: 0;
+  margin-right: 0;
+}
+.creditAndPlayMapButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  margin-right: 0;
+  padding-right: 0;
+}
 .playMap, .mapCredit {
   user-select: none;
-  padding: 0.5rem;
+  padding: 1rem;
   margin: 0.25rem;
   margin-top: 0.75rem;
   background-color: var(--buttonColor1);
@@ -228,6 +368,16 @@ button:not(.wip):hover {
   border-radius: 5px;
   border: 1px var(--textColor) solid;
   transition: background-color 0.25s
+}
+@media only screen and (max-width: 768px) {
+  .mapAndButtonsContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .creditAndPlayMapButtonContainer {
+    flex-direction: row;
+  }
 }
 .playMap:hover, .mapCredit:hover {
   background: var(--buttonColor2);
@@ -242,7 +392,7 @@ button:not(.wip):hover {
 .mapImage {
   aspect-ratio: 1.5 / 1;
   max-width: 500px;
-  width: 60%;
+  width: 80%;
   border-radius: 15px;
 }
 .idHelperHeader {
@@ -256,7 +406,7 @@ button:not(.wip):hover {
 .idHelperImage {
   border-radius: 10px;
   border: 2px solid var(--textColor);
-  margin: 0px 5px 20px 5px;
+  margin: 0px 5px 30px 5px;
   width: 85%;
   max-width: 500px;
 }
@@ -308,7 +458,7 @@ button:not(.wip):hover {
     width: 100vw;
     height: 150vh;
     z-index: 30;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.45);
   }
   .popupImageContainer {
     display: flex;
