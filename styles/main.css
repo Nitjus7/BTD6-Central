@@ -23,7 +23,7 @@ body {
 
 .heroContainer::before {
   content: "";
-  background-image: url("../assets/christmasHero.jpg");
+  background-image: url("../assets/hero.png");
   background-size: cover;
   position: absolute;
   top: 0px;

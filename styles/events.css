@@ -299,9 +299,10 @@ button {
   flex-wrap: wrap;
   background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
-  border-radius: 5px;
-  width: fit-content;
-  margin: 0 auto;
+  border-radius: 10px;
+  width: 80vw;
+  max-width: 600px;
+  margin: 0.5rem auto;
   padding: 0;
 }
 .specialModsContainer > * {

@@ -1,7 +1,7 @@
 const popupContainer = document.querySelector(".popupContainer")
 const popupTitle = document.querySelector(".popupTitle")
 const popupContentContainer = document.querySelector(".popupContentContainer")
-const statsPopupOverlay = document.querySelector(".popupOverlay")
+const eventsPopupOverlay = document.querySelector(".popupOverlay")
 const backButton = document.querySelector(".takeMeHomeContainer")
 
 const primaryTowers = [
@@ -691,7 +691,7 @@ function displayLeaderboard(event, difficulty = "normal") {
       playerDiv.querySelector(".goToProfile").onclick = () => {
         let urlParts = player["profile"].split("/")
         let userID = urlParts[urlParts.length - 1]
-        window.open(`https://nitjus7.github.io/BTD6-Central/community.html?type=player&id=${userID}`)
+        window.open(`https://nitjus7.github.io/BTD6-Central/community.html?type=player&id=${userID}`, `_self`)
       }
       container.appendChild(playerDiv)
     }
@@ -755,6 +755,9 @@ function addDifficultyButtons(event, name, container, type, difficulty) {
     if (difficulty == "normal") {
       norm.classList.remove("inactive")
       L.classList.add("inactive")
+    } else {
+      norm.classList.add("inactive")
+      L.classList.remove("inactive")
     }
     if (norm.classList.contains("inactive")) {
       norm.onclick = () => {
@@ -819,11 +822,11 @@ function editURL(name, value) {
 }
 
 function enableLoading() {
-  statsPopupOverlay.style.display = "block"
+  eventsPopupOverlay.style.display = "block"
   document.body.classList.add("no-scroll")
 }
 function disableLoading() {
-  statsPopupOverlay.style.display = "none"
+  eventsPopupOverlay.style.display = "none"
   document.body.classList.remove("no-scroll")
 }
 function showPopup(title, content) {
@@ -906,7 +909,7 @@ function thanosSnap() {
   raceArchiveContainer.style.display = "none"
   bossArchiveContainer.style.display = "none"
   ctArchiveContainer.style.display = "none"
-  eventPickContainer.style.display = "block"
+  eventPickContainer.style.display = "flex"
   backButton.style.display = "none"
   for (const why of eventDetailsContainers) {
     why.style.display = "none"
@@ -962,11 +965,15 @@ async function main() {
     if (!urlType) {
       swapToEventOverview(urlEvent)
     } else if (urlEvent == "bosses"){
-      if (urlType == "metadata" && urlID && urlDifficulty && urlName) swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/standard`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/elite`, null, urlDifficulty)
-      else if (urlType == "leaderboard" && urlID && urlDifficulty && urlName) swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/standard/1`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/elite/1`, urlDifficulty)
+      if (urlType == "metadata" && urlID && urlDifficulty && urlName) 
+        swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/standard`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/metadata/elite`, null, urlDifficulty)
+      else if (urlType == "leaderboard" && urlID && urlDifficulty && urlName) 
+        swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/standard/1`, `https://data.ninjakiwi.com/btd6/bosses/${urlID}/leaderboard/elite/1`, urlDifficulty)
     } else if (urlEvent == "races") {
-      if (urlType == "metadata" && urlID && urlName) swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/metadata`)
-      else if (urlType == "leaderboard" && urlID && urlName) swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/leaderboard`)
+      if (urlType == "metadata" && urlID && urlName) 
+        swapToEventDetails(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/metadata`)
+      else if (urlType == "leaderboard" && urlID && urlName) 
+        swapToEventLeaderboard(urlID, urlEvent, urlName, "", `https://data.ninjakiwi.com/btd6/races/${urlID}/leaderboard`)
     }
   } else {
     thanosSnap()
