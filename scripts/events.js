@@ -148,7 +148,10 @@ class BossLeaderboard extends Boss {
   constructor(name, timestamp, leaderboard) {
     super(name, timestamp)
     this.leaderboard = leaderboard
-    this.scoringType = this.leaderboard["body"][0]["scoreParts"][0]["name"]
+    if (this.leaderboad) 
+      this.scoringType = this.leaderboard["body"][0]["scoreParts"][0]["name"]
+    else 
+      this.scoringType = null
   }
   getTimestamp() {
     return this.timestamp
@@ -627,6 +630,7 @@ function displayLeaderboard(event, difficulty = "normal") {
   let scoringType
   let name
   let timestamp
+  let successBool
   const container = document.querySelector(`.${event}LeaderboardContainer`)
   if (event == "bosses") {
     if (difficulty == "elite") {
@@ -661,7 +665,7 @@ function displayLeaderboard(event, difficulty = "normal") {
       playerDiv.classList.add("playerDiv")
       let playerHTML = `
       <div class="placementAndNameWrapper">
-        <h2 class="placementNumber">#${i + 1}</h2>
+        <h2 class="placementNumber">${i + 1}</h2>
         <div class="playerTitleContainer">
           <span class="material-symbols-outlined goToProfile">person</span>
           <h3 class="playerName">${player["displayName"]}</h3>

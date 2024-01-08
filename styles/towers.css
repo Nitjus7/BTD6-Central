@@ -183,7 +183,7 @@ h1, h2, .attackName {
     margin: 1rem;
     padding: 0 0.5rem;
     border-radius: 5px;
-    border: 1px var(--textColor) solid;
+    box-shadow: 0px 0px 5px var(--shadowColor);
 }
 .damageDiv {
     display: flex;
@@ -196,7 +196,7 @@ h1, h2, .attackName {
     width: 800px;
     background-color: var(--contentBackground1);
     border-radius: 5px;
-    border: 1px var(--textColor) solid;
+    box-shadow: 0px 0px 5px var(--shadowColor);
     margin: 0 2rem 0.5rem 2rem;
 }
 .sectionTitle {

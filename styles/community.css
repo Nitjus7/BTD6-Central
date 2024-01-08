@@ -120,6 +120,15 @@ button:not(.wip):hover {
   aspect-ratio: 1 / 1;
   width: 150px;
 }
+@media only screen and (max-width: 768px) {
+  .playerIcon {
+    width: 75px;
+    height: 75px;
+  }
+  .playerName {
+    font-size: 1.25rem;
+  }
+}
 .favoriteHeroContainer {
   display: flex;
   width: 100vw;

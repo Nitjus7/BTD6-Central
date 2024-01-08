@@ -333,7 +333,7 @@ body {
 
 
 
-.featuredPagesHeader, .resourcesHeader {
+.featuredPagesHeader, .resourcesHeader, .aboutWebsiteHeader {
   text-align: center;
   font-family: var(--secondaryFont);
   margin: 2rem 0px 0px 0px;
@@ -413,8 +413,15 @@ body {
   max-width: 800px;
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 5px;
-  border: 1px var(--textColor) solid;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px var(--shadowColor)
+}
+.nkAPILink {
+  font-size: 1.2rem;
+}
+.discordContainer {
+  background: var(--contentBackground3);
+  border: 1px var(--contentOutline3) solid;
 }
 .resourceButton {
   padding: 1rem;
@@ -426,12 +433,12 @@ body {
   border-style: none;
   border-radius: 5px;
   box-shadow: 0px 0px 3px var(--shadowColor);
-  transition: all 0.25s;
+  transition: background-color 0.5s;
   font-size: 1.2rem;
 }
 .resourceButton:hover {
   cursor: pointer;
-  transform: scale(1.03);
+  background-color: var(--buttonColor2);
 }
 @media only screen and (max-width: 768px) {
   .resourcesList {
@@ -441,6 +448,16 @@ body {
   .resourceButton {
     width: 75%;
   }
+}
+.aboutWebsiteContainer {
+  width: 80vw;
+  max-width: 800px;
+  text-align: center;
+  margin: 1rem auto;
+  background-color: var(--contentBackground1);
+  box-shadow: 0px 0px 5px var(--shadowColor);
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .takeMeHomeContainer {

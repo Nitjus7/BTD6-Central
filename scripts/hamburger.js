@@ -68,7 +68,7 @@ function swapToDark() {
     styles.style.setProperty("--contentOutline3", "#d382e7")
     styles.style.setProperty("--contentOutline4", "#4dbbe0")
     styles.style.setProperty("--itemSelectedBackground", "rgb(116, 109, 109)");
-    styles.style.setProperty("--shadowColor", "rgb(32, 31, 31)");
+    styles.style.setProperty("--shadowColor", "rgb(0, 0, 0)");
     styles.style.setProperty("--wip", "0.5");
     styles.style.setProperty("--textColor", "#dce0e7");
     styles.style.setProperty("--textColor2", "rgb(243, 176, 110)")
@@ -81,7 +81,7 @@ function swapToDark() {
   
 function meetGod() {
     pageTheme.value = "light"
-    styles.style.setProperty("--pageBackground", "#e8e5e5");
+    styles.style.setProperty("--pageBackground", "#f3f3f3");
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");
     styles.style.setProperty("--contentBackground3", "#b095e047")
@@ -89,7 +89,7 @@ function meetGod() {
     styles.style.setProperty("--itemSelectedBackground", "lightgray")
     styles.style.setProperty("--contentOutline1", "#a69a9a")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
-    styles.style.setProperty("--contentOutline3", "#af91b6")
+    styles.style.setProperty("--contentOutline3", "#a46ab3")
     styles.style.setProperty("--contentOutline4", "#1e2f9d")
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");

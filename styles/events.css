@@ -44,7 +44,7 @@ button {
   letter-spacing: 0.5px;
   color: var(--textColor);
   background: var(--contentBackground1);
-  box-shadow: 0px 0px 3px var(--shadowColor);
+  box-shadow: 0px 0px 5px var(--shadowColor);
   transition: all 0.5s;
 }
 #raceEventButton {
@@ -113,7 +113,7 @@ button {
   padding: 0 1rem 0 1rem;
   width: 80%;
   max-width: 650px;
-  border: 1px var(--textColor) solid;
+  box-shadow: 0px 0px 5px var(--shadowColor);
 }
 .eventOverviewTitle {
   font-family: var(--secondaryFont);
@@ -177,8 +177,10 @@ button {
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  width: fit-content;
+  width: 80vw;
+  max-width: 600px;
   margin: 0.5rem auto;
+  padding: 0;
 }
 .singleModContainer {
   padding: 0px 1rem;
@@ -190,6 +192,7 @@ button {
 @media only screen and (max-width: 768px) {
   .singleModContainer {
     padding: 0px 0.5rem;
+    margin: 0px 0.5rem 1rem 0.5rem;
   }
   .singleModContainer.withImage {
     padding: 0.5rem 0.35rem 0px 0.35rem;
@@ -367,7 +370,7 @@ h2 {
   display: flex;
   align-items: center;
   background: var(--contentBackground1);
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   margin: 1rem 0;
   border-radius: 5px;
   border: 1px var(--textColor) solid;
@@ -376,7 +379,7 @@ h2 {
   justify-content: space-between;
 }
 .placementNumber {
-  margin-right: 1rem;
+  margin: 0px 1.7rem 0px 1rem;
 }
 .playerTitleContainer {
   display: flex;

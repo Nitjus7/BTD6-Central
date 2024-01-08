@@ -13,9 +13,6 @@ function generateResourceLinks() {
   document.querySelector(".goToBTD6Index").onclick = () => {
     window.open("https://btd6index.win/")
   }
-  document.querySelector(".goToBTD6Popology").onclick = () => {
-    window.open("https://www.reddit.com/r/btd6/comments/atomg3/advanced_popology_vol_1_primary_towers/")
-  }
   document.querySelector(".goToCyberQuincy").onclick = () => {
     window.open("https://top.gg/bot/591922988832653313")
   }
