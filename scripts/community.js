@@ -256,6 +256,8 @@ function parsePlayerData() {
     playerName.innerText = playerData["displayName"]
     playerIcon.src = playerData["avatarURL"]
     const bannerURL = playerData["bannerURL"]
+    if (bannerURL == "https://static-api.nkstatic.com/appdocs/4/assets/opendata/9dfe787e1eb1c79a1532bcd5e49cf0f1_.png")
+        bannerURL = "assets/hero.png"
 
     document.documentElement.style.setProperty(`--player-banner-bg-image`, `url(${bannerURL})`)
     const whyDoPluralsHaveToExist = playerData["followers"] == 1 ? "follower" : "followers"
@@ -265,12 +267,15 @@ function parsePlayerData() {
         document.querySelector(".vetLevelContainer").style.display = "flex"
         document.querySelector(".vetLevel").innerText = `Veteran Level ${playerData["veteranRank"]}`
         document.querySelector(".vetLevel").onclick = () => {
+            // technically the amount for levels 1-155 is 180001000 but that looks ugly 
+            // and the difference is effectively nothing
+            const totalXP = 180000000 + (playerData["veteranRank"] * 20000000)
             let popupHTML = `
             <div class="popupImageContainer">
                 <img src="assets/vetLevelIcon.png" class="vetLevelIcon popupImage"/>
                 <p>Veteran Levels are levels that exist beyond the normal levels that you can get after reaching Level 155. 
                 Veteran Levels are purely cosmetic and won't unlock anything new, but it takes <b>20 million XP</b> for each new Veteran Level. 
-                A player with Veteran Levels has some true dedication to the game.</p>
+                At Veteran Level ${playerData["veteranRank"]}, this player has gotten a total of <b>over ${totalXP.toLocaleString()} XP</b>.</p>
             </div>`
             showPopup("Veteran Levels", popupHTML)
         }

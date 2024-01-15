@@ -9,6 +9,9 @@
 .no-scroll {
   overflow: hidden;
 }
+.material-symbols-outlined {
+  user-select: none;
+}
 
 /* format everything */
 body {
@@ -90,7 +93,8 @@ body {
   padding: 1rem;
   border-radius: 10px;
   background: var(--contentBackground3);
-  border: 2px var(--contentOutline3) solid;
+  border: 1px var(--contentOutline3) solid;
+  box-shadow: 0px 0px 3px var(--shadowColor);
 }
 .goToFeaturedPageButton {
   display: flex;
@@ -101,7 +105,7 @@ body {
   color: var(--textColor);
   border-radius: 5px;
   padding: 0.5rem;
-  transition: background-color 0.35s;
+  transition: background-color 0.25s;
 }
 .goToFeaturedPageButton:hover {
   cursor: pointer;
@@ -416,9 +420,6 @@ body {
   border-radius: 10px;
   box-shadow: 0px 0px 5px var(--shadowColor)
 }
-.nkAPILink {
-  font-size: 1.2rem;
-}
 .discordContainer {
   background: var(--contentBackground3);
   border: 1px var(--contentOutline3) solid;
@@ -433,7 +434,7 @@ body {
   border-style: none;
   border-radius: 5px;
   box-shadow: 0px 0px 3px var(--shadowColor);
-  transition: background-color 0.5s;
+  transition: background-color 0.25s;
   font-size: 1.2rem;
 }
 .resourceButton:hover {

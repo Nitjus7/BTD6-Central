@@ -629,8 +629,6 @@ function displayLeaderboard(event, difficulty = "normal") {
   let leaderboard
   let scoringType
   let name
-  let timestamp
-  let successBool
   const container = document.querySelector(`.${event}LeaderboardContainer`)
   if (event == "bosses") {
     if (difficulty == "elite") {
@@ -650,12 +648,12 @@ function displayLeaderboard(event, difficulty = "normal") {
     name = raceLB.getName()
     timestamp = raceLB.getTimestamp()
   }
+  addDifficultyButtons("bosses", name, document.getElementById("bossDifficultyButtonContainerLB"), "leaderboard", difficulty)
   if (!leaderboard["success"]) {
     appendElement(container, "No Scores Available", "")
   } else {
     let formattedScoringType = formatScoringType(scoringType)
     if (event == "bosses") {
-      addDifficultyButtons("bosses", name, document.getElementById("bossDifficultyButtonContainerLB"), "leaderboard", difficulty)
       document.getElementById("bossDifficultyButtonContainerLB").style.display = "flex"
     }
     for (let i = 0; i < leaderboard["body"].length; i++) {
@@ -885,8 +883,8 @@ async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, 
   else displayDetails(event, difficulty)
   document.getElementById(`${event}EventDetails`).style.display = "block"
   editURL("type", "metadata")
-  editURL("id", id)
   editURL("name", name)
+  editURL("id", id)
   disableLoading()
 }
 // url2 is optional: either elite boss or player CT

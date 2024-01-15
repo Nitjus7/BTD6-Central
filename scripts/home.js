@@ -27,17 +27,17 @@ function generateFeaturedPagesLinks() {
   const links4 = Array.from(document.querySelectorAll(".goToLink4"))
   for (const link of links1) {
     link.onclick = () => {
-      window.open("https://nitjus7.github.io/BTD6-Central/towers.html")
+      window.open("towers.html")
     }
   }
   for (const link of links2) {
     link.onclick = () => {
-      window.open("https://nitjus7.github.io/BTD6-Central/community.html")
+      window.open("community.html")
     }
   }
   for (const link of links3) {
     link.onclick = () => {
-      window.open("https://nitjus7.github.io/BTD6-Central/events.html?event=bosses")
+      window.open("events.html?event=bosses")
     }
   }
   for (const link of links4) {

@@ -282,22 +282,20 @@ button:hover {
   align-items: center;
   -webkit-overflow-scrolling: touch;
   flex-shrink: 0; 
-  background: var(--contentBackground1);
+  background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
-  width: 20vw;
-  min-width: 175px;
+  width: 25vw;
+  min-width: 225px;
   border-radius: 5px;
-  height: fit-content;
   margin: 0 1rem 0.2rem 1rem;
-  transition: all 0.25s;
+  transition: background-color 0.25s
 }
 .bossOverviewCard:last-child {
   margin-right: 1.5rem;
 }
 .bossOverviewCard.selected {
-  width: 25vw;
-  min-width: 225px;
-  background: var(--contentBackground2);
+  padding-bottom: 2.4rem;
+  background-color: var(--contentBackground2);
   border: 1px var(--contentOutline2) solid;
 }
 .showMoreButton {
