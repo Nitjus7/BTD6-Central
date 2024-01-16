@@ -324,8 +324,7 @@ button:not(.wip):hover {
 
 }
 .IDInputContainer {
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
 }
 .IDInputContainer:first-child {
   margin-bottom: 1rem;
@@ -337,8 +336,8 @@ button:not(.wip):hover {
   background-color: var(--buttonColor1);
   color: var(--textColor);
   width: 40vw;
-  max-width: 150px;
-  height: 45px;
+  max-width: 200px;
+  font-size: 16px;
   border: 1px var(--textColor) solid;
   border-radius: 5px;
   transition: background-color 0.25s;
@@ -440,8 +439,7 @@ button:not(.wip):hover {
   background-color: var(--contentBackground1);
   box-shadow: 0px 0px 3px var(--shadowColor);
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 3rem;
+  margin: 0 2rem 3rem 2rem;
   padding: 1.5rem;
 }
 
