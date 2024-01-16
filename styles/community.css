@@ -321,6 +321,11 @@ button:not(.wip):hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+}
+.IDInputContainer {
+  justify-content: center;
+  align-items: center;
 }
 .IDInputContainer:first-child {
   margin-bottom: 1rem;
@@ -331,7 +336,9 @@ button:not(.wip):hover {
 .IDInputContainer > button {
   background-color: var(--buttonColor1);
   color: var(--textColor);
-  width: 150px;
+  width: 40vw;
+  max-width: 150px;
+  height: 45px;
   border: 1px var(--textColor) solid;
   border-radius: 5px;
   transition: background-color 0.25s;
@@ -340,8 +347,10 @@ button:not(.wip):hover {
   background-color: var(--buttonColor2);
 }
 .IDInputContainer > input {
+  font-size: 16px;
   font-family: var(--mainFont);
-  width: 150px;
+  width: 40vw;
+  max-width: 200px;
   background-color: var(--contentBackground1);
   color: var(--textColor);
   outline: 1px var(--textColor) solid;
@@ -414,7 +423,7 @@ button:not(.wip):hover {
 }
 .idHelperImage {
   border-radius: 10px;
-  border: 2px solid var(--textColor);
+  border: 1px solid var(--textColor);
   margin: 0px 5px 30px 5px;
   width: 85%;
   max-width: 500px;
@@ -425,6 +434,15 @@ button:not(.wip):hover {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+.idExplainer {
+  border-radius: 10px;
+  background-color: var(--contentBackground1);
+  box-shadow: 0px 0px 3px var(--shadowColor);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
 }
 
 

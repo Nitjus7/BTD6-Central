@@ -148,19 +148,12 @@ class BossLeaderboard extends Boss {
   constructor(name, timestamp, leaderboard) {
     super(name, timestamp)
     this.leaderboard = leaderboard
-    if (this.leaderboad) 
-      this.scoringType = this.leaderboard["body"][0]["scoreParts"][0]["name"]
-    else 
-      this.scoringType = null
   }
   getTimestamp() {
     return this.timestamp
   }
   getLeaderboard() {
     return this.leaderboard
-  }
-  getScoringType() {
-    return this.scoringType
   }
 }
 class CT {
@@ -633,15 +626,15 @@ function displayLeaderboard(event, difficulty = "normal") {
   if (event == "bosses") {
     if (difficulty == "elite") {
       leaderboard = bossEliteLB1P.getLeaderboard()
-      scoringType = bossEliteLB1P.getScoringType()
       name = bossEliteLB1P.getName()
       timestamp = bossEliteLB1P.getTimestamp()
     } else {
       leaderboard = bossStandardLB1P.getLeaderboard()
-      scoringType = bossStandardLB1P.getScoringType()
       name = bossStandardLB1P.getName()
       timestamp = bossStandardLB1P.getTimestamp()
     }
+    if (leaderboard["success"]) scoringType = leaderboard["body"][0]["scoreParts"][0]["name"]
+    else scoringType = null
   } else { /* event is hopefully "races" */
     leaderboard = raceLB.getLeaderboard()
     scoringType = "Game Time"
@@ -683,7 +676,7 @@ function displayLeaderboard(event, difficulty = "normal") {
         const formattedSubscoringType = formatScoringType(scoreObj["name"])
         playerHTML += `
         <div class="playerScoreContainer">
-          <h4 class="scoringType">Tiebreaker: ${formattedSubscoringType}</h4>
+          <h4 class="scoringType">${formattedSubscoringType}</h4>
           <p class="playerScore">${formattedSubscore}</p>
         </div>
         `
@@ -736,6 +729,7 @@ function formatScoringType(type) {
 
 function addDifficultyButtons(event, name, container, type, difficulty) {
   if (event == "bosses") {
+    container.style.display = "block"
     const norm = container.querySelector(".difficultyImageStandard")
     const L = container.querySelector(".difficultyImageElite")
     if (name.includes("Bloonarius")) {

@@ -249,7 +249,7 @@ button:hover {
   text-align: center;
   margin: 0 auto;
   margin-top: 10px;
-  background: var(--buttonColor1);
+  background-color: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--mainFont);
   border-style: none;
@@ -257,10 +257,10 @@ button:hover {
   padding: 0.5rem;
   font-size: 1.2rem;
   width: fit-content;
-  transition: .25s all ease;
+  transition: background-color .25s ease;
 }
 .jumpToEliteButton:hover {
-  transform: scale(1.05)
+  background-color: var(--buttonColor2);
 }
 .bossDataContainer {
   display: none;
@@ -303,17 +303,17 @@ button:hover {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 5px;
-  background: var(--buttonColor1);
+  background-color: var(--buttonColor1);
   color: var(--textColor);
   font-family: var(--mainFont);
   border-style: none;
   border-radius: 4px;
   padding: 0.5rem;
   width: fit-content;
-  transition: .25s all ease;
+  transition: background-color .25s ease;
 }
 .showMoreButton:hover {
-  transform: scale(1.05);
+  background-color: var(--buttonColor2);
 }
 .bossImage {
   width: 25vw;
