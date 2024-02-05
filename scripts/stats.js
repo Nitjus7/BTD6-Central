@@ -133,14 +133,16 @@ function showBloonStats(round) {
   for (const data of blimpList) {
     const container = document.createElement("div")
     container.className = "blimpCard"
+    const healthMult = calculateHealthMult(round)
+    const health = data["health"] * healthMult
     let html = `
       <div class="nameElem">
         <img src="${data["image"]}" alt="Image of a ${data["name"]}" class="bloonImage"></img>
         <h3 class="bloonName">${data["name"]}</h3>
       </div>
       <div class="healthElem">
-        <p class="bloonHealth">${data["health"].toLocaleString()} HP</p>
-        <p class="bloonHealth fortified">Fortified: ${(data["health"] * 2).toLocaleString()} HP</p>
+        <p class="bloonHealth">${health.toLocaleString()} HP</p>
+        <p class="bloonHealth fortified">Fortified: ${(health * 2).toLocaleString()} HP</p>
       </div>
       `
     const speedMult = calculateSpeedMult(round)
