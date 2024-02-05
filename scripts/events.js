@@ -635,13 +635,13 @@ function displayLeaderboard(event, difficulty = "normal") {
     }
     if (leaderboard["success"]) scoringType = leaderboard["body"][0]["scoreParts"][0]["name"]
     else scoringType = null
+    addDifficultyButtons("bosses", name, document.getElementById("bossDifficultyButtonContainerLB"), "leaderboard", difficulty)
   } else { /* event is hopefully "races" */
     leaderboard = raceLB.getLeaderboard()
     scoringType = "Game Time"
     name = raceLB.getName()
     timestamp = raceLB.getTimestamp()
   }
-  addDifficultyButtons("bosses", name, document.getElementById("bossDifficultyButtonContainerLB"), "leaderboard", difficulty)
   if (!leaderboard["success"]) {
     appendElement(container, "No Scores Available", "")
   } else {
@@ -729,7 +729,7 @@ function formatScoringType(type) {
 
 function addDifficultyButtons(event, name, container, type, difficulty) {
   if (event == "bosses") {
-    container.style.display = "block"
+    container.style.display = "flex"
     const norm = container.querySelector(".difficultyImageStandard")
     const L = container.querySelector(".difficultyImageElite")
     if (name.includes("Bloonarius")) {
@@ -787,7 +787,7 @@ function generateTimestamp(data, status) {
   const dateFormatting = { month: "short", day: "numeric", year: "numeric" };
   const startDate = new Date(data["start"]);
   const endDate = new Date(data["end"]);
-  if (status == "LIVE") {
+  if (status == "Live") {
     return calculateTimeRemaining(endDate)
   } else {
     return `${startDate.toLocaleDateString([], dateFormatting)} to ${endDate.toLocaleDateString([], dateFormatting)}`

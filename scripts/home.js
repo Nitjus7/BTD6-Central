@@ -46,11 +46,7 @@ function generateFeaturedPagesLinks() {
     }
   }
 }
-const navList = document.querySelector(".navList")
-window.addEventListener('scroll', function() {
-  if (window.scrollY <= 45) navList.classList.add("navBeforeScroll")
-  else navList.classList.remove("navBeforeScroll")
-})
+
 generateResourceLinks()
 generateFeaturedPagesLinks()
 // main() 
@@ -149,4 +145,10 @@ async function main() {
   generateResourceLinks()
   if (await getData() != "oops") generateNewsCards()
 }
+
+const navList = document.querySelector(".navList")
+window.addEventListener('scroll', function() {
+  if (window.scrollY <= 45) navList.classList.add("navBeforeScroll")
+  else navList.classList.remove("navBeforeScroll")
+})
 */

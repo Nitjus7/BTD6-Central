@@ -26,11 +26,39 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <div class="navBarContainer">
+    <div class="navBarContainer noBurger">
+      <nav>
+        <ul class="navList noBurger">
+          <li class="websiteTitle">
+            <a href="index.html">
+              <p><strong>BTD6 Central</strong></p>
+            </a>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToHome">Home</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToStats">Stats</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToEvents currentPage">Events</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToCommunity">Community</button>
+          </li>
+          <li class="lastItemNoBurger">
+            <button class="pageThemeButtonNoBurger"><span class="material-symbols-outlined">light_mode</span></button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navBarContainer withBurger">
       <nav>
         <ul class="navList">
           <li class="websiteTitle">
-            <a href="index.html"><strong>BTD6 Central</strong></a>
+            <a href="index.html">
+              <p><strong>BTD6 Central</strong></p>
+            </a>
           </li>
           <li class="hamburgerButton">
             <span class="material-symbols-outlined">
@@ -40,9 +68,10 @@
         </ul>
       </nav>
     </div>
+    </div>
       <div class="hamburgerContainer">
         <ul class="hamburgerMenu">
-          <li>
+          <li class="hamburgerTop">
             <span class="material-symbols-outlined closeButton">
               close
             </span>
@@ -89,12 +118,12 @@
         </div>
       </div>
       <div id="raceModifiersContainer" class="allModifiersContainer">
-        <div class="singleModContainer withImage">
-          <img src="assets/moneyIcon.png" alt="Starting Cash" class="modImage">
+        <div class="singleModContainer">
+          <h4 class="modHeader">Starting Cash</h4>
           <p class="modifiers startingCash"></p>
         </div>
-        <div class="singleModContainer withImage">
-          <img src="assets/livesIcon.png" alt="Lives" class="modImage">
+        <div class="singleModContainer">
+          <h4 class="modHeader">Lives</h4>
           <p class="modifiers lives"></p>
         </div>
         <div class="singleModContainer">
@@ -133,12 +162,12 @@
         </div>
       </div>
       <div id="bossModifiersContainer" class="allModifiersContainer">
-        <div class="singleModContainer withImage">
-          <img src="assets/moneyIcon.png" alt="Starting Cash" class="modImage">
+        <div class="singleModContainer">
+          <h4 class="modHeader">Starting Cash</h4>
           <p class="modifiers startingCash"></p>
         </div>
-        <div class="singleModContainer withImage">
-          <img src="assets/livesIcon.png" alt="Lives" class="modImage">
+        <div class="singleModContainer">
+          <h4 class="modHeader">Lives</h4>
           <p class="modifiers lives"></p>
         </div>
         <div class="singleModContainer">
@@ -171,9 +200,6 @@
     </div>
     <div class="bossesLeaderboardContainer leaderboardContainer">
     </div>
-    
-    
-    
     <div id="bossImageContainer">
       <img src="" alt="" id="bossImage" />
     </div>

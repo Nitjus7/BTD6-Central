@@ -8,11 +8,12 @@ const hamburgerMenu = document.querySelector(".hamburgerMenu")
 const hamburgerContainer = document.querySelector(".hamburgerContainer")
 const popupOverlay = document.querySelector(".popupOverlay")
 const closeButton = document.querySelector(".closeButton")
-const goToEvents = document.querySelector(".goToEvents")
-const goToStats = document.querySelector(".goToStats")
-const goToHome = document.querySelector(".goToHome")
-const goToCommunity = document.querySelector(".goToCommunity")
+const goToEvents = document.querySelectorAll(".goToEvents")
+const goToStats = document.querySelectorAll(".goToStats")
+const goToHome = document.querySelectorAll(".goToHome")
+const goToCommunity = document.querySelectorAll(".goToCommunity")
 const pageTheme = document.querySelector(".pageTheme")
+const pageThemeButtonNoBurger = document.querySelector(".pageThemeButtonNoBurger")
 const styles = document.documentElement
 
 hamburgerButton.onclick = () => {
@@ -25,17 +26,32 @@ closeButton.onclick = () => {
     popupOverlay.style.display = "none"
     document.body.classList.remove("no-scroll")
 }
-goToEvents.onclick = () => {
-    window.location.replace("events.html")
+for (const elem of goToEvents) {
+    elem.onclick = () => {
+        window.location.replace("events.html")
+    }
 }
-goToStats.onclick = () => {
-    window.location.replace("stats.html")
+for (const elem of goToHome) {
+    elem.onclick = () => {
+        window.location.replace("index.html")
+    }
 }
-goToHome.onclick = () => {
-    window.location.replace("index.html")
+for (const elem of goToStats) {
+    elem.onclick = () => {
+        window.location.replace("stats.html")
+    }
 }
-goToCommunity.onclick = () => {
-    window.location.replace("community.html")
+for (const elem of goToCommunity) {
+    elem.onclick = () => {
+        window.location.replace("community.html")
+    }
+}
+pageThemeButtonNoBurger.onclick = () => {
+    if (pageThemeButtonNoBurger.innerHTML == `<span class="material-symbols-outlined">dark_mode</span>`) {
+        meetGod()
+    } else if (pageThemeButtonNoBurger.innerHTML == `<span class="material-symbols-outlined">light_mode</span>`){
+        swapToDark()
+    }
 }
 pageTheme.addEventListener("change", () => {
     if (pageTheme.value == "light") meetGod()
@@ -57,6 +73,7 @@ switch (localStorage.getItem("themeMode")) {
 }
 function swapToDark() {
     pageTheme.value = "dark"
+    pageThemeButtonNoBurger.innerHTML = `<span class="material-symbols-outlined">dark_mode</span>`
     styles.style.setProperty("--pageBackground", "#212121")
     styles.style.setProperty("--contentBackground1", "#3c4048")
     styles.style.setProperty("--contentBackground2", "#ff56286a")
@@ -81,6 +98,7 @@ function swapToDark() {
   
 function meetGod() {
     pageTheme.value = "light"
+    pageThemeButtonNoBurger.innerHTML = `<span class="material-symbols-outlined">light_mode</span>`
     styles.style.setProperty("--pageBackground", "#f3f3f3");
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");

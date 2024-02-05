@@ -26,11 +26,39 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <div class="navBarContainer">
+    <div class="navBarContainer noBurger">
+      <nav>
+        <ul class="navList noBurger">
+          <li class="websiteTitle">
+            <a href="index.html">
+              <p><strong>BTD6 Central</strong></p>
+            </a>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToHome">Home</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToStats">Stats</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToEvents">Events</button>
+          </li>
+          <li class="">
+            <button class="noBurgerButton goToCommunity currentPage">Community</button>
+          </li>
+          <li class="lastItemNoBurger">
+            <button class="pageThemeButtonNoBurger"><span class="material-symbols-outlined">light_mode</span></button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navBarContainer withBurger">
       <nav>
         <ul class="navList">
           <li class="websiteTitle">
-            <a href="index.html"><strong>BTD6 Central</strong></a>
+            <a href="index.html">
+              <p><strong>BTD6 Central</strong></p>
+            </a>
           </li>
           <li class="hamburgerButton">
             <span class="material-symbols-outlined">
@@ -39,6 +67,7 @@
           </li>
         </ul>
       </nav>
+    </div>
     </div>
       <div class="hamburgerContainer">
         <ul class="hamburgerMenu">
@@ -61,7 +90,7 @@
             <button class="navButton goToEvents">Events</button>
           </li>
           <li class="navItem">
-            <button class="navButton currentPage goToCommunity">Community</button>
+            <button href="#" class="navButton goToCommunity currentPage">Community</button>
           </li>
         </ul>
       </div>

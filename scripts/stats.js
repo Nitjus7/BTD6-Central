@@ -65,31 +65,117 @@ function showBloonStats(round) {
   roundInputContainer.style.display = "flex"
   roundSelectionHeader.innerText = `Bloon Stats at Round ${round}`
   roundSelectionHeader.style.display = "flex"
-    for (const bloon of bloonList) {
-      const bloonCard = document.createElement("div")
-      bloonCard.classList.add("bloonCard")
-      generateNameElem(bloon["name"], bloonCard)
-      if (bloon.hasOwnProperty("image")) generateImageElem(bloon["image"], bloonCard)
-      if (!bloon["name"].includes("Ceramic")) generateStatsElem(bloon, bloonCard) 
-        else generateHealthElem(bloon, round, bloonCard) 
-      generateSpeedElem(bloon, round, bloonCard)
-      if (bloon["immuneTo"] != null) generateImmuneElem(bloon, bloonCard)
-      generateChildrenElem(bloon, round, bloonCard)
-      bloonStatsContainer.appendChild(bloonCard)
+  let i = 0
+  for (const data of bloonList) {
+    if (data["name"] == "Ceramic Bloon" && round > 80) data["name"] = "Super Ceramic"
+    if (data["name"] == "Super Ceramic" && round < 80) data["name"] = "Ceramic Bloon"
+    const container = document.createElement("div")
+    container.className = "bloonCard"
+    let html = `
+      <div class="nameElem">
+        <img src="${data["image"]}" alt="Image of a ${data["name"]}" class="bloonImage"></img>
+        <h3 class="bloonName">${data["name"]}</h3>
+      </div>`
+
+    if (data["name"].includes("Ceramic")) {
+      let health
+      if (round > 80) health = 60
+      else health = 10
+      html += `
+        <div class="healthElem">
+          <p class="bloonHealth">${health} HP</p>
+          <p class="bloonHealth fortified">Fortified: ${health * 2} HP</p>
+          <span class="material-symbols-outlined infoButton superCeramicInfoButton">info</span>
+        </div>`
     }
-    for (const blimp of blimpList) {
-      const blimpCard = document.createElement("div")
-      blimpCard.classList.add("blimpCard")
-      generateNameElem(blimp["name"], blimpCard)
-      generateFullNameElem(blimp["fullName"], blimpCard)
-      if (blimp.hasOwnProperty("image")) generateImageElem(blimp["image"], blimpCard)
-      generateHealthElem(blimp, round, blimpCard)
-      generateSpeedElem(blimp, round, blimpCard)
-      if (blimp["name"] == "DDT") generateImmuneElem(blimp, blimpCard)
-      generateChildrenElem(blimp, round, blimpCard)
-      blimpStatsContainer.appendChild(blimpCard)
+
+    const speedMult = calculateSpeedMult(round)
+    html += `
+    <div class="speedElem">
+      <p class="bloonSpeed">${(data["speed"] * 25 * speedMult).toLocaleString()} units/sec</p>
+      <span class="material-symbols-outlined infoButton speedInfoButton">info</span>
+    </div>`
+
+    if (data["immuneTo"]) {
+      html += `
+        <div class="vaccineElem">
+          <p class="immuneTo">Immunities: ${data["immuneTo"]}</p>
+        </div>`
     }
-    bloonDataLoaded = true;
+
+    if (data["spawns"]) {
+      html += `
+        <div class="childrenElem">
+          <p class="children">${getChildren(data, round)}</p>
+        </div>
+      `
+    }
+    container.innerHTML = html
+    container.querySelector(".speedInfoButton").onclick = () => {
+      let popupHTML = `
+        <p>A Red Bloon at round 1 moves at 25 units per second. A ${data["name"]} moves at 
+        <b>${(data["speed"] * speedMult).toLocaleString()}x</b> that speed at round ${round}.</p> 
+      `
+      showPopup("About Speed", popupHTML)
+    }
+    if (container.querySelector(".superCeramicInfoButton")) {
+      container.querySelector(".superCeramicInfoButton").onclick = () => {
+        let popupHTML = `
+        <p>After Round 80, Ceramics turn into Super Ceramics which have 60 HP, and all Bloons below a MOAB will
+        only spawn one child each.</p> 
+        `
+        showPopup("About Super Ceramics", popupHTML)
+      }
+    }
+    bloonStatsContainer.appendChild(container)
+  }
+
+  for (const data of blimpList) {
+    const container = document.createElement("div")
+    container.className = "blimpCard"
+    let html = `
+      <div class="nameElem">
+        <img src="${data["image"]}" alt="Image of a ${data["name"]}" class="bloonImage"></img>
+        <h3 class="bloonName">${data["name"]}</h3>
+      </div>
+      <div class="healthElem">
+        <p class="bloonHealth">${data["health"].toLocaleString()} HP</p>
+        <p class="bloonHealth fortified">Fortified: ${(data["health"] * 2).toLocaleString()} HP</p>
+      </div>
+      `
+    const speedMult = calculateSpeedMult(round)
+    html += `
+    <div class="speedElem">
+      <p class="bloonSpeed">${(data["speed"] * 25 * speedMult).toLocaleString()} units/sec</p>
+      <span class="material-symbols-outlined infoButton speedInfoButton">info</span>
+    </div>`
+
+    if (data["immuneTo"]) {
+      html += `
+        <div class="vaccineElem">
+          <p class="immuneTo">Immunities: ${data["immuneTo"]}</p>
+        </div>`
+    }
+
+    if (data["spawns"]) {
+      html += `
+        <div class="childrenElem">
+          <p class="children">${getChildren(data, round)}</p>
+        </div>
+      `
+    }
+    container.innerHTML = html
+    container.querySelector(".speedInfoButton").onclick = () => {
+      let popupHTML = `
+        <p>A Red Bloon at round 1 moves at 25 units per second. A ${data["name"]} moves at 
+        <b>${(data["speed"] * speedMult).toLocaleString()}x</b> that speed at round ${round}.</p> 
+      `
+      showPopup("About Speed", popupHTML)
+    }
+    blimpStatsContainer.appendChild(container)
+  }
+
+  bloonDataLoaded = true
   bloonStatsContainer.style.display = "grid"
   blimpStatsContainer.style.display = "flex"
   bloonTypeButtonContainer.style.display = "flex"
@@ -97,78 +183,31 @@ function showBloonStats(round) {
   editURL("type", "bloons")
   editURL("round", round)
 }
-function generateNameElem(name, parent) {
-  const nameElem = document.createElement("h4")
-  nameElem.classList.add("bloonName")
-  nameElem.innerText = name;
-  parent.appendChild(nameElem)
-}
-function generateFullNameElem(fullName, parent) {
-  const fullNameElem = document.createElement("p")
-  fullNameElem.classList.add("fullName")
-  fullNameElem.innerText = fullName
-  parent.appendChild(fullNameElem)
-}
-function generateImageElem(source, parent) {
-  const imageElem = document.createElement("img")
-  imageElem.classList.add("bloonImage")
-  imageElem.src = source
-  parent.appendChild(imageElem)
-}
 function generateStatsElem(bloon, parent) {
-  const layersElem = document.createElement("button")
+  const layersElem = document.createElement("p")
   layersElem.classList.add("layersElem")
   layersElem.innerHTML = `Layers: <b>${bloon["layers"]}</b>`
-  layersElem.onclick = () => {
-    let layersHTML = `
-    <p>The <b>layers</b> of a Bloon is how much damage you need to one-shot it. For example, a Black Bloon has <b>6 layers</b> because you need 6 damage to fully one-shot it.</p>
-    `
-    showPopup(`What are Layers?`,  layersHTML)
-  }
   parent.appendChild(layersElem)
 }
 function generateHealthElem(bloon, round, parent) {
   let health;
-  const healthElem = document.createElement("button")
+  const healthElem = document.createElement("p")
   healthElem.classList.add("layersElem")
   if (bloon["name"] == "Ceramic Bloon") {
     health = round > 80 ? 60 : 10
-    healthElem.onclick = () => {
-      let healthHTML = `
-      <p>After Round 80, Ceramics become Super Ceramics. Their HP increases from 10 to 60 (fortified from 20 to 120). In turn, everything below a MOAB will only spawn 1 child.</p>`
-      showPopup(`About Super Ceramics`, healthHTML)
-    }
   } else {
     let healthMult = calculateHealthMult(round)
     health = Number(bloon["health"] * healthMult)
-    healthElem.onclick = () => {
-      let healthHTML = `
-      <p>Fortified Blimps always have double their normal HP.</p>`
-      if (round > 80) {
-        healthHTML += `
-        <br><h2>Blimp HP Ramping Info</h2>
-        <p>After Round 80, Blimps get extra HP each round on top of the extra speed that all Bloons get. The amount of HP they gain varies based on the Round.</p>
-        <p>Blimps have <b>${healthMult.toLocaleString()}x</b> more HP than normal at Round ${round}.`
-      }
-      showPopup(`Fortified ${bloon["name"]}: ${(health * 2).toLocaleString()} HP`, healthHTML)
-    }
   }
   healthElem.innerHTML = `HP: <b>${health.toLocaleString()}`
   parent.appendChild(healthElem)
 }
 function generateSpeedElem(bloon, round, parent) {
-  const speedElem = document.createElement("button")
+  const speedElem = document.createElement("p")
   speedElem.classList.add("speedElem")
   speedElem.innerHTML = `<b>${(bloon["speed"] * 100).toLocaleString()}%</b> Red Bloon speed`
   let speedMult = calculateSpeedMult(round)
   let totalSpeed = Number((bloon["speed"] * 25 * speedMult).toFixed(2))
-  speedElem.onclick = () => {
-    let speedHTML = `
-    <h2>${totalSpeed.toLocaleString()} units per second</h2>
-    <p>A Red Bloon at Round 1 moves at <b>25</b> units per second. A ${bloon["name"]} moves <b>${((totalSpeed / 25).toFixed(2)).toLocaleString()}x</b> faster than that at Round ${round}.</p>`
-    if (round > 80) speedHTML += `<p>Bloons move <b>${speedMult.toLocaleString()}x faster</b> than their normal speed at Round ${round}.</p>`
-    showPopup(`${bloon["name"]} Speed`, speedHTML)
-  }
   parent.appendChild(speedElem)
 }
 function generateImmuneElem(bloon, parent) {
@@ -177,24 +216,23 @@ function generateImmuneElem(bloon, parent) {
   vaccineElem.innerText = `Immunity: ${bloon["immuneTo"]}`
   parent.appendChild(vaccineElem)
 }
-function generateChildrenElem(bloon, round, parent) {
+function getChildren(bloon, round) {
   const childrenElem = document.createElement("p")
   childrenElem.classList.add("childrenElem")
   const spawns = bloon["spawns"]
   if (round <= 80) {
-    childrenElem.innerText = `Children: ${spawns}`
+    return `Children: ${spawns}`
   } else {
     if (bloon["name"] == "Zebra Bloon") {
-      childrenElem.innerText = `Children: 1x Black`
+      return `Children: 1x Black`
     } else if (bloon["name"] == "BAD") {
-      childrenElem.innerText = `Children: ${spawns}`
+      return `Children: ${spawns}`
     } else if (spawns.charAt(0) == "2") {
-      childrenElem.innerText = `Children: 1x ${spawns.slice(3)}`;
+      return `Children: 1x ${spawns.slice(3)}`;
     } else {
-      childrenElem.innerText = `Children: ${bloon["spawns"]}`; 
+      return `Children: ${bloon["spawns"]}`; 
     }
   }
-  parent.appendChild(childrenElem)
 }
 
 function calculateHealthMult(r) {
@@ -230,8 +268,8 @@ function showBossStats(boss, tier) {
   }
   
   let shit = tier == null ? tier = 1 : tier
-  bossSelectionHeader.innerText = `NORMAL ${boss.toUpperCase()}`
-  eliteBossSelectionHeader.innerText = `ELITE ${boss.toUpperCase()}`
+  bossSelectionHeader.innerText = `Normal ${boss.charAt(0).toUpperCase() + boss.slice(1)}`
+  eliteBossSelectionHeader.innerText = `Elite ${boss.charAt(0).toUpperCase() + boss.slice(1)}`
   bossSelectionHeader.style.display = "flex"
   eliteBossSelectionHeader.style.display = "flex"
   document.querySelector(`.bossOverviewCardET${shit}`).classList.add("selected")

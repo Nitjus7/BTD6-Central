@@ -1,6 +1,9 @@
 #eventPickList {
   list-style: none;
 }
+.wip {
+  display: none;
+}
 h1 {
   font-family: var(--secondaryFont)
 }
@@ -55,7 +58,7 @@ button {
     ),
     url("../assets/races.png");
   background-position: right;
-  margin-top: 75px;
+  margin-top: 120px;
   background-repeat: no-repeat;
 }
 
@@ -184,7 +187,7 @@ button {
 }
 .singleModContainer {
   padding: 0px 1rem;
-  margin: 0px 1rem 1rem 1rem;
+  margin: 0px 1rem 0 1rem;
 }
 .singleModContainer.withImage {
   padding: 1rem 1rem 0px 1rem;
@@ -226,6 +229,7 @@ button {
 }
 .bossDifficultyButtonContainer {
   display: flex;
+  flex-direction: column;
   flex-direction: column;
   align-items: center;
 }
@@ -295,6 +299,9 @@ button {
   background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
 }
+.specialModsContainer:empty {
+  display: none;
+}
 .specialModsContainer {
   display: flex;
   justify-content: center;
@@ -321,7 +328,7 @@ h2 {
 
 .enabledTowersContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow-x: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -342,12 +349,12 @@ h2 {
 }
 .enabledTowersContainer > * {
   display: flex;
-  flex-direction: row;
-  margin: 0 1rem 0 1rem;
+  flex-direction: column;
+  margin: 0 1rem;
   justify-content: flex-start;
 }
 .enabledTowersContainer > * > * { /* this is also so stupid */
-  margin: 2rem 1rem;
+  margin: 2rem;
   padding-right: 0.5rem;
 }
 .scrollInfo {
@@ -374,7 +381,7 @@ h2 {
   margin: 1rem 0;
   border-radius: 5px;
   border: 1px var(--textColor) solid;
-  width: 80vw;
+  width: 85vw;
   max-width: 750px;
   justify-content: space-between;
 }
@@ -382,15 +389,16 @@ h2 {
   margin: 0px 1.7rem 0px 1rem;
 }
 .playerTitleContainer {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   background-color: var(--contentBackground4);
   border: 1px var(--contentOutline4) solid;
   border-radius: 5px;
   padding: 0 1rem;
+  margin: 0;
   flex-shrink: 1;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
+  
 }
 .playerName {
   margin-left: 1rem;

@@ -59,8 +59,9 @@ button:hover {
 .roundInput {
   background: var(--contentBackground1);
   color: var(--textColor);
-  height: 2rem;
-  width: 4rem;
+  height: 3rem;
+  width: 5rem;
+  font-size: 16px;
   text-align: center;
   margin-right: 10px;
   border-radius: 5px;
@@ -73,16 +74,18 @@ button:hover {
   outline-color: var(--buttonColor1);
 }
 .roundInputConfirm {
-  background: var(--buttonColor1);
+  background-color: var(--buttonColor1);
   color: var(--textColor);
   border-radius: 5px;
+  padding: 0 0.5rem;
+  font-size: 16px;
   text-align: center;
   border-style: none;
-  transition: all 0.25s;
+  transition: 0.15s ease-in-out background-color;
 }
 .roundInputConfirm:hover {
   cursor: pointer;
-  transform: scale(1.1)
+  background-color: var(--buttonColor2);
 }
 .roundSelectionHeader {
   display: none;
@@ -99,7 +102,7 @@ button:hover {
 }
 @media only screen and (max-width: 768px) {
   .bloonStatsContainer {
-    grid-template-columns: 45% 45%;
+    grid-template-columns: 95%;
   }
 }
 .bloonTypeButtonContainer {
@@ -118,64 +121,62 @@ button:hover {
   border-radius: 3px;
   box-shadow: 0px 0px 3px var(--shadowColor);
   background-color: var(--buttonColor1);
-  transition: all 0.5s;
+  transition: 0.15s background-color;
 }
-.bloonTypeButton:hover {
+.bloonTypeButton:not(.selected):hover {
   cursor: pointer;
-  transform: scale(1.05);
+  background-color: var(--buttonColor2);
 }
 .bloonTypeButton.selected {
-  background: rgb(207, 170, 46);
+  outline: 2px gold solid;
   cursor: default !important;
 }
-.bloonCard {
+.bloonCard, .blimpCard {
   display: flex;
   flex-direction: column;
   background: var(--contentBackground1);
-  align-items: center;
-  text-align: center;
-  justify-content: center;
+  align-items: flex-start;
   border-radius: 10px;
   width: 100%;
   box-shadow: 0px 0px 5px var(--shadowColor);
 }
-.bloonName {
-  text-align: center;
-  font-family: var(--secondaryFont);
-  margin-bottom: 0;
-}
-.fullNameElem {
-  margin-top: 0;
-}
-.layersElem, .speedElem {
-  background-color: var(--buttonColor2);
-  color: var(--textColor);
-  align-self: center;
+.bloonCard > *, .blimpCard > * {
+  display: flex;
   align-items: center;
-  padding: 5px;
-  margin: 10px 0 5px 0;
-  border-style: none;
+}
+.bloonCard > * > *, .blimpCard > * > * {
+  margin: 0 0.5rem 1rem 1rem;
+}
+.infoButton {
+  background-color: var(--buttonColor1);
+  padding: 0.25rem;
+  margin-left: 0.5rem;
   border-radius: 5px;
-  width: 50%;
+  transition: 0.15s ease-in-out background-color;
 }
-.speedElem {
-  align-self: center;
+.infoButton:hover {
+  background-color: var(--buttonColor2);
 }
-.layersElem:hover, .speedElem:hover {
-  cursor: pointer;
+.bloonName {
+  font-family: var(--secondaryFont);
+  margin: 0 10px 0 0;
+}
+.bloonHealth {
+  background-color: var(--contentBackground3);
+  padding: 7px;
+  border-radius: 5px;
+  margin-right: 1rem;
 }
 .bloonCard .bloonImage {
-  max-width: 25px;
-  margin: 0 auto;
-  margin: 10px 0 10px 0;
+  width: 30px;
+  margin: 20px;
   border: 1px solid var(--textColor);
   padding: 5px;
   border-radius: 5px;
 }
 .blimpCard .bloonImage {
-  max-width: 100px;
-  margin: 0 auto;
-  margin: 10px 0 10px 0;
+  width: 100px;
+  margin: 20px;
   border: 1px solid var(--textColor);
   padding: 5px;
   border-radius: 5px;
@@ -192,19 +193,15 @@ button:hover {
   margin: 15px;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   text-align: center;
   justify-content: center;
   width: 45%;
   box-shadow: 0px 0px 5px var(--shadowColor);
 }
-.immuneElem {
-  margin: 0.5rem 0.5rem 0 0.5rem;
-}
 @media only screen and (max-width: 768px) {
   .blimpCard {
-    width: 95%;
+    width: 90%;
   }
 }
 
@@ -435,8 +432,6 @@ button:hover {
 }
 .popupTitle {
   font-family: var(--secondaryFont);
-  padding: 10px;
-  border-radius: 4px;
 }
 .popupOverlay {
   display: none;

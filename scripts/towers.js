@@ -5,10 +5,18 @@ const calculateDegreeCheck = document.querySelector("#charizardIChooseYou")
 const calculateParagonDegreeButton = document.querySelector(".calculateParagonDegreeButton")
 
 const dataContainers = [paragonContainer]
-let monkeyList = document.querySelectorAll(".monkey")
-let heroList = document.querySelectorAll(".hero")
-let paragonList = document.querySelectorAll(".paragon")
-let parentList = [monkeyList, heroList, paragonList]
+const monkeyList = document.querySelectorAll(".monkey")
+const heroList = document.querySelectorAll(".hero")
+const paragonList = document.querySelectorAll(".paragon")
+const primaryContainer = document.querySelector(".primaryContainer")
+const militaryContainer = document.querySelector(".militaryContainer")
+const magicContainer = document.querySelector(".magicContainer")
+const supportContainer = document.querySelector(".supportContainer")
+const heroesContainer = document.querySelector(".heroesContainer")
+const towerPickContainer = document.querySelector(".towerPickContainer")
+
+const parentList = [monkeyList, heroList, paragonList]
+const subParentList = []
 
 let monkeyData;
 let heroData;
@@ -112,7 +120,7 @@ async function getData(category, tower) {
 }
 
 // type: "remove" means REMOVE elements with that class name
-// type: "include" means only INCLUDE elements with that class name
+// type: "include" means ONLY INCLUDE elements with that class name
 function filter(name, type) {
     if (type == "remove") {
         for (const parent of parentList) {
@@ -146,6 +154,36 @@ function checkFilter() {
             break;
         default: filter(appliedFilter, "include"); break;
     }
+    const pArray = Array.from(primaryContainer.children)
+    if (pArray.every(child => child.style.display == "none")) {
+        document.querySelector(".supportHeader").style.display = "none"
+    } else {
+        document.querySelector(".supportHeader").style.display = "flex"
+    }
+    const miArray = Array.from(militaryContainer.children)
+    if (miArray.every(child => child.style.display == "none")) {
+        document.querySelector(".supportHeader").style.display = "none"
+    } else {
+        document.querySelector(".supportHeader").style.display = "flex"
+    }
+    const maArray = Array.from(magicContainer.children)
+    if (maArray.every(child => child.style.display == "none")) {
+        document.querySelector(".supportHeader").style.display = "none"
+    } else {
+        document.querySelector(".supportHeader").style.display = "flex"
+    }
+    const sArray = Array.from(supportContainer.children)
+    if (sArray.every(child => child.style.display == "none")) {
+        document.querySelector(".supportHeader").style.display = "none"
+    } else {
+        document.querySelector(".supportHeader").style.display = "flex"
+    }
+    const hArray = Array.from(heroesContainer.children)
+    if (hArray.every(child => child.style.display == "none")) {
+        document.querySelector(".heroesHeader").style.display = "none"
+    } else {
+        document.querySelector(".heroesHeader").style.display = "flex"
+    }
 }
 
 async function swapToTower(category, tower, level) {
@@ -154,15 +192,18 @@ async function swapToTower(category, tower, level) {
     level = Math.round(level)
     document.querySelector(".towerPickContainer").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
+    // document.querySelector(".toolsPickContainer").style.display = "none"
+    document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
+    document.querySelector(".takeMeHomeContainer").style.display = "block"
+    backButton.style.display = "block"
     if (category == "paragons") {
         if (level < 1) level = 1
         if (level > 100) level = 100
         paragonContainer.style.display = "block"
         displayParagonData(level)
     }
-    document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
-    document.querySelector(".takeMeHomeContainer").style.display = "block"
-    backButton.style.display = "block"
 }
 
 function displayParagonData(degree) {
@@ -208,7 +249,7 @@ function createAbilityDivs(p) {
         paragonContainer.appendChild(attackDiv)
         if (attackModel.hasOwnProperty("special")) createElem(attackModel["special"], "Special", attackDiv)
         if (attackModel.hasOwnProperty("emits")) createAttackDivs(attackModel["emits"], attackModel["name"])
-        else attackDiv.classList.add("finalEmission")
+        
     }
 }
 
@@ -236,15 +277,18 @@ function createAttackDivs(p, emitsFrom) {
             const damageDiv = document.createElement("div")
             damageDiv.classList.add("damageDiv")
             let dmgModel = attackModel["dmg"]
-            createElem(dmgModel["base"], "Base", damageDiv, "Damage")
-            if (dmgModel.hasOwnProperty("bonusCeram")) createElem(`${formatNumber(Number(dmgModel["bonusCeram"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCeram"])})`, "Ceramic", damageDiv)
-            if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusMOAB"])})`, "MOAB", damageDiv)
-            if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))} (+${formatNumber(dmgModel["bonusCamo"])})`, "Camo", damageDiv)
+            createElem(dmgModel["base"], "Base", damageDiv, "Total Damage")
+            // (+${formatNumber(dmgModel["bonusCeram"])})
+            // in case I wanna add back the bonus damage stat
+
+            if (dmgModel.hasOwnProperty("bonusCeram")) createElem(`${formatNumber(Number(dmgModel["bonusCeram"]) + Number(dmgModel["base"]))}`, "Ceramic", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))}`, "MOAB", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))}`, "Camo", damageDiv)
             if (dmgModel.hasOwnProperty("bonusBoss")) {
                 let totalBossDmg = 0
                 if (!dmgModel.hasOwnProperty("bonusMOAB")) totalBossDmg = Number(dmgModel["bonusBoss"]) + Number(dmgModel["base"])
                 else totalBossDmg =  Number(dmgModel["bonusBoss"]) + Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"])
-                createElem(`${formatNumber(totalBossDmg)} (+${formatNumber(dmgModel["bonusBoss"])})`, "Boss", damageDiv)
+                createElem(`${formatNumber(totalBossDmg)}`, "Boss", damageDiv)
                 createElem(`${formatNumber(totalBossDmg * 2)}`, "Elite Boss", damageDiv)
             } else if (dmgModel.hasOwnProperty("bonusMOAB")){
                 createElem(`${formatNumber((Number(dmgModel["base"]) + Number(dmgModel["bonusMOAB"])) * 2)}`, "Elite Boss", damageDiv)
@@ -257,12 +301,38 @@ function createAttackDivs(p, emitsFrom) {
         if (attackModel.hasOwnProperty("rate")) createElem(`${attackModel["rate"]}sec`, "Attack Rate", attackDiv)
         if (attackModel.hasOwnProperty("projectiles")) createElem(attackModel["projectiles"], "Projectiles", attackDiv)
         if (attackModel.hasOwnProperty("range")) createElem(attackModel["range"], "Range", attackDiv)
+        if (attackModel["type"] !== "status" && attackModel.hasOwnProperty("duration"))
+            createElem(`${attackModel["duration"]}sec`, "Duration", attackDiv)
+        if (attackModel.hasOwnProperty("tickRate")) createElem(`${attackModel["tickRate"]}sec`, "Tick Rate", attackDiv)
+        if (attackModel.hasOwnProperty("lifespan")) {
+            const lifespanDiv = document.createElement("div")
+            lifespanDiv.classList.add("lifespanDiv")
+            let lifespan
+            if (attackModel["lifespan"] == 999) lifespan = "Infinite"
+            else lifespan = `${attackModel["lifespan"]}sec`
+            createElem(lifespan, "Time", lifespanDiv, "Lifespan")
+            if (attackModel.hasOwnProperty("lifespanRounds")) 
+                createElem(`${attackModel["lifespanRounds"]}`, "Rounds", lifespanDiv)
+            attackDiv.appendChild(lifespanDiv)
+        }
+        if (attackModel["type"] == "status") {
+            if (attackModel.hasOwnProperty("duration")) {
+                const specialList = ["ceramic", "blimps", "moab", "bfb", "zomg", "ddt", "bad"]
+                const durationModel = attackModel["duration"]
+                const statusDurationDiv = document.createElement("div")
+                statusDurationDiv.classList.add("damageDiv")
+                createElem(`${durationModel["base"]}sec`, "BASE", statusDurationDiv, "Duration")
+                for (const temp of specialList) {
+                    if (durationModel.hasOwnProperty(temp)) 
+                        createElem(`${durationModel[temp]}sec`, temp.toUpperCase(), statusDurationDiv)
+                }
+                attackDiv.appendChild(statusDurationDiv)
+            }
+        }
         if (attackModel.hasOwnProperty("special")) createElem(attackModel["special"], "Special", attackDiv)
         paragonContainer.appendChild(attackDiv)
         if (attackModel.hasOwnProperty("emits")) {
             createAttackDivs(attackModel["emits"], attackModel["name"])
-        } else {
-            attackDiv.classList.add("finalEmission")
         }
     }
 }
@@ -306,15 +376,22 @@ function calculateParagonDegree() {
     let power = 0
     let degree = 1
     const maxPops = 16200000
+    let paragonCost = data["cost"]
+    switch (document.querySelector("#gamemodeDifficulty").value) {
+        case "easy": paragonCost = Math.round(data["cost"] * 0.85); break;
+        case "hard": paragonCost = Math.round(data["cost"] * 1.08); break;
+        case "impoppable": paragonCost = Math.round(data["cost"] * 1.2); break;
+        default: paragonCost = paragonCost
+    }
     let pops = Math.floor(document.querySelector("#paragonPops").value)
     if (pops == null || pops < 0) {pops = 0; document.querySelector("#paragonPops").value = 0}
     const maxTiers = 100
     let tiers = Math.floor(document.querySelector("#paragonTiersSacced").value)
     if (tiers == null || tiers < 0) {tiers = 0; document.querySelector("#paragonTiersSacced").value = 0}
-    const maxCashSac = data["cost"] * 3
+    const maxCashSac = paragonCost * 3
     let cashSac = Math.floor(document.querySelector("#paragonCashSacced").value)
     if (cashSac == null || cashSac < 0) {cashSac = 0; document.querySelector("#paragonCashSacced").value}
-    const maxCashSlider = data["cost"] * 3 * 1.05
+    const maxCashSlider = paragonCost * 3 * 1.05
     let cashSlider = Math.floor(document.querySelector("#paragonCashSlider").value)
     if (cashSlider == null || cashSlider < 0) {cashSlider = 0; document.querySelector("#paragonCashSlider").value = 0}
     const maxT5 = 12
@@ -330,8 +407,8 @@ function calculateParagonDegree() {
     if (tiers >= 100) document.querySelector("#paragonTiersSacced").value = maxTiers
 
     let powerFromCash
-    let idk = cashSac / (data["cost"] / 20000) 
-    let idk2 = cashSlider / (data["cost"] * 1.05 / 20000)
+    let idk = cashSac / (paragonCost / 20000) 
+    let idk2 = cashSlider / (paragonCost * 1.05 / 20000)
     powerFromCash = idk + idk2 > 60000 ? 60000 : idk + idk2
     if (powerFromCash >= 60000) {
         if (cashSac < cashSlider) document.querySelector("#paragonCashSlider").value = maxCashSlider
@@ -344,7 +421,6 @@ function calculateParagonDegree() {
     while (power >= powerDegreeRequirements[i] && i <= 100) {
         i++
     }
-    console.log(power)
     degree = i + 1
     document.querySelector(".result").innerText = `Degree ${degree}`
     displayParagonData(degree)
@@ -358,6 +434,29 @@ for (const element of document.querySelectorAll(".paragon")) {
       }
     }
 }
+// this will be worked on for v0.10.0 pinky promise
+/* document.querySelector(".heroLevelButton").onclick = () => {
+    document.querySelector(".towerPickContainer").style.display = "none"
+    document.querySelector(".optionsBar").style.display = "none"
+    document.querySelector(".toolsPickContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
+    document.querySelector(".takeMeHomeContainer").style.display = "block"
+    backButton.style.display = "block"
+    document.querySelector(".heroLevelCalculatorContainer").style.display = "block"
+    editURL("menu", "heroLevelCalculator")
+}
+document.querySelector(".paragonDegreeButton").onclick = () => {
+    document.querySelector(".towerPickContainer").style.display = "none"
+    document.querySelector(".optionsBar").style.display = "none"
+    document.querySelector(".toolsPickContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
+    document.querySelector(".takeMeHomeContainer").style.display = "block"
+    backButton.style.display = "block"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "block"
+    editURL("menu", "paragonDegreeCalculator")
+} */
 filterSelect.addEventListener("change", checkFilter)
 
 paragonDegreeInput.addEventListener("change", function() {
@@ -401,9 +500,14 @@ backButton.onclick = () => {
         vrej.style.display = "none"
     }
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "block"
-    document.querySelector(".towerPickContainer").style.display = "flex"
+    towerPickContainer.style.display = "block"
+    for (const elem of Array.from(towerPickContainer.children)) elem.style.display = "flex"
     document.querySelector(".optionsBar").style.display = "flex"
     backButton.style.display = "none"
+    // document.querySelector(".toolsPickContainer").style.display = "flex"
+    document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    checkFilter()
     editURL("paragon", null, false)
     editURL("level", null, false)
 }

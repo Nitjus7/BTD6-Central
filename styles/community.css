@@ -228,7 +228,7 @@ button:not(.wip):hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
 }
 .medalContainer {
   display: flex;
@@ -248,7 +248,7 @@ button:not(.wip):hover {
 }
 @media only screen and (max-width: 768px) {
   .medalContainer {
-    width: 300px;
+    width: 350px;
   }
 }
 .medalLabel {

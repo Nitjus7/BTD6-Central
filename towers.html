@@ -14,53 +14,82 @@
      <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
      <!--CUSTOM FONTS IMPORT END-->
      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,200" />
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,0,200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
  
      <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
      <link rel="stylesheet" href="styles/main.css" />
      <link rel="stylesheet" href="styles/towers.css" />
 </head>
 <body>
-    <div class="navBarContainer">
-        <nav>
-          <ul class="navList">
-            <li class="websiteTitle">
-              <a href="index.html"><strong>BTD6 Central</strong></a>
-            </li>
-            <li class="hamburgerButton">
-              <span class="material-symbols-outlined">
-                menu
-              </span>
-            </li>
-          </ul>
-        </nav>
-      </div>
-        <div class="hamburgerContainer">
-          <ul class="hamburgerMenu">
-            <li class="hamburgerTop">
-              <span class="material-symbols-outlined closeButton">
-                close
-              </span>
-            </li>
-            <select name="theme" class="pageTheme navItem">
-              <option value="light">Light Theme</option>
-              <option value="dark">Dark Theme</option>
-            </select>
-            <li class="navItem">
-              <button class="navButton goToHome">Home</button>
-            </li>
-            <li class="navItem">
-              <button class="navButton goToStats currentPage">Stats</button>
-            </li>
-            <li class="navItem">
-              <button class="navButton goToEvents">Events</button>
-            </li>
-            <li class="navItem">
-              <button href="#" class="navButton goToCommunity">Community</button>
-            </li>
-          </ul>
-      </div>
+  <div class="navBarContainer noBurger">
+    <nav>
+      <ul class="navList noBurger">
+        <li class="websiteTitle">
+          <a href="index.html">
+            <p><strong>BTD6 Central</strong></p>
+          </a>
+        </li>
+        <li class="">
+          <button class="noBurgerButton goToHome">Home</button>
+        </li>
+        <li class="">
+          <button class="noBurgerButton goToStats currentPage">Stats</button>
+        </li>
+        <li class="">
+          <button class="noBurgerButton goToEvents">Events</button>
+        </li>
+        <li class="">
+          <button class="noBurgerButton goToCommunity">Community</button>
+        </li>
+        <li class="lastItemNoBurger">
+          <button class="pageThemeButtonNoBurger"><span class="material-symbols-outlined">light_mode</span></button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="navBarContainer withBurger">
+    <nav>
+      <ul class="navList">
+        <li class="websiteTitle">
+          <a href="index.html">
+            <p><strong>BTD6 Central</strong></p>
+          </a>
+        </li>
+        <li class="hamburgerButton">
+          <span class="material-symbols-outlined">
+            menu
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+    <div class="hamburgerContainer">
+      <ul class="hamburgerMenu">
+        <li class="hamburgerTop">
+          <span class="material-symbols-outlined closeButton">
+            close
+          </span>
+        </li>
+        <select name="theme" class="pageTheme navItem">
+          <option value="light">Light Theme</option>
+          <option value="dark">Dark Theme</option>
+        </select>
+        <li class="navItem">
+          <button class="navButton goToHome">Home</button>
+        </li>
+        <li class="navItem">
+          <button class="navButton goToStats currentPage">Stats</button>
+        </li>
+        <li class="navItem">
+          <button class="navButton goToEvents">Events</button>
+        </li>
+        <li class="navItem">
+          <button href="#" class="navButton goToCommunity">Community</button>
+        </li>
+      </ul>
+    </div>
       <div class="optionsBar">
         <select name="Filter" class="filterSelect">
           <option value="noWIP">All Available Stats</option>
@@ -85,55 +114,181 @@
             </span>
         </a>
       </div>
+
+      <!-- This will be worked on for v0.10.0 pinky promise-->
+      <div class="toolsPickContainer">
+        <h2 class="toolsHeader">Tools</h2>
+        <div class="toolButtonContainer">
+          <button class="paragonDegreeButton toolButton">Paragon Degree Calculator</button>
+        </div>
+      </div>
+      <div class="heroLevelCalculatorContainer">
+        <h1 class="heroLevelCalcHeader">Hero Level Calculator</h1>
+        <h4 class="heroLevelBasicHeader">Calculate Hero level based on the starting round.</h4>
+        <div class="heroLevelBasicContainer">
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroBasicCalcInput">Hero</label>
+            <select name="heroName" id="heroBasicCalcInput">
+              <option value="quincy">Quincy</option>
+              <option value="gwendolin">Gwendolin</option>
+              <option value="striker">Striker Jones</option>
+              <option value="obyn">Obyn Greenfoot</option>
+              <option value="churchill">Captain Churchill</option>
+              <option value="ben">Benjamin</option>
+              <option value="ezili">Ezili</option>
+              <option value="pat">Pat Fusty</option>
+              <option value="adora">Adora</option>
+              <option value="brickell">Admiral Brickell</option>
+              <option value="etienne">Etienne</option>
+              <option value="sauda">Sauda</option>
+              <option value="psi">Psi</option>
+              <option value="geraldo">Geraldo</option>
+              <option value="corvus">Corvus</option>
+            </select>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroLevelCalcInput">Starting Round (1 to 100)</label>
+            <input type="number" class="calcInput" id="heroRoundCalcInput" placeholder="required" name="heroRound" min="1" max="100"></input>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="mapDifficultyCalcInput">Map Difficulty</label>
+            <select name="mapDifficulty" id="mapDifficultyCalcInput">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+              <option value="expert">Expert</option>
+              <option value="custom">Custom Map</option>
+            </select>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="energizerPlacementInput">Energizer Placement Round (1 to 100)</label>
+            <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="100"></input>
+          </div>
+          <button class="confirmHeroBasicCalcButton">Calculate</button>
+          <h2 class="heroLevelBasicResult"></h2>
+        </div>
+        <h4 class="heroLevelByHeader">Find the latest round you can place a Hero to reach a desired level before a certain round.</h4>
+        <div class="heroLevelByContainer">
+          <p class="heroLevelByText">I want to get</p>
+          <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
+            <option value="quincy">Quincy</option>
+            <option value="gwendolin">Gwendolin</option>
+            <option value="striker">Striker Jones</option>
+            <option value="obyn">Obyn Greenfoot</option>
+            <option value="churchill">Captain Churchill</option>
+            <option value="ben">Benjamin</option>
+            <option value="ezili">Ezili</option>
+            <option value="pat">Pat Fusty</option>
+            <option value="adora">Adora</option>
+            <option value="brickell">Admiral Brickell</option>
+            <option value="etienne">Etienne</option>
+            <option value="sauda">Sauda</option>
+            <option value="psi">Psi</option>
+            <option value="geraldo">Geraldo</option>
+            <option value="corvus">Corvus</option>
+          </select>
+          <p class="heroLevelByText">to level</p>
+          <input type="number" class="calcInput heroLevelCalcInput" placeholder="between 1 and 20" name="heroRound" min="1" max="20"></input>
+          <p class="heroLevelByText">by round</p>
+          <input type="number" class="calcInput heroGoalRoundInput" placeholder="between 1 and 100" name="heroRound" min="1" max="100"></input>
+          <p class="heroLevelByText">on a(n)</p>
+          <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+            <option value="expert">Expert</option>
+            <option value="custom">Custom</option>
+          </select>
+          <p class="heroLevelByText">map.</p>
+          <div class="lineBreak"></div>
+          <button class="confirmHeroLevelByButton">Confirm</button>
+          <p class="heroLevelByResult"></p>
+        </div>
+
+      </div> 
+      <div class="paragonDegreeCalculatorContainer">
+        <h1 class="paragonDegreeCalcHeader">Paragon Degree Calculator</h1>
+        <label for="paragonNameInput">Choose a Paragon</label>
+        <select name="paragonName" id="paragonNameInput">
+          <option value="DartMonkey">Apex Plasma Master (Dart)</option>
+          <option value="BoomerangMonkey">Glaive Dominus (Boomerang)</option>
+          <option value="MonkeySub">Nautic Siege Core (Sub)</option>
+          <option value="MonkeyBuccaneer">Navarch of the Seas (Buccaneer)</option>
+          <option value="MonkeyAce">Goliath Doomship (Ace)</option>
+          <option value="WizardMonkey">Magus Perfectus (Wizard)</option>
+          <option value="NinjaMonkey">Ascended Shadow (Ninja)</option>
+          <option value="MonkeyEngineer">Master Builder (Engineer)</option>
+        </select>
+        <label for=""></label>
+      </div>
+
+
       <div class="towerPickContainer">
         <!--PRIMARY-->
-        <button id="dartButton" class="wip primary monkey">Dart Monkey</button>
-        <button id="ApexPlasmaMaster" class="primary paragon">Apex Plasma Master</button>
-        <button id="boomerButton" class="wip primary monkey">Boomerang Monkey</button>
-        <button id="GlaiveDominus" class="primary paragon">Glaive Dominus</button>
-        <button id="bombButton" class="wip primary monkey">Bomb Shooter</button>
-        <button id="tackButton" class="wip primary monkey">Tack Shooter</button>
-        <button id="iceButton" class="wip primary monkey">Ice Monkey</button>
+        <h2 class="primaryHeader">Primary</h2>
+        <div class="primaryContainer">
+          <button id="DartMonkey" class="wip primary monkey">Dart Monkey</button>
+          <button id="ApexPlasmaMaster" class="primary paragon">Apex Plasma Master</button>
+          <button id="BoomerangMonkey" class="wip primary monkey">Boomerang Monkey</button>
+          <button id="GlaiveDominus" class="primary paragon">Glaive Dominus</button>
+          <button id="BombShooter" class="wip primary monkey">Bomb Shooter</button>
+          <button id="TackShooter" class="wip primary monkey">Tack Shooter</button>
+          <button id="IceMonkey" class="wip primary monkey">Ice Monkey</button>
+          <button id="GlueGunner" class="wip primary monkey">Glue Gunner</button>
+        </div>
         <!--MILITARY-->
-        <button id="sniperButton" class="wip military monkey">Sniper Monkey</button>
-        <button id="subButton" class="wip military monkey">Monkey Sub</button>
-        <button id="buccaneerButton" class="wip military monkey">Monkey Buccaneer</button>
-        <button id="NavarchOfTheSeas" class="military paragon">Navarch of the Seas</button>
-        <button id="aceButton" class="wip military monkey">Monkey Ace</button>
-        <button id="GoliathDoomship" class="military paragon">Goliath Doomship</button>
-        <button id="heliButton" class="wip military monkey">Heli Pilot</button>
-        <button id="mortarButton" class="wip military monkey">Mortar Monkey</button>
-        <button id="dartlingButton" class="wip military monkey">Dartling Gunner</button>
+        <h2 class="militaryHeader">Military</h2>
+        <div class="militaryContainer">
+          <button id="SniperMonkey" class="wip military monkey">Sniper Monkey</button>
+          <button id="MonkeySub" class="wip military monkey">Monkey Sub</button>
+          <button id="NauticSiegeCore" class="wip military paragon">Nautic Siege Core</button>
+          <button id="MonkeyBuccaneer" class="wip military monkey">Monkey Buccaneer</button>
+          <button id="NavarchOfTheSeas" class="military paragon">Navarch of the Seas</button>
+          <button id="MonkeyAce" class="wip military monkey">Monkey Ace</button>
+          <button id="GoliathDoomship" class="military paragon">Goliath Doomship</button>
+          <button id="HeliPilot" class="wip military monkey">Heli Pilot</button>
+          <button id="MortarMonkey" class="wip military monkey">Mortar Monkey</button>
+          <button id="DartlingGunner" class="wip military monkey">Dartling Gunner</button>
+        </div>
         <!--MAGIC-->
-        <button id="wizardButton" class="wip magic monkey">Wizard Monkey</button>
-        <button id="MagusPerfectus" class="magic paragon">Magus Perfectus</button>
-        <button id="superButton" class="wip magic monkey">Super Monkey</button>
-        <button id="ninjaButton" class="wip magic monkey">Ninja Monkey</button>
-        <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
-        <button id="alchemistButton" class="wip magic monkey">Alchemist</button>
-        <button id="druidButton" class="wip magic monkey">Druid</button>
+        <h2 class="magicHeader">Magic</h2>
+        <div class="magicContainer">
+          <button id="WizardMonkey" class="wip magic monkey">Wizard Monkey</button>
+          <button id="MagusPerfectus" class="magic paragon">Magus Perfectus</button>
+          <button id="SuperMonkey" class="wip magic monkey">Super Monkey</button>
+          <button id="NinjaMonkey" class="wip magic monkey">Ninja Monkey</button>
+          <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
+          <button id="Alchemist" class="wip magic monkey">Alchemist</button>
+          <button id="Druid" class="wip magic monkey">Druid</button>
+        </div>
         <!--SUPPORT-->
-        <button id="farmButton" class="wip support monkey">Banana Farm</button>
-        <button id="villageButton" class="wip support monkey">Monkey Village</button>
-        <button id="spikeButton" class="wip support monkey">Spike Factory</button>
-        <button id="beastButton" class="wip support monkey">Beast Handler</button>
-        <button id="engineerButton" class="wip support monkey">Engineer Monkey</button>
-        <button id="MasterBuilder" class="support paragon">Master Builder</button>
-        <!--HERO-->
-        <button id="quincyButton" class="hero wip">Quincy</button>
-        <button id="gwenButton" class="hero wip">Gwendolin</button>
-        <button id="jonesButton" class="hero wip">Striker Jones</button>
-        <button id="obynButton" class="hero wip">Obyn Greenfoot</button>
-        <button id="churchButton" class="hero wip">Captain Churchill</button>
-        <button id="benButton" class="hero wip">Benjamin</button>
-        <button id="eziliButton" class="hero wip">Ezili</button>
-        <button id="patButton" class="hero wip">Pat Fusty</button>
-        <button id="adoraButton" class="hero wip">Adora</button>
-        <button id="brickButton" class="hero wip">Brickell</button>
-        <button id="etiButton" class="hero wip">Etienne</button>
-        <button id="psiButton" class="hero wip">Psi</button>
-        <button id="geraldoButton" class="hero wip">Geraldo</button>
-        <button id="corvusButton" class="hero wip">Corvus</button>
+        <h2 class="supportHeader">Support</h2>
+        <div class="supportContainer">
+          <button id="BananaFarm" class="wip support monkey">Banana Farm</button>
+          <button id="MonkeyVillage" class="wip support monkey">Monkey Village</button>
+          <button id="SpikeFactory" class="wip support monkey">Spike Factory</button>
+          <button id="EngineerMonkey" class="wip support monkey">Engineer Monkey</button>
+          <button id="MasterBuilder" class="support paragon">Master Builder</button>
+          <button id="BeastHandler" class="wip support monkey">Beast Handler</button>
+        </div>
+        <!--HEROES--->
+        <h2 class="heroesHeader">Heroes</h2>
+        <div class="heroesContainer">
+          <button id="Quincy" class="hero wip">Quincy</button>
+          <button id="Gwendolin" class="hero wip">Gwendolin</button>
+          <button id="StrikerJones" class="hero wip">Striker Jones</button>
+          <button id="ObynGreenfoot" class="hero wip">Obyn Greenfoot</button>
+          <button id="CaptainChurchill" class="hero wip">Captain Churchill</button>
+          <button id="Benjamin" class="hero wip">Benjamin</button>
+          <button id="Ezili" class="hero wip">Ezili</button>
+          <button id="Pat" class="hero wip">Pat Fusty</button>
+          <button id="Adora" class="hero wip">Adora</button>
+          <button id="Brickell" class="hero wip">Brickell</button>
+          <button id="Etienne" class="hero wip">Etienne</button>
+          <button id="Psi" class="hero wip">Psi</button>
+          <button id="Geraldo" class="hero wip">Geraldo</button>
+          <button id="Corvus" class="hero wip">Corvus</button>
+        </div>
       </div>
       <div class="paragonContainer">
         <div class="paragonStatsContainer">
@@ -158,6 +313,13 @@
               <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSlider"><br>
               <label for="paragonT5Sacced">Extra Tier 5s</label>
               <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5Sacced"><br>
+              <label for="gamemodeDifficulty">Difficulty</label>
+              <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+                <option value="impoppable">Impoppable</option>
+              </select><br>
               <button class="calculateParagonDegreeButton" id="calculateParagonDegreeButton">Calculate</button>
               <label for="calculateParagonDegreeButton" class="result"></label>
             </div>

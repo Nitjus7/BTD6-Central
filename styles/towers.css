@@ -5,6 +5,12 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
+/* TEMPORARY CSS ALERT TEMPORARY CSS ALERT */
+#MasterBuilder {
+    margin-bottom: 2rem;
+}
+
+
 .noMarginTop {
     margin-top: 0;
 }
@@ -94,6 +100,7 @@ h1, h2, .attackName {
     display: block;
 }
 .valueInput {
+    font-family: var(--primaryFont);
     width: 40px;
     height: 20px;
     border-radius: 10px;
@@ -107,24 +114,72 @@ h1, h2, .attackName {
 .valueInput.wider {
     width: 65px;
 }
+.valueInput.muchWider {
+    width: 100px;
+}
 .valueInput:focus {
     outline: 1px var(--textColor2) solid;
 }
-.towerPickContainer {
+
+.toolsPickContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.toolButton {
+    background-color: var(--buttonColor1);
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px var(--textColor) solid;
+    color: var(--textColor);
+    font-size: 1rem;
+    transition: 0.15s ease-in-out background-color;
+}
+.toolButton:hover {
+    background-color: var(--buttonColor2);
+}
+
+.heroLevelCalculatorContainer {
+    display: none;
+    text-align: center;
+}
+.heroLevelCalcHeader {
+    margin-top: 75px;
+}
+
+.paragonDegreeCalculatorContainer {
+    display: none;
+    text-align: center;
+}
+.paragonDegreeCalcHeader {
+    margin-top: 75px;
+}
+
+.calcInput {
+    margin: 0.25rem;
+}
+
+.heroLevelByContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.lineBreak {
+    width: 100%;
+}
+
+.towerPickContainer > * {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     justify-items: center;
 }
-.towerPickContainer > * {
+.towerPickContainer > * > * {
     text-align: center;
     justify-content: center;
     align-items: center;
-}
-.finalEmission {
-    margin-bottom: 2rem;
-    border-bottom: 2px var(--textColor) dotted;
 }
 .towerPickContainer button {
     color: var(--textColor);
@@ -145,7 +200,7 @@ h1, h2, .attackName {
     border: 1.5px var(--contentOutline3) solid;
     height: 4rem;
     transition: 0.5s ease;
-    font-family: var(--secondaryFont);
+    font-family: var(--primaryFont);
     font-size: 1.5rem;
 }
 
@@ -161,7 +216,7 @@ h1, h2, .attackName {
 }
 .attackName {
     text-align: center;
-    padding: 0;
+    padding: 2rem 0 0 0;
     margin: 0;
 }
 .attackType {
@@ -177,11 +232,12 @@ h1, h2, .attackName {
     justify-content: center;
     align-items: center;
     padding-bottom: 1.5rem;
+    border-bottom: 1px var(--textColor) dotted;
 }
 .attackDiv > * {
     background-color: var(--contentBackground1);
-    margin: 1rem;
-    padding: 0 0.5rem;
+    margin: 1rem 1rem 1rem 2rem;
+    padding: 0 1rem;
     border-radius: 5px;
     box-shadow: 0px 0px 5px var(--shadowColor);
 }
@@ -192,12 +248,19 @@ h1, h2, .attackName {
     align-items: center;
     justify-content: space-around;
     flex-shrink: 1;
-    flex-basis: 100%;
+    flex-basis: 50%;
     width: 800px;
     background-color: var(--contentBackground1);
     border-radius: 5px;
     box-shadow: 0px 0px 5px var(--shadowColor);
     margin: 0 2rem 0.5rem 2rem;
+}
+.lifespanDiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 33%;
+    align-items: center;
+    justify-content: space-around;
 }
 .sectionTitle {
     border-right: 1px var(--textColor) solid;
@@ -235,5 +298,12 @@ h1, h2, .attackName {
 @media only screen and (max-width: 760px) {
     .frequency, .emitsFrom {
         width: 35%
+    }
+    .sectionTitle {
+        border-right: none;
+        padding-right: 0;
+    }
+    .damageDiv {
+        flex-basis: 100%;
     }
 }
