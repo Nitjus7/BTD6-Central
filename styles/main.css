@@ -228,7 +228,7 @@ body {
   display: flex;
 }
 .hamburgerTop:first-child {
-  justify-content: flex-start
+  justify-content: flex-end
 }
 .pageTheme {
   display: block;
@@ -323,8 +323,8 @@ body {
 }
 .closeButton {
   display: flex;
-  justify-content: flex-start;
-  margin-left: 1.5rem; margin-top: 25px;
+  justify-content: flex-end;
+  margin-right: 1.5rem; margin-top: 25px;
 }
 .navItem {
   display: flex;

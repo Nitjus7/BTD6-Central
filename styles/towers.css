@@ -236,7 +236,7 @@ h1, h2, .attackName {
 }
 .attackDiv > * {
     background-color: var(--contentBackground1);
-    margin: 1rem 1rem 1rem 2rem;
+    margin: 1rem;
     padding: 0 1rem;
     border-radius: 5px;
     box-shadow: 0px 0px 5px var(--shadowColor);
@@ -258,9 +258,12 @@ h1, h2, .attackName {
 .lifespanDiv {
     display: flex;
     flex-wrap: wrap;
-    flex-basis: 33%;
+    flex-basis: 40%;
     align-items: center;
     justify-content: space-around;
+}
+.time {
+    margin-left: 1rem;
 }
 .sectionTitle {
     border-right: 1px var(--textColor) solid;

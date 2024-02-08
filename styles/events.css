@@ -180,8 +180,8 @@ button {
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  width: 80vw;
-  max-width: 600px;
+  width: 90vw;
+  max-width: 700px;
   margin: 0.5rem auto;
   padding: 0;
 }
@@ -310,8 +310,8 @@ button {
   background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
   border-radius: 10px;
-  width: 80vw;
-  max-width: 600px;
+  width: 90vw;
+  max-width: 700px;
   margin: 0.5rem auto;
   padding: 0;
 }
@@ -354,7 +354,7 @@ h2 {
   justify-content: flex-start;
 }
 .enabledTowersContainer > * > * { /* this is also so stupid */
-  margin: 2rem;
+  margin: 1rem;
   padding-right: 0.5rem;
 }
 .scrollInfo {
