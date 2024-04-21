@@ -422,7 +422,7 @@ button:not(.wip):hover {
 }
 .idHelperImage {
   border-radius: 10px;
-  border: 1px solid var(--textColor);
+  border: 1px solid white;
   margin: 0px 5px 30px 5px;
   width: 85%;
   max-width: 500px;

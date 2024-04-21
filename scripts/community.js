@@ -269,13 +269,12 @@ function parsePlayerData() {
         document.querySelector(".vetLevel").onclick = () => {
             // technically the amount for levels 1-155 is 180001000 but that looks ugly 
             // and the difference is effectively nothing
-            const totalXP = 180000000 + (playerData["veteranRank"] * 20000000)
+            const totalXPInMillions = 180 + (playerData["veteranRank"] * 20)
             let popupHTML = `
             <div class="popupImageContainer">
                 <img src="assets/vetLevelIcon.png" class="vetLevelIcon popupImage"/>
-                <p>Veteran Levels are levels that exist beyond the normal levels that you can get after reaching Level 155. 
-                Veteran Levels are purely cosmetic and won't unlock anything new, but it takes <b>20 million XP</b> for each new Veteran Level. 
-                At Veteran Level ${playerData["veteranRank"]}, this player has gotten a total of <b>over ${totalXP.toLocaleString()} XP</b>.</p>
+                <p>Veteran Levels are unlocked after reaching Level 155. They don't unlock anything new, and it takes <b>20 million XP</b> for each.<br>
+                At Veteran Level ${playerData["veteranRank"]}, this player has gotten a total of <b>over ${totalXPInMillions.toLocaleString()} million XP</b>.</p>
             </div>`
             showPopup("Veteran Levels", popupHTML)
         }

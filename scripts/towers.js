@@ -1,10 +1,11 @@
 const paragonDegreeInput = document.querySelector(".paragonDegreeInput")
 const paragonContainer = document.querySelector(".paragonContainer")
+const heroContainer = document.querySelector(".heroContainer")
 const selectDegreeCheck = document.querySelector("#pikachuIChooseYou")
 const calculateDegreeCheck = document.querySelector("#charizardIChooseYou")
 const calculateParagonDegreeButton = document.querySelector(".calculateParagonDegreeButton")
 
-const dataContainers = [paragonContainer]
+const dataContainers = [paragonContainer, heroContainer]
 const monkeyList = document.querySelectorAll(".monkey")
 const heroList = document.querySelectorAll(".hero")
 const paragonList = document.querySelectorAll(".paragon")
@@ -14,6 +15,7 @@ const magicContainer = document.querySelector(".magicContainer")
 const supportContainer = document.querySelector(".supportContainer")
 const heroesContainer = document.querySelector(".heroesContainer")
 const towerPickContainer = document.querySelector(".towerPickContainer")
+const heroStatsContainer = document.querySelector(".heroStatsContainer")
 
 const parentList = [monkeyList, heroList, paragonList]
 const subParentList = []
@@ -21,6 +23,8 @@ const subParentList = []
 let monkeyData;
 let heroData;
 let paragon;
+let hero;
+let baseHero;
 let costs;
 
 const backButton = document.querySelector(".takeMeHome")
@@ -31,7 +35,7 @@ let urlParams = new URLSearchParams(window.location.search);
 
 const filterSelect = document.querySelector(".filterSelect")
 let appliedFilter = "noWIP" // placeholder
-const powerDegreeRequirements = [
+const POWER_DEGREE_REQUIREMENTS = [
     2000,2324,2666,3027,3408,3808,4228,4669,5131,5615,6121,6650,7203,7779,8379,9004,9654,
     10330,11032,11761,12518,13302,14114,14955,15825,16725,17655,18616,19609,20633,21689,22778,
     23900,25056,26246,27471,28732,30028,31360,32729,34135,35579,37061,38582,40143,41743,43383,
@@ -39,7 +43,10 @@ const powerDegreeRequirements = [
     75509,77910,80360,82860,85410,88011,90664,93368,96124,98933,101795,104711,107681,110706,113787,
     116923,120115,123364,126670,130034,133456,136937,140478,144078,147738,151459,155241,159085,162991,
     166960,170993,175089,179249,183474,187764,192120,200000
- ]
+]
+const BASE_XP_REQUIREMENTS = [0,180,460,1000,1860,3280,5180,8320,9380,13620,16380,14400,16650,
+    14940,16380,17820,19260,20700,16470,17280
+]
 
 class Paragon {
     constructor(paragonData) {
@@ -68,6 +75,7 @@ class Paragon {
                 if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] *= formatNumber(1 + (x-1)*0.01)
                 if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] *= formatNumber(1 + (x-1)*0.01)
                 if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = formatNumber(dmgModel["bonusBoss"] * (1 + Math.floor(x/20)*0.25)) * (1 + (x-1)*0.01)
+                if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"] *= formatNumber(1 + (x-1)*0.01)
             }
             if (attackModel.hasOwnProperty("emits")) {
                 for (const emissionModel of attackModel["emits"]) applyDegreeBonusForSubEffects(emissionModel, x)
@@ -92,6 +100,7 @@ function applyDegreeBonusForSubEffects(attackModel, x) {
             if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] *= formatNumber(1 + (x-1)*0.01)
             if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] *= formatNumber(1 + (x-1)*0.01)
             if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = formatNumber(dmgModel["bonusBoss"] * (1 + Math.floor(x/20)*0.25)) * (1 + (x-1)*0.01)
+            if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"] *= formatNumber(1 + (x-1)*0.01)
         }
     }
     if (attackModel.hasOwnProperty("emits")) {
@@ -99,6 +108,115 @@ function applyDegreeBonusForSubEffects(attackModel, x) {
     } 
 }
 
+
+
+class Hero {
+    constructor(fullData) {
+        this.fullData = fullData
+        this.baseHero = fullData
+        this.name = fullData["hero"]
+        this.projectiles = fullData["projectiles"]
+        if (fullData.hasOwnProperty("abilities")) this.abilities = fullData["abilities"]
+        if (fullData.hasOwnProperty("supports")) this.support = fullData["supports"]
+        if (fullData.hasOwnProperty("statuses")) this.statuses = fullData["statuses"]
+    }
+
+    resetData() {
+        this.fullData = structuredClone(this.baseHero)
+    }
+
+    editItem(data) {
+        this.abilities = this.fullData["abilities"]
+        this.projectiles = this.fullData["projectiles"]
+        const abil = this.abilities
+        const proj = this.projectiles
+        const supp = this.support
+        const stat = this.statuses
+        const target = data["target"]
+        const item = data["item"]
+        const type = data["type"]
+        const value = data["value"]
+        if (proj.hasOwnProperty(target) && proj[target].hasOwnProperty(item)) {
+            if (type == "subtract") {
+                this.fullData["projectiles"][target][item] -= value
+            } else if (type == "multiply") {
+                this.fullData["projectiles"][target][item] *= value
+            } else if (type == "divide") {
+                this.fullData["projectiles"][target][item] /= value
+            } else if (type == "add") {
+                this.fullData["projectiles"][target][item] += value
+            } else {
+                this.fullData["projectiles"][target][item] = value
+            }
+        } else if (abil.hasOwnProperty(target) && abil[target].hasOwnProperty(item)) {
+            if (type == "subtract") {
+                this.fullData["abilities"][target][item] -= value
+            } else if (type == "multiply") {
+                this.fullData["abilities"][target][item] *= value
+            } else if (type == "divide") {
+                this.fullData["abilities"][target][item] /= value
+            } else if (type == "add") {
+                this.fullData["abilities"][target][item] += value
+            } else {
+                this.fullData["abilities"][target][item] = value
+            }
+        } else if (supp && supp.hasOwnProperty(target) && supp[target].hasOwnProperty(item)) {
+            if (type == "subtract") {
+                this.fullData["supports"][target][item] -= value
+            } else if (type == "multiply") {
+                this.fullData["supports"][target][item] *= value
+            } else if (type == "divide") {
+                this.fullData["supports"][target][item] /= value
+            } else if (type == "add") {
+                this.fullData["supports"][target][item] += value
+            } else {
+                this.fullData["supports"][target][item] = value
+            }
+        } else if (stat && stat.hasOwnProperty(target) && stat[target].hasOwnProperty(item)) {
+            if (type == "subtract") {
+                this.fullData["statuses"][target][item] -= value
+            } else if (type == "multiply") {
+                this.fullData["statuses"][target][item] *= value
+            } else if (type == "divide") {
+                this.fullData["statuses"][target][item] /= value
+            } else if (type == "add") {
+                this.fullData["statuses"][target][item] += value
+            } else {
+                this.fullData["statuses"][target][item] = value
+            }
+        }
+    }
+
+    addProperty(data) {
+        const abil = this.abilities
+        const proj = this.projectiles
+        const supp = this.support
+        const target = data["target"]
+        const key = data["key"]
+        const value = data["value"]
+        if (proj.hasOwnProperty(target)) {
+            this.fullData["projectiles"][target][key] = value
+        } else if (abil.hasOwnProperty(target)) {
+            this.fullData["abilities"][target][key] = value
+        } else if (supp && supp.hasOwnProperty(target)) {
+            this.fullData["support"][target][key] = value
+        }
+    }
+
+    addAttack(name) {
+        this.fullData["enabledProjectiles"].push(name)
+    }
+    addAbility(name) {
+        this.fullData["enabledAbilities"].push(name)
+    }
+    addSupport(name) {
+        this.fullData["enabledSupports"].push(name)
+    }
+
+    getData() {
+        return JSON.parse(JSON.stringify(this.fullData))
+    }
+}
 
 /**************************************************/
 
@@ -108,12 +226,17 @@ function applyDegreeBonusForSubEffects(attackModel, x) {
 async function getData(category, tower) {
     enableLoading()
     try {
-        costs = await(await fetch("https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/costs.json")).json()
-        paragon = new Paragon(await(await fetch(`https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/${category}/${tower}.json`)).json())
+        if (!costs)
+            costs = await(await fetch("https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/costs.json")).json()
+        if (category == "paragons")
+            paragon = new Paragon(await(await fetch(`https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/${category}/${tower}.json`)).json())
+        else if (category == "heroes") {
+            const heroData = await(await fetch(`https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/${category}/${tower}.json`)).json()
+            hero = new Hero(heroData)
+        }
     } catch(error) {
         alert("There was an error while getting tower data. Some features may not work.")
         console.log(error)
-        return "oops"
     } finally {
         disableLoading()
     }
@@ -192,9 +315,9 @@ async function swapToTower(category, tower, level) {
     level = Math.round(level)
     document.querySelector(".towerPickContainer").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
-    // document.querySelector(".toolsPickContainer").style.display = "none"
+    document.querySelector(".toolsPickContainer").style.display = "none"
     document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
-    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
     document.querySelector(".takeMeHomeContainer").style.display = "block"
     backButton.style.display = "block"
@@ -203,6 +326,12 @@ async function swapToTower(category, tower, level) {
         if (level > 100) level = 100
         paragonContainer.style.display = "block"
         displayParagonData(level)
+    } else if (category == "heroes") {
+        level = Math.round(level)
+        if (level < 1) level = 1
+        if (level > 20) level = 20
+        heroContainer.style.display = "block"
+        displayHeroData(level)
     }
 }
 
@@ -284,6 +413,7 @@ function createAttackDivs(p, emitsFrom) {
             if (dmgModel.hasOwnProperty("bonusCeram")) createElem(`${formatNumber(Number(dmgModel["bonusCeram"]) + Number(dmgModel["base"]))}`, "Ceramic", damageDiv)
             if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))}`, "MOAB", damageDiv)
             if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))}`, "Camo", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusStunned")) createElem(`${formatNumber(Number(dmgModel["bonusStunned"]) + Number(dmgModel["base"]))}`, "Stunned", damageDiv)
             if (dmgModel.hasOwnProperty("bonusBoss")) {
                 let totalBossDmg = 0
                 if (!dmgModel.hasOwnProperty("bonusMOAB")) totalBossDmg = Number(dmgModel["bonusBoss"]) + Number(dmgModel["base"])
@@ -352,8 +482,8 @@ function createSupportDivs(p) {
 
 function createElem(value, type, parent, st) {
     if (st) {
-        const sectionTitle = document.createElement("h3")
-        sectionTitle.classList.add("sectionTitle")
+        const sectionTitle = document.createElement("div")
+        sectionTitle.classList.add("attackElemLabel")
         sectionTitle.innerText = st
         parent.appendChild(sectionTitle)
     }
@@ -394,7 +524,7 @@ function calculateParagonDegree() {
     const maxCashSlider = paragonCost * 3 * 1.05
     let cashSlider = Math.floor(document.querySelector("#paragonCashSlider").value)
     if (cashSlider == null || cashSlider < 0) {cashSlider = 0; document.querySelector("#paragonCashSlider").value = 0}
-    const maxT5 = 12
+    const maxT5 = 9
     let t5 = Math.floor(document.querySelector("#paragonT5Sacced").value)
     if (t5 > 9) {
         t5 = 9
@@ -418,7 +548,7 @@ function calculateParagonDegree() {
 
     power += t5 * 6000 > 50000 ? 50000 : t5 * 6000
     let i = 0;
-    while (power >= powerDegreeRequirements[i] && i <= 100) {
+    while (power >= POWER_DEGREE_REQUIREMENTS[i] && i <= 100) {
         i++
     }
     degree = i + 1
@@ -426,27 +556,424 @@ function calculateParagonDegree() {
     displayParagonData(degree)
 }
 
-for (const element of document.querySelectorAll(".paragon")) {
-    if (!element.classList.contains("wip")) {
-      element.onclick = () => {
-        swapToTower("paragons", element.id, 1)
-        editURL("paragon", element.id, false)
-      }
+
+
+function displayHeroData(level) {
+    let attackDivs = Array.from(document.querySelectorAll(".attackDiv"))
+    let attackNames = Array.from(document.querySelectorAll(".attackName"))
+    let attackTypes = Array.from(document.querySelectorAll(".attackType"))
+    for (const e of attackDivs) {
+        e.remove();
+    }
+    for (const e of attackNames) {
+        e.remove();
+    }
+    for (const e of attackTypes) {
+        e.remove();
+    }
+    for (const elem of Array.from(document.querySelectorAll(".chooseLevelButton:not(.selected)"))) {
+        elem.onclick = () => {
+            document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
+            elem.classList.add("selected")
+            displayHeroData(elem.id.slice(11))
+        }
+    }
+    editHeroDataAtLevel(level)
+    const h = hero.getData()
+    document.querySelector(".heroName").innerText = h["hero"]
+    document.querySelector(".heroCost").innerHTML = `$${h["cost"]}&nbsp;&nbsp;|&nbsp;&nbsp;Level ${level}`
+    document.querySelector(".heroImage").src = `assets/${h["hero"].replace(/ /g, "")}.png` // removes spaces from the hero name
+    if (h.hasOwnProperty("abilities")) {
+        const abilitiesContainer = document.createElement("div")
+        abilitiesContainer.className = "abilitiesContainer"
+        for (const temp of h["enabledAbilities"]) {
+            const abilityDiv = document.createElement("div")
+            abilityDiv.className = "attackDiv notCentered"
+            const abilityModel = h["abilities"][temp]
+            const abilityName = document.createElement("h2")
+            abilityName.innerText = abilityModel["displayName"]
+            abilityName.className = "attackName notCentered"
+            abilitiesContainer.appendChild(abilityName)
+            createElem(`${abilityModel["cooldown"]}s`, "Cooldown", abilityDiv)
+            if (abilityModel.hasOwnProperty("duration")) createElem(`${abilityModel["duration"]}s`, "Duration", abilityDiv)
+            if (abilityModel.hasOwnProperty("description")) createElem(`${abilityModel["description"]}`, "Description", abilityDiv)
+            if (abilityModel.hasOwnProperty("special")) createElem(abilityModel["special"], "Special", abilityDiv)
+            abilitiesContainer.appendChild(abilityDiv)
+            if (abilityModel.hasOwnProperty("emissions")) {
+                const emissionsContainer = document.createElement("div")
+                for (const emissionName of abilityModel["emissions"]){
+                    for (const name in h["projectiles"]) {
+                        if (emissionName == name) generateHeroEmission(h["projectiles"][emissionName], emissionsContainer, "projectile")
+                    }
+                    if (h.hasOwnProperty("statuses")) {
+                        for (const name in h["statuses"]) {
+                            if (emissionName == name) generateHeroEmission(h["statuses"][emissionName], emissionsContainer, "status")
+                        }
+                    }
+                    if (h.hasOwnProperty("supports")) {
+                        for (const name in h["supports"]) {
+                            if (emissionName == name) generateHeroEmission(h["supports"][emissionName], emissionsContainer, "support")
+                        }
+                    }
+                }
+                abilitiesContainer.appendChild(emissionsContainer)
+            }
+        }
+        heroStatsContainer.appendChild(abilitiesContainer)
+    }
+    if (h.hasOwnProperty("projectiles")) {
+        const projectilesContainer = document.createElement("div")
+        projectilesContainer.className = "abilitiesContainer projectilesContainer"
+        for (const temp of h["enabledProjectiles"]) {
+            const projectileDiv = document.createElement("div")
+            projectileDiv.className = "attackDiv notCentered"
+            const projectileModel = h["projectiles"][temp]
+            const projectileName = document.createElement("h2")
+            projectileName.innerText = projectileModel["displayName"]
+            projectileName.className = "attackName notCentered"
+            projectilesContainer.appendChild(projectileName)
+            generateHeroProjectile(projectileModel, projectileDiv)
+            projectilesContainer.appendChild(projectileDiv)
+            if (projectileModel.hasOwnProperty("emissions")) {
+                const h = hero.getData()
+                const emissionsContainer = document.createElement("div")
+                for (const emissionName of projectileModel["emissions"]) {
+                    for (const name in h["projectiles"]) {
+                        if (emissionName == name) generateHeroEmission(h["projectiles"][emissionName], emissionsContainer, "projectile")
+                    }
+                    if (h.hasOwnProperty("statuses")) {
+                        for (const name in h["statuses"]) {
+                            if (emissionName == name) generateHeroEmission(h["statuses"][emissionName], emissionsContainer, "status")
+                        }
+                    }
+                    if (h.hasOwnProperty("supports")) {
+                        for (const name in h["supports"]) {
+                            if (emissionName == name) generateHeroEmission(h["supports"][emissionName], emissionsContainer, "support")
+                        }
+                    }
+                }
+                projectilesContainer.appendChild(emissionsContainer)
+            }
+        }
+        heroStatsContainer.appendChild(projectilesContainer)
+    }
+    if (h.hasOwnProperty("supports")) {
+        const supportsContainer = document.createElement("div")
+        supportsContainer.className = "supportsContainer notCentered"
+        for (const temp of h["enabledSupports"]) {
+            const supportDiv = document.createElement("div")
+            supportDiv.className = "attackDiv notCentered"
+            const supportModel = h["supports"][temp]
+            const supportName = document.createElement("h2")
+            supportName.innerText = supportModel["displayName"]
+            supportName.className = "attackName notCentered"
+            supportsContainer.appendChild(supportName)
+            createElem(supportModel["target"], "Affects", supportDiv)
+            createElem(supportModel["buff"], "Buff", supportDiv)
+            if (supportModel.hasOwnProperty("duration")) createElem(`${supportModel["duration"]}s`, "Duration", supportDiv)
+            if (supportModel.hasOwnProperty("description")) createElem(supportModel["description"], "Description", supportDiv)
+            if (supportModel.hasOwnProperty("special")) createElem(supportModel["special"], "Special", supportDiv)
+            supportsContainer.appendChild(supportDiv)
+        }
+        heroStatsContainer.appendChild(supportsContainer)
+    }
+    editURL("level", level)
+}
+
+function generateHeroEmission(data, container, type) {
+    const h = hero.getData()
+    const emissionDiv = document.createElement("div")
+    emissionDiv.className = "attackDiv notCentered"
+    const emissionName = document.createElement("h3")
+    emissionName.innerText = data["displayName"]
+    emissionName.className = "attackName notCentered emissionName"
+    container.appendChild(emissionName)
+    container.appendChild(emissionDiv)
+    if (type != "support") { 
+        generateHeroProjectile(data, emissionDiv) 
+    } else {
+        createElem(data["target"], "Affects", emissionDiv)
+        createElem(data["buff"], "Buff", emissionDiv)
+        if (data.hasOwnProperty("duration")) createElem(`${data["duration"]}s`, "Duration", emissionDiv)
+        if (data.hasOwnProperty("description")) createElem(data["description"], "Description", emissionDiv)
+        if (data.hasOwnProperty("special")) createElem(data["special"], "Special", emissionDiv)
+    }
+    if (data.hasOwnProperty("emissions")) {
+        const h = hero.getData()
+        const emissionsContainer = document.createElement("div")
+        for (const emissionName of data["emissions"]) {
+            for (const name in h["projectiles"]) {
+                if (emissionName == name) generateHeroEmission(h["projectiles"][emissionName], emissionsContainer, "projectile")
+            }
+            if (h.hasOwnProperty("statuses")) {
+                for (const name in h["statuses"]) {
+                    if (emissionName == name) generateHeroEmission(h["statuses"][emissionName], emissionsContainer, "status")
+                }
+            }
+            if (h.hasOwnProperty("supports")) {
+                for (const name in h["supports"]) {
+                    if (emissionName == name) generateHeroEmission(h["supports"][emissionName], emissionsContainer, "support")
+                }
+            }
+        }
+        container.appendChild(emissionsContainer)
     }
 }
-// this will be worked on for v0.10.0 pinky promise
-/* document.querySelector(".heroLevelButton").onclick = () => {
+
+function generateHeroProjectile(data, container) {
+    if (data.hasOwnProperty("damageType")) generateDamageTypeIcons(data, container)
+    if (data.hasOwnProperty("dmgBase")) {
+        const damageDiv = document.createElement("div")
+        damageDiv.className = "damageDiv"
+        createElem(data["dmgBase"], "Base", damageDiv, "Damage")
+        if (data.hasOwnProperty("dmgBonusCeram")) createElem(`${data["dmgBase"] + data["dmgBonusCeram"]}`, "Ceramic", damageDiv)
+        if (data.hasOwnProperty("dmgBonusMOAB")) createElem(`${data["dmgBase"] + data["dmgBonusMOAB"]}`, "MOAB", damageDiv)
+        if (data.hasOwnProperty("dmgBonusFortified")) createElem(`+${data["dmgBonusFortified"]}`, "Bonus Fortified", damageDiv)
+        if (data.hasOwnProperty("dmgBonusLead")) createElem(`+${data["dmgBonusLead"]}`, "Bonus Lead", damageDiv)
+        if (data.hasOwnProperty("dmgBonusStunned")) createElem(`+${data["dmgBonusStunned"]}`, "Bonus Stunned", damageDiv)
+        container.appendChild(damageDiv)
+    }
+    if (data.hasOwnProperty("pierce")) {
+        if (!data["pierce"]) createElem("infinite", "Pierce", container)
+        else createElem(data["pierce"], "Pierce", container)
+    }
+    if (data.hasOwnProperty("attackRate")) createElem(`${formatNumber(data["attackRate"])}s`, "Attack Rate", container)
+    if (data.hasOwnProperty("frequency")) createElem(data["frequency"], "Frequency", container)
+    if (data.hasOwnProperty("range")) createElem(data["range"], "Range", container)
+    if (data.hasOwnProperty("lifespan")) {
+        const lifespanDiv = document.createElement("div")
+        lifespanDiv.className = "damageDiv lifespanDiv"
+        createElem(`${data["lifespan"]}s`, "Time", lifespanDiv, "Lifespan")
+        if (data.hasOwnProperty("lifespanRounds")) createElem(data["lifespanRounds"], "Rounds", lifespanDiv)
+        container.appendChild(lifespanDiv)
+    }
+    if (data.hasOwnProperty("tickRate")) createElem(`${data["tickRate"]}s`, "Tick Rate", container)
+    if (data.hasOwnProperty("duration")) createElem(`${data["duration"]}s`, "Duration", container) 
+    if (data.hasOwnProperty("description")) createElem(data["description"], "Description", container)
+}
+
+function generateDamageTypeIcons(data, container) {
+    const poppingPower = getParsedDamageType(data["damageType"])
+    const canPopBlack = poppingPower[0] ? "assets/greenCheck.png" : "assets/redX.png"
+    const canPopWhite = poppingPower[1] ? "assets/greenCheck.png" : "assets/redX.png"
+    const canPopPurple = poppingPower[2] ? "assets/greenCheck.png" : "assets/redX.png"
+    const canPopLead = poppingPower[3] ? "assets/greenCheck.png" : "assets/redX.png"
+    const canPopFrozen = poppingPower[4] ? "assets/greenCheck.png" : "assets/redX.png"
+    container.innerHTML += `
+        <div class="damageTypeIconContainer">
+            <div>
+                <img src="https://i.ibb.co/kDgsV06/black-Bloon.webp" alt="Can Pop Black" class="damageTypeImage">
+                <img src=${canPopBlack} alt=${poppingPower[0]} class="damageTypeImage">
+            </div>
+            <div>
+                <img src="https://i.ibb.co/Q8F46kc/white-Bloon.webp" alt="Can Pop White" class="damageTypeImage">
+                <img src=${canPopWhite} alt=${poppingPower[1]} class="damageTypeImage">
+            </div>
+            <div>
+                <img src="https://i.ibb.co/LtPry6q/purple-Bloon.webp" alt="Can Pop Purple" class="damageTypeImage">
+                <img src=${canPopPurple} alt=${poppingPower[2]} class="damageTypeImage">
+            </div>
+            <div>
+                <img src="https://i.ibb.co/6mb6QPj/lead-Bloon.webp" alt="Can Pop Lead" class="damageTypeImage">
+                <img src=${canPopLead} alt=${poppingPower[3]} class="damageTypeImage">
+            </div>
+            <div>
+                <img src="https://i.ibb.co/j6Mf20W/frozen-Bloon.png" alt="Can Pop Frozen" class="damageTypeImage">
+                <img src=${canPopFrozen} alt=${poppingPower[4]} class="damageTypeImage">
+            </div>
+        </div>
+    `
+    if (data.hasOwnProperty("camo")) {
+        const canPopCamo = data["camo"] ? "assets/greenCheck.png" : "assets/redX.png"
+        container.querySelector(".damageTypeIconContainer").innerHTML += `
+            <div>
+                <img src="https://i.ibb.co/zVDR6x5/camoRed.png" alt="Can Pop Camo" class="damageTypeImage">
+                <img src=${canPopCamo} alt=${data["camo"]} class="damageTypeImage">
+            </div>
+        `
+    }
+}
+
+function editHeroDataAtLevel(level) {
+    hero.resetData()
+    const data = hero.getData()
+    const levels = data["levels"]
+    for (let i = 0; i < level; i++) {
+        const currentLevel = levels[i]
+        if (currentLevel.hasOwnProperty("editItems")) {
+            for (const obj of currentLevel["editItems"]) {
+                hero.editItem(obj)
+            }
+        }
+        if (currentLevel.hasOwnProperty("addProperties")) {
+            for (const obj of currentLevel["addProperties"]) {
+                hero.addProperty(obj)
+            }
+        }
+        if (currentLevel.hasOwnProperty("addAttacks")) {
+            for (const name of currentLevel["addAttacks"]) {
+                hero.addAttack(name)
+            }
+        }
+        if (currentLevel.hasOwnProperty("addAbility")) {
+            hero.addAbility(currentLevel["addAbility"])
+        }
+        if (currentLevel.hasOwnProperty("addSupports")) {
+            for (const name of currentLevel["addSupports"]) {
+                hero.addSupport(name)
+            }
+        }
+    }
+    const abilities = data["abilities"]
+    for (const key of Object.keys(abilities)) {
+        if (abilities[key].hasOwnProperty("addDurationPerLevel")) {
+            hero.editItem({
+                "target": key,
+                "item": "duration",
+                "type": "add",
+                "value": abilities[key]["addDurationPerLevel"] * level
+            })
+        }
+    }
+}
+
+// this is kinda confusing but imma actually try to explain this one
+// ORDER: black, white, purple, lead, frozen
+// EX: "sharp" returns [true, true, true, false, false] because it CAN pop black, white, purple, but NOT lead or frozen
+// check the table at the bottom of the btd6 popology on reddit and it will all make sense
+function getParsedDamageType(str) {
+    switch (str) {
+        case "normal": return [true, true, true, true, true]
+        case "acid": return [true, true, true, true, true]
+        case "sharp": return [true, true, true, false, false]
+        case "explosion": return [false, true, true, true, true]
+        case "cold": return [true, false, true, false, false]
+        case "glacier": return [true, false, true, false, true]
+        case "shatter": return [true, true, true, false, true]
+        case "energy": return [true, true, false, false, true]
+        case "plasma": return [true, true, false, true, true]
+        case "fire": return [true, true, false, true, true]
+        default: return [true, true, true, true, true]
+    }
+}
+
+function getHeroLevel(xpCurve, startRound, targetRound, difficultyBonus, energizerRound) {
+    if (!startRound) {
+        return "start round missing"
+    } else if (!targetRound) {
+        return "end round missing"
+    } else if (startRound > targetRound) {
+        return "Level 1"
+    }
+    let xp = 0
+    for (let i = startRound; i < targetRound; i++) {
+        let xpBonus = 0
+        xpBonus += getXPAtRound(i)
+        if (energizerRound && energizerRound <= i) xpBonus *= 1.5
+        xp += xpBonus
+    }
+    xp *= difficultyBonus
+    let xpAfterCurve = Array.from(BASE_XP_REQUIREMENTS)
+    for (let i = 0; i < xpAfterCurve.length; i++) {
+        xpAfterCurve[i] *= xpCurve
+    }
+    let xpRequirement = 0
+    for (let i = 0; i < xpAfterCurve.length; i++) {
+        xpRequirement += xpAfterCurve[i]
+        if (xpRequirement > xp) {
+            if (i <= 1) return "Level 1"
+            else return `Level ${i}`
+        } else if (i == 19) return "Level 20"
+    }
+}
+function getHeroLevelBy(xpCurve, targetLevel, targetRound, difficultyBonus) {
+    if (!targetLevel) return "target level missing"
+    if (!targetRound) return "target round missing"
+    let xpAfterCurve = Array.from(BASE_XP_REQUIREMENTS)
+    for (let i = 0; i < xpAfterCurve.length; i++) {
+        xpAfterCurve[i] *= xpCurve
+    }
+    let requiredXP = 0
+    for (let i = 0; i < targetLevel; i++) {
+        requiredXP += xpAfterCurve[i]
+    }
+    let xp = 0
+    for (let i = targetRound; i > 0; i--) {
+        xp += getXPAtRound(i) * difficultyBonus
+        if (xp >= requiredXP) {
+            return `Place your hero during or before round ${i}.`
+        }
+    }
+    return `It's not possible to get your hero to level ${targetLevel} by round ${targetRound} without spending extra resources.`
+ }
+function getXPAtRound(round) {
+    if (round < 20) {
+        return (20 * round) + 20
+    } else if (round < 50) {
+        return (40 * (round - 20)) + 420
+    } else {
+        return (90 * (round - 50)) + 1620
+    }
+}
+function swapToHeroCalculator() {
     document.querySelector(".towerPickContainer").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".toolsPickContainer").style.display = "none"
-    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
     document.querySelector(".takeMeHomeContainer").style.display = "block"
     backButton.style.display = "block"
     document.querySelector(".heroLevelCalculatorContainer").style.display = "block"
     editURL("menu", "heroLevelCalculator")
 }
-document.querySelector(".paragonDegreeButton").onclick = () => {
+
+
+
+for (const element of document.querySelectorAll(".paragon")) {
+    if (!element.classList.contains("wip")) {
+      element.onclick = () => {
+        swapToTower("paragons", element.id, 1)
+        editURL("paragon", element.id)
+      }
+    }
+}
+for (const element of document.querySelectorAll(".hero")) {
+    if (!element.classList.contains("wip")) {
+        element.onclick = () => {
+            swapToTower("heroes", element.id, 1)
+            editURL("hero", element.id)
+        }
+    }
+}
+document.querySelector(".confirmHeroBasicCalcButton").onclick = () => {
+    const energizerRound = document.querySelector("#energizerRoundCalcInput").value ? document.querySelector("#energizerRoundCalcInput").value : null
+
+    const level = getHeroLevel(
+        document.querySelector("#heroBasicCalcInput").value,
+        Math.round(document.querySelector("#heroStartRoundCalcInput").value),
+        Math.round(document.querySelector("#heroEndRoundCalcInput").value),
+        document.querySelector("#mapDifficultyCalcInput").value,
+        energizerRound
+    )
+    console.log(level)
+    document.querySelector(".heroLevelBasicResult").innerText = level
+}
+document.querySelector(".confirmHeroLevelByButton").onclick = () => {
+    let targetLevel = Math.round(document.querySelector("#heroLevelByTargetLevel").value)
+    if (targetLevel > 20) targetLevel = 20
+    else if (targetLevel && targetLevel < 1) targetLevel = 1
+    const round = getHeroLevelBy(
+        document.querySelector("#heroLevelByCalcInput").value,
+        targetLevel,
+        Math.round(document.querySelector(".heroGoalRoundInput").value),
+        document.querySelector("#mapDifficultyLevelByInput").value
+    )
+    document.querySelector(".heroLevelByResult").innerText = round
+}
+document.querySelector(".heroLevelButton").onclick = () => {
+    swapToHeroCalculator()
+}
+/* document.querySelector(".paragonDegreeButton").onclick = () => {
     document.querySelector(".towerPickContainer").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".toolsPickContainer").style.display = "none"
@@ -495,6 +1022,7 @@ calculateDegreeCheck.addEventListener("change", function() {
     document.querySelector(".degreeCalculatorContainer").classList.remove("unchecked")
     document.querySelector(".degreeSelectorContainer").classList.add("unchecked")
 })
+
 backButton.onclick = () => {
     for (const vrej of dataContainers) {
         vrej.style.display = "none"
@@ -504,12 +1032,16 @@ backButton.onclick = () => {
     for (const elem of Array.from(towerPickContainer.children)) elem.style.display = "flex"
     document.querySelector(".optionsBar").style.display = "flex"
     backButton.style.display = "none"
-    // document.querySelector(".toolsPickContainer").style.display = "flex"
+    document.querySelector(".toolsPickContainer").style.display = "flex"
     document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
-    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
+    document.querySelector("#chooseLevel1").classList.add("selected")
     checkFilter()
-    editURL("paragon", null, false)
-    editURL("level", null, false)
+    editURL("paragon", null)
+    editURL("level", null)
+    editURL("menu", null)
+    editURL("hero", null)
 }
 
 function editURL(name, value, push) {
@@ -544,12 +1076,23 @@ async function main() {
     for (const vrej of dataContainers) {
         vrej.style.display = "none"
     }
+    urlMenu = urlParams.get("menu")
     urlParagon = urlParams.get("paragon")
+    urlHero = urlParams.get("hero")
     urlTower = urlParams.get("tower")
     urlLevel = urlParams.get("level")
-    if (urlParagon != null) {
+    if (urlMenu != null) {
+        if (urlMenu == "heroLevelCalculator") swapToHeroCalculator()
+    } else if (urlParagon != null) {
         swapToTower("paragons", urlParagon, urlLevel)
         paragonDegreeInput.value = urlLevel
+    } else if (urlHero != null) {
+        urlLevel = Math.round(urlLevel)
+        if (urlLevel < 1) urlLevel = 1
+        else if (urlLevel > 20) urlLevel = 20
+        swapToTower("heroes", urlHero, urlLevel)
+        document.querySelector(`#chooseLevel${urlLevel}`).classList.add("selected")
+        document.querySelector("#chooseLevel1").classList.remove("selected")
     }
 }
 main()

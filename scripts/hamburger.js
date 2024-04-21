@@ -99,7 +99,7 @@ function swapToDark() {
 function meetGod() {
     pageTheme.value = "light"
     pageThemeButtonNoBurger.innerHTML = `<span class="material-symbols-outlined">light_mode</span>`
-    styles.style.setProperty("--pageBackground", "#f3f3f3");
+    styles.style.setProperty("--pageBackground", "#f7f7f7");
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");
     styles.style.setProperty("--contentBackground3", "#b095e047")
@@ -114,8 +114,8 @@ function meetGod() {
     styles.style.setProperty("--textColor", "#121212");
     styles.style.setProperty("--textColor2", "rgb(203 108 4)");
     styles.style.setProperty("--textColor3", "rgb(107 26 219)")
-    styles.style.setProperty("--buttonColor1", "#819fe0");
-    styles.style.setProperty("--buttonColor2", "#8caeeb");
+    styles.style.setProperty("--buttonColor1", "#88b1f7");
+    styles.style.setProperty("--buttonColor2", "#6092eb");
     styles.style.setProperty("--buttonColor3", "#b873cf")
     localStorage.setItem('themeMode', 'light');
 }

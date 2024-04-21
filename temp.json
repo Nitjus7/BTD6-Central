@@ -1,0 +1,290 @@
+{
+    "hero": "Obyn Greenfoot",
+    "cost": 650,
+    "xpCurve": 1,
+    "footprintRadius": 7,
+    "range": 43,
+    "projectiles": {
+        "spirit": {
+            "displayName": "Spirit Wolf",
+            "dmgBase": 2,
+            "pierce": 4,
+            "attackRate": 1.35,
+            "damageType": "plasma",
+            "camo": false
+        },
+        "bramble-pile": {
+            "displayName": "Bramble Pile",
+            "dmgBase": 1,
+            "pierce": 50,
+            "damageType": "sharp",
+            "lifespan": 120,
+            "lifespanRounds": 5,
+            "camo": true
+        },
+        "totem": {
+            "displayName": "Nature's Ward Totem",
+            "dmgBase": 0,
+            "range": 32,
+            "pierce": null,
+            "attackRate": 18,
+            "lifespan": 15,
+            "description": "Bloons in range move at 70% speed. Blimps in range move at 85% speed."
+        },
+        "tree-wall": {
+            "displayName": "Tree Wall",
+            "dmgBase": 0,
+            "pierce": 3000,
+            "description": "Absorbs all Bloons and gives double the normal income when full. Cannot absorb Blimps that go past the pierce limit."
+        }
+    },
+    "abilities": {
+        "brambles": {
+            "displayName": "Brambles",
+            "cooldown": 30,
+            "description": "Creates a Bramble Pile on the track."
+        },
+        "wall-of-trees": {
+            "displayName": "Wall of Trees",
+            "cooldown": 90,
+            "description": "Summons a Tree Wall on the selected location.",
+            "emissions": ["tree-wall"]
+        }
+    },
+    "supports": {
+        "natures-wrath-buff": {
+            "displayName": "Nature's Wrath",
+            "target": "All Druids in range",
+            "buff": "+1 pierce"
+        },
+        "jungle-druid-buff": {
+            "displayName": "Jungle Druid Buff",
+            "target": "All x - 3+ - x Druids on screen",
+            "buff": "+40% range"
+        },
+        "storm-druid-buff": {
+            "displayName": "Storm Druid Buff",
+            "target": "All 3+ - x - x Druids on screen",
+            "buff": "70% attack cooldown, +20% projectile radius"
+        },
+        "natures-clarity-buff": {
+            "displayName": "Nature's Clarity",
+            "target": "All Magic towers in range EXCEPT Druids",
+            "buff": "+2 pierce, +5 range"
+        },
+        "ability-cooldown-buff": {
+            "displayName": "Ability Cooldown Buff",
+            "target": "All Magic towers in range",
+            "buff": "95% ability cooldown durations"
+        },
+        "improved-wrath-buff": {
+            "displayName": "Improved Wrath",
+            "target": "All x - x - 3+ Druids on screen",
+            "buff": "Starts each round with max attack speed."
+        }
+    },
+    "levels": [
+        {
+            "level": 1,
+            "addAttack": "spirit"
+        },
+        {
+            "level": 2,
+            "addSupports": ["natures-wrath-buff"]
+        },
+        {
+            "level": 3,
+            "addAbility": "brambles"
+        },
+        {
+            "level": 4,
+            "addAttack": "totem"
+        },
+        {
+            "level": 5,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.81481481
+                }
+            ]
+        },
+        {
+            "level": 6,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "level": 7,
+            "editItems": [
+                {
+                    "target": "bramble-pile",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 50
+                }
+            ]
+        },
+        {
+            "level": 8,
+            "editItems": [
+                {
+                    "target": "totem",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "Bloons in range move at 60% speed. Blimps in range move at 80% speed."
+                }
+            ]
+        },
+        {
+            "level": 9,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                }
+            ],
+            "addSupports": ["storm-druid-buff"]
+        },
+        {
+            "level": 10,
+            "addAbility": "wall-of-trees"
+        },
+        {
+            "level": 11,
+            "editItems": [
+                {
+                    "target": "natures-wrath-buff",
+                    "item": "buff",
+                    "type": "replace",
+                    "value": "+3 pierce, +5 range"
+                }
+            ],
+            "addSupports": ["natures-clarity-buff"]
+        },
+        {
+            "level": 12,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.72727272727272
+                }
+            ],
+            "addSupports": ["ability-cooldown-buff"]
+        },
+        {
+            "level": 13,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "level": 14,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "level": 15,
+            "editItems": [
+                {
+                    "target": "totem",
+                    "item": "attackRate",
+                    "type": "divide",
+                    "value": 1.5
+                },
+                {
+                    "target": "totem",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "Bloons in range move at 40% speed. Blimps in range move at 70% speed."
+                }
+            ]
+        },
+        {
+            "level": 16,
+            "editItems": [
+                {
+                    "target": "bramble-pile",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 400
+                },
+                {
+                    "target": "bramble-pile",
+                    "item": "damageType",
+                    "type": "replace",
+                    "value": "normal"
+                }
+            ]
+        },
+        {
+            "level": 17,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.625
+                }
+            ]
+        },
+        {
+            "level": 18,
+            "addSupports": "improved-wrath-buff"
+        },
+        {
+            "level": 19,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "level": 20,
+            "editItems": [
+                {
+                    "target": "tree-wall",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 6001
+                },
+                {
+                    "target": "wall-of-trees",
+                    "item": "cooldown",
+                    "type": "subtract",
+                    "value": 15
+                }
+            ]
+        }
+    ],
+    "enabledProjectiles": [],
+    "enabledAbilities": [],
+    "enabledSupports": []
+}

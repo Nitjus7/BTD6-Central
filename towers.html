@@ -6,7 +6,7 @@
     <title>Tower Stats | BTD6 Central</title>
     <meta
       name="description"
-      content="Find detailed stats for Bloons TD 6 Paragons. Also includes an up-to-date Degree Calculator for each Paragon."
+      content="Find detailed stats for Bloons TD 6 Paragons and Heroes. Also includes a degree calculator for each Paragon, and a Hero level calculator."
     />
      <!--CUSTOM FONTS IMPORT BEGIN-->
      <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,97 +116,105 @@
       </div>
 
       <!-- This will be worked on for v0.10.0 pinky promise-->
+      <!-- I did it :) -->
       <div class="toolsPickContainer">
         <h2 class="toolsHeader">Tools</h2>
         <div class="toolButtonContainer">
-          <button class="paragonDegreeButton toolButton">Paragon Degree Calculator</button>
+          <button class="heroLevelButton toolButton standardButton">Hero Level Calculator</button>
         </div>
+       <!-- <div class="toolButtonContainer">
+          <button class="paragonDegreeButton toolButton standardButton">Paragon Degree Calculator</button>
+        </div> -->
       </div>
       <div class="heroLevelCalculatorContainer">
-        <h1 class="heroLevelCalcHeader">Hero Level Calculator</h1>
-        <h4 class="heroLevelBasicHeader">Calculate Hero level based on the starting round.</h4>
+        <h1 class="heroLevelCalcHeader">Hero Level Calculators</h1>
         <div class="heroLevelBasicContainer">
           <div class="heroLevelBasicInputContainer">
             <label for="heroBasicCalcInput">Hero</label>
             <select name="heroName" id="heroBasicCalcInput">
-              <option value="quincy">Quincy</option>
-              <option value="gwendolin">Gwendolin</option>
-              <option value="striker">Striker Jones</option>
-              <option value="obyn">Obyn Greenfoot</option>
-              <option value="churchill">Captain Churchill</option>
-              <option value="ben">Benjamin</option>
-              <option value="ezili">Ezili</option>
-              <option value="pat">Pat Fusty</option>
-              <option value="adora">Adora</option>
-              <option value="brickell">Admiral Brickell</option>
-              <option value="etienne">Etienne</option>
-              <option value="sauda">Sauda</option>
-              <option value="psi">Psi</option>
-              <option value="geraldo">Geraldo</option>
-              <option value="corvus">Corvus</option>
+              <option value="1">Quincy</option>
+              <option value="1">Gwendolin</option>
+              <option value="1">Striker Jones</option>
+              <option value="1">Obyn Greenfoot</option>
+              <option value="1.71">Captain Churchill</option>
+              <option value="1.5">Benjamin</option>
+              <option value="1.425">Ezili</option>
+              <option value="1.425">Pat Fusty</option>
+              <option value="1.71">Adora</option>
+              <option value="1.425">Admiral Brickell</option>
+              <option value="1">Etienne</option>
+              <option value="1.425">Sauda</option>
+              <option value="1.5">Psi</option>
+              <option value="1">Geraldo</option>
+              <option value="1.71">Corvus</option>
             </select>
           </div>
           <div class="heroLevelBasicInputContainer">
-            <label for="heroLevelCalcInput">Starting Round (1 to 100)</label>
-            <input type="number" class="calcInput" id="heroRoundCalcInput" placeholder="required" name="heroRound" min="1" max="100"></input>
+            <label for="heroLevelCalcInput">Hero Placement Round</label>
+            <input type="number" class="calcInput" id="heroStartRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroLevelCalcInput">Ending Round</label>
+            <input type="number" class="calcInput" id="heroEndRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
           </div>
           <div class="heroLevelBasicInputContainer">
             <label for="mapDifficultyCalcInput">Map Difficulty</label>
             <select name="mapDifficulty" id="mapDifficultyCalcInput">
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-              <option value="expert">Expert</option>
-              <option value="custom">Custom Map</option>
+              <option value="1">Beginner</option>
+              <option value="1.1">Intermediate</option>
+              <option value="1.2">Advanced</option>
+              <option value="1.3">Expert</option>
+              <option value="1.1">Custom Map</option>
             </select>
           </div>
           <div class="heroLevelBasicInputContainer">
-            <label for="energizerPlacementInput">Energizer Placement Round (1 to 100)</label>
-            <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="100"></input>
+            <label for="energizerPlacementInput">Energizer Placement Round</label>
+            <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="1000"></input>
           </div>
-          <button class="confirmHeroBasicCalcButton">Calculate</button>
+          <button class="confirmHeroBasicCalcButton standardButton confirmHeroCalcButton">Calculate</button>
           <h2 class="heroLevelBasicResult"></h2>
         </div>
-        <h4 class="heroLevelByHeader">Find the latest round you can place a Hero to reach a desired level before a certain round.</h4>
+        <h2 class="heroLevelByHeader">OR</h2>
         <div class="heroLevelByContainer">
           <p class="heroLevelByText">I want to get</p>
           <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
-            <option value="quincy">Quincy</option>
-            <option value="gwendolin">Gwendolin</option>
-            <option value="striker">Striker Jones</option>
-            <option value="obyn">Obyn Greenfoot</option>
-            <option value="churchill">Captain Churchill</option>
-            <option value="ben">Benjamin</option>
-            <option value="ezili">Ezili</option>
-            <option value="pat">Pat Fusty</option>
-            <option value="adora">Adora</option>
-            <option value="brickell">Admiral Brickell</option>
-            <option value="etienne">Etienne</option>
-            <option value="sauda">Sauda</option>
-            <option value="psi">Psi</option>
-            <option value="geraldo">Geraldo</option>
-            <option value="corvus">Corvus</option>
+            <option value="1">Quincy</option>
+            <option value="1">Gwendolin</option>
+            <option value="1">Striker Jones</option>
+            <option value="1">Obyn Greenfoot</option>
+            <option value="1.71">Captain Churchill</option>
+            <option value="1.5">Benjamin</option>
+            <option value="1.425">Ezili</option>
+            <option value="1.425">Pat Fusty</option>
+            <option value="1.71">Adora</option>
+            <option value="1.425">Admiral Brickell</option>
+            <option value="1">Etienne</option>
+            <option value="1.425">Sauda</option>
+            <option value="1.5">Psi</option>
+            <option value="1">Geraldo</option>
+            <option value="1.71">Corvus</option>
           </select>
           <p class="heroLevelByText">to level</p>
-          <input type="number" class="calcInput heroLevelCalcInput" placeholder="between 1 and 20" name="heroRound" min="1" max="20"></input>
+          <input type="number" class="calcInput heroLevelCalcInput" id="heroLevelByTargetLevel" placeholder="required" name="heroRound" min="1" max="20"></input>
           <p class="heroLevelByText">by round</p>
-          <input type="number" class="calcInput heroGoalRoundInput" placeholder="between 1 and 100" name="heroRound" min="1" max="100"></input>
+          <input type="number" class="calcInput heroGoalRoundInput" placeholder="required" name="heroRound" min="1" max="100"></input>
           <p class="heroLevelByText">on a(n)</p>
           <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-            <option value="expert">Expert</option>
-            <option value="custom">Custom</option>
+            <option value="1">Beginner</option>
+            <option value="1.1">Intermediate</option>
+            <option value="1.2">Advanced</option>
+            <option value="1.3">Expert</option>
+            <option value="1.1">Custom</option>
           </select>
           <p class="heroLevelByText">map.</p>
           <div class="lineBreak"></div>
-          <button class="confirmHeroLevelByButton">Confirm</button>
-          <p class="heroLevelByResult"></p>
+          <button class="confirmHeroLevelByButton standardButton confirmHeroCalcButton">Confirm</button>
+          <div class="lineBreak"></div>
+          <h4 class="heroLevelByResult"></h4>
         </div>
 
       </div> 
-      <div class="paragonDegreeCalculatorContainer">
+      <!-- <div class="paragonDegreeCalculatorContainer">
         <h1 class="paragonDegreeCalcHeader">Paragon Degree Calculator</h1>
         <label for="paragonNameInput">Choose a Paragon</label>
         <select name="paragonName" id="paragonNameInput">
@@ -218,9 +226,27 @@
           <option value="WizardMonkey">Magus Perfectus (Wizard)</option>
           <option value="NinjaMonkey">Ascended Shadow (Ninja)</option>
           <option value="MonkeyEngineer">Master Builder (Engineer)</option>
-        </select>
-        <label for=""></label>
-      </div>
+        </select><br><br>
+          <label for="paragonPops">Total Pops</label>
+          <input type="number" value="0" class="valueInput wider calcInput" id="paragonPopsInTool"><br>
+          <label for="paragonTiersSacced">Tiers in Sacrifices</label>
+          <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSaccedInTool"><br>
+          <label for="paragonCashSacced">Cash in Sacrifices</label>
+          <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSaccedInTool"><br>
+          <label for="paragonCashSlider">Cash Slider</label>
+          <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSliderInTool"><br>
+          <label for="paragonT5Sacced">Extra Tier 5s</label>
+          <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5SaccedInTool"><br>
+          <label for="gamemodeDifficulty">Difficulty</label>
+          <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+            <option value="impoppable">Impoppable</option>
+          </select><br>
+          <button class="calculateParagonDegreeButton standardButton" id="calculateParagonDegreeButtonInTool">Calculate</button>
+          <p class="resultInTool">Placeholder</p>
+      </div> -->
 
 
       <div class="towerPickContainer">
@@ -274,11 +300,13 @@
         <!--HEROES--->
         <h2 class="heroesHeader">Heroes</h2>
         <div class="heroesContainer">
-          <button id="Quincy" class="hero wip">Quincy</button>
-          <button id="Gwendolin" class="hero wip">Gwendolin</button>
-          <button id="StrikerJones" class="hero wip">Striker Jones</button>
-          <button id="ObynGreenfoot" class="hero wip">Obyn Greenfoot</button>
+          <button id="Quincy" class="hero">Quincy</button>
+          <button id="Gwendolin" class="hero">Gwendolin</button>
+          <button id="StrikerJones" class="hero">Striker Jones</button>
+          <button id="ObynGreenfoot" class="hero">Obyn Greenfoot</button>
           <button id="CaptainChurchill" class="hero wip">Captain Churchill</button>
+          <button id="JetpackHero" class="hero wip">Jetpack Hero</button>
+          <button id="Corvus" class="hero wip">Corvus</button>
           <button id="Benjamin" class="hero wip">Benjamin</button>
           <button id="Ezili" class="hero wip">Ezili</button>
           <button id="Pat" class="hero wip">Pat Fusty</button>
@@ -287,7 +315,6 @@
           <button id="Etienne" class="hero wip">Etienne</button>
           <button id="Psi" class="hero wip">Psi</button>
           <button id="Geraldo" class="hero wip">Geraldo</button>
-          <button id="Corvus" class="hero wip">Corvus</button>
         </div>
       </div>
       <div class="paragonContainer">
@@ -325,6 +352,46 @@
             </div>
           </div>
           <h1 class="tier paragonDegree"></h1>
+        </div>
+      </div>
+      <div class="heroContainer">
+        <div class="heroHeaderContainer firstElem">
+          <img class="heroImage" draggable="false" src="assets/Quincy.png"></img>
+          <div class="heroNameAndCostContainer">
+            <h1 class="heroName">Placeholder</h1>
+            <h2 class="heroCost">$9999</h2>
+          </div>
+        </div>
+        <div class="heroStatsAndSelectContainer">
+          <div>
+            <h2 class="heroLevelSelectHeader">Hero Level</h2>
+            <div class="heroLevelSelectContainer">
+              <p id="chooseLevel1" class="chooseLevelButton standardButton selected">1</p>
+              <p id="chooseLevel2" class="chooseLevelButton standardButton">2</p>
+              <p id="chooseLevel3" class="chooseLevelButton standardButton">3</p>
+              <p id="chooseLevel4" class="chooseLevelButton standardButton">4</p>
+              <p id="chooseLevel5" class="chooseLevelButton standardButton">5</p>
+              <p id="chooseLevel6" class="chooseLevelButton standardButton">6</p>
+              <p id="chooseLevel7" class="chooseLevelButton standardButton">7</p>
+              <p id="chooseLevel8" class="chooseLevelButton standardButton">8</p>
+              <p id="chooseLevel9" class="chooseLevelButton standardButton">9</p>
+              <p id="chooseLevel10" class="chooseLevelButton standardButton">10</p>
+              <p id="chooseLevel11" class="chooseLevelButton standardButton">11</p>
+              <p id="chooseLevel12" class="chooseLevelButton standardButton">12</p>
+              <p id="chooseLevel13" class="chooseLevelButton standardButton">13</p>
+              <p id="chooseLevel14" class="chooseLevelButton standardButton">14</p>
+              <p id="chooseLevel15" class="chooseLevelButton standardButton">15</p>
+              <p id="chooseLevel16" class="chooseLevelButton standardButton">16</p>
+              <p id="chooseLevel17" class="chooseLevelButton standardButton">17</p>
+              <p id="chooseLevel18" class="chooseLevelButton standardButton">18</p>
+              <p id="chooseLevel19" class="chooseLevelButton standardButton">19</p>
+              <p id="chooseLevel20" class="chooseLevelButton standardButton">20</p>
+            </div>
+          </div>
+          <div class="heroStatsMarginAdder">
+            <div class="heroStatsContainer">
+              
+          </div>
         </div>
       </div>
       <div class="popupOverlay"></div>

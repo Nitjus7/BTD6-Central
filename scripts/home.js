@@ -1,8 +1,3 @@
-const link1Name = "goToParagons"
-const link2Name = "goToMaps"
-const link3Name = "goToBosses"
-const link4Name = "goToRaces"
-
 function generateResourceLinks() {
   /* document.querySelector(".jumpToResourcesButton").onclick = () => {
     document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
@@ -27,22 +22,22 @@ function generateFeaturedPagesLinks() {
   const links4 = Array.from(document.querySelectorAll(".goToLink4"))
   for (const link of links1) {
     link.onclick = () => {
-      window.open("towers.html")
+      window.location.replace("towers.html")
     }
   }
   for (const link of links2) {
     link.onclick = () => {
-      window.open("community.html")
+      window.location.replace("community.html")
     }
   }
   for (const link of links3) {
     link.onclick = () => {
-      window.open("events.html?event=bosses")
+      window.location.replace("events.html?event=bosses")
     }
   }
   for (const link of links4) {
     link.onclick = () => {
-      window.open("events.html?event=races") // testing this for when I push to github to see if it still works
+      window.location.replace("events.html?event=races") // testing this for when I push to github to see if it still works
     }
   }
 }
