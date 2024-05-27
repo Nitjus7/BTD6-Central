@@ -191,6 +191,7 @@ class Hero {
         const abil = this.abilities
         const proj = this.projectiles
         const supp = this.support
+        const stat = this.statuses
         const target = data["target"]
         const key = data["key"]
         const value = data["value"]
@@ -200,6 +201,8 @@ class Hero {
             this.fullData["abilities"][target][key] = value
         } else if (supp && supp.hasOwnProperty(target)) {
             this.fullData["support"][target][key] = value
+        } else if (stat && stat.hasOwnProperty(target)) {
+            this.fullData["statuses"][target][key] = value
         }
     }
 
@@ -573,7 +576,7 @@ function displayHeroData(level) {
     }
     for (const elem of Array.from(document.querySelectorAll(".chooseLevelButton:not(.selected)"))) {
         elem.onclick = () => {
-            document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
+            if (document.querySelector(".chooseLevelButton.selected")) document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
             elem.classList.add("selected")
             displayHeroData(elem.id.slice(11))
         }
@@ -591,7 +594,7 @@ function displayHeroData(level) {
             abilityDiv.className = "attackDiv notCentered"
             const abilityModel = h["abilities"][temp]
             const abilityName = document.createElement("h2")
-            abilityName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon"/> ${abilityModel["displayName"]}`
+            abilityName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon" draggable="false"/> ${abilityModel["displayName"]}`
             abilityName.className = "attackName notCentered"
             abilitiesContainer.appendChild(abilityName)
             createElem(`${abilityModel["cooldown"]}s`, "Cooldown", abilityDiv)
@@ -629,7 +632,7 @@ function displayHeroData(level) {
             projectileDiv.className = "attackDiv notCentered"
             const projectileModel = h["projectiles"][temp]
             const projectileName = document.createElement("h2")
-            projectileName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon"/> ${projectileModel["displayName"]}`
+            projectileName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon" draggable="false"/> ${projectileModel["displayName"]}`
             projectileName.className = "attackName notCentered"
             projectilesContainer.appendChild(projectileName)
             generateHeroProjectile(projectileModel, projectileDiv)
@@ -665,7 +668,7 @@ function displayHeroData(level) {
             supportDiv.className = "attackDiv notCentered"
             const supportModel = h["supports"][temp]
             const supportName = document.createElement("h2")
-            supportName.innerText = supportModel["displayName"]
+            supportName.innerHTML = `<img src="assets/supportIcon.png" class="attackCategoryIcon" draggable="false"/> ${supportModel["displayName"]}`
             supportName.className = "attackName notCentered"
             supportsContainer.appendChild(supportName)
             if (supportModel.hasOwnProperty("target")) createElem(supportModel["target"], "Affects", supportDiv)
@@ -685,7 +688,7 @@ function generateHeroEmission(data, container, type) {
     const emissionDiv = document.createElement("div")
     emissionDiv.className = "attackDiv notCentered"
     const emissionName = document.createElement("h3")
-    emissionName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon"/> ${data["displayName"]}`
+    emissionName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon" draggable="false"/> ${data["displayName"]}`
     emissionName.className = "attackName notCentered emissionName"
     container.appendChild(emissionName)
     container.appendChild(emissionDiv)
@@ -725,7 +728,7 @@ function generateHeroProjectile(data, container) {
     if (data.hasOwnProperty("dmgBase")) {
         const damageDiv = document.createElement("div")
         damageDiv.className = "damageDiv"
-        createElem(data["dmgBase"], "Base", damageDiv, "Damage")
+        if (data.hasOwnProperty("dmgBase")) createElem(data["dmgBase"], "Base", damageDiv, "Damage")
         if (data.hasOwnProperty("dmgBonusCeram")) createElem(`${data["dmgBase"] + data["dmgBonusCeram"]}`, "Ceramic", damageDiv)
         if (data.hasOwnProperty("dmgBonusMOAB")) createElem(`${data["dmgBase"] + data["dmgBonusMOAB"]}`, "MOAB", damageDiv)
         if (data.hasOwnProperty("dmgBonusFortified")) createElem(`+${data["dmgBonusFortified"]}`, "Bonus Fortified", damageDiv)
@@ -750,6 +753,7 @@ function generateHeroProjectile(data, container) {
     if (data.hasOwnProperty("tickRate")) createElem(`${data["tickRate"]}s`, "Tick Rate", container)
     if (data.hasOwnProperty("duration")) createElem(`${data["duration"]}s`, "Duration", container) 
     if (data.hasOwnProperty("description")) createElem(data["description"], "Description", container)
+    if (data.hasOwnProperty("special")) createElem(data["special"], "Special", container)
 }
 
 function generateDamageTypeIcons(data, container) {
@@ -761,23 +765,23 @@ function generateDamageTypeIcons(data, container) {
     const canPopFrozen = poppingPower[4] ? "assets/greenCheck.png" : "assets/redX.png"
     container.innerHTML += `
         <div class="damageTypeIconContainer">
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/kDgsV06/black-Bloon.webp" alt="Can Pop Black" class="damageTypeImage">
                 <img src=${canPopBlack} alt=${poppingPower[0]} class="damageTypeImage">
             </div>
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/Q8F46kc/white-Bloon.webp" alt="Can Pop White" class="damageTypeImage">
                 <img src=${canPopWhite} alt=${poppingPower[1]} class="damageTypeImage">
             </div>
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/LtPry6q/purple-Bloon.webp" alt="Can Pop Purple" class="damageTypeImage">
                 <img src=${canPopPurple} alt=${poppingPower[2]} class="damageTypeImage">
             </div>
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/6mb6QPj/lead-Bloon.webp" alt="Can Pop Lead" class="damageTypeImage">
                 <img src=${canPopLead} alt=${poppingPower[3]} class="damageTypeImage">
             </div>
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/j6Mf20W/frozen-Bloon.png" alt="Can Pop Frozen" class="damageTypeImage">
                 <img src=${canPopFrozen} alt=${poppingPower[4]} class="damageTypeImage">
             </div>
@@ -786,7 +790,7 @@ function generateDamageTypeIcons(data, container) {
     if (data.hasOwnProperty("camo")) {
         const canPopCamo = data["camo"] ? "assets/greenCheck.png" : "assets/redX.png"
         container.querySelector(".damageTypeIconContainer").innerHTML += `
-            <div>
+            <div class="indivDamageTypeContainer">
                 <img src="https://i.ibb.co/zVDR6x5/camoRed.png" alt="Can Pop Camo" class="damageTypeImage">
                 <img src=${canPopCamo} alt=${data["camo"]} class="damageTypeImage">
             </div>
@@ -932,6 +936,7 @@ function swapToHeroCalculator() {
 for (const element of document.querySelectorAll(".paragon")) {
     if (!element.classList.contains("wip")) {
       element.onclick = () => {
+        enableLoading()
         swapToTower("paragons", element.id, 1)
         editURL("paragon", element.id)
       }
@@ -940,6 +945,7 @@ for (const element of document.querySelectorAll(".paragon")) {
 for (const element of document.querySelectorAll(".hero")) {
     if (!element.classList.contains("wip")) {
         element.onclick = () => {
+            enableLoading()
             swapToTower("heroes", element.id, 1)
             editURL("hero", element.id)
         }

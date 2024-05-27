@@ -1,111 +1,123 @@
 {
-    "hero": "Captain Churchill",
-    "cost": 2000,
-    "xpCurve": 1.71,
-    "footprintRadius": 8,
-    "range": 63,
+    "hero": "Admiral Brickell",
+    "cost": 750,
+    "xpCurve": 1.425,
+    "footprintRadius": 7,
+    "range": 50,
     "projectiles": {
-        "shell": {
-            "displayName": "Explosive Shell",
-            "dmgBase": 1,
-            "pierce": 12,
-            "attackRate": 0.7,
-            "damageType": "explosion",
-            "camo": false,
-            "special": "Can explode 3 times"
-        },
-        "machine-gun": {
-            "displayName": "Machine Gun",
-            "dmgBase": 1,
+        "pistol": {
+            "displayName": "Pistol",
+            "dmgBase": 3,
             "pierce": 1,
+            "attackRate": 0.8,
             "damageType": "sharp",
             "camo": false
         },
-        "barrage-missile": {
-            "displayName": "Barrage Missile",
-            "dmgBase": 0,
-            "dmgBonusMOAB": 200,
-            "pierce": 1,
-            "attackRate": 0.5,
+        "mine": {
+            "displayName": "Mine",
+            "dmgBase": 1,
+            "pierce": 20,
+            "attackRate": 3,
+            "lifespan": 120,
+            "lifespanRounds": 2,
+            "damageType": "explosion",
+            "camo": false,
+            "description": "Has a 0.4s activation delay between each mine. Prefers spots closer to the track.",
+            "special": "Can pop any type of bloon only to the main target."
+        },
+        "mega-mine": {
+            "displayName": "Mega Mine",
+            "dmgBase": 4000,
+            "pierce": 100,
+            "lifespan": 150,
+            "lifespanRounds": 4,
             "damageType": "normal",
-            "camo": true
+            "camo": true,
+            "description": "Stuns anything that wasn't popped by the explosion for 5s."
         }
     },
     "abilities": {
-        "armor-piercing-shells": {
-            "displayName": "Armor Piercing Shells",
-            "cooldown": 30,
-            "duration": 10,
-            "addDurationPerLevel": 0.5,
-            "description": "Explosive Shell gets +3 bonus Ceramic damage, +3 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times."
+        "naval-tactics": {
+            "displayName": "Naval Tactics",
+            "cooldown": 50,
+            "duration": 9,
+            "description": "All water towers in radius and Brickell get 50% attack cooldown."
         },
-        "moab-barrage": {
-            "displayName": "MOAB Barrage",
+        "blast-chain": {
+            "displayName": "Blast Chain",
+            "cooldown": 45,
+            "duration": 12,
+            "description": "50% Mine activation delay and doubled Mine projectile speed."
+        },
+        "mega-mine-ability": {
+            "displayName": "Mega Mine Ability",
             "cooldown": 60,
-            "duration": 7.5,
-            "description": "Fires Barrage Missiles at each of the 10 strongest blimps on screen.",
-            "emissions": ["barrage-missile"]
+            "description": "Creates a Mega Mine.",
+            "emissions": ["mega-mine"]
+        }
+    },
+    "supports": {
+        "pierce-buff": {
+            "displayName": "Pierce Buff",
+            "target": "Water towers in range",
+            "buff": "+1 pierce"
         }
     },
     "levels": [
         {
             "level": 1,
-            "addAttacks": ["shell"]
+            "addAttacks": ["mine", "pistol"]
         },
         {
             "level": 2,
-            "editItems": [{
-                "target": "shell",
-                "item": "pierce",
-                "type": "add",
-                "value": 3
-            }]
+            "editItems": [
+                {
+                    "target": "mine",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.93333333333333333
+                },
+                {
+                    "target": "pistol",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.8125
+                }
+            ]
         },
         {
             "level": 3,
-            "addAbility": "armor-piercing-shells"
+            "addAbility": "naval-tactics"
         },
         {
             "level": 4,
-            "addRange": 3
+            "editItems": [{
+                "target": "mine",
+                "item": "pierce",
+                "type": "add",
+                "value": 8
+            }]
         },
         {
             "level": 5,
-            "addAttacks": ["machine-gun"],
             "editItems": [{
-                "target": "armor-piercing-shells",
+                "target": "naval-tactics",
                 "item": "description",
                 "type": "replace",
-                "value": "Explosive Shell gets +3 bonus Ceramic damage, +3 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all Bloon types."
+                "value": "All water towers in radius and Brickell get +1 pierce, 50% attack cooldown, and can pop all Bloon types."
             }]
         },
         {
             "level": 6,
             "editItems": [
-            {
-                "target": "shell",
-                "item": "camo",
-                "type": "replace",
-                "value": true
-            },
-            {
-                "target": "machine-gun",
-                "item": "camo",
-                "type": "replace",
-                "value": true
-            }]
-        },
-        {
-            "level": 7,
-            "editItems": [
                 {
-                    "target": "shell",
-                    "item": "special",
-                    "type": "replace",
-                    "value": "Can explode 4 times"
+                    "target": "pistol",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 3
                 },
                 {
-                    "target": "shell",
+                    "target": "mine",
                     "item": "dmgBase",
                     "type": "add",
                     "value": 1
@@ -113,37 +125,60 @@
             ]
         },
         {
+            "level": 7,
+            "addAbility": "blast-chain",
+            "addRange": 8,
+            "editItems": [
+                {
+                    "target": "pistol",
+                    "item": "camo",
+                    "type": "replace",
+                    "value": true
+                },
+                {
+                    "target": "mine",
+                    "item": "camo",
+                    "type": "replace",
+                    "value": true
+                }
+            ]
+        },
+        {
             "level": 8,
-            "editItems": [{
-                "target": "shell",
-                "item": "attackRate",
-                "type": "divide",
-                "value": 1.4
-            }]
+            "editItems": [
+                {
+                    "target": "naval-tactics",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "All water towers in radius and Brickell get +1 pierce, 50% attack cooldown, can pop all Bloon types, and get Camo detection."
+                }
+            ],
+            "addSupports": ["pierce-buff"]
         },
         {
             "level": 9,
+            "addRange": 5,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "special",
-                    "type": "replace",
-                    "value": "Can explode 5 times"
+                    "target": "mine",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 5
                 }
             ]
         },
         {
             "level": 10,
-            "addAbility": "moab-barrage"
+            "addAbility": "mega-mine-ability"
         },
         {
             "level": 11,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "pierce",
-                    "type": "add",
-                    "value": 5
+                    "target": "mine",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.8929
                 }
             ]
         },
@@ -151,99 +186,111 @@
             "level": 12,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "special",
-                    "type": "replace",
-                    "value": "Can explode 6 times"
-                },
-                {
-                    "target": "shell",
+                    "target": "pistol",
                     "item": "dmgBase",
                     "type": "add",
-                    "value": 1
+                    "value": 6
+                },
+                {
+                    "target": "pistol",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.5385
+                },
+                {
+                    "target": "mine",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 5
                 }
             ]
         },
         {
             "level": 13,
-            "editItems": [{
-                "target": "armor-piercing-shells",
-                "item": "description",
-                "type": "replace",
-                "value": "Explosive Shell gets +1 damage, +7 bonus Ceramic damage, +7 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all bloon types."
-            }]
+            "editItems": [
+                {
+                    "target": "mega-mine-ability",
+                    "item": "cooldown",
+                    "type": "subtract",
+                    "value": 10
+                }
+            ]
         },
         {
             "level": 14,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "dmgBase",
+                    "target": "naval-tactics",
+                    "item": "duration",
                     "type": "add",
-                    "value": 1
-                },
-                {
-                    "target": "machine-gun",
-                    "item": "dmgBase",
-                    "type": "add",
-                    "value": 1
+                    "value": 3
                 }
             ]
         },
         {
             "level": 15,
-            "addProperties": [
+            "editItems": [
                 {
-                    "target": "shell",
-                    "key": "dmgBonusFortified",
-                    "value": 1
+                    "target": "pistol",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 6
                 },
                 {
-                    "target": "machine-gun",
-                    "key": "dmgBonusFortified",
-                    "value": 1
+                    "target": "mine",
+                    "item": "damageType",
+                    "type": "replace",
+                    "value": "normal"
+                },
+                {
+                    "target": "mine",
+                    "item": "special",
+                    "type": "replace",
+                    "value": "Removes the Camo property on damage."
                 }
             ]
         },
         {
             "level": 16,
-            "editItems": [
-                {
-                    "target": "shell",
-                    "item": "attackRate",
-                    "type": "multiply",
-                    "value": 0.6
-                }
-            ]
+            "addRange": 4
         },
         {
             "level": 17,
-            "editItems": [{
-                "target": "armor-piercing-shells",
-                "item": "description",
-                "type": "replace",
-                "value": "Explosive Shell gets +2 damage, +11 bonus Ceramic damage, +11 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all bloon types."
-            }]
+            "editItems": [
+                {
+                    "target": "pistol",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 22
+                },
+                {
+                    "target": "mine",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 10
+                }
+            ]
         },
         {
             "level": 18,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "dmgBase",
-                    "type": "add",
-                    "value": 1
+                    "target": "mega-mine-ability",
+                    "item": "cooldown",
+                    "type": "subtract",
+                    "value": 5
                 }
             ]
         },
         {
             "level": 19,
+            "addRange": 5,
             "editItems": [
                 {
-                    "target": "shell",
-                    "item": "special",
+                    "target": "naval-tactics",
+                    "item": "description",
                     "type": "replace",
-                    "value": "Can explode 7 times"
+                    "value": "All water towers on screen and Brickell get +1 pierce, 50% attack cooldown, can pop all Bloon types, and get Camo detection."
                 }
             ]
         },
@@ -251,22 +298,22 @@
             "level": 20,
             "editItems": [
                 {
-                    "target": "moab-barrage",
-                    "item": "cooldown",
-                    "type": "subtract",
-                    "value": 30
-                },
-                {
-                    "target": "moab-barrage",
-                    "item": "description",
-                    "type": "replace",
-                    "value": "Fires Barrage Missiles at each of the 10 strongest blimps on screen and gives Explosive Shell +3 damage."
-                },
-                {
-                    "target": "barrage-missile",
+                    "target": "mega-mine",
                     "item": "dmgBase",
                     "type": "add",
-                    "value": 300
+                    "value": 7000
+                },
+                {
+                    "target": "mega-mine",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 50
+                },
+                {
+                    "target": "mega-mine",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "Stuns anything that wasn't popped by the explosion for 10s."
                 }
             ]
         }

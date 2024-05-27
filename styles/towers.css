@@ -409,7 +409,7 @@ h1, h2, .attackName {
     max-width: 30px;
     margin-right: 10px;
 }
-.attackName {
+.attackName.notCentered {
     display: flex;
     align-items: center;
 }
@@ -420,6 +420,11 @@ h1, h2, .attackName {
         height: fit-content;
         width: fit-content;
     }
+}
+.heroNameAndCostContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 @media only screen and (max-width: 1000px) {
     .heroStatsAndSelectContainer {
@@ -448,6 +453,14 @@ h1, h2, .attackName {
         display: flex;
         flex-direction: column;
     }
+    .heroName {
+        max-width: 100px;
+    }
+}
+.indivDamageTypeContainer {
+    background-color: var(--contentBackground4);
+    padding: 5px;
+    border-radius: 5px;
 }
 .heroesContainer {
     display: flex;
