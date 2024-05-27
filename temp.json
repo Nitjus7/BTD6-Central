@@ -1,194 +1,146 @@
 {
-    "hero": "Obyn Greenfoot",
-    "cost": 650,
-    "xpCurve": 1,
-    "footprintRadius": 7,
-    "range": 43,
+    "hero": "Captain Churchill",
+    "cost": 2000,
+    "xpCurve": 1.71,
+    "footprintRadius": 8,
+    "range": 63,
     "projectiles": {
-        "spirit": {
-            "displayName": "Spirit Wolf",
-            "dmgBase": 2,
-            "pierce": 4,
-            "attackRate": 1.35,
-            "damageType": "plasma",
+        "shell": {
+            "displayName": "Explosive Shell",
+            "dmgBase": 1,
+            "pierce": 12,
+            "attackRate": 0.7,
+            "damageType": "explosion",
+            "camo": false,
+            "special": "Can explode 3 times"
+        },
+        "machine-gun": {
+            "displayName": "Machine Gun",
+            "dmgBase": 1,
+            "pierce": 1,
+            "damageType": "sharp",
             "camo": false
         },
-        "bramble-pile": {
-            "displayName": "Bramble Pile",
-            "dmgBase": 1,
-            "pierce": 50,
-            "damageType": "sharp",
-            "lifespan": 120,
-            "lifespanRounds": 5,
+        "barrage-missile": {
+            "displayName": "Barrage Missile",
+            "dmgBase": 0,
+            "dmgBonusMOAB": 200,
+            "pierce": 1,
+            "attackRate": 0.5,
+            "damageType": "normal",
             "camo": true
-        },
-        "totem": {
-            "displayName": "Nature's Ward Totem",
-            "dmgBase": 0,
-            "range": 32,
-            "pierce": null,
-            "attackRate": 18,
-            "lifespan": 15,
-            "description": "Bloons in range move at 70% speed. Blimps in range move at 85% speed."
-        },
-        "tree-wall": {
-            "displayName": "Tree Wall",
-            "dmgBase": 0,
-            "pierce": 3000,
-            "description": "Absorbs all Bloons and gives double the normal income when full. Cannot absorb Blimps that go past the pierce limit."
         }
     },
     "abilities": {
-        "brambles": {
-            "displayName": "Brambles",
+        "armor-piercing-shells": {
+            "displayName": "Armor Piercing Shells",
             "cooldown": 30,
-            "description": "Creates a Bramble Pile on the track."
+            "duration": 10,
+            "addDurationPerLevel": 0.5,
+            "description": "Explosive Shell gets +3 bonus Ceramic damage, +3 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times."
         },
-        "wall-of-trees": {
-            "displayName": "Wall of Trees",
-            "cooldown": 90,
-            "description": "Summons a Tree Wall on the selected location.",
-            "emissions": ["tree-wall"]
-        }
-    },
-    "supports": {
-        "natures-wrath-buff": {
-            "displayName": "Nature's Wrath",
-            "target": "All Druids in range",
-            "buff": "+1 pierce"
-        },
-        "jungle-druid-buff": {
-            "displayName": "Jungle Druid Buff",
-            "target": "All x - 3+ - x Druids on screen",
-            "buff": "+40% range"
-        },
-        "storm-druid-buff": {
-            "displayName": "Storm Druid Buff",
-            "target": "All 3+ - x - x Druids on screen",
-            "buff": "70% attack cooldown, +20% projectile radius"
-        },
-        "natures-clarity-buff": {
-            "displayName": "Nature's Clarity",
-            "target": "All Magic towers in range EXCEPT Druids",
-            "buff": "+2 pierce, +5 range"
-        },
-        "ability-cooldown-buff": {
-            "displayName": "Ability Cooldown Buff",
-            "target": "All Magic towers in range",
-            "buff": "95% ability cooldown durations"
-        },
-        "improved-wrath-buff": {
-            "displayName": "Improved Wrath",
-            "target": "All x - x - 3+ Druids on screen",
-            "buff": "Starts each round with max attack speed."
+        "moab-barrage": {
+            "displayName": "MOAB Barrage",
+            "cooldown": 60,
+            "duration": 7.5,
+            "description": "Fires Barrage Missiles at each of the 10 strongest blimps on screen.",
+            "emissions": ["barrage-missile"]
         }
     },
     "levels": [
         {
             "level": 1,
-            "addAttack": "spirit"
+            "addAttacks": ["shell"]
         },
         {
             "level": 2,
-            "addSupports": ["natures-wrath-buff"]
+            "editItems": [{
+                "target": "shell",
+                "item": "pierce",
+                "type": "add",
+                "value": 3
+            }]
         },
         {
             "level": 3,
-            "addAbility": "brambles"
+            "addAbility": "armor-piercing-shells"
         },
         {
             "level": 4,
-            "addAttack": "totem"
+            "addRange": 3
         },
         {
             "level": 5,
-            "editItems": [
-                {
-                    "target": "spirit",
-                    "item": "attackRate",
-                    "type": "multiply",
-                    "value": 0.81481481
-                }
-            ]
+            "addAttacks": ["machine-gun"],
+            "editItems": [{
+                "target": "armor-piercing-shells",
+                "item": "description",
+                "type": "replace",
+                "value": "Explosive Shell gets +3 bonus Ceramic damage, +3 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all Bloon types."
+            }]
         },
         {
             "level": 6,
             "editItems": [
-                {
-                    "target": "spirit",
-                    "item": "pierce",
-                    "type": "add",
-                    "value": 5
-                }
-            ]
+            {
+                "target": "shell",
+                "item": "camo",
+                "type": "replace",
+                "value": true
+            },
+            {
+                "target": "machine-gun",
+                "item": "camo",
+                "type": "replace",
+                "value": true
+            }]
         },
         {
             "level": 7,
             "editItems": [
                 {
-                    "target": "bramble-pile",
-                    "item": "pierce",
+                    "target": "shell",
+                    "item": "special",
+                    "type": "replace",
+                    "value": "Can explode 4 times"
+                },
+                {
+                    "target": "shell",
+                    "item": "dmgBase",
                     "type": "add",
-                    "value": 50
+                    "value": 1
                 }
             ]
         },
         {
             "level": 8,
-            "editItems": [
-                {
-                    "target": "totem",
-                    "item": "description",
-                    "type": "replace",
-                    "value": "Bloons in range move at 60% speed. Blimps in range move at 80% speed."
-                }
-            ]
+            "editItems": [{
+                "target": "shell",
+                "item": "attackRate",
+                "type": "divide",
+                "value": 1.4
+            }]
         },
         {
             "level": 9,
             "editItems": [
                 {
-                    "target": "spirit",
-                    "item": "dmgBase",
-                    "type": "add",
-                    "value": 2
+                    "target": "shell",
+                    "item": "special",
+                    "type": "replace",
+                    "value": "Can explode 5 times"
                 }
-            ],
-            "addSupports": ["storm-druid-buff"]
+            ]
         },
         {
             "level": 10,
-            "addAbility": "wall-of-trees"
+            "addAbility": "moab-barrage"
         },
         {
             "level": 11,
             "editItems": [
                 {
-                    "target": "natures-wrath-buff",
-                    "item": "buff",
-                    "type": "replace",
-                    "value": "+3 pierce, +5 range"
-                }
-            ],
-            "addSupports": ["natures-clarity-buff"]
-        },
-        {
-            "level": 12,
-            "editItems": [
-                {
-                    "target": "spirit",
-                    "item": "attackRate",
-                    "type": "multiply",
-                    "value": 0.72727272727272
-                }
-            ],
-            "addSupports": ["ability-cooldown-buff"]
-        },
-        {
-            "level": 13,
-            "editItems": [
-                {
-                    "target": "spirit",
+                    "target": "shell",
                     "item": "pierce",
                     "type": "add",
                     "value": 5
@@ -196,30 +148,60 @@
             ]
         },
         {
+            "level": 12,
+            "editItems": [
+                {
+                    "target": "shell",
+                    "item": "special",
+                    "type": "replace",
+                    "value": "Can explode 6 times"
+                },
+                {
+                    "target": "shell",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "level": 13,
+            "editItems": [{
+                "target": "armor-piercing-shells",
+                "item": "description",
+                "type": "replace",
+                "value": "Explosive Shell gets +1 damage, +7 bonus Ceramic damage, +7 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all bloon types."
+            }]
+        },
+        {
             "level": 14,
             "editItems": [
                 {
-                    "target": "spirit",
+                    "target": "shell",
                     "item": "dmgBase",
                     "type": "add",
-                    "value": 2
+                    "value": 1
+                },
+                {
+                    "target": "machine-gun",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1
                 }
             ]
         },
         {
             "level": 15,
-            "editItems": [
+            "addProperties": [
                 {
-                    "target": "totem",
-                    "item": "attackRate",
-                    "type": "divide",
-                    "value": 1.5
+                    "target": "shell",
+                    "key": "dmgBonusFortified",
+                    "value": 1
                 },
                 {
-                    "target": "totem",
-                    "item": "description",
-                    "type": "replace",
-                    "value": "Bloons in range move at 40% speed. Blimps in range move at 70% speed."
+                    "target": "machine-gun",
+                    "key": "dmgBonusFortified",
+                    "value": 1
                 }
             ]
         },
@@ -227,42 +209,41 @@
             "level": 16,
             "editItems": [
                 {
-                    "target": "bramble-pile",
-                    "item": "pierce",
-                    "type": "add",
-                    "value": 400
-                },
-                {
-                    "target": "bramble-pile",
-                    "item": "damageType",
-                    "type": "replace",
-                    "value": "normal"
+                    "target": "shell",
+                    "item": "attackRate",
+                    "type": "multiply",
+                    "value": 0.6
                 }
             ]
         },
         {
             "level": 17,
-            "editItems": [
-                {
-                    "target": "spirit",
-                    "item": "attackRate",
-                    "type": "multiply",
-                    "value": 0.625
-                }
-            ]
+            "editItems": [{
+                "target": "armor-piercing-shells",
+                "item": "description",
+                "type": "replace",
+                "value": "Explosive Shell gets +2 damage, +11 bonus Ceramic damage, +11 bonus MOAB damage, can pop all bloon types, and can explode 2 additional times. Machine Gun can pop all bloon types."
+            }]
         },
         {
             "level": 18,
-            "addSupports": "improved-wrath-buff"
+            "editItems": [
+                {
+                    "target": "shell",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1
+                }
+            ]
         },
         {
             "level": 19,
             "editItems": [
                 {
-                    "target": "spirit",
-                    "item": "dmgBase",
-                    "type": "add",
-                    "value": 2
+                    "target": "shell",
+                    "item": "special",
+                    "type": "replace",
+                    "value": "Can explode 7 times"
                 }
             ]
         },
@@ -270,16 +251,22 @@
             "level": 20,
             "editItems": [
                 {
-                    "target": "tree-wall",
-                    "item": "pierce",
-                    "type": "add",
-                    "value": 6001
-                },
-                {
-                    "target": "wall-of-trees",
+                    "target": "moab-barrage",
                     "item": "cooldown",
                     "type": "subtract",
-                    "value": 15
+                    "value": 30
+                },
+                {
+                    "target": "moab-barrage",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "Fires Barrage Missiles at each of the 10 strongest blimps on screen and gives Explosive Shell +3 damage."
+                },
+                {
+                    "target": "barrage-missile",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 300
                 }
             ]
         }

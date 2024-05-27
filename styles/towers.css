@@ -405,6 +405,22 @@ h1, h2, .attackName {
     width: 25px;
     object-fit: contain;
 }
+.attackCategoryIcon {
+    max-width: 30px;
+    margin-right: 10px;
+}
+.attackName {
+    display: flex;
+    align-items: center;
+}
+@media only screen and (min-width: 1000px) {
+    .heroLevelContainer {
+        position: sticky;
+        top: 150px;
+        height: fit-content;
+        width: fit-content;
+    }
+}
 @media only screen and (max-width: 1000px) {
     .heroStatsAndSelectContainer {
         display: block;

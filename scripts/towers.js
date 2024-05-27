@@ -591,7 +591,7 @@ function displayHeroData(level) {
             abilityDiv.className = "attackDiv notCentered"
             const abilityModel = h["abilities"][temp]
             const abilityName = document.createElement("h2")
-            abilityName.innerText = abilityModel["displayName"]
+            abilityName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon"/> ${abilityModel["displayName"]}`
             abilityName.className = "attackName notCentered"
             abilitiesContainer.appendChild(abilityName)
             createElem(`${abilityModel["cooldown"]}s`, "Cooldown", abilityDiv)
@@ -629,7 +629,7 @@ function displayHeroData(level) {
             projectileDiv.className = "attackDiv notCentered"
             const projectileModel = h["projectiles"][temp]
             const projectileName = document.createElement("h2")
-            projectileName.innerText = projectileModel["displayName"]
+            projectileName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon"/> ${projectileModel["displayName"]}`
             projectileName.className = "attackName notCentered"
             projectilesContainer.appendChild(projectileName)
             generateHeroProjectile(projectileModel, projectileDiv)
@@ -668,8 +668,8 @@ function displayHeroData(level) {
             supportName.innerText = supportModel["displayName"]
             supportName.className = "attackName notCentered"
             supportsContainer.appendChild(supportName)
-            createElem(supportModel["target"], "Affects", supportDiv)
-            createElem(supportModel["buff"], "Buff", supportDiv)
+            if (supportModel.hasOwnProperty("target")) createElem(supportModel["target"], "Affects", supportDiv)
+            if (supportModel.hasOwnProperty("buff")) createElem(supportModel["buff"], "Buff", supportDiv)
             if (supportModel.hasOwnProperty("duration")) createElem(`${supportModel["duration"]}s`, "Duration", supportDiv)
             if (supportModel.hasOwnProperty("description")) createElem(supportModel["description"], "Description", supportDiv)
             if (supportModel.hasOwnProperty("special")) createElem(supportModel["special"], "Special", supportDiv)
@@ -685,7 +685,7 @@ function generateHeroEmission(data, container, type) {
     const emissionDiv = document.createElement("div")
     emissionDiv.className = "attackDiv notCentered"
     const emissionName = document.createElement("h3")
-    emissionName.innerText = data["displayName"]
+    emissionName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon"/> ${data["displayName"]}`
     emissionName.className = "attackName notCentered emissionName"
     container.appendChild(emissionName)
     container.appendChild(emissionDiv)
