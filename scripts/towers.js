@@ -125,6 +125,14 @@ class Hero {
         this.fullData = structuredClone(this.baseHero)
     }
 
+    addRange(value) {
+        this.fullData["range"] += value
+    }
+
+    editDescription(str) {
+        this.fullData["description"] = str
+    }
+
     editItem(data) {
         this.abilities = this.fullData["abilities"]
         this.projectiles = this.fullData["projectiles"]
@@ -499,7 +507,7 @@ function createElem(value, type, parent, st) {
     title.innerText = type
     elem.appendChild(title)
     const content = document.createElement("p")
-    content.innerText = value
+    content.innerHTML = value
     elem.appendChild(content)
     parent.appendChild(elem)
 }
@@ -562,6 +570,7 @@ function calculateParagonDegree() {
 
 
 function displayHeroData(level) {
+    const scrollPos = window.scrollY
     let attackDivs = Array.from(document.querySelectorAll(".attackDiv"))
     let attackNames = Array.from(document.querySelectorAll(".attackName"))
     let attackTypes = Array.from(document.querySelectorAll(".attackType"))
@@ -581,49 +590,21 @@ function displayHeroData(level) {
             displayHeroData(elem.id.slice(11))
         }
     }
+
     editHeroDataAtLevel(level)
+
+    // the magic begins
     const h = hero.getData()
     document.querySelector(".heroName").innerText = h["hero"]
     document.querySelector(".heroCost").innerHTML = `$${h["cost"]}&nbsp;&nbsp;|&nbsp;&nbsp;Level ${level}`
     document.querySelector(".heroImage").src = `assets/${h["hero"].replace(/ /g, "")}.png` // removes spaces from the hero name
-    if (h.hasOwnProperty("abilities")) {
-        const abilitiesContainer = document.createElement("div")
-        abilitiesContainer.className = "abilitiesContainer"
-        for (const temp of h["enabledAbilities"]) {
-            const abilityDiv = document.createElement("div")
-            abilityDiv.className = "attackDiv notCentered"
-            const abilityModel = h["abilities"][temp]
-            const abilityName = document.createElement("h2")
-            abilityName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon" draggable="false"/> ${abilityModel["displayName"]}`
-            abilityName.className = "attackName notCentered"
-            abilitiesContainer.appendChild(abilityName)
-            createElem(`${abilityModel["cooldown"]}s`, "Cooldown", abilityDiv)
-            if (abilityModel.hasOwnProperty("duration")) createElem(`${abilityModel["duration"]}s`, "Duration", abilityDiv)
-            if (abilityModel.hasOwnProperty("description")) createElem(`${abilityModel["description"]}`, "Description", abilityDiv)
-            if (abilityModel.hasOwnProperty("special")) createElem(abilityModel["special"], "Special", abilityDiv)
-            abilitiesContainer.appendChild(abilityDiv)
-            if (abilityModel.hasOwnProperty("emissions")) {
-                const emissionsContainer = document.createElement("div")
-                for (const emissionName of abilityModel["emissions"]){
-                    for (const name in h["projectiles"]) {
-                        if (emissionName == name) generateHeroEmission(h["projectiles"][emissionName], emissionsContainer, "projectile")
-                    }
-                    if (h.hasOwnProperty("statuses")) {
-                        for (const name in h["statuses"]) {
-                            if (emissionName == name) generateHeroEmission(h["statuses"][emissionName], emissionsContainer, "status")
-                        }
-                    }
-                    if (h.hasOwnProperty("supports")) {
-                        for (const name in h["supports"]) {
-                            if (emissionName == name) generateHeroEmission(h["supports"][emissionName], emissionsContainer, "support")
-                        }
-                    }
-                }
-                abilitiesContainer.appendChild(emissionsContainer)
-            }
-        }
-        heroStatsContainer.appendChild(abilitiesContainer)
-    }
+    const baseStatsContainer = document.createElement("div")
+    baseStatsContainer.className = "attackDiv notCentered"
+    createElem(h["range"], "Range", baseStatsContainer)
+    createElem(`${getFootprintInEnglish(h["footprintRadius"])} (${h["footprintRadius"]})`, "Tower Size", baseStatsContainer)
+    createElem(`${h["xpCurve"]}x`, "XP Curve", baseStatsContainer)
+    if (h.hasOwnProperty("description")) createElem(h["description"], "Description", baseStatsContainer)
+    heroStatsContainer.appendChild(baseStatsContainer)
     if (h.hasOwnProperty("projectiles")) {
         const projectilesContainer = document.createElement("div")
         projectilesContainer.className = "abilitiesContainer projectilesContainer"
@@ -660,6 +641,45 @@ function displayHeroData(level) {
         }
         heroStatsContainer.appendChild(projectilesContainer)
     }
+    if (h.hasOwnProperty("abilities")) {
+        const abilitiesContainer = document.createElement("div")
+        abilitiesContainer.className = "abilitiesContainer"
+        for (const temp of h["enabledAbilities"]) {
+            const abilityDiv = document.createElement("div")
+            abilityDiv.className = "attackDiv notCentered"
+            const abilityModel = h["abilities"][temp]
+            const abilityName = document.createElement("h2")
+            abilityName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon" draggable="false"/> ${abilityModel["displayName"]}`
+            abilityName.className = "attackName notCentered"
+            abilitiesContainer.appendChild(abilityName)
+            createElem(`${abilityModel["cooldown"]}s`, "Cooldown", abilityDiv)
+            if (abilityModel.hasOwnProperty("duration")) createElem(`${abilityModel["duration"]}s`, "Duration", abilityDiv)
+            if (abilityModel.hasOwnProperty("range")) createElem(abilityModel["range"], "Range", abilityDiv)
+            if (abilityModel.hasOwnProperty("description")) createElem(`${abilityModel["description"]}`, "Description", abilityDiv)
+            if (abilityModel.hasOwnProperty("special")) createElem(abilityModel["special"], "Special", abilityDiv)
+            abilitiesContainer.appendChild(abilityDiv)
+            if (abilityModel.hasOwnProperty("emissions")) {
+                const emissionsContainer = document.createElement("div")
+                for (const emissionName of abilityModel["emissions"]){
+                    for (const name in h["projectiles"]) {
+                        if (emissionName == name) generateHeroEmission(h["projectiles"][emissionName], emissionsContainer, "projectile")
+                    }
+                    if (h.hasOwnProperty("statuses")) {
+                        for (const name in h["statuses"]) {
+                            if (emissionName == name) generateHeroEmission(h["statuses"][emissionName], emissionsContainer, "status")
+                        }
+                    }
+                    if (h.hasOwnProperty("supports")) {
+                        for (const name in h["supports"]) {
+                            if (emissionName == name) generateHeroEmission(h["supports"][emissionName], emissionsContainer, "support")
+                        }
+                    }
+                }
+                abilitiesContainer.appendChild(emissionsContainer)
+            }
+        }
+        heroStatsContainer.appendChild(abilitiesContainer)
+    }
     if (h.hasOwnProperty("supports")) {
         const supportsContainer = document.createElement("div")
         supportsContainer.className = "supportsContainer notCentered"
@@ -680,6 +700,7 @@ function displayHeroData(level) {
         }
         heroStatsContainer.appendChild(supportsContainer)
     }
+    window.scrollTo({ top: scrollPos })
     editURL("level", level)
 }
 
@@ -741,6 +762,7 @@ function generateHeroProjectile(data, container) {
         else createElem(data["pierce"], "Pierce", container)
     }
     if (data.hasOwnProperty("attackRate")) createElem(`${formatNumber(data["attackRate"])}s`, "Attack Rate", container)
+    if (data.hasOwnProperty("projectiles")) createElem(data["projectiles"], "Projectiles", container)
     if (data.hasOwnProperty("frequency")) createElem(data["frequency"], "Frequency", container)
     if (data.hasOwnProperty("range")) createElem(data["range"], "Range", container)
     if (data.hasOwnProperty("lifespan")) {
@@ -782,7 +804,7 @@ function generateDamageTypeIcons(data, container) {
                 <img src=${canPopLead} alt=${poppingPower[3]} class="damageTypeImage">
             </div>
             <div class="indivDamageTypeContainer">
-                <img src="https://i.ibb.co/j6Mf20W/frozen-Bloon.png" alt="Can Pop Frozen" class="damageTypeImage">
+                <img src="https://i.ibb.co/X8jqXsP/frozen-Bloon.png" alt="Can Pop Frozen" class="damageTypeImage">
                 <img src=${canPopFrozen} alt=${poppingPower[4]} class="damageTypeImage">
             </div>
         </div>
@@ -827,6 +849,12 @@ function editHeroDataAtLevel(level) {
                 hero.addSupport(name)
             }
         }
+        if (currentLevel.hasOwnProperty("addRange")) {
+            hero.addRange(currentLevel["addRange"])
+        }
+        if (currentLevel.hasOwnProperty("editDescription")) {
+            hero.editDescription(currentLevel["editDescription"])
+        }
     }
     const abilities = data["abilities"]
     for (const key of Object.keys(abilities)) {
@@ -859,6 +887,14 @@ function getParsedDamageType(str) {
         case "fire": return [true, true, false, true, true]
         default: return [true, true, true, true, true]
     }
+}
+
+function getFootprintInEnglish(num) {
+    if (num < 6) return "Extra Small"
+    else if (num == 6) return "Small"
+    else if (num == 7) return "Medium"
+    else if (num == 8) return "Large"
+    else return "Extra Large"
 }
 
 function getHeroLevel(xpCurve, startRound, targetRound, difficultyBonus, energizerRound) {

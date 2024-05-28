@@ -405,65 +405,9 @@ button:hover {
   margin-bottom: 0.75rem;
 }
 
-.popupContainer {
-  position: fixed;
-  color: var(--textColor);
-  width: 75vw; height: fit-content;
-  padding: 10px;
-  background: var(--contentBackground1);
-  box-shadow: 0px 0px 10px var(--shadowColor);
-  border-radius: 5px;
-  z-index: 100;
-  text-align: left;
-  border: 1px var(--textColor) solid;
-}
-.popupContainer::backdrop {
-  background: rgb(28,115,222);
-  background: radial-gradient(circle, rgba(28,115,222,0.6) 0%, rgba(0,0,0,0.2679665616246498) 100%);
-}
-.popupContainer.open {
-  animation: expandIn 0.5s cubic-bezier(0.47, -0.01, 0.1, 0.99) forwards;
-}
-.popupContainer:not(.open) {
-  animation: expandOut 0.3s cubic-bezier(0.58, 0.02, 0.8, 0.87) forwards;
-}
-.popupTitleContainer {
-  display: flex;
-  justify-content: space-between;
-}
-.popupTitle {
-  font-family: var(--secondaryFont);
-}
-.popupOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 150vh;
-  z-index: 30;
-  background: rgba(0, 0, 0, 0.65);
-}
 
 .roundInput[type=number]::-webkit-inner-spin-button,
 .roundInput[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-@keyframes expandIn {
-  0% {
-    transform: scale(0)
-  }
-  100% {
-    transform: scale(1)
-  }
-}
-@keyframes expandOut {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
 }

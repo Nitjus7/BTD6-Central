@@ -367,6 +367,77 @@ body {
 
 
 
+
+
+
+.popupContainer {
+  position: fixed;
+  color: var(--textColor);
+  width: 75vw; height: fit-content;
+  padding: 10px;
+  background: var(--contentBackground1);
+  box-shadow: 0px 0px 10px var(--shadowColor);
+  border-radius: 5px;
+  z-index: 100;
+  text-align: left;
+  border: none;
+  outline: 1px var(--textColor) solid;
+}
+.popupContainer::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+.popupContainer.open {
+  animation: expandIn 0.5s cubic-bezier(0.47, -0.01, 0.1, 0.99) forwards;
+}
+.popupContainer:not(.open) {
+  animation: expandOut 0.3s cubic-bezier(0.58, 0.02, 0.8, 0.87) forwards;
+}
+.popupTitleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.popupTitle {
+  font-family: var(--secondaryFont);
+  padding: 10px;
+}
+.popupOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 150vh;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.65);
+}
+.popupImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popupImage {
+  user-select: none;
+  margin-right: 1rem;
+}
+@keyframes expandIn {
+  0% {
+    transform: scale(0)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+@keyframes expandOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+
+
 .featuredPagesHeader, .resourcesHeader, .aboutWebsiteHeader {
   text-align: center;
   font-family: var(--secondaryFont);
@@ -480,6 +551,7 @@ body {
   transition: background-color 0.25s;
   font-size: 1.2rem;
 }
+
 .resourceButton:hover {
   cursor: pointer;
   background-color: var(--buttonColor2);

@@ -656,7 +656,7 @@ document.querySelector(".closePopupButton").onclick = () => {
   document.body.classList.remove("no-scroll")
   setTimeout(() => {
     popupContainer.close();
-  }, 300);
+  }, 290);
 }
 backButtonContainer.onclick = () => {
   hideLayers(2)
