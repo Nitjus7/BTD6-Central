@@ -133,6 +133,10 @@ class Hero {
         this.fullData["description"] = str
     }
 
+    editFootprint(value) {
+        this.fullData["footprintRadius"] = value
+    }
+
     editItem(data) {
         this.abilities = this.fullData["abilities"]
         this.projectiles = this.fullData["projectiles"]
@@ -855,6 +859,9 @@ function editHeroDataAtLevel(level) {
         if (currentLevel.hasOwnProperty("editDescription")) {
             hero.editDescription(currentLevel["editDescription"])
         }
+        if (currentLevel.hasOwnProperty("editFootprint")) {
+            hero.editFootprint(currentLevel["editFootprint"])
+        }
     }
     const abilities = data["abilities"]
     for (const key of Object.keys(abilities)) {
@@ -890,7 +897,8 @@ function getParsedDamageType(str) {
 }
 
 function getFootprintInEnglish(num) {
-    if (num < 6) return "Extra Small"
+    if (num == 0) return "None"
+    else if (num < 6) return "Extra Small"
     else if (num == 6) return "Small"
     else if (num == 7) return "Medium"
     else if (num == 8) return "Large"
