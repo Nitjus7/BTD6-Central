@@ -2,7 +2,6 @@
 :root {
   --mainFont: "Quicksand", sans-serif;
   --secondaryFont: "Poppins", sans-serif;
-  --pageBackground: black;
   font-size: 16px;
   box-sizing: border-box;
 }
@@ -217,7 +216,7 @@ body {
   padding: 0.5rem;
   color: var(--textColor);
   border-style: none;
-  box-shadow: 0px 0px 6px var(--shadowColor);
+  box-shadow: 0px 0px 2px var(--shadowColor);
   transition: 0.15s ease-in-out background-color;
 }
 .noBurgerButton:hover, .pageThemeButtonNoBurger:hover {
@@ -298,6 +297,30 @@ body {
   height: 100vh;
   overflow-x: auto;
   z-index: 10;
+}
+.loading {
+  display: none;
+  position: fixed;
+  margin: -47px 0 0 -47px;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
+}
+.throbber {
+  border: 12px #e4dfde solid;
+  border-top: 12px solid var(--buttonColor1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  animation: spin 1.75s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .hamburgerMenu {
   list-style: none;

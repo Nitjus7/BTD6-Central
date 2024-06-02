@@ -819,10 +819,12 @@ function editURL(name, value) {
 
 function enableLoading() {
   eventsPopupOverlay.style.display = "block"
+  document.querySelector(".loading").style.display = "block"
   document.body.classList.add("no-scroll")
 }
 function disableLoading() {
   eventsPopupOverlay.style.display = "none"
+  document.querySelector(".loading").style.display = "none"
   document.body.classList.remove("no-scroll")
 }
 function showPopup(title, content) {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTD6 Central</title>
+</head>
+<body>
+    <h2 class="errorMessage">Sorry! The page you're looking for couldn't be found.</h2>
+    <button class="takeMeHome">Home</button>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script>
+        document.querySelector(".takeMeHome").onclick = () => {
+            window.location.replace("index.html")
+        }
+    </script>
+    <style>
+        body {
+            display: grid;
+            place-items: center;
+        }
+        .errorMessage {
+            font-family: var(--secondaryFont);
+        }
+        .takeMeHome {
+            font-family: var(--mainFont);
+            font-size: 1.5rem;
+            font-weight: normal;
+            border-radius: 5px;
+            background-color: #88b1f7;
+            transition: 0.25s ease;
+            padding: 5px;
+        }
+        .takeMeHome:hover {
+            background-color: #6092eb;
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>

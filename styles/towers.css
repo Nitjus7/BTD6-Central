@@ -212,7 +212,7 @@ h1, h2, .attackName {
     justify-content: center;
     align-items: center;
 }
-.towerPickContainer button {
+.towerPickContainer button:not(.hero) {
     color: var(--textColor);
     height: 2rem;
     margin: 0.5rem 1rem 0.5rem 1rem;
@@ -224,22 +224,76 @@ h1, h2, .attackName {
 .towerPickContainer button:not(.wip):not(.paragon) {
     background-color: var(--buttonColor1);
     height: 4rem;
+    border: none;
     transition: 0.5s ease;
 }
 .towerPickContainer .paragon:not(.wip) {
     background-color: var(--buttonColor3);
     border: 1.5px var(--contentOutline3) solid;
     height: 4rem;
-    transition: 0.5s ease;
+    transition: 0.25s ease;
     font-family: var(--primaryFont);
     font-size: 1.25rem;
 }
 
-.towerPickContainer button:not(.wip):hover {
-    transform: scale(1.02)
+.towerPickContainer button:not(.wip).hero {
+    animation: 0.25s bring-down ease forwards;
+}
+.towerPickContainer button:not(.wip):not(.hero):hover {
+    transform: scale(1.015)
+}
+.towerPickContainer button:not(.wip).hero:hover {
+    animation: 0.25s bring-up ease forwards;
+    box-shadow: 0px 0px 7px var(--shadowColor);
 }
 .towerPickContainer button.wip {
     background-color: var(--contentBackground1);
+}
+.towerPickContainer button.hero {
+    width: 20%; /* Adjusted to ensure responsiveness */
+    min-width: 75px; /* Minimum width to avoid becoming too small */
+    height: 20px; /* Adjusted to ensure responsiveness */
+    min-height: 100px;
+    max-width: 225px;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+}
+.heroesContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.heroesContainer > * {
+    width: 20%;
+    height: 20px;
+}
+.heroButtonIcon {
+    object-fit: contain;
+    max-width: 100%; 
+    max-height: 100%;
+}
+
+@keyframes bring-up {
+    from {
+        transform: translateY(0);
+    }
+    to {
+       transform: translateY(-2px) scale(1.015);
+    }
+}
+@keyframes bring-down {
+    from {
+        transform: translateY(-2px) scale(1.015)
+    }
+    to {
+       transform: translateY(0)
+    }
 }
 
 .paragonContainer {
@@ -464,17 +518,6 @@ h1, h2, .attackName {
 }
 .damageTypeImage {
     padding: 2px;
-}
-.heroesContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.heroesContainer > * {
-    flex-basis: 40%;
-    font-size: 1.25rem;
 }
 @media only screen and (max-width: 768px) {
     .heroesContainer > * {

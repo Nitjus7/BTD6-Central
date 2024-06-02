@@ -85,7 +85,7 @@ function swapToDark() {
     styles.style.setProperty("--contentOutline3", "#d382e7")
     styles.style.setProperty("--contentOutline4", "#4dbbe0")
     styles.style.setProperty("--itemSelectedBackground", "rgb(116, 109, 109)");
-    styles.style.setProperty("--shadowColor", "rgb(0, 0, 0)");
+    styles.style.setProperty("--shadowColor", "rgba(255, 255, 255, 0.3)");
     styles.style.setProperty("--wip", "0.5");
     styles.style.setProperty("--textColor", "#dce0e7");
     styles.style.setProperty("--textColor2", "rgb(243, 176, 110)")
@@ -119,11 +119,7 @@ function meetGod() {
     styles.style.setProperty("--buttonColor3", "#b873cf")
     localStorage.setItem('themeMode', 'light');
 }
-  
-function swapToSpirit() {
-    pageTheme.value = "spirit"
-    styles.style.setProperty("--pageBackground", "")
-}
+
 
 /* if (document.getElementsByClassName("takeMeHomeContainer").length > 0) {
     let lastScrollPos = 0;

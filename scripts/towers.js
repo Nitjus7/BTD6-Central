@@ -1113,10 +1113,12 @@ function formatNumber(input) {
  } 
 function enableLoading() {
     document.querySelector(".popupOverlay").style.display = "block"
+    document.querySelector(".loading").style.display = "block"
     document.body.classList.add("no-scroll")
 }
 function disableLoading() {
     document.querySelector(".popupOverlay").style.display = "none"
+    document.querySelector(".loading").style.display = "none"
     document.body.classList.remove("no-scroll")
 }
  
