@@ -245,6 +245,7 @@ h1, h2, .attackName {
 .towerPickContainer button:not(.wip).hero:hover {
     animation: 0.25s bring-up ease forwards;
     box-shadow: 0px 0px 7px var(--shadowColor);
+    background-color: var(--buttonColor2);
 }
 .towerPickContainer button.wip {
     background-color: var(--contentBackground1);
@@ -277,6 +278,7 @@ h1, h2, .attackName {
     object-fit: contain;
     max-width: 100%; 
     max-height: 100%;
+    image-rendering: pixelated;
 }
 
 @keyframes bring-up {
@@ -463,9 +465,14 @@ h1, h2, .attackName {
     max-width: 30px;
     margin-right: 10px;
 }
-.attackName.notCentered {
+.attackName {
     display: flex;
     align-items: center;
+}
+.attackName:not(.notCentered) {
+    margin: 0 auto;
+    padding: 20px 15px 5px 15px;
+    width: fit-content;
 }
 @media only screen and (min-width: 1000px) {
     .heroLevelContainer {

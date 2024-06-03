@@ -368,8 +368,8 @@ function displayParagonData(degree) {
     document.querySelector(".paragonName").innerText = p["name"]
     document.querySelector(".paragonDegree").innerText = `Degree ${degree}`
     if (degree == 100) document.querySelector(".paragonDegree").innerText += ` (MAX)`
-    if (p.hasOwnProperty("abilities")) createAbilityDivs(p)
     createAttackDivs(p, null)
+    if (p.hasOwnProperty("abilities")) createAbilityDivs(p)
     if (p.hasOwnProperty("support")) createSupportDivs(p)
     editURL("level", degree, false)
 }
@@ -379,14 +379,16 @@ function createAbilityDivs(p) {
         const attackDiv = document.createElement("div")
         attackDiv.classList.add("attackDiv")
         const attackName = document.createElement("h2")
-        attackName.innerText = attackModel["name"]
+        attackName.innerHTML = `${attackModel["name"]}`
         attackName.classList.add("attackName")
         paragonContainer.appendChild(attackName)
-        if (attackModel.hasOwnProperty("type")){
+        if (attackModel.hasOwnProperty("type") && attackModel["type"] === "passive ability"){
             const attackType = document.createElement("h3")
             attackType.innerText = attackModel["type"]
             attackType.classList.add("attackType")
             paragonContainer.appendChild(attackType)
+        } else {
+            attackName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon" alt="activated ability" draggable="false"/> ${attackModel["name"]}`
         }
         createElem(`${attackModel["cooldown"]} sec`, "Cooldown", attackDiv)
         createElem(attackModel["description"], "Description", attackDiv)
@@ -405,13 +407,9 @@ function createAttackDivs(p, emitsFrom) {
         const attackDiv = document.createElement("div")
         attackDiv.classList.add("attackDiv")
         const attackName = document.createElement("h2")
-        attackName.innerText = attackModel["name"]
+        attackName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon" alt="projectile" draggable="false"/> ${attackModel["name"]}`
         attackName.classList.add("attackName")
         paragonContainer.appendChild(attackName)
-        const attackType = document.createElement("h3")
-        attackType.innerText = attackModel["type"]
-        attackType.classList.add("attackType")
-        paragonContainer.appendChild(attackType)
         if (emitsFrom != null) {
             createElem(emitsFrom, "Emitted From", attackDiv)
             if (attackModel.hasOwnProperty("frequency")) createElem(attackModel["frequency"], "Frequency", attackDiv)
@@ -487,7 +485,7 @@ function createSupportDivs(p) {
         const attackDiv = document.createElement("div")
         attackDiv.classList.add("attackDiv")
         const attackName = document.createElement("h2")
-        attackName.innerText = supportModel["name"]
+        attackName.innerHTML = `<img src="assets/supportIcon.png" class="attackCategoryIcon" draggable="false"/> ${supportModel["name"]}`
         attackName.classList.add("attackName")
         paragonContainer.appendChild(attackName)
         createElem(supportModel["description"], "Description", attackDiv)
@@ -1111,9 +1109,15 @@ function formatNumber(input) {
     str = String(str);
     return str;
  } 
-function enableLoading() {
+function enableLoading(str) {
+    const msgElem = document.querySelector(".loadingMessage")
     document.querySelector(".popupOverlay").style.display = "block"
-    document.querySelector(".loading").style.display = "block"
+    document.querySelector(".loading").style.display = "flex"
+    if (str) {
+        msgElem.innerText = str
+    } else {
+        msgElem.innerText = ""
+    }
     document.body.classList.add("no-scroll")
 }
 function disableLoading() {

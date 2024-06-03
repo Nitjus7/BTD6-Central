@@ -817,9 +817,15 @@ function editURL(name, value) {
   }
 }
 
-function enableLoading() {
-  eventsPopupOverlay.style.display = "block"
-  document.querySelector(".loading").style.display = "block"
+function enableLoading(str) {
+  const msgElem = document.querySelector(".loadingMessage")
+  document.querySelector(".popupOverlay").style.display = "block"
+  document.querySelector(".loading").style.display = "flex"
+  if (str) {
+      msgElem.innerHTML = str
+  } else {
+      msgElem.innerHTML = ""
+  }
   document.body.classList.add("no-scroll")
 }
 function disableLoading() {
@@ -843,7 +849,7 @@ document.querySelector(".closePopupButton").onclick = () => {
 }
 
 async function swapToEventOverview(event) {
-  enableLoading()
+  enableLoading(`Loading ${event}...`)
   if (event == "races") {
     if (raceOverview == null) await getRaceData()
     if (!isRaceGenerated) generateRaceList()
@@ -869,7 +875,7 @@ async function swapToEventOverview(event) {
 }
 // url2 and url3 are optional: url2 for elite boss or medium odyssey, url3 for hard odyssey
 async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, url3 = null, difficulty = null) {
-  enableLoading()
+  enableLoading(`Loading <b>${name}</b> Details`)
   eventTitle.innerText = ""
   await getMetadata(id, event, name, timestamp, url, url2, url3)
   raceArchiveContainer.style.display = "none"
@@ -885,7 +891,7 @@ async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, 
 }
 // url2 is optional: either elite boss or player CT
 async function swapToEventLeaderboard(id, event, name, timestamp, url, url2 = null, difficulty = null) {
-  enableLoading()
+  enableLoading(`Loading <b>${name}</b> Leaderboards`)
   eventTitle.innerText = ""
   await getLeaderboard(id, event, name, timestamp, url, url2)
   document.querySelector(".leaderboardTitle").innerText = name

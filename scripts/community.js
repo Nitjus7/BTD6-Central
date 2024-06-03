@@ -42,7 +42,7 @@ async function getUser(identification) {
     const id = identification == null ? userIDInput.value : identification
     userID = id.trim()
     userIDInput.value = ""
-    enableLoading()
+    enableLoading("Loading user info...")
     try {
         let player
         if (userID.length < 7) { 
@@ -92,7 +92,7 @@ async function getMap(identification) {
     const id = identification == null ? mapIDInput.value : identification
     mapID = id.trim().toUpperCase()
     mapIDInput.value = ""
-    enableLoading()
+    enableLoading("Loading Map info...")
     try {
         if (mapID.length < 7) throw new Error("Map ID Input Too Short")
         else if (regexLetter.test(mapID)) throw new Error("Invalid Character")
@@ -432,9 +432,15 @@ document.querySelector(".closePopupButton").onclick = () => {
     closePopup()
 }
 
-function enableLoading() {
+function enableLoading(str) {
+    const msgElem = document.querySelector(".loadingMessage")
     statsPopupOverlay.style.display = "block"
-    document.querySelector(".loading").style.display = "block"
+    document.querySelector(".loading").style.display = "flex"
+    if (str) {
+        msgElem.innerHTML = str
+    } else {
+        msgElem.innerHTML = ""
+    }
     document.body.classList.add("no-scroll")
 }
 function disableLoading() {
