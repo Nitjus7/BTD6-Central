@@ -33,8 +33,8 @@ let urlParagon;
 let urlLevel;
 let urlParams = new URLSearchParams(window.location.search);
 
-const filterSelect = document.querySelector(".filterSelect")
-let appliedFilter = "noWIP" // placeholder
+// const filterSelect = document.querySelector(".filterSelect")
+let appliedFilter = "noFilter" // placeholder
 const POWER_DEGREE_REQUIREMENTS = [
     2000,2324,2666,3027,3408,3808,4228,4669,5131,5615,6121,6650,7203,7779,8379,9004,9654,
     10330,11032,11761,12518,13302,14114,14955,15825,16725,17655,18616,19609,20633,21689,22778,
@@ -263,30 +263,30 @@ function filter(name, type) {
     if (type == "remove") {
         for (const parent of parentList) {
             for (const child of parent) {
-                if (child.classList.contains(name)) child.style.display = "none"
+                if (child.classList.contains(name) || child.classList.contains("wip")) child.style.display = "none"
             }
         }
     } else {
         for (const parent of parentList) {
             for (const child of parent) {
-                if (!child.classList.contains(name)) child.style.display = "none";
+                if (!child.classList.contains(name) || child.classList.contains("wip")) child.style.display = "none";
             }
         }
     }
 }
-function checkFilter() {
+function checkFilter(id) {
     for (const parent of parentList) {
         for (const child of parent) {
             child.style.display = "flex";
         }
     }
-    appliedFilter = filterSelect.value
+    if (id) appliedFilter = id
     switch (appliedFilter) {
-        case "noWIP": filter("wip", "remove"); break;
         case "noFilter": 
             for (const parent of parentList) {
                 for (const child of parent) {
-                    child.style.display = "flex";
+                    if (!child.classList.contains("wip")) child.style.display = "flex";
+                    else child.style.display = "none"
                 }
             }
             break;
@@ -294,21 +294,21 @@ function checkFilter() {
     }
     const pArray = Array.from(primaryContainer.children)
     if (pArray.every(child => child.style.display == "none")) {
-        document.querySelector(".supportHeader").style.display = "none"
+        document.querySelector(".primaryHeader").style.display = "none"
     } else {
-        document.querySelector(".supportHeader").style.display = "flex"
+        document.querySelector(".primaryHeader").style.display = "flex"
     }
     const miArray = Array.from(militaryContainer.children)
     if (miArray.every(child => child.style.display == "none")) {
-        document.querySelector(".supportHeader").style.display = "none"
+        document.querySelector(".militaryHeader").style.display = "none"
     } else {
-        document.querySelector(".supportHeader").style.display = "flex"
+        document.querySelector(".militaryHeader").style.display = "flex"
     }
     const maArray = Array.from(magicContainer.children)
     if (maArray.every(child => child.style.display == "none")) {
-        document.querySelector(".supportHeader").style.display = "none"
+        document.querySelector(".magicHeader").style.display = "none"
     } else {
-        document.querySelector(".supportHeader").style.display = "flex"
+        document.querySelector(".magicHeader").style.display = "flex"
     }
     const sArray = Array.from(supportContainer.children)
     if (sArray.every(child => child.style.display == "none")) {
@@ -329,7 +329,9 @@ async function swapToTower(category, tower, level) {
     if (level == undefined || level == null) level = 1
     level = Math.round(level)
     document.querySelector(".towerPickContainer").style.display = "none"
+    document.querySelector(".filterHeader").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
+    document.querySelector(".disclaimerContainer").style.display = "flex"
     document.querySelector(".toolsPickContainer").style.display = "none"
     document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
     // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
@@ -963,6 +965,7 @@ function getXPAtRound(round) {
 }
 function swapToHeroCalculator() {
     document.querySelector(".towerPickContainer").style.display = "none"
+    document.querySelector(".filterHeader").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".toolsPickContainer").style.display = "none"
     // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
@@ -1023,6 +1026,7 @@ document.querySelector(".heroLevelButton").onclick = () => {
 }
 /* document.querySelector(".paragonDegreeButton").onclick = () => {
     document.querySelector(".towerPickContainer").style.display = "none"
+    document.querySelector(".filterHeader").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".toolsPickContainer").style.display = "none"
     document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
@@ -1032,7 +1036,16 @@ document.querySelector(".heroLevelButton").onclick = () => {
     document.querySelector(".paragonDegreeCalculatorContainer").style.display = "block"
     editURL("menu", "paragonDegreeCalculator")
 } */
-filterSelect.addEventListener("change", checkFilter)
+const optionsBarArray = Array.from(document.querySelector(".optionsBar").children)
+for (const child of optionsBarArray) {
+    child.onclick = () => {
+        checkFilter(child.id)
+        child.classList.add("selected")
+        for (const elem of optionsBarArray) {
+            if (child.id !== elem.id) elem.classList.remove("selected")
+        }
+    }
+}
 
 paragonDegreeInput.addEventListener("change", function() {
     if (!document.querySelector(".degreeSelectorContainer").classList.contains("unchecked")){
@@ -1078,10 +1091,12 @@ backButton.onclick = () => {
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "block"
     towerPickContainer.style.display = "block"
     for (const elem of Array.from(towerPickContainer.children)) elem.style.display = "flex"
+    document.querySelector(".filterHeader").style.display = "block"
     document.querySelector(".optionsBar").style.display = "flex"
+    document.querySelector(".disclaimerContainer").style.display = "none"
     backButton.style.display = "none"
-    document.querySelector(".toolsPickContainer").style.display = "flex"
-    document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
+    // document.querySelector(".toolsPickContainer").style.display = "flex"
+    // document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
     // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
     document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
     document.querySelector("#chooseLevel1").classList.add("selected")
@@ -1128,7 +1143,7 @@ function disableLoading() {
  
 
 async function main() {
-    checkFilter()
+    checkFilter("noFilter")
     for (const vrej of dataContainers) {
         vrej.style.display = "none"
     }

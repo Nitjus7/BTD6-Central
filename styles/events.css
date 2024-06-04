@@ -275,23 +275,22 @@ button {
 .enabledHeroes {
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 15%;
+  flex-basis: 10%;
   justify-content: center;
 }
 .heroIcon {
-  min-width: 70px;
+  min-width: 30px;
   width: 10vw;
-  max-width: 100px;
+  max-width: 85px;
   object-fit: contain;
   background-color: var(--contentBackground4);
   border: 1px var(--contentOutline4) solid;
-  margin: 1rem;
-  padding: 1rem;
+  margin: 7px;
+  padding: 15px;
   border-radius: 10px;
 }
 .headerHeroDisplay {
   border-radius: 7px;
-  padding: 1rem;
 }
 .anyHeroDisplay {
   background-color: var(--contentBackground4);
@@ -300,6 +299,10 @@ button {
 .noHeroDisplay {
   background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
+}
+.towerHeader {
+  margin-top: 1rem;
+  margin-bottom: 0;
 }
 .specialModsContainer:empty {
   display: none;

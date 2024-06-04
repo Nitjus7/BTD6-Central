@@ -91,18 +91,6 @@
         </li>
       </ul>
     </div>
-      <div class="optionsBar">
-        <select name="Filter" class="filterSelect">
-          <option value="noWIP">All Available Stats</option>
-          <option value="primary">Primary</option>
-          <option value="military">Military</option>
-          <option value="magic">Magic</option>
-          <option value="support">Support</option>
-          <option value="hero">Heroes</option>
-          <option value="paragon">Paragons</option>
-          <option value="noFilter">Disable Filter</option>
-        </select>
-      </div>
       <div class="takeMeHomeContainer">
         <span class="material-symbols-outlined takeMeHome">
           arrow_back
@@ -116,8 +104,16 @@
         </a>
       </div>
 
-      <!-- This will be worked on for v0.10.0 pinky promise-->
-      <!-- I did it :) -->
+      <h2 class="filterHeader">Filters</h2>
+      <div class="optionsBar">
+        <button id="primary" class="standardButton filterOption">Primary</button>
+        <button id="military" class="standardButton filterOption">Military</button>
+        <button id="magic" class="standardButton filterOption">Magic</button>
+        <button id="support" class="standardButton filterOption">Support</button>
+        <button id="hero" class="standardButton filterOption">Heroes</button>
+        <button id="paragon" class="standardButton filterOption">All Paragons</button>
+        <button id="noFilter" class="standardButton filterOption selected">All Towers</button>
+      </div>
       <div class="toolsPickContainer">
         <h2 class="toolsHeader">Tools</h2>
         <div class="toolButtonContainer">
@@ -303,22 +299,22 @@
         <!--HEROES--->
         <h2 class="heroesHeader">Heroes</h2>
         <div class="heroesContainer">
-          <button id="Quincy" class="hero standardButton"><img src="assets/Quincy.png" alt="Quincy" class="heroButtonIcon"></button>
-          <button id="Gwendolin" class="hero standardButton"><img src="assets/Gwendolin.png" alt="Gwendolin" class="heroButtonIcon"></button>
-          <button id="StrikerJones" class="hero standardButton"><img src="assets/StrikerJones.png" alt="StrikerJones" class="heroButtonIcon"></button>
-          <button id="ObynGreenfoot" class="hero standardButton"><img src="assets/ObynGreenfoot.png" alt="ObynGreenfoot" class="heroButtonIcon"></button>
-          <button id="Rosalia" class="hero standardButton"><img src="assets/Rosalia.png" alt="Rosalia" class="heroButtonIcon"></button>
-          <button id="CaptainChurchill" class="hero standardButton"><img src="assets/CaptainChurchill.png" alt="CaptainChurchill" class="heroButtonIcon"></button>
-          <button id="Benjamin" class="hero standardButton"><img src="assets/Benjamin.png" alt="Benjamin" class="heroButtonIcon"></button>
-          <button id="Ezili" class="hero standardButton"><img src="assets/Ezili.png" alt="Ezili" class="heroButtonIcon"></button>
-          <button id="PatFusty" class="hero standardButton"><img src="assets/PatFusty.png" alt="PatFusty" class="heroButtonIcon"></button>
-          <button id="Adora" class="hero standardButton"><img src="assets/Adora.png" alt="Adora" class="heroButtonIcon"></button>
-          <button id="AdmiralBrickell" class="hero standardButton"><img src="assets/AdmiralBrickell.png" alt="AdmiralBrickell" class="heroButtonIcon"></button>
-          <button id="Etienne" class="hero standardButton"><img src="assets/Etienne.png" alt="Etienne" class="heroButtonIcon"></button>
-          <button id="Sauda" class="hero standardButton"><img src="assets/Sauda.png" alt="Sauda" class="heroButtonIcon"></button>
-          <button id="Psi" class="hero standardButton"><img src="assets/Psi.png" alt="Psi" class="heroButtonIcon"></button>
-          <button id="Geraldo" class="hero wip"><img src="assets/Geraldo.png" alt="Geraldo" class="heroButtonIcon"></button>
-          <button id="Corvus" class="hero wip"><img src="assets/Corvus.png" alt="Corvus" class="heroButtonIcon"></button>
+          <button id="Quincy" class="hero standardButton"><img src="assets/Quincy.png" alt="Quincy" class="heroButtonIcon" loading="eager"></button>
+          <button id="Gwendolin" class="hero standardButton"><img src="assets/Gwendolin.png" alt="Gwendolin" class="heroButtonIcon" loading="eager"></button>
+          <button id="StrikerJones" class="hero standardButton"><img src="assets/StrikerJones.png" alt="StrikerJones" class="heroButtonIcon" loading="eager"></button>
+          <button id="ObynGreenfoot" class="hero standardButton"><img src="assets/ObynGreenfoot.png" alt="ObynGreenfoot" class="heroButtonIcon" loading="eager"></button>
+          <button id="Rosalia" class="hero standardButton"><img src="assets/Rosalia.png" alt="Rosalia" class="heroButtonIcon" loading="eager"></button>
+          <button id="CaptainChurchill" class="hero standardButton"><img src="assets/CaptainChurchill.png" alt="CaptainChurchill" class="heroButtonIcon" loading="eager"></button>
+          <button id="Benjamin" class="hero standardButton"><img src="assets/Benjamin.png" alt="Benjamin" class="heroButtonIcon" loading="eager"></button>
+          <button id="Ezili" class="hero standardButton"><img src="assets/Ezili.png" alt="Ezili" class="heroButtonIcon" loading="eager"></button>
+          <button id="PatFusty" class="hero standardButton"><img src="assets/PatFusty.png" alt="PatFusty" class="heroButtonIcon" loading="eager"></button>
+          <button id="Adora" class="hero standardButton"><img src="assets/Adora.png" alt="Adora" class="heroButtonIcon" loading="eager"></button>
+          <button id="AdmiralBrickell" class="hero standardButton"><img src="assets/AdmiralBrickell.png" alt="AdmiralBrickell" class="heroButtonIcon" loading="eager"></button>
+          <button id="Etienne" class="hero standardButton"><img src="assets/Etienne.png" alt="Etienne" class="heroButtonIcon" loading="eager"></button>
+          <button id="Sauda" class="hero standardButton"><img src="assets/Sauda.png" alt="Sauda" class="heroButtonIcon" loading="eager"></button>
+          <button id="Psi" class="hero standardButton"><img src="assets/Psi.png" alt="Psi" class="heroButtonIcon" loading="eager"></button>
+          <button id="Geraldo" class="hero wip"><img src="assets/Geraldo.png" alt="Geraldo" class="heroButtonIcon" loading="eager"></button>
+          <button id="Corvus" class="hero wip"><img src="assets/Corvus.png" alt="Corvus" class="heroButtonIcon" loading="eager"></button>
         </div>
       </div>
       <div class="paragonContainer">
@@ -397,6 +393,15 @@
               
           </div>
         </div>
+      </div>
+
+      <div class="disclaimerContainer">
+        <h2 class="disclaimerHeader">See a Mistake?</h2>
+        <p class="disclaimer">The <a class="decoratedLink" href="https://discord.gg/xzwcXGxMQR">BTD6 Central Discord</a> 
+          is the best way to get my attention about it.</p>
+        <p class="disclaimer">BTD6 Central's tower stats are made based on community-gathered data and 
+          community feedback. There will likely be some mistakes, so please report any you find!
+        </p>
       </div>
       <div class="popupOverlay"></div>
       <div class="loading">

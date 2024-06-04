@@ -18,9 +18,6 @@ select:hover {
 button:not(.wip):hover {
     cursor: pointer;
 }
-.optionsBar {
-    margin-top: 75px;
-}
 .actuallyTakeMeHomeContainer {
     position: fixed;
     transform: scale(1.05);
@@ -47,6 +44,29 @@ h1, h2, .attackName {
 }
 .tier {
     text-align: center
+}
+
+
+.filterHeader {
+    margin-top: 75px;
+    text-align: center;
+}
+.optionsBar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.filterOption {
+    margin: 5px;
+    padding: 3px 7px;
+}
+.filterOption.selected {
+    background-color: var(--contentBackground2);
+    border: 1px solid var(--contentOutline2);
+}
+@media only screen and (max-width: 768px) {
+
 }
 .paragonName, .paragonDegree {
     color: var(--textColor3)
@@ -123,7 +143,7 @@ h1, h2, .attackName {
 }
 
 .toolsPickContainer {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -278,7 +298,6 @@ h1, h2, .attackName {
     object-fit: contain;
     max-width: 100%; 
     max-height: 100%;
-    image-rendering: pixelated;
 }
 
 @keyframes bring-up {
@@ -358,7 +377,7 @@ h1, h2, .attackName {
     margin: 0.5rem;
 }
 .filterSelect {
-    display: none;
+
 }
 .special {
     background-color: var(--contentBackground2);
@@ -530,4 +549,19 @@ h1, h2, .attackName {
     .heroesContainer > * {
         font-size: 1rem;
     }
+}
+.disclaimerContainer {
+    background-color: var(--contentBackground1);
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 50px 0px 20px 20px;
+    border-radius: 10px;
+    width: 40vw;
+    min-width: 350px;
+}
+.decoratedLink {
+    color: var(--buttonColor2) !important;
+    text-decoration: underline !important;
 }
