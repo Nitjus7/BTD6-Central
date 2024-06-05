@@ -58,8 +58,10 @@ h1, h2, .attackName {
     justify-content: center;
 }
 .filterOption {
-    margin: 5px;
-    padding: 3px 7px;
+    margin: 12px;
+    padding: 5px 9px;
+    border: none;
+    font-size: 1.1rem;
 }
 .filterOption.selected {
     background-color: var(--contentBackground2);
@@ -560,6 +562,11 @@ h1, h2, .attackName {
     border-radius: 10px;
     width: 40vw;
     min-width: 350px;
+}
+@media only screen and (max-width: 768px) {
+    .disclaimerContainer {
+        margin: 50px auto 0 auto;
+    }
 }
 .decoratedLink {
     color: var(--buttonColor2) !important;
