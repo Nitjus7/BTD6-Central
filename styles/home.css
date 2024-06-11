@@ -1,0 +1,255 @@
+.coverImage {
+    background-image: linear-gradient(to top, var(--pageBackground), var(--gradientEndsAt)), url('../assets/coverImage.webp');
+    filter: blur(5px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--textColor);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 45vh;
+    z-index: -50;
+}
+  
+.heroTitle {
+    display: block;
+    height: 100%;
+    width: 85%;
+    text-align: center;
+    font-family: var(--secondaryFont);
+    font-weight: bold;
+    margin: 100px auto 50px auto;
+    font-size: 2rem;
+    padding: 0;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+}
+@media only screen and (max-width: 768px) {
+    .heroTitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: -0.65px;
+        font-size: 2.5rem;
+    }
+}
+
+
+.newsCard {
+    padding: 10px 15px 15px 15px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--newsBackground);
+    border: 1px var(--newsOutline) solid;
+    border-radius: 10px;
+    width: 85%;
+}
+.newsHeader {
+    font-family: var(--secondaryFont)
+}
+.newsTextContainer {
+    width: 70vw;
+}
+.newsLearnMoreButton {
+    display: flex; 
+    align-items: center;
+    padding: 0 7px;
+}
+.learnMoreText {
+    margin-right: 5px;
+}
+.newsLearnMoreIcon {
+    font-size: 25px;
+}
+.learnMoreButtonContainer {
+    display: flex;
+    align-items: flex-end;
+}
+@media only screen and (max-width: 768px) {
+    .newsCard {
+        flex-direction: column;
+    }
+    .newsTextContainer {
+        width: 100%;
+    }
+    .newsLearnMoreButton {
+        padding: 0 3px;
+    }
+}
+
+
+.featuredPagesListContainer {
+    display: flex;
+    justify-content: center;
+    flex-basis: 45%;
+    flex-wrap: wrap;
+}
+.featuredPageContainer {
+    width: 45%;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: var(--contentBackground3);
+    border: 1px var(--contentOutline3) solid;
+    box-shadow: 0px 0px 3px var(--shadowColor);
+}
+.goToFeaturedPageButton {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    background-color: var(--buttonColor1);
+    border: 1px var(--textColor) solid;
+    color: var(--textColor);
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: background-color 0.25s;
+}
+.goToFeaturedPageButton:hover {
+    cursor: pointer;
+    background-color: var(--buttonColor2)
+}
+.imageAndHeaderContainer {
+    display: flex;
+    align-items: center;
+}
+.featuredPageHeader {
+    font-family: var(--secondaryFont);
+}
+.featuredPageImage {
+    width: 15vw;
+    max-width: 125px;
+    object-fit: contain;
+    margin-right: 1rem;
+}
+.featuredPageImage:hover {
+    cursor: pointer;
+    /* transform: scale(1.05);
+    box-shadow: 0px 0px 15px black; */
+}
+.goToFeaturedPage {
+    display: flex;
+    align-items: center;
+}
+@media only screen and (max-width: 768px) {
+    .featuredPagesListContainer {
+      flex-basis: 90%;
+    }
+    .featuredPageContainer { 
+      width: 90%;
+    }
+}
+
+
+.resourcesList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 45%
+}
+.resourceItemContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: var(--contentBackground1);
+    width: 45%;
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px var(--shadowColor)
+}
+.resourceHeader {
+    font-family: var(--secondaryFont);
+    margin-right: 0.5em;
+}
+.resourceHeaderContainer {
+    display: flex;
+    align-items: center;
+}
+@media only screen and (max-width: 768px) {
+    .resourceHeaderContainer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .resourcesList {
+        flex-basis: 85%;
+    }
+    .resourceItemContainer {
+        width: 85%;
+    }
+}
+.discordContainer {
+    background: var(--contentBackground3);
+    border: 1px var(--contentOutline3) solid;
+}
+.resourceButton {
+    padding: 1rem;
+    width: 100%;
+    max-width: 500px;
+    height: fit-content;
+    background: var(--buttonColor1);
+    color: var(--textColor);
+    border-style: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px var(--shadowColor);
+    transition: background-color 0.25s;
+    font-size: 1.2rem;
+}
+  
+.resourceButton:hover {
+    cursor: pointer;
+    background-color: var(--buttonColor2);
+}
+@media only screen and (max-width: 768px) {
+    .resourcesList {
+      flex-wrap: nowrap;
+      flex-direction: column;
+    }
+    .resourceButton {
+      width: 75%;
+    }
+    .resourceHeader {
+        margin-bottom: 0;
+    }
+    .resourceCredits {
+        margin-top: 0;
+    }
+    .resourceDescription {
+        margin-top: 0.5rem;
+    }
+}
+
+
+.aboutWebsiteContainer {
+    width: 80vw;
+    max-width: 1000px;
+    text-align: left;
+    margin: 2rem;
+    background-color: var(--contentBackground1);
+    box-shadow: 0px 0px 5px var(--shadowColor);
+    padding: 1rem;
+    border-radius: 10px;
+    @media only screen and (max-width: 768px) {
+        margin: 1rem;
+        width: 85vw;
+    }
+}
+
+.featuredPagesHeader, .resourcesHeader, .aboutWebsiteHeader {
+    font-family: var(--secondaryFont);
+    margin: 2rem 0px 0px 2rem;
+    border-bottom: 1px var(--textColor) solid;
+    width: 50vw;
+    min-width: 300px;
+    @media only screen and (max-width: 768px) {
+      margin: 2rem 0px 0.5rem 1rem;
+      width: 85vw;
+    }
+}

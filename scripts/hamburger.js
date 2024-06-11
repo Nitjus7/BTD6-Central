@@ -74,16 +74,19 @@ switch (localStorage.getItem("themeMode")) {
 function swapToDark() {
     pageTheme.value = "dark"
     pageThemeButtonNoBurger.innerHTML = `<span class="material-symbols-outlined">dark_mode</span>`
-    styles.style.setProperty("--pageBackground", "#212121")
+    styles.style.setProperty("--pageBackground", "rgb(33, 33, 33)")
+    styles.style.setProperty("--gradientEndsAt", "rgba(0, 0, 0, 0)");
     styles.style.setProperty("--contentBackground1", "#3c4048")
     styles.style.setProperty("--contentBackground2", "#ff56286a")
     styles.style.setProperty("--contentBackground3", "#6648906a")
     styles.style.setProperty("--contentBackground4", "#074059")
+    styles.style.setProperty("--newsBackground", "#3d6738")
     styles.style.setProperty("--contentAccent", "rgba(75, 55, 90, 0.35)")
     styles.style.setProperty("--contentOutline1", "#8e8e8e")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#d382e7")
     styles.style.setProperty("--contentOutline4", "#4dbbe0")
+    styles.style.setProperty("--newsOutline", "#86cb7c")
     styles.style.setProperty("--itemSelectedBackground", "rgb(116, 109, 109)");
     styles.style.setProperty("--shadowColor", "rgba(255, 255, 255, 0.3)");
     styles.style.setProperty("--wip", "0.5");
@@ -99,24 +102,27 @@ function swapToDark() {
 function meetGod() {
     pageTheme.value = "light"
     pageThemeButtonNoBurger.innerHTML = `<span class="material-symbols-outlined">light_mode</span>`
-    styles.style.setProperty("--pageBackground", "#f7f7f7");
+    styles.style.setProperty("--pageBackground", "rgb(247, 247, 247)");
+    styles.style.setProperty("--gradientEndsAt", "rgba(255, 255, 255, 0)");
     styles.style.setProperty("--contentBackground1", "white");
     styles.style.setProperty("--contentBackground2", "rgba(232, 119, 88, 0.39)");
     styles.style.setProperty("--contentBackground3", "#b095e047")
     styles.style.setProperty("--contentBackground4", "#b0d6f3")
+    styles.style.setProperty("--newsBackground", "#9ede96")
     styles.style.setProperty("--itemSelectedBackground", "lightgray")
     styles.style.setProperty("--contentOutline1", "#a69a9a")
     styles.style.setProperty("--contentOutline2", "rgb(241, 77, 59)")
     styles.style.setProperty("--contentOutline3", "#a46ab3")
     styles.style.setProperty("--contentOutline4", "#1e2f9d")
+    styles.style.setProperty("--newsOutline", "#296022")
     styles.style.setProperty("--shadowColor", "gray");
     styles.style.setProperty("--wip", "0.33");
     styles.style.setProperty("--textColor", "#121212");
-    styles.style.setProperty("--textColor2", "rgb(203 108 4)");
+    styles.style.setProperty("--textColor2", "rgb(255, 149, 33)");
     styles.style.setProperty("--textColor3", "rgb(107 26 219)")
     styles.style.setProperty("--buttonColor1", "#88b1f7");
     styles.style.setProperty("--buttonColor2", "#6092eb");
-    styles.style.setProperty("--buttonColor3", "#b873cf")
+    styles.style.setProperty("--buttonColor3", "#d88ef0")
     localStorage.setItem('themeMode', 'light');
 }
 

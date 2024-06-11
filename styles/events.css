@@ -295,10 +295,12 @@ button {
 .anyHeroDisplay {
   background-color: var(--contentBackground4);
   border: 1px var(--contentOutline4) solid;
+  padding: 15px;
 }
 .noHeroDisplay {
   background-color: var(--contentBackground1);
   border: 1px var(--textColor) solid;
+  padding: 15px;
 }
 .towerHeader {
   margin-top: 1rem;
@@ -334,7 +336,7 @@ h2 {
 .enabledTowersContainer {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
   overscroll-behavior: contain;
   border: 0.6px var(--textColor) solid;
   border-radius: 5px;

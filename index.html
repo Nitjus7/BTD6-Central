@@ -24,6 +24,7 @@
 
     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
     <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/home.css" />
   </head>
   <body>
     <div class="navBarContainer noBurger">
@@ -91,15 +92,19 @@
         </ul>
       </div>
 
-    
+    <div class="coverImage"></div>
     <div class="heroContainer homePage">
       <div class="heroTextContainer">
         <h1 class="heroTitle">Welcome to BTD6 Central</h1>
       </div>
     </div>
-    <!-- <h1 class="newsHeader">Latest News</h1>
-    <button class="jumpToResourcesButton">Jump to Resources</button>
-    <div class="newsContainer"></div> -->
+    <div class="newsCard">
+      <div class="newsTextContainer">
+        <h2 class="newsHeader">BTD6 Birthday Event Begins Soon!</h2>
+        <p class="newsDescription">Bloons TD 6 turns six years old on June 13! To celebrate, there will be a special in-game community-based event starting on that day.</p>
+      </div>
+      <div class="learnMoreButtonContainer"><button class="newsLearnMoreButton standardButton"><p class="learnMoreText">Learn More</p><span class="material-symbols-outlined newsLearnMoreIcon">open_in_new</span></button></div>
+    </div>
     <h1 class="featuredPagesHeader">Featured Pages</h1>
       <div class="featuredPagesListContainer">
         <div class="featuredPageContainer">
@@ -111,16 +116,6 @@
             Get detailed stats about every Paragon and some Heroes in Bloons TD 6 such as damage or pierce, including the degree/hero level calculators.
           </p>
           <button class="goToFeaturedPageButton goToLink1"><span class="material-symbols-outlined">open_in_new</span></button>
-        </div>
-        <div class="featuredPageContainer">
-          <div class="imageAndHeaderContainer">
-            <img src="https://i.ibb.co/C9pcr4G/map-Editor-Icon.webp" alt="paragon-Icon" class="featuredPageImage goToLink2">
-            <h2 class="featuredPageHeader">Custom Map Finder</h2>
-          </div>
-          <p class="featuredPageDescription">
-            Find any verified custom map in Bloons TD 6 by its map code and get the map image along with relevant stats about the map.
-          </p>
-          <button class="goToFeaturedPageButton goToLink2"><span class="material-symbols-outlined">open_in_new</span></button>
         </div>
         <div class="featuredPageContainer">
           <div class="imageAndHeaderContainer">
@@ -142,43 +137,52 @@
           </p>
           <button class="goToFeaturedPageButton goToLink4"><span class="material-symbols-outlined">open_in_new</span></button>
         </div>
+        <div class="featuredPageContainer">
+          <div class="imageAndHeaderContainer">
+            <img src="https://i.ibb.co/C9pcr4G/map-Editor-Icon.webp" alt="paragon-Icon" class="featuredPageImage goToLink2">
+            <h2 class="featuredPageHeader">Custom Map Finder</h2>
+          </div>
+          <p class="featuredPageDescription">
+            Find any verified custom map in Bloons TD 6 by its map code and get the map image along with relevant stats about the map.
+          </p>
+          <button class="goToFeaturedPageButton goToLink2"><span class="material-symbols-outlined">open_in_new</span></button>
+        </div>
       </div>
     <h1 class="resourcesHeader">Extra Resources</h1>
-    <div class="resourcesContainer">
-      <div class="resourcesList">
-        <div class="resourceItemContainer discordContainer">
-          <div class="resourceHeaderContainer"><h2 class="resourceHeader">Discord Community</h2></div>
-          <p class="resourceDescription">The BTD6 Central Discord Server is where I give complete details about every new change to the website.
-            I also accept feedback and bug reports. If you find something wrong, the Discord server is the best way to get my attention about it!
-          </p>
-          <button class="goToFeaturedPageButton goToBTD6CentralDiscord"><span class="material-symbols-outlined">open_in_new</span></button>
-        </div>
-        <div class="resourceItemContainer">
-          <div class="resourceHeaderContainer"><h2 class="resourceHeader">Cyber Quincy</h2><p>by hemidemisemipresent, rmlrmlrml, and others</p></div>
-          <p class="resourceDescription">A frequently updated community-maintained Discord bot that has everything you'd ever need to know with Bloons TD 6. With dozens upon dozens of commands, Cyber Quincy is the most in-depth BTD6 Discord bot.
-          </p>
-          <button class="goToFeaturedPageButton goToCyberQuincy"><span class="material-symbols-outlined">open_in_new</span></button>
-        </div>
-        <div class="resourceItemContainer">
-          <div class="resourceHeaderContainer"><h2 class="resourceHeader">BTD6 Index</h2><p>website made by lordlandmaster</p></div>
-          <p class="resourceDescription">Stay up to date on the biggest challenges players are taking on in Bloons TD 6, or get tips on high-level gameplay.
-          </p>
-          <button class="goToFeaturedPageButton goToBTD6Index"><span class="material-symbols-outlined">open_in_new</span></button>
-        </div>
-        <div class="resourceItemContainer">
-          <div class="resourceHeaderContainer"><h2 class="resourceHeader">Battles 2 Popology</h2><p>by emilplane</p></div>
-          <p class="resourceDescription">Get Tower and Hero stats about Battles 2 and visit related sites from the Battles 2 Popology. It is currently the most extensive resource for Bloons TD Battles 2.
-          </p>
-          <button class="goToFeaturedPageButton goToB2Popology"><span class="material-symbols-outlined">open_in_new</span></button>
-        </div>
+    <div class="resourcesList">
+      <div class="resourceItemContainer discordContainer">
+        <div class="resourceHeaderContainer"><h2 class="resourceHeader">Discord Community</h2></div>
+        <p class="resourceDescription">The BTD6 Central Discord Server is where I give complete details about every new change to the website.
+          I also accept feedback and bug reports. If you find something wrong, or if you just want something changed, the Discord server is 
+          the best way to get my attention about it!
+        </p>
+        <button class="goToFeaturedPageButton goToBTD6CentralDiscord"><span class="material-symbols-outlined">open_in_new</span></button>
       </div>
-     </div>
+      <div class="resourceItemContainer">
+        <div class="resourceHeaderContainer"><h2 class="resourceHeader">Cyber Quincy</h2><p class="resourceCredits">by hemidemisemipresent, rmlrmlrml, and others</p></div>
+        <p class="resourceDescription">A frequently updated community-maintained Discord bot that has everything you'd ever need to know with Bloons TD 6. With dozens upon dozens of commands, Cyber Quincy is the most in-depth BTD6 Discord bot.
+        </p>
+        <button class="goToFeaturedPageButton goToCyberQuincy"><span class="material-symbols-outlined">open_in_new</span></button>
+      </div>
+      <div class="resourceItemContainer">
+        <div class="resourceHeaderContainer"><h2 class="resourceHeader">BTD6 Index</h2><p class="resourceCredits">website made by lordlandmaster</p></div>
+        <p class="resourceDescription">Stay up to date on the biggest challenges players are taking on in Bloons TD 6, or get tips on high-level gameplay.
+        </p>
+        <button class="goToFeaturedPageButton goToBTD6Index"><span class="material-symbols-outlined">open_in_new</span></button>
+      </div>
+      <div class="resourceItemContainer">
+        <div class="resourceHeaderContainer"><h2 class="resourceHeader">Battles 2 Popology</h2><p class="resourceCredits">by emilplane</p></div>
+        <p class="resourceDescription">Get Tower and Hero stats about Battles 2 and visit related sites from the Battles 2 Popology. It is currently the most extensive resource for Bloons TD Battles 2.
+        </p>
+        <button class="goToFeaturedPageButton goToB2Popology"><span class="material-symbols-outlined">open_in_new</span></button>
+      </div>
+    </div>
     <h1 class="aboutWebsiteHeader">About BTD6 Central</h1>
     <p class="aboutWebsiteContainer">Much of BTD6 Central is powered by the Ninja Kiwi API, a resource provided by Ninja Kiwi
-    to give developers easy access to in-game info. You can read more about it <u><a href="https://support.ninjakiwi.com/hc/en-us/articles/13438499873937-Open-Data-API" class="nkAPILink" target="_blank">here</a></u>. The OAK ID you provide for your player profile can't be used to track any sensitive information, so
+    to give developers easy access to in-game info. You can read more about it <u><a href="https://support.ninjakiwi.com/hc/en-us/articles/13438499873937-Open-Data-API" class="nkAPILink decoratedLink" target="_blank">here</a></u>. The OAK ID you provide for your player profile can't be used to track any sensitive information, so
     <b>OAK IDs are safe to share and use</b>.<br><br>
     Other info such as Paragon stats, Bloon stats, and Boss stats are provided by myself and some others. There may be some inaccuracies with these stats, so please report it to the 
-    <u><a href="https://discord.com/invite/xNxjqXBp6B" class="nkAPILink" target="_blank">BTD6 Central Discord Server</a></u> if you have any concerns.</p>
+    <a href="https://discord.com/invite/xNxjqXBp6B" class="decoratedLink" target="_blank">BTD6 Central Discord</a> if you have any concerns.</p>
 
     <div class="popupOverlay"></div>
     <script src="scripts/hamburger.js"></script>

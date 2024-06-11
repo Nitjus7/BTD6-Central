@@ -1,0 +1,658 @@
+{
+    "hero": "Corvus",
+    "cost": 925,
+    "xpCurve": 1.71,
+    "footprintRadius": 7,
+    "range": 50,
+    "description": "Coruvs has a spellbook! View it in the bottom right. Corvus has a Spirit with global range. Corvus generates 1 mana per second while Bloons are spawning.",
+    "projectiles": {
+        "haunt": {
+            "displayName": "Haunt",
+            "attackRate": 3,
+            "damageType": "normal",
+            "camo": false,
+            "description": "Applies the Haunted status to one Bloon. When the last child of that Bloon is popped, it creates an Explosion. Cannot target Blimps.",
+            "emissions": ["haunted", "explosion"]
+        },
+        "spirit": {
+            "displayName": "Spirit",
+            "dmgBase": 1,
+            "pierce": 5,
+            "attackRate": 1,
+            "damageType": "energy",
+            "camo": false,
+            "description": "Can only travel up to 50 units once it begins attacking."
+        },
+        "explosion": {
+            "displayName": "Explosion",
+            "dmgBase": 2,
+            "pierce": 4,
+            "damageType": "normal",
+            "camo": false
+        },
+        "lightning-rod": {
+            "displayName": "Lightning Rod",
+            "pierce": 10,
+            "attackRate": 2.5,
+            "lifespan": 1.6,
+            "damageType": "plasma",
+            "camo": false,
+            "description": "Emits Lightning on each hit. Max 0.05s per Lightning.",
+            "emissions": ["lightning"]
+        },
+        "lightning": {
+            "displayName": "Lightning",
+            "dmgBase": 2,
+            "pierce": 60,
+            "damageType": "plasma",
+            "camo": false
+        },
+        "harvest": {
+            "displayName": "Harvest",
+            "pierce": 20,
+            "dmgBase": 20,
+            "damageType": "plasma",
+            "camo": false,
+            "special": "Generates 100 Mana + 1 per damage dealt."
+        },
+        "wall-of-fire": {
+            "displayName": "Wall of Fire",
+            "pierce": 10,
+            "dmgBase": 1,
+            "attackRate": 0.2,
+            "duration": 4.5,
+            "damageType": "fire",
+            "camo": false
+        },
+        "spirit-aura": {
+            "displayName": "Spirit Aura",
+            "pierce": 80,
+            "dmgBase": 2,
+            "dmgBonusCeram": 1,
+            "attackRate": 0.3,
+            "damageType": "energy",
+            "camo": false
+        },
+        "hand": {
+            "displayName": "Hand",
+            "pierce": 15,
+            "dmgBase": 50,
+            "attackRate": 1,
+            "damageType": "plasma",
+            "camo": false
+        },
+        "spiritual-balance": {
+            "displayName": "Spiritual Balance",
+            "description": "2x mana when under 200 mana stored, decreasing to 1x mana at 520 stored."
+        },
+        "spiritual-attunement": {
+            "displayName": "Spiritual Attunement",
+            "description": "Spirit gets up to +20% movement speed and +80% damage at max Mana stored."
+        },
+        "blades": {
+            "displayName": "Blades",
+            "pierce": 8,
+            "dmgBase": 1,
+            "attackRate": 0.12,
+            "projectiles": 2,
+            "damageType": "energy",
+            "camo": false
+        },
+        "ritual-circle": {
+            "displayName": "Ritual Circle",
+            "pierce": 100,
+            "dmgBase": 1,
+            "attackRate": 0.2,
+            "damageType": "plasma",
+            "camo": false,
+            "special": "Generates 1 Mana per damage dealt. Ability is cancelled if it hits a Purple Bloon."
+        },
+        "spirit-explosion": {
+            "displayName": "Spirit Explosion",
+            "pierce": 200,
+            "dmgBase": 1500,
+            "blastRadius": 55,
+            "damageType": "plasma",
+            "camo": false
+        }
+    },
+    "statuses": {
+        "haunted": {
+            "displayName": "Haunted",
+            "damageDebuff": 1,
+            "description": "Affected Purple and Regrow Bloons lose their properties. When the last child of the Huanted bloon pops, generates 3 Mana per layer on the original affected Bloon and creates an Explosion.",
+            "special": "Damage debuff only applies to Energy and Plasma attacks."
+        },
+        "freeze": {
+            "displayName": "Frozen",
+            "duration": 0.5,
+            "description": "The top 2 layers of the affected Bloon are frozen. Cannot affect Blimps."
+        },
+        "permafrost": {
+            "displayName": "Permafrost",
+            "description": "The top layer of the Bloon moves at 75% speed until popped."
+        },
+        "explosion-burn": {
+            "displayName": "Nail Mine Explosion Burn",
+            "dmgBase": 1,
+            "tickRate": 2,
+            "duration": 4
+        },
+        "mystical-shroud": {
+            "displayName": "Mystical Shroud",
+            "pierce": 50,
+            "description": "On pop, explodes with 1% damage (10% to Blimps) of this Blimp's base HP. MOABs and BFBs use 2 pierce, ZOMGs and DDTs use 4 pierce, BADs use 10 pierce."
+        }
+    },
+    "abilities": {
+        "soul-harvest": {
+            "displayName": "Soul Harvest",
+            "cooldown": 41.5,
+            "reduceCooldownPerLevel": 0.5,
+            "description": "Harvests Bloons in Corvus' range.",
+            "special": "Disables after 8 uses or 3 minutes into a round.",
+            "emissions": ["harvest"]
+        },
+        "spirit-walk": {
+            "displayName": "Spirit Walk",
+            "cooldown": 20,
+            "description": "Relocates Corvus to a valid location on the map."
+        },
+        "dark-ritual": {
+            "displayName": "Dark Ritual",
+            "cooldown": 60,
+            "duration": 12,
+            "description": "Creates a Ritual Circle in Corvus' range.",
+            "emissions": ["ritual-circle"]
+        }
+    },
+    "store": {
+        "spear": {
+            "displayName": "Spear",
+            "icon": "assets/corvus1.png",
+            "cost": "100 + 10 per second",
+            "description": "Spirit gets a homing Lightning Rod attack that creates Lightning on impact.",
+            "hasAttacks": ["lightning-rod"],
+            "unlockLevel": 1
+        },
+        "repel": {
+            "displayName": "Repel",
+            "icon": "assets/corvus5.png",
+            "cost": 150,
+            "duration": 15,
+            "cooldown": 45,
+            "description": "Spirit pushes back up to 10 nearby regular Bloons by 4 units every 0.1s. Cannot affect Blimps.",
+            "unlockLevel": 1
+        },
+        "nourishment": {
+            "displayName": "Nourishment",
+            "icon": "assets/corvus13.png",
+            "cost": "All Mana",
+            "description": "Converts all of Corvus' stored Mana into 2x as much Hero XP.",
+            "unlockLevel": 1
+        },
+        "echo": {
+            "displayName": "Echo",
+            "icon": "assets/corvus6.png",
+            "cost": 300,
+            "duration": 24,
+            "cooldown": 45,
+            "description": "Creates a clone of Spirit that always targets first and receives the same spells.",
+            "unlockLevel": 3
+        },
+        "haste": {
+            "displayName": "Haste",
+            "icon": "assets/corvus7.png",
+            "cost": 50,
+            "duration": 20,
+            "cooldown": 15,
+            "description": "Spirit gets +50% movement speed and +33% faster turn speed.",
+            "unlockLevel": 3
+        },
+        "trample": {
+            "displayName": "Trample",
+            "icon": "assets/corvus8.png",
+            "cost": 180,
+            "cooldown": 45,
+            "description": "Spirit travels backwards on one track (follows first targeting), doing 12 damage on up to 150 bloons in its path.",
+            "unlockLevel": 4
+        },
+        "soul-barrier": {
+            "displayName": "Soul Barrier",
+            "icon": "assets/corvus14.png",
+            "cost": 40,
+            "duration": 10,
+            "cooldown": 60,
+            "description": "Corvus uses all his stored Mana as lives. Can absorb up to 400 lives.",
+            "unlockLevel": 4
+        },
+        "aggression": {
+            "displayName": "Aggression",
+            "icon": "assets/corvus2.png",
+            "cost": "50 + 5 per second",
+            "description": "Spirit gets 70% attack cooldown and +40% size.",
+            "unlockLevel": 5
+        },
+        "frostbound": {
+            "displayName": "Frostbound",
+            "icon": "assets/corvus9.png",
+            "cost": 170,
+            "duration": 10,
+            "cooldown": 45,
+            "description": "Every 0.1s, Spirit applies Freeze status on up to 10 Bloons it touches.",
+            "hasStatuses": ["freeze"],
+            "unlockLevel": 5
+        },
+        "vision": {
+            "displayName": "Vision",
+            "icon": "assets/corvus15.png",
+            "cost": 170,
+            "duration": 15,
+            "cooldown": 30,
+            "description": "Spirit gets camo detection and can decamo.",
+            "unlockLevel": 5
+        },
+        "ember": {
+            "displayName": "Ember",
+            "icon": "assets/corvus10.png",
+            "cost": 150,
+            "duration": 15,
+            "cooldown": 45,
+            "description": "Spirit drops a Wall of Fire every 1.5s.",
+            "hasAttacks": ["wall-of-fire"],
+            "unlockLevel": 6
+        },
+        "malevolence": {
+            "displayName": "Malevolence",
+            "icon": "assets/corvus3.png",
+            "cost": "60 + 6 per second",
+            "description": "Spirit is disabled. A Spirit Aura is created on top of Corvus. Disables all spells except Spear and Ancestral Might while active.",
+            "hasAttacks": ["spirit-aura"],
+            "unlockLevel": 7
+        },
+        "ancestral-might": {
+            "displayName": "Ancestral Might",
+            "icon": "assets/corvus11.png",
+            "cost": 440,
+            "duration": 15,
+            "cooldown": 90,
+            "description": "Spirit is transformed into a Hand which can only attack in range of Corvus.",
+            "hasAttacks": ["hand"],
+            "unlockLevel": 7
+        },
+        "storm": {
+            "displayName": "Storm",
+            "icon": "assets/corvus4.png",
+            "cost": "120 + 15 per second",
+            "description": "Spirit shoots Blades.",
+            "hasAttacks": ["blades"],
+            "unlockLevel": 8
+        },
+        "recovery": {
+            "displayName": "Recovery",
+            "icon": "assets/corvus16.png",
+            "cost": 140,
+            "cooldown": 30,
+            "description": "Corvus is completely disabled. All of Corvus' spells except Nourishment recharge twice as fast while this is active.",
+            "unlockLevel": 10
+        },
+        "overload": {
+            "displayName": "Overload",
+            "icon": "assets/corvus12.png",
+            "cost": 520,
+            "cooldown": 90,
+            "description": "Spirit instantly creates a Spirit Explosion on its location and is disabled for 10 seconds.",
+            "hasAttacks": ["spirit-explosion"],
+            "unlockLevel": 13
+        }
+    },
+    "levels": [
+        {
+            "level": 1,
+            "addAttacks": ["haunt", "spirit"]
+        },
+        {
+            "level": 2,
+            "description": "Spirit size increased.",
+            "editItems": [{
+                "target": "spirit",
+                "item": "pierce",
+                "type": "add",
+                "value": 3
+            }]
+        },
+        {
+            "level": 3,
+            "addAbility": "soul-harvest",
+            "description": "Learns Echo and Haste."
+        },
+        {
+            "level": 4,
+            "description": "Learns Trample and Soul Barrier."
+        },
+        {
+            "level": 5,
+            "description": "Learns Aggression, Frostbound, and Vision."
+        },
+        {
+            "level": 6,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1
+                },
+                {
+                    "target": "explosion",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                },
+                {
+                    "target": "explosion",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 4
+                }
+            ],
+            "description": "Learns Ember."
+        },
+        {
+            "level": 7,
+            "addAbility": "spirit-walk",
+            "description": "Learns Malevolence and Ancestral Might."
+        },
+        {
+            "level": 8,
+            "description": "Learns Storm.",
+            "addAttacks": ["spiritual-balance"]
+        },
+        {
+            "level": 9,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                },
+                {
+                    "target": "freeze",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "The top 2 layers of the affected Bloon are frozen. Can affect up to MOABs."
+                }
+            ],
+            "addProperties": [
+                {
+                    "target": "spirit",
+                    "key": "dmgBonusMOAB",
+                    "value": 1
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "soul-barrier",
+                    "target": "description",
+                    "key": "replace",
+                    "value": "Corvus uses all his stored Mana as lives. Can absorb up to 800 lives."
+                }
+            ]
+        },
+        {
+            "level": 10,
+            "addAbility": "dark-ritual",
+            "editStore": [
+                {
+                    "store-item": "trample",
+                    "target": "description",
+                    "key": "replace",
+                    "value": "Spirit travels backwards on one track (follows first targeting), doing 40 damage on up to 300 bloons in its path."
+                }
+            ],
+            "description": "Learns Recovery."
+        },
+        {
+            "level": 11,
+            "addAttacks": ["spiritual-attunement"],
+            "editItems": [
+                {
+                    "target": "harvest",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 15
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "frostbound",
+                    "target": "hasStatuses",
+                    "key": "replace",
+                    "value": ["freeze", "permafrost"]
+                }
+            ],
+            "addProperties": [
+                {
+                    "target": "harvest",
+                    "key": "dmgBonusCeram",
+                    "value": 35
+                }
+            ]
+        },
+        {
+            "level": 12,
+            "editItems": [
+                {
+                    "target": "explosion",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 6
+                },
+                {
+                    "target": "explosion",
+                    "item": "pierce",
+                    "type": "add",
+                    "value": 8
+                },
+                {
+                    "target": "lightning",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 2
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "repel",
+                    "target": "description",
+                    "type": "replace",
+                    "value": "Spirit pushes back up to 10 nearby Bloons by 4 units every 0.1s. Can affect up to MOABs."
+                }
+            ]
+        },
+        {
+            "level": 13,
+            "editItems": [
+                {
+                    "target": "hand",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 100
+                }
+            ],
+            "description": "Learns Overload."
+        },
+        {
+            "level": 14,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 5
+                },
+                {
+                    "target": "spirit",
+                    "item": "dmgBonusMOAB",
+                    "type": "add",
+                    "value": 4
+                },
+                {
+                    "target": "spirit-aura",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 3
+                },
+                {
+                    "target": "spirit-aura",
+                    "item": "dmgBonusCeram",
+                    "type": "add",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "level": 15,
+            "editItems": [
+                {
+                    "target": "wall-of-fire",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "ember",
+                    "target": "description",
+                    "type": "replace",
+                    "value": "Spirit drops a Wall of Fire every 1.2s."
+                },
+                {
+                    "store-item": "nourishment",
+                    "target": "description",
+                    "type": "replace",
+                    "value": "Converts all of Corvus' stored Mana into 4x as much Hero XP."
+                }
+            ]
+        },
+        {
+            "level": 16,
+            "addRange": 8,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 10
+                },
+                {
+                    "target": "explosion",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 20
+                }
+            ]
+        },
+        {
+            "level": 17,
+            "editItems": [
+                {
+                    "target": "haunted",
+                    "item": "damageDebuff",
+                    "type": "add",
+                    "value": 1
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "soul-barrier",
+                    "target": "description",
+                    "type": "replace",
+                    "value": "Corvus uses all his stored Mana as lives. Can absorb up to 2000 lives."
+                }
+            ]
+        },
+        {
+            "level": 18,
+            "addProperties": [
+                {
+                    "target": "lightning",
+                    "key": "dmgBase",
+                    "value": 6
+                },
+                {
+                    "target": "blades",
+                    "key": "dmgBase",
+                    "value": 1
+                },
+                {
+                    "target": "blades",
+                    "key": "pierce",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "level": 19,
+            "addRange": 3,
+            "editItems": [
+                {
+                    "target": "haunt",
+                    "item": "description",
+                    "type": "replace",
+                    "value": "Applies the Haunted status to one Bloon. When the last child of that Bloon is popped, it creates an Explosion."
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "trample",
+                    "target": "description",
+                    "key": "replace",
+                    "value": "Spirit travels backwards on one track (follows first targeting), doing 90 damage on up to 800 bloons in its path."
+                }
+            ]
+        },
+        {
+            "level": 20,
+            "editItems": [
+                {
+                    "target": "spirit",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 20
+                },
+                {
+                    "target": "spirit",
+                    "item": "dmgBonusMOAB",
+                    "type": "add",
+                    "value": 5
+                },
+                {
+                    "target": "hand",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 150
+                },
+                {
+                    "target": "spirit-explosion",
+                    "item": "dmgBase",
+                    "type": "add",
+                    "value": 1500
+                }
+            ],
+            "editStore": [
+                {
+                    "store-item": "nourishment",
+                    "target": "description",
+                    "type": "replace",
+                    "value": "Converts all of Corvus' stored Mana into an equal amount of cash."
+                }
+            ]
+        }
+    ],
+    "enabledProjectiles": [],
+    "enabledAbilities": [],
+    "enabledSupports": []
+}

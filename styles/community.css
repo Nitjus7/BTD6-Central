@@ -181,7 +181,7 @@ button:not(.wip):hover {
 .normalBossContainer, .eliteBossContainer, .raceContainer, .ctLocalContainer, .ctGlobalContainer {
   display: flex;
   width: 80vw;
-  overflow-x: scroll;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background: var(--contentBackground1);
   padding: 0.5rem;
@@ -240,7 +240,7 @@ button:not(.wip):hover {
   padding: 0.5rem;
   border-radius: 4px;
   width: 550px;
-  overflow-x: scroll;
+  overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   background: var(--contentBackground1);

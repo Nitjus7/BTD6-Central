@@ -5,7 +5,7 @@ const selectDegreeCheck = document.querySelector("#pikachuIChooseYou")
 const calculateDegreeCheck = document.querySelector("#charizardIChooseYou")
 const calculateParagonDegreeButton = document.querySelector(".calculateParagonDegreeButton")
 
-const dataContainers = [paragonContainer, heroContainer]
+const dataContainers = [paragonContainer, heroContainer, document.querySelector(".disclaimerContainer")]
 const monkeyList = document.querySelectorAll(".monkey")
 const heroList = document.querySelectorAll(".hero")
 const paragonList = document.querySelectorAll(".paragon")
@@ -160,7 +160,7 @@ class Hero {
             } else {
                 this.fullData["projectiles"][target][item] = value
             }
-        } else if (abil.hasOwnProperty(target) && abil[target].hasOwnProperty(item)) {
+        } else if (abil && abil.hasOwnProperty(target) && abil[target].hasOwnProperty(item)) {
             if (type == "subtract") {
                 this.fullData["abilities"][target][item] -= value
             } else if (type == "multiply") {
@@ -195,6 +195,27 @@ class Hero {
                 this.fullData["statuses"][target][item] += value
             } else {
                 this.fullData["statuses"][target][item] = value
+            }
+        }
+    }
+
+    editStore(data) {
+        const store = this.fullData["store"]
+        const storeItem = data["store-item"]
+        const target = data["target"]
+        const type = data["type"]
+        const value = data["value"]
+        if (store.hasOwnProperty(storeItem) && store[storeItem].hasOwnProperty(target)) {
+            if (type == "subtract") {
+                this.fullData["store"][storeItem][target] -= value
+            } else if (type == "multiply") {
+                this.fullData["store"][storeItem][target] *= value
+            } else if (type == "divide") {
+                this.fullData["store"][storeItem][target] /= value
+            } else if (type == "add") {
+                this.fullData["store"][storeItem][target] += value
+            } else {
+                this.fullData["store"][storeItem][target] = value
             }
         }
     }
@@ -239,7 +260,7 @@ class Hero {
 
 
 async function getData(category, tower) {
-    enableLoading()
+    enableLoading(`Loading tower data...`)
     try {
         if (!costs)
             costs = await(await fetch("https://raw.githubusercontent.com/Nitjus7/BTD6-Central-Data/main/stats/towers/costs.json")).json()
@@ -509,6 +530,7 @@ function createElem(value, type, parent, st) {
     
     const title = document.createElement("h4")
     title.innerText = type
+    title.className = "damageElemHeader"
     elem.appendChild(title)
     const content = document.createElement("p")
     content.innerHTML = value
@@ -578,6 +600,8 @@ function displayHeroData(level) {
     let attackDivs = Array.from(document.querySelectorAll(".attackDiv"))
     let attackNames = Array.from(document.querySelectorAll(".attackName"))
     let attackTypes = Array.from(document.querySelectorAll(".attackType"))
+    const storeButton = document.querySelector(".heroStoreButton")
+    const storeContainer = document.querySelector(".storeContainer")
     for (const e of attackDivs) {
         e.remove();
     }
@@ -600,6 +624,76 @@ function displayHeroData(level) {
     // the magic begins
     const h = hero.getData()
     document.querySelector(".heroName").innerText = h["hero"]
+
+
+
+    if (h["hero"] === "Geraldo" || h["hero"] === "Corvus") {
+        document.querySelector(".disclaimerContainer").style.margin = "50px 0 100px 20px"
+        storeButton.style.display = "flex"
+        const storeItems = Object.keys(h["store"])
+        if (h["hero"] === "Geraldo") {
+            for (let i = 0; i < storeItems.length; i++) {
+                document.querySelector(`#storeItem${i + 1} > img`).src = `assets/geraldo${i + 1}.png`
+            }
+            document.querySelector(".openStoreIcon").src = "assets/geraldoShopIcon.png"
+            document.querySelector(".storeHeader").innerHTML = `The Shop&nbsp;&nbsp;|&nbsp;&nbsp;Level ${level}`
+        } else if (h["hero"] === "Corvus") {
+            for (let i = 0; i < storeItems.length; i++) {
+                document.querySelector(`#storeItem${i + 1} > img`).src = `assets/corvus${i + 1}.png`
+            }
+            // document.querySelectorAll(".openStoreIcon").style.backgroundColor = "#f9dbab"
+            document.querySelector(".openStoreIcon").src = "assets/corvusSpellbookIcon.png"
+            document.querySelector(".storeHeader").innerHTML = `The Spellbook&nbsp;&nbsp;|&nbsp;&nbsp;Level ${level}`
+        }
+        let storeItemsArray = Array.from(document.querySelector(".storeItemsContainer").children)
+        for (let i = 0; i < storeItemsArray.length; i++) {
+            const elem = storeItemsArray[i]
+            const currItem = h["store"][storeItems[i]]
+            const currItemUnlocksAt = currItem["unlockLevel"]
+            for (const child of Array.from(elem.querySelectorAll(".levelUnlockOverlay"))) {
+                child.remove()
+            }
+            if (currItemUnlocksAt > level) {
+                elem.classList.add("inactive")
+                elem.innerHTML += `<p class="levelUnlockOverlay">${currItemUnlocksAt}</p>`
+            } else {
+                elem.classList.remove("inactive")
+            }
+            elem.onclick = () => {
+                if (!elem.classList.contains("selected") && !elem.classList.contains("inactive")) {
+                    for (const child of storeItemsArray) {
+                        if (child.classList.contains("selected")) child.classList.remove("selected")
+                    }
+                    elem.classList.add("selected")
+                    displayStore(h, h["hero"], currItem)
+                }
+            }
+        }
+        const storeList = Object.keys(h["store"])
+        displayStore(h, h["hero"], h["store"][storeList[0]])
+        storeItemsArray[0].classList.add("selected")
+        storeButton.onclick = () => {
+            document.body.classList.add("no-scroll")
+            displayStore[h, h["store"][storeList]]
+            storeContainer.showModal()
+        }
+        document.querySelector(".closeStoreButton").onclick = () => {
+            document.body.classList.remove("no-scroll")
+            for (const child of storeItemsArray) {
+                if (child.classList.contains("selected")) child.classList.remove("selected")
+            }
+            storeItemsArray[0].classList.add("selected")
+            displayStore(h, h["hero"], h["store"][storeList[0]])
+            storeContainer.close()
+        }
+    } else {
+        document.querySelector(".disclaimerContainer").style.margin = "50px 0 20px 20px"
+        storeButton.style.display = "none"
+    }
+
+
+
+
     document.querySelector(".heroCost").innerHTML = `$${h["cost"]}&nbsp;&nbsp;|&nbsp;&nbsp;Level ${level}`
     document.querySelector(".heroImage").src = `assets/${h["hero"].replace(/ /g, "")}.png` // removes spaces from the hero name
     const baseStatsContainer = document.createElement("div")
@@ -642,8 +736,8 @@ function displayHeroData(level) {
                 }
                 projectilesContainer.appendChild(emissionsContainer)
             }
+            heroStatsContainer.appendChild(projectilesContainer)
         }
-        heroStatsContainer.appendChild(projectilesContainer)
     }
     if (h.hasOwnProperty("abilities")) {
         const abilitiesContainer = document.createElement("div")
@@ -708,12 +802,153 @@ function displayHeroData(level) {
     editURL("level", level)
 }
 
+function displayStore(heroData, heroName, item) {
+    const overviewStatsContainer = document.querySelector(".overviewStatsContainer")
+    for (const child of Array.from(overviewStatsContainer.children)) child.remove()
+    for (const child of Array.from(document.querySelector(".relatedStatsContainer").children)) child.remove()
+    document.querySelector(".itemPortrait").src = item["icon"]
+    document.querySelector(".itemName").innerText = item["displayName"]
+    document.querySelector(".itemOverviewDescription").innerText = item["description"]
+    if (heroName === "Geraldo") {
+        overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer withImage">
+            <div class="descriptionContainer">
+              <h4 class="storeOverviewIconDescription">Cost</h4>
+            </div>
+            <div class="overviewImageAndValueContainer">
+              <img src="assets/moneyIcon.png" alt="" class="overviewImage">
+              <p class="storeItemCost">${item["cost"]}</p>
+            </div>
+            </div>
+        </div>
+        <div class="overviewStatsSectionContainer withImage">
+        <div class="descriptionContainer">
+            <h4 class="storeOverviewIconDescription">Refresh Time</h4>
+        </div>
+        <div class="overviewImageAndValueContainer">
+            <span class="material-symbols-outlined reloadTimeIcon overviewIcon">refresh</span>
+            <p class="storeItemReloadTime">${item["refreshRounds"]} round(s) per item</p>
+        </div>
+        </div>
+        `
+        let duration = item["durationRounds"]
+        if (!duration) duration = "Infinite"
+       overviewStatsContainer.innerHTML += `
+       <div class="overviewStatsSectionContainer withImage">
+            <div class="descriptionContainer">
+            <h4 class="storeOverviewIconDescription">Duration</h4>
+            </div>
+            <div class="overviewImageAndValueContainer">
+            <img src="assets/timer.png" alt="" class="overviewImage">
+            <p class="storeItemDurationTime">${duration} rounds</p>
+            </div>
+        </div>
+        <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+            <h4 class="overviewHeader">Max Stock</h4>
+            <p class="storeItemMaxStock">${item["maxStock"]} items</p>
+        </div>`
+        if (item.hasOwnProperty("footprintRadius")) overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+            <h4 class="overviewHeader">Tower Size</h4>
+            <p class="storeItemRange">${getFootprintInEnglish(item["footprintRadius"])} (${item["footprintRadius"]})</p>
+        </div>`
+        if (item.hasOwnProperty("range")) overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+            <h4 class="overviewHeader">Range</h4>
+            <p class="storeItemRange">${item["range"]}</p>
+        </div>`
+        if (item.hasOwnProperty("special")) overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer special">
+            <h4 class="overviewHeader">Special</h4>
+            <p class="storeItemRange">${item["special"]}</p>
+        </div>`
+    } else if (heroName === "Corvus") {
+        overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer">
+            <h4 class="overviewHeader">Mana Cost</h4>
+            <p class="storeItemMaxStock">${item["cost"]}</p>
+        </div>
+        `
+        if (item.hasOwnProperty("cooldown")) overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer withImage">
+        <div class="descriptionContainer">
+            <h4 class="storeOverviewIconDescription">Cooldown</h4>
+        </div>
+        <div class="overviewImageAndValueContainer">
+            <span class="material-symbols-outlined reloadTimeIcon overviewIcon">refresh</span>
+            <p class="storeItemReloadTime">${item["cooldown"]} seconds</p>
+        </div>
+        </div>
+        `
+        let duration
+        if (item.hasOwnProperty("duration")) {
+            duration = item["duration"]
+            if (!duration) duration = "Infinite"
+            overviewStatsContainer.innerHTML += `
+            <div class="overviewStatsSectionContainer withImage">
+                    <div class="descriptionContainer">
+                    <h4 class="storeOverviewIconDescription">Duration</h4>
+                    </div>
+                    <div class="overviewImageAndValueContainer">
+                    <img src="assets/timer.png" alt="" class="overviewImage">
+                    <p class="storeItemDurationTime">${duration} seconds</p>
+                    </div>
+                </div>
+                `
+        }
+        if (item.hasOwnProperty("special")) overviewStatsContainer.innerHTML += `
+        <div class="overviewStatsSectionContainer special">
+            <h4 class="overviewHeader">Special</h4>
+            <p class="storeItemRange">${item["special"]}</p>
+        </div>`
+    }
+    if (item.hasOwnProperty("hasAttacks")) {
+        for (const attack of item["hasAttacks"]) {
+            const attackDiv = document.createElement("div")
+            attackDiv.className = "attackDiv notCentered"
+            const currAttack = heroData["projectiles"][attack]
+            generateHeroProjectile(currAttack, attackDiv)
+            document.querySelector(".relatedStatsContainer").appendChild(attackDiv)
+            if (currAttack.hasOwnProperty("emissions")) {
+                const emissionsContainer = document.createElement("div")
+                for (const emissionName of currAttack["emissions"]){
+                    for (const name in heroData["projectiles"]) {
+                        if (emissionName == name) generateHeroEmission(heroData["projectiles"][emissionName], emissionsContainer, "projectile")
+                    }
+                    if (heroData.hasOwnProperty("statuses")) {
+                        for (const name in heroData["statuses"]) {
+                            if (emissionName == name) generateHeroEmission(heroData["statuses"][emissionName], emissionsContainer, "status")
+                        }
+                    }
+                    if (heroData.hasOwnProperty("supports")) {
+                        for (const name in heroData["supports"]) {
+                            if (emissionName == name) generateHeroEmission(heroData["supports"][emissionName], emissionsContainer, "support")
+                        }
+                    }
+                }
+                document.querySelector(".relatedStatsContainer").appendChild(emissionsContainer)
+            }
+        }
+    }
+    if (item.hasOwnProperty("hasStatuses")) {
+        for (const attack of item["hasStatuses"]) {
+            generateHeroEmission(heroData["statuses"][attack], document.querySelector(".relatedStatsContainer"), "status")
+        }
+    }
+    if (item.hasOwnProperty("hasSupports")) {
+        for (const attack of item["hasSupports"]) {
+            generateHeroEmission(heroData["supports"][attack], document.querySelector(".relatedStatsContainer"), "support")
+        }
+    }
+}
+
 function generateHeroEmission(data, container, type) {
     const h = hero.getData()
     const emissionDiv = document.createElement("div")
     emissionDiv.className = "attackDiv notCentered"
     const emissionName = document.createElement("h3")
-    emissionName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon" draggable="false"/> ${data["displayName"]}`
+    let emissionImage = type == "support" ? "assets/supportIcon.png" : "assets/projectileIcon.png"
+    emissionName.innerHTML = `<img src="${emissionImage}" class="attackCategoryIcon" draggable="false"/> ${data["displayName"]}`
     emissionName.className = "attackName notCentered emissionName"
     container.appendChild(emissionName)
     container.appendChild(emissionDiv)
@@ -778,6 +1013,7 @@ function generateHeroProjectile(data, container) {
     }
     if (data.hasOwnProperty("tickRate")) createElem(`${data["tickRate"]}s`, "Tick Rate", container)
     if (data.hasOwnProperty("duration")) createElem(`${data["duration"]}s`, "Duration", container) 
+    if (data.hasOwnProperty("damageDebuff")) createElem(`+${data["damageDebuff"]} damage`, "Debuff", container)
     if (data.hasOwnProperty("description")) createElem(data["description"], "Description", container)
     if (data.hasOwnProperty("special")) createElem(data["special"], "Special", container)
 }
@@ -828,6 +1064,7 @@ function editHeroDataAtLevel(level) {
     hero.resetData()
     const data = hero.getData()
     const levels = data["levels"]
+    const name = data["hero"]
     for (let i = 0; i < level; i++) {
         const currentLevel = levels[i]
         if (currentLevel.hasOwnProperty("editItems")) {
@@ -862,16 +1099,33 @@ function editHeroDataAtLevel(level) {
         if (currentLevel.hasOwnProperty("editFootprint")) {
             hero.editFootprint(currentLevel["editFootprint"])
         }
+        if (name === "Geraldo" || name === "Corvus") {
+            if (currentLevel.hasOwnProperty("editStore")) {
+                for (const data of currentLevel["editStore"]) {
+                    hero.editStore(data)
+                }
+            }
+        }
     }
     const abilities = data["abilities"]
-    for (const key of Object.keys(abilities)) {
-        if (abilities[key].hasOwnProperty("addDurationPerLevel")) {
-            hero.editItem({
-                "target": key,
-                "item": "duration",
-                "type": "add",
-                "value": abilities[key]["addDurationPerLevel"] * level
-            })
+    if (abilities) {
+        for (const key of Object.keys(abilities)) {
+            if (abilities[key].hasOwnProperty("addDurationPerLevel")) {
+                hero.editItem({
+                    "target": key,
+                    "item": "duration",
+                    "type": "add",
+                    "value": abilities[key]["addDurationPerLevel"] * level
+                })
+            }
+            if (abilities[key].hasOwnProperty("reduceCooldownPerLevel")) {
+                hero.editItem({
+                    "target": key,
+                    "item": "cooldown",
+                    "type": "subtract",
+                    "value": abilities[key]["reduceCooldownPerLevel"] * level
+                })
+            }
         }
     }
 }
@@ -981,7 +1235,6 @@ function swapToHeroCalculator() {
 for (const element of document.querySelectorAll(".paragon")) {
     if (!element.classList.contains("wip")) {
       element.onclick = () => {
-        enableLoading()
         swapToTower("paragons", element.id, 1)
         editURL("paragon", element.id)
       }
@@ -990,7 +1243,6 @@ for (const element of document.querySelectorAll(".paragon")) {
 for (const element of document.querySelectorAll(".hero")) {
     if (!element.classList.contains("wip")) {
         element.onclick = () => {
-            enableLoading()
             swapToTower("heroes", element.id, 1)
             editURL("hero", element.id)
         }
@@ -1093,11 +1345,11 @@ backButton.onclick = () => {
     for (const elem of Array.from(towerPickContainer.children)) elem.style.display = "flex"
     document.querySelector(".filterHeader").style.display = "block"
     document.querySelector(".optionsBar").style.display = "flex"
-    document.querySelector(".disclaimerContainer").style.display = "none"
     backButton.style.display = "none"
     // document.querySelector(".toolsPickContainer").style.display = "flex"
     // document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
     // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".disclaimerContainer").style.margin = "50px 0 20px 20px"
     document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
     document.querySelector("#chooseLevel1").classList.add("selected")
     checkFilter()
@@ -1129,9 +1381,9 @@ function enableLoading(str) {
     document.querySelector(".popupOverlay").style.display = "block"
     document.querySelector(".loading").style.display = "flex"
     if (str) {
-        msgElem.innerText = str
+        msgElem.innerHTML = str
     } else {
-        msgElem.innerText = ""
+        msgElem.innerHTML = ""
     }
     document.body.classList.add("no-scroll")
 }

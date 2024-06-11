@@ -875,7 +875,7 @@ async function swapToEventOverview(event) {
 }
 // url2 and url3 are optional: url2 for elite boss or medium odyssey, url3 for hard odyssey
 async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, url3 = null, difficulty = null) {
-  enableLoading(`Loading <b>${name}</b> Details`)
+  enableLoading(`Loading Event Details...`)
   eventTitle.innerText = ""
   await getMetadata(id, event, name, timestamp, url, url2, url3)
   raceArchiveContainer.style.display = "none"
@@ -891,7 +891,7 @@ async function swapToEventDetails(id, event, name, timestamp, url, url2 = null, 
 }
 // url2 is optional: either elite boss or player CT
 async function swapToEventLeaderboard(id, event, name, timestamp, url, url2 = null, difficulty = null) {
-  enableLoading(`Loading <b>${name}</b> Leaderboards`)
+  enableLoading(`Loading Event Leaderboards...`)
   eventTitle.innerText = ""
   await getLeaderboard(id, event, name, timestamp, url, url2)
   document.querySelector(".leaderboardTitle").innerText = name

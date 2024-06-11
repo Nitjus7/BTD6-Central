@@ -1,3 +1,8 @@
+function generateNewsLinks() {
+  document.querySelector(".learnMoreButtonContainer").onclick = () => {
+    window.open("https://www.reddit.com/r/btd6/comments/1dca4jl/btd6_community_event_birthday_bad_bonanza/")
+  }
+}
 function generateResourceLinks() {
   /* document.querySelector(".jumpToResourcesButton").onclick = () => {
     document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
@@ -22,26 +27,27 @@ function generateFeaturedPagesLinks() {
   const links4 = Array.from(document.querySelectorAll(".goToLink4"))
   for (const link of links1) {
     link.onclick = () => {
-      window.location.replace("towers.html")
+      window.open("towers.html")
     }
   }
   for (const link of links2) {
     link.onclick = () => {
-      window.location.replace("community.html")
+      window.open("community.html")
     }
   }
   for (const link of links3) {
     link.onclick = () => {
-      window.location.replace("events.html?event=bosses")
+      window.open("events.html?event=bosses")
     }
   }
   for (const link of links4) {
     link.onclick = () => {
-      window.location.replace("events.html?event=races") // testing this for when I push to github to see if it still works
+      window.open("events.html?event=races") // testing this for when I push to github to see if it still works
     }
   }
 }
 
+generateNewsLinks()
 generateResourceLinks()
 generateFeaturedPagesLinks()
 // main() 
