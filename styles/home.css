@@ -1,3 +1,7 @@
+.homePageBody {
+    max-width: var(--maxBodyWidth);
+    margin: 0 auto;
+}
 .coverImage {
     background-image: linear-gradient(to top, var(--pageBackground), var(--gradientEndsAt)), url('../assets/coverImage.webp');
     filter: blur(5px);
@@ -42,6 +46,7 @@
 
 .newsCard {
     padding: 10px 15px 15px 15px;
+    max-width: var(--maxTextAreaWidth);
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -89,6 +94,7 @@
     justify-content: center;
     flex-basis: 45%;
     flex-wrap: wrap;
+    margin: 0 auto;
 }
 .featuredPageContainer {
     width: 45%;

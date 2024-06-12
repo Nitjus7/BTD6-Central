@@ -628,7 +628,7 @@ function displayHeroData(level) {
 
 
     if (h["hero"] === "Geraldo" || h["hero"] === "Corvus") {
-        document.querySelector(".disclaimerContainer").style.margin = "50px 0 100px 20px"
+        document.querySelector(".disclaimerContainer").style.margin = "50px auto 100px auto"
         storeButton.style.display = "flex"
         const storeItems = Object.keys(h["store"])
         if (h["hero"] === "Geraldo") {
@@ -687,7 +687,7 @@ function displayHeroData(level) {
             storeContainer.close()
         }
     } else {
-        document.querySelector(".disclaimerContainer").style.margin = "50px 0 20px 20px"
+        document.querySelector(".disclaimerContainer").style.margin = "50px auto 20px auto"
         storeButton.style.display = "none"
     }
 
@@ -1349,7 +1349,7 @@ backButton.onclick = () => {
     // document.querySelector(".toolsPickContainer").style.display = "flex"
     // document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
     // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
-    document.querySelector(".disclaimerContainer").style.margin = "50px 0 20px 20px"
+    document.querySelector(".disclaimerContainer").style.margin = "50px auto 20px auto"
     document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
     document.querySelector("#chooseLevel1").classList.add("selected")
     checkFilter()

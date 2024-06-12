@@ -107,31 +107,79 @@
         </a>
       </div>
 
-      <h2 class="filterHeader">Categories</h2>
-      <div class="optionsBar">
-        <button id="primary" class="standardButton filterOption">Primary</button>
-        <button id="military" class="standardButton filterOption">Military</button>
-        <button id="magic" class="standardButton filterOption">Magic</button>
-        <button id="support" class="standardButton filterOption">Support</button>
-        <button id="hero" class="standardButton filterOption">Heroes</button>
-        <button id="paragon" class="standardButton filterOption">All Paragons</button>
-        <button id="noFilter" class="standardButton filterOption selected">All Towers</button>
-      </div>
-      <div class="toolsPickContainer">
-        <h2 class="toolsHeader">Tools</h2>
-        <div class="toolButtonContainer">
-          <button class="heroLevelButton toolButton standardButton">Hero Level Calculator</button>
+      <div class="towerStatsBody">
+        <h2 class="filterHeader">Categories</h2>
+        <div class="optionsBar">
+          <button id="primary" class="standardButton filterOption">Primary</button>
+          <button id="military" class="standardButton filterOption">Military</button>
+          <button id="magic" class="standardButton filterOption">Magic</button>
+          <button id="support" class="standardButton filterOption">Support</button>
+          <button id="hero" class="standardButton filterOption">Heroes</button>
+          <button id="paragon" class="standardButton filterOption">All Paragons</button>
+          <button id="noFilter" class="standardButton filterOption selected">All Towers</button>
         </div>
-       <!-- <div class="toolButtonContainer">
-          <button class="paragonDegreeButton toolButton standardButton">Paragon Degree Calculator</button>
-        </div> -->
-      </div>
-      <div class="heroLevelCalculatorContainer">
-        <h1 class="heroLevelCalcHeader">Hero Level Calculators</h1>
-        <div class="heroLevelBasicContainer">
-          <div class="heroLevelBasicInputContainer">
-            <label for="heroBasicCalcInput">Hero</label>
-            <select name="heroName" id="heroBasicCalcInput">
+        <div class="toolsPickContainer">
+          <h2 class="toolsHeader">Tools</h2>
+          <div class="toolButtonContainer">
+            <button class="heroLevelButton toolButton standardButton">Hero Level Calculator</button>
+          </div>
+         <!-- <div class="toolButtonContainer">
+            <button class="paragonDegreeButton toolButton standardButton">Paragon Degree Calculator</button>
+          </div> -->
+        </div>
+        <div class="heroLevelCalculatorContainer">
+          <h1 class="heroLevelCalcHeader">Hero Level Calculators</h1>
+          <div class="heroLevelBasicContainer">
+            <div class="heroLevelBasicInputContainer">
+              <label for="heroBasicCalcInput">Hero</label>
+              <select name="heroName" id="heroBasicCalcInput">
+                <option value="1">Quincy</option>
+                <option value="1">Gwendolin</option>
+                <option value="1">Striker Jones</option>
+                <option value="1">Obyn Greenfoot</option>
+                <option value="1.71">Captain Churchill</option>
+                <option value="1.5">Benjamin</option>
+                <option value="1.425">Ezili</option>
+                <option value="1.425">Pat Fusty</option>
+                <option value="1.71">Adora</option>
+                <option value="1.425">Admiral Brickell</option>
+                <option value="1">Etienne</option>
+                <option value="1.425">Sauda</option>
+                <option value="1.5">Psi</option>
+                <option value="1">Geraldo</option>
+                <option value="1.71">Corvus</option>
+                <option value="1.425">Rosalia</option>
+              </select>
+            </div>
+            <div class="heroLevelBasicInputContainer">
+              <label for="heroLevelCalcInput">Hero Placement Round</label>
+              <input type="number" class="calcInput" id="heroStartRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
+            </div>
+            <div class="heroLevelBasicInputContainer">
+              <label for="heroLevelCalcInput">Ending Round</label>
+              <input type="number" class="calcInput" id="heroEndRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
+            </div>
+            <div class="heroLevelBasicInputContainer">
+              <label for="mapDifficultyCalcInput">Map Difficulty</label>
+              <select name="mapDifficulty" id="mapDifficultyCalcInput">
+                <option value="1">Beginner</option>
+                <option value="1.1">Intermediate</option>
+                <option value="1.2">Advanced</option>
+                <option value="1.3">Expert</option>
+                <option value="1.1">Custom Map</option>
+              </select>
+            </div>
+            <div class="heroLevelBasicInputContainer">
+              <label for="energizerPlacementInput">Energizer Placement Round</label>
+              <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="1000"></input>
+            </div>
+            <button class="confirmHeroBasicCalcButton standardButton confirmHeroCalcButton">Calculate</button>
+            <h2 class="heroLevelBasicResult"></h2>
+          </div>
+          <h2 class="heroLevelByHeader">OR</h2>
+          <div class="heroLevelByContainer">
+            <p class="heroLevelByText">I want to get</p>
+            <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
               <option value="1">Quincy</option>
               <option value="1">Gwendolin</option>
               <option value="1">Striker Jones</option>
@@ -149,371 +197,322 @@
               <option value="1.71">Corvus</option>
               <option value="1.425">Rosalia</option>
             </select>
-          </div>
-          <div class="heroLevelBasicInputContainer">
-            <label for="heroLevelCalcInput">Hero Placement Round</label>
-            <input type="number" class="calcInput" id="heroStartRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
-          </div>
-          <div class="heroLevelBasicInputContainer">
-            <label for="heroLevelCalcInput">Ending Round</label>
-            <input type="number" class="calcInput" id="heroEndRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
-          </div>
-          <div class="heroLevelBasicInputContainer">
-            <label for="mapDifficultyCalcInput">Map Difficulty</label>
-            <select name="mapDifficulty" id="mapDifficultyCalcInput">
+            <p class="heroLevelByText">to level</p>
+            <input type="number" class="calcInput heroLevelCalcInput" id="heroLevelByTargetLevel" placeholder="required" name="heroRound" min="1" max="20"></input>
+            <p class="heroLevelByText">by round</p>
+            <input type="number" class="calcInput heroGoalRoundInput" placeholder="required" name="heroRound" min="1" max="100"></input>
+            <p class="heroLevelByText">on a(n)</p>
+            <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
               <option value="1">Beginner</option>
               <option value="1.1">Intermediate</option>
               <option value="1.2">Advanced</option>
               <option value="1.3">Expert</option>
-              <option value="1.1">Custom Map</option>
+              <option value="1.1">Custom</option>
             </select>
-          </div>
-          <div class="heroLevelBasicInputContainer">
-            <label for="energizerPlacementInput">Energizer Placement Round</label>
-            <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="1000"></input>
-          </div>
-          <button class="confirmHeroBasicCalcButton standardButton confirmHeroCalcButton">Calculate</button>
-          <h2 class="heroLevelBasicResult"></h2>
-        </div>
-        <h2 class="heroLevelByHeader">OR</h2>
-        <div class="heroLevelByContainer">
-          <p class="heroLevelByText">I want to get</p>
-          <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
-            <option value="1">Quincy</option>
-            <option value="1">Gwendolin</option>
-            <option value="1">Striker Jones</option>
-            <option value="1">Obyn Greenfoot</option>
-            <option value="1.71">Captain Churchill</option>
-            <option value="1.5">Benjamin</option>
-            <option value="1.425">Ezili</option>
-            <option value="1.425">Pat Fusty</option>
-            <option value="1.71">Adora</option>
-            <option value="1.425">Admiral Brickell</option>
-            <option value="1">Etienne</option>
-            <option value="1.425">Sauda</option>
-            <option value="1.5">Psi</option>
-            <option value="1">Geraldo</option>
-            <option value="1.71">Corvus</option>
-            <option value="1.425">Rosalia</option>
-          </select>
-          <p class="heroLevelByText">to level</p>
-          <input type="number" class="calcInput heroLevelCalcInput" id="heroLevelByTargetLevel" placeholder="required" name="heroRound" min="1" max="20"></input>
-          <p class="heroLevelByText">by round</p>
-          <input type="number" class="calcInput heroGoalRoundInput" placeholder="required" name="heroRound" min="1" max="100"></input>
-          <p class="heroLevelByText">on a(n)</p>
-          <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
-            <option value="1">Beginner</option>
-            <option value="1.1">Intermediate</option>
-            <option value="1.2">Advanced</option>
-            <option value="1.3">Expert</option>
-            <option value="1.1">Custom</option>
-          </select>
-          <p class="heroLevelByText">map.</p>
-          <div class="lineBreak"></div>
-          <button class="confirmHeroLevelByButton standardButton confirmHeroCalcButton">Confirm</button>
-          <div class="lineBreak"></div>
-          <h4 class="heroLevelByResult"></h4>
-        </div>
-
-      </div> 
-      <!-- <div class="paragonDegreeCalculatorContainer">
-        <h1 class="paragonDegreeCalcHeader">Paragon Degree Calculator</h1>
-        <label for="paragonNameInput">Choose a Paragon</label>
-        <select name="paragonName" id="paragonNameInput">
-          <option value="DartMonkey">Apex Plasma Master (Dart)</option>
-          <option value="BoomerangMonkey">Glaive Dominus (Boomerang)</option>
-          <option value="MonkeySub">Nautic Siege Core (Sub)</option>
-          <option value="MonkeyBuccaneer">Navarch of the Seas (Buccaneer)</option>
-          <option value="MonkeyAce">Goliath Doomship (Ace)</option>
-          <option value="WizardMonkey">Magus Perfectus (Wizard)</option>
-          <option value="NinjaMonkey">Ascended Shadow (Ninja)</option>
-          <option value="MonkeyEngineer">Master Builder (Engineer)</option>
-        </select><br><br>
-          <label for="paragonPops">Total Pops</label>
-          <input type="number" value="0" class="valueInput wider calcInput" id="paragonPopsInTool"><br>
-          <label for="paragonTiersSacced">Tiers in Sacrifices</label>
-          <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSaccedInTool"><br>
-          <label for="paragonCashSacced">Cash in Sacrifices</label>
-          <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSaccedInTool"><br>
-          <label for="paragonCashSlider">Cash Slider</label>
-          <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSliderInTool"><br>
-          <label for="paragonT5Sacced">Extra Tier 5s</label>
-          <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5SaccedInTool"><br>
-          <label for="gamemodeDifficulty">Difficulty</label>
-          <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-            <option value="impoppable">Impoppable</option>
-          </select><br>
-          <button class="calculateParagonDegreeButton standardButton" id="calculateParagonDegreeButtonInTool">Calculate</button>
-          <p class="resultInTool">Placeholder</p>
-      </div> -->
-
-
-      <div class="towerPickContainer">
-        <!--PRIMARY-->
-        <h2 class="primaryHeader">Primary</h2>
-        <div class="primaryContainer">
-          <button id="DartMonkey" class="wip primary monkey">Dart Monkey</button>
-          <button id="ApexPlasmaMaster" class="primary paragon">Apex Plasma Master</button>
-          <button id="BoomerangMonkey" class="wip primary monkey">Boomerang Monkey</button>
-          <button id="GlaiveDominus" class="primary paragon">Glaive Dominus</button>
-          <button id="BombShooter" class="wip primary monkey">Bomb Shooter</button>
-          <button id="TackShooter" class="wip primary monkey">Tack Shooter</button>
-          <button id="IceMonkey" class="wip primary monkey">Ice Monkey</button>
-          <button id="GlueGunner" class="wip primary monkey">Glue Gunner</button>
-        </div>
-        <!--MILITARY-->
-        <h2 class="militaryHeader">Military</h2>
-        <div class="militaryContainer">
-          <button id="SniperMonkey" class="wip military monkey">Sniper Monkey</button>
-          <button id="MonkeySub" class="wip military monkey">Monkey Sub</button>
-          <button id="NauticSiegeCore" class="military paragon">Nautic Siege Core</button>
-          <button id="MonkeyBuccaneer" class="wip military monkey">Monkey Buccaneer</button>
-          <button id="NavarchOfTheSeas" class="military paragon">Navarch of the Seas</button>
-          <button id="MonkeyAce" class="wip military monkey">Monkey Ace</button>
-          <button id="GoliathDoomship" class="military paragon">Goliath Doomship</button>
-          <button id="HeliPilot" class="wip military monkey">Heli Pilot</button>
-          <button id="MortarMonkey" class="wip military monkey">Mortar Monkey</button>
-          <button id="DartlingGunner" class="wip military monkey">Dartling Gunner</button>
-        </div>
-        <!--MAGIC-->
-        <h2 class="magicHeader">Magic</h2>
-        <div class="magicContainer">
-          <button id="WizardMonkey" class="wip magic monkey">Wizard Monkey</button>
-          <button id="MagusPerfectus" class="magic paragon">Magus Perfectus</button>
-          <button id="SuperMonkey" class="wip magic monkey">Super Monkey</button>
-          <button id="NinjaMonkey" class="wip magic monkey">Ninja Monkey</button>
-          <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
-          <button id="Alchemist" class="wip magic monkey">Alchemist</button>
-          <button id="Druid" class="wip magic monkey">Druid</button>
-        </div>
-        <!--SUPPORT-->
-        <h2 class="supportHeader">Support</h2>
-        <div class="supportContainer">
-          <button id="BananaFarm" class="wip support monkey">Banana Farm</button>
-          <button id="MonkeyVillage" class="wip support monkey">Monkey Village</button>
-          <button id="SpikeFactory" class="wip support monkey">Spike Factory</button>
-          <button id="EngineerMonkey" class="wip support monkey">Engineer Monkey</button>
-          <button id="MasterBuilder" class="support paragon">Master Builder</button>
-          <button id="BeastHandler" class="wip support monkey">Beast Handler</button>
-        </div>
-        <!--HEROES--->
-        <h2 class="heroesHeader">Heroes</h2>
-        <div class="heroesContainer">
-          <button id="Quincy" class="hero standardButton"><img src="assets/Quincy.png" alt="Quincy" class="heroButtonIcon" loading="eager"></button>
-          <button id="Gwendolin" class="hero standardButton"><img src="assets/Gwendolin.png" alt="Gwendolin" class="heroButtonIcon" loading="eager"></button>
-          <button id="StrikerJones" class="hero standardButton"><img src="assets/StrikerJones.png" alt="StrikerJones" class="heroButtonIcon" loading="eager"></button>
-          <button id="ObynGreenfoot" class="hero standardButton"><img src="assets/ObynGreenfoot.png" alt="ObynGreenfoot" class="heroButtonIcon" loading="eager"></button>
-          <button id="Rosalia" class="hero standardButton"><img src="assets/Rosalia.png" alt="Rosalia" class="heroButtonIcon" loading="eager"></button>
-          <button id="CaptainChurchill" class="hero standardButton"><img src="assets/CaptainChurchill.png" alt="CaptainChurchill" class="heroButtonIcon" loading="eager"></button>
-          <button id="Benjamin" class="hero standardButton"><img src="assets/Benjamin.png" alt="Benjamin" class="heroButtonIcon" loading="eager"></button>
-          <button id="Ezili" class="hero standardButton"><img src="assets/Ezili.png" alt="Ezili" class="heroButtonIcon" loading="eager"></button>
-          <button id="PatFusty" class="hero standardButton"><img src="assets/PatFusty.png" alt="PatFusty" class="heroButtonIcon" loading="eager"></button>
-          <button id="Adora" class="hero standardButton"><img src="assets/Adora.png" alt="Adora" class="heroButtonIcon" loading="eager"></button>
-          <button id="AdmiralBrickell" class="hero standardButton"><img src="assets/AdmiralBrickell.png" alt="AdmiralBrickell" class="heroButtonIcon" loading="eager"></button>
-          <button id="Etienne" class="hero standardButton"><img src="assets/Etienne.png" alt="Etienne" class="heroButtonIcon" loading="eager"></button>
-          <button id="Sauda" class="hero standardButton"><img src="assets/Sauda.png" alt="Sauda" class="heroButtonIcon" loading="eager"></button>
-          <button id="Psi" class="hero standardButton"><img src="assets/Psi.png" alt="Psi" class="heroButtonIcon" loading="eager"></button>
-          <button id="Geraldo" class="hero"><img src="assets/Geraldo.png" alt="Geraldo" class="heroButtonIcon" loading="eager"></button>
-          <button id="Corvus" class="hero"><img src="assets/Corvus.png" alt="Corvus" class="heroButtonIcon" loading="eager"></button>
-        </div>
-      </div>
-      <div class="paragonContainer">
-        <div class="paragonStatsContainer">
-          <h1 class="name paragonName"></h1>
-          <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
-          <div class="degreeEditorContainer">
-            <div class="degreeSelectorContainer editorOptionContainer">
-              <input type="radio" name="Billy" id="pikachuIChooseYou" class="checkmark" checked>
-              <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br><br>
-              <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
-            </div>
-            <div class="degreeCalculatorContainer editorOptionContainer unchecked">
-              <input type="radio" name="Bob" id="charizardIChooseYou" class="checkmark">
-              <b><label for="charizardIChooseYou" class="degreeEditorHeader">Calculate Degree</label></b><br><br>
-              <label for="paragonPops">Total Pops</label>
-              <input type="number" value="0" class="valueInput wider calcInput" id="paragonPops"><br>
-              <label for="paragonTiersSacced">Tiers in Sacrifices</label>
-              <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSacced"><br>
-              <label for="paragonCashSacced">Cash in Sacrifices</label>
-              <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSacced"><br>
-              <label for="paragonCashSlider">Cash Slider</label>
-              <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSlider"><br>
-              <label for="paragonT5Sacced">Extra Tier 5s</label>
-              <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5Sacced"><br>
-              <label for="gamemodeDifficulty">Difficulty</label>
-              <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
-                <option value="easy">Easy</option>
-                <option value="medium" selected>Medium</option>
-                <option value="hard">Hard</option>
-                <option value="impoppable">Impoppable</option>
-              </select><br>
-              <button class="calculateParagonDegreeButton" id="calculateParagonDegreeButton">Calculate</button>
-              <label for="calculateParagonDegreeButton" class="result"></label>
-            </div>
-          </div>
-          <h1 class="tier paragonDegree"></h1>
-        </div>
-      </div>
-      <div class="heroContainer">
-        <div class="heroHeaderContainer firstElem">
-          <img class="heroImage" draggable="false" src="assets/Quincy.png"></img>
-          <div class="heroNameAndCostContainer">
-            <h1 class="heroName">Placeholder</h1>
-            <h2 class="heroCost">$9999</h2>
+            <p class="heroLevelByText">map.</p>
+            <div class="lineBreak"></div>
+            <button class="confirmHeroLevelByButton standardButton confirmHeroCalcButton">Confirm</button>
+            <div class="lineBreak"></div>
+            <h4 class="heroLevelByResult"></h4>
           </div>
         </div>
-        <div class="heroStatsAndSelectContainer">
-          <div class="heroLevelContainer">
-            <h2 class="heroLevelSelectHeader">Hero Level</h2>
-            <div class="heroLevelSelectContainer">
-              <p id="chooseLevel1" class="chooseLevelButton standardButton selected">1</p>
-              <p id="chooseLevel2" class="chooseLevelButton standardButton">2</p>
-              <p id="chooseLevel3" class="chooseLevelButton standardButton">3</p>
-              <p id="chooseLevel4" class="chooseLevelButton standardButton">4</p>
-              <p id="chooseLevel5" class="chooseLevelButton standardButton">5</p>
-              <p id="chooseLevel6" class="chooseLevelButton standardButton">6</p>
-              <p id="chooseLevel7" class="chooseLevelButton standardButton">7</p>
-              <p id="chooseLevel8" class="chooseLevelButton standardButton">8</p>
-              <p id="chooseLevel9" class="chooseLevelButton standardButton">9</p>
-              <p id="chooseLevel10" class="chooseLevelButton standardButton">10</p>
-              <p id="chooseLevel11" class="chooseLevelButton standardButton">11</p>
-              <p id="chooseLevel12" class="chooseLevelButton standardButton">12</p>
-              <p id="chooseLevel13" class="chooseLevelButton standardButton">13</p>
-              <p id="chooseLevel14" class="chooseLevelButton standardButton">14</p>
-              <p id="chooseLevel15" class="chooseLevelButton standardButton">15</p>
-              <p id="chooseLevel16" class="chooseLevelButton standardButton">16</p>
-              <p id="chooseLevel17" class="chooseLevelButton standardButton">17</p>
-              <p id="chooseLevel18" class="chooseLevelButton standardButton">18</p>
-              <p id="chooseLevel19" class="chooseLevelButton standardButton">19</p>
-              <p id="chooseLevel20" class="chooseLevelButton standardButton">20</p>
+        <!-- <div class="paragonDegreeCalculatorContainer">
+          <h1 class="paragonDegreeCalcHeader">Paragon Degree Calculator</h1>
+          <label for="paragonNameInput">Choose a Paragon</label>
+          <select name="paragonName" id="paragonNameInput">
+            <option value="DartMonkey">Apex Plasma Master (Dart)</option>
+            <option value="BoomerangMonkey">Glaive Dominus (Boomerang)</option>
+            <option value="MonkeySub">Nautic Siege Core (Sub)</option>
+            <option value="MonkeyBuccaneer">Navarch of the Seas (Buccaneer)</option>
+            <option value="MonkeyAce">Goliath Doomship (Ace)</option>
+            <option value="WizardMonkey">Magus Perfectus (Wizard)</option>
+            <option value="NinjaMonkey">Ascended Shadow (Ninja)</option>
+            <option value="MonkeyEngineer">Master Builder (Engineer)</option>
+          </select><br><br>
+            <label for="paragonPops">Total Pops</label>
+            <input type="number" value="0" class="valueInput wider calcInput" id="paragonPopsInTool"><br>
+            <label for="paragonTiersSacced">Tiers in Sacrifices</label>
+            <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSaccedInTool"><br>
+            <label for="paragonCashSacced">Cash in Sacrifices</label>
+            <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSaccedInTool"><br>
+            <label for="paragonCashSlider">Cash Slider</label>
+            <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSliderInTool"><br>
+            <label for="paragonT5Sacced">Extra Tier 5s</label>
+            <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5SaccedInTool"><br>
+            <label for="gamemodeDifficulty">Difficulty</label>
+            <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+              <option value="impoppable">Impoppable</option>
+            </select><br>
+            <button class="calculateParagonDegreeButton standardButton" id="calculateParagonDegreeButtonInTool">Calculate</button>
+            <p class="resultInTool">Placeholder</p>
+        </div> -->
+        <div class="towerPickContainer">
+          <!--PRIMARY-->
+          <h2 class="primaryHeader">Primary</h2>
+          <div class="primaryContainer">
+            <button id="DartMonkey" class="wip primary monkey">Dart Monkey</button>
+            <button id="ApexPlasmaMaster" class="primary paragon">Apex Plasma Master</button>
+            <button id="BoomerangMonkey" class="wip primary monkey">Boomerang Monkey</button>
+            <button id="GlaiveDominus" class="primary paragon">Glaive Dominus</button>
+            <button id="BombShooter" class="wip primary monkey">Bomb Shooter</button>
+            <button id="TackShooter" class="wip primary monkey">Tack Shooter</button>
+            <button id="IceMonkey" class="wip primary monkey">Ice Monkey</button>
+            <button id="GlueGunner" class="wip primary monkey">Glue Gunner</button>
+          </div>
+          <!--MILITARY-->
+          <h2 class="militaryHeader">Military</h2>
+          <div class="militaryContainer">
+            <button id="SniperMonkey" class="wip military monkey">Sniper Monkey</button>
+            <button id="MonkeySub" class="wip military monkey">Monkey Sub</button>
+            <button id="NauticSiegeCore" class="military paragon">Nautic Siege Core</button>
+            <button id="MonkeyBuccaneer" class="wip military monkey">Monkey Buccaneer</button>
+            <button id="NavarchOfTheSeas" class="military paragon">Navarch of the Seas</button>
+            <button id="MonkeyAce" class="wip military monkey">Monkey Ace</button>
+            <button id="GoliathDoomship" class="military paragon">Goliath Doomship</button>
+            <button id="HeliPilot" class="wip military monkey">Heli Pilot</button>
+            <button id="MortarMonkey" class="wip military monkey">Mortar Monkey</button>
+            <button id="DartlingGunner" class="wip military monkey">Dartling Gunner</button>
+          </div>
+          <!--MAGIC-->
+          <h2 class="magicHeader">Magic</h2>
+          <div class="magicContainer">
+            <button id="WizardMonkey" class="wip magic monkey">Wizard Monkey</button>
+            <button id="MagusPerfectus" class="magic paragon">Magus Perfectus</button>
+            <button id="SuperMonkey" class="wip magic monkey">Super Monkey</button>
+            <button id="NinjaMonkey" class="wip magic monkey">Ninja Monkey</button>
+            <button id="AscendedShadow" class="magic paragon">Ascended Shadow</button>
+            <button id="Alchemist" class="wip magic monkey">Alchemist</button>
+            <button id="Druid" class="wip magic monkey">Druid</button>
+          </div>
+          <!--SUPPORT-->
+          <h2 class="supportHeader">Support</h2>
+          <div class="supportContainer">
+            <button id="BananaFarm" class="wip support monkey">Banana Farm</button>
+            <button id="MonkeyVillage" class="wip support monkey">Monkey Village</button>
+            <button id="SpikeFactory" class="wip support monkey">Spike Factory</button>
+            <button id="EngineerMonkey" class="wip support monkey">Engineer Monkey</button>
+            <button id="MasterBuilder" class="support paragon">Master Builder</button>
+            <button id="BeastHandler" class="wip support monkey">Beast Handler</button>
+          </div>
+          <!--HEROES--->
+          <h2 class="heroesHeader">Heroes</h2>
+          <div class="heroesContainer">
+            <button id="Quincy" class="hero standardButton"><img src="assets/Quincy.png" alt="Quincy" class="heroButtonIcon" loading="eager"></button>
+            <button id="Gwendolin" class="hero standardButton"><img src="assets/Gwendolin.png" alt="Gwendolin" class="heroButtonIcon" loading="eager"></button>
+            <button id="StrikerJones" class="hero standardButton"><img src="assets/StrikerJones.png" alt="StrikerJones" class="heroButtonIcon" loading="eager"></button>
+            <button id="ObynGreenfoot" class="hero standardButton"><img src="assets/ObynGreenfoot.png" alt="ObynGreenfoot" class="heroButtonIcon" loading="eager"></button>
+            <button id="Rosalia" class="hero standardButton"><img src="assets/Rosalia.png" alt="Rosalia" class="heroButtonIcon" loading="eager"></button>
+            <button id="CaptainChurchill" class="hero standardButton"><img src="assets/CaptainChurchill.png" alt="CaptainChurchill" class="heroButtonIcon" loading="eager"></button>
+            <button id="Benjamin" class="hero standardButton"><img src="assets/Benjamin.png" alt="Benjamin" class="heroButtonIcon" loading="eager"></button>
+            <button id="Ezili" class="hero standardButton"><img src="assets/Ezili.png" alt="Ezili" class="heroButtonIcon" loading="eager"></button>
+            <button id="PatFusty" class="hero standardButton"><img src="assets/PatFusty.png" alt="PatFusty" class="heroButtonIcon" loading="eager"></button>
+            <button id="Adora" class="hero standardButton"><img src="assets/Adora.png" alt="Adora" class="heroButtonIcon" loading="eager"></button>
+            <button id="AdmiralBrickell" class="hero standardButton"><img src="assets/AdmiralBrickell.png" alt="AdmiralBrickell" class="heroButtonIcon" loading="eager"></button>
+            <button id="Etienne" class="hero standardButton"><img src="assets/Etienne.png" alt="Etienne" class="heroButtonIcon" loading="eager"></button>
+            <button id="Sauda" class="hero standardButton"><img src="assets/Sauda.png" alt="Sauda" class="heroButtonIcon" loading="eager"></button>
+            <button id="Psi" class="hero standardButton"><img src="assets/Psi.png" alt="Psi" class="heroButtonIcon" loading="eager"></button>
+            <button id="Geraldo" class="hero"><img src="assets/Geraldo.png" alt="Geraldo" class="heroButtonIcon" loading="eager"></button>
+            <button id="Corvus" class="hero"><img src="assets/Corvus.png" alt="Corvus" class="heroButtonIcon" loading="eager"></button>
+          </div>
+        </div>
+        <div class="paragonContainer">
+          <div class="paragonStatsContainer">
+            <h1 class="name paragonName"></h1>
+            <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
+            <div class="degreeEditorContainer">
+              <div class="degreeSelectorContainer editorOptionContainer">
+                <input type="radio" name="Billy" id="pikachuIChooseYou" class="checkmark" checked>
+                <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br><br>
+                <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
+              </div>
+              <div class="degreeCalculatorContainer editorOptionContainer unchecked">
+                <input type="radio" name="Bob" id="charizardIChooseYou" class="checkmark">
+                <b><label for="charizardIChooseYou" class="degreeEditorHeader">Calculate Degree</label></b><br><br>
+                <label for="paragonPops">Total Pops</label>
+                <input type="number" value="0" class="valueInput wider calcInput" id="paragonPops"><br>
+                <label for="paragonTiersSacced">Tiers in Sacrifices</label>
+                <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSacced"><br>
+                <label for="paragonCashSacced">Cash in Sacrifices</label>
+                <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSacced"><br>
+                <label for="paragonCashSlider">Cash Slider</label>
+                <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSlider"><br>
+                <label for="paragonT5Sacced">Extra Tier 5s</label>
+                <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5Sacced"><br>
+                <label for="gamemodeDifficulty">Difficulty</label>
+                <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
+                  <option value="easy">Easy</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="hard">Hard</option>
+                  <option value="impoppable">Impoppable</option>
+                </select><br>
+                <button class="calculateParagonDegreeButton" id="calculateParagonDegreeButton">Calculate</button>
+                <label for="calculateParagonDegreeButton" class="result"></label>
+              </div>
+            </div>
+            <h1 class="tier paragonDegree"></h1>
+          </div>
+        </div>
+        <div class="heroContainer">
+          <div class="heroHeaderContainer firstElem">
+            <img class="heroImage" draggable="false" src="assets/Quincy.png"></img>
+            <div class="heroNameAndCostContainer">
+              <h1 class="heroName">Placeholder</h1>
+              <h2 class="heroCost">$9999</h2>
             </div>
           </div>
-          <div class="heroStatsMarginAdder">
-            <div class="heroStatsContainer">
-              
-            </div>
-          </div> 
-        <div class="heroStoreButton"><img src="assets/geraldoShopIcon.png" alt="Store" class="openStoreIcon" draggable="false"></div>
-        <dialog class="storeContainer">
-          <div class="storeHeaderContainer"><h2 class="storeHeader">The Placeholder&nbsp;&nbsp;|&nbsp;&nbsp;Level 1</h2><span class="material-symbols-outlined closeStoreButton">close</span></div>
-          <div class="itemSelectAndOverviewContainer">
-            <div class="storeItemsContainer">
-              <div class="iconCover selected">
-                <div id="storeItem1"><img src="assets/geraldo1.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem2"><img src="assets/geraldo2.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem3"><img src="assets/geraldo3.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem4"><img src="assets/geraldo4.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem5"><img src="assets/geraldo5.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem6"><img src="assets/geraldo6.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem7"><img src="assets/geraldo7.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem8"><img src="assets/geraldo8.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem9"><img src="assets/geraldo9.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem10"><img src="assets/geraldo10.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover inactive">
-                <div id="storeItem11"><img src="assets/geraldo11.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem12"><img src="assets/geraldo12.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem13"><img src="assets/geraldo13.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem14"><img src="assets/geraldo14.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem15"><img src="assets/geraldo15.png" alt="" class="storeIcon" draggable="false"></div>
-              </div>
-              <div class="iconCover">
-                <div id="storeItem16"><img src="assets/geraldo16.png" alt="" class="storeIcon" draggable="false"></div>
+          <div class="heroStatsAndSelectContainer">
+            <div class="heroLevelContainer">
+              <h2 class="heroLevelSelectHeader">Hero Level</h2>
+              <div class="heroLevelSelectContainer">
+                <p id="chooseLevel1" class="chooseLevelButton standardButton selected">1</p>
+                <p id="chooseLevel2" class="chooseLevelButton standardButton">2</p>
+                <p id="chooseLevel3" class="chooseLevelButton standardButton">3</p>
+                <p id="chooseLevel4" class="chooseLevelButton standardButton">4</p>
+                <p id="chooseLevel5" class="chooseLevelButton standardButton">5</p>
+                <p id="chooseLevel6" class="chooseLevelButton standardButton">6</p>
+                <p id="chooseLevel7" class="chooseLevelButton standardButton">7</p>
+                <p id="chooseLevel8" class="chooseLevelButton standardButton">8</p>
+                <p id="chooseLevel9" class="chooseLevelButton standardButton">9</p>
+                <p id="chooseLevel10" class="chooseLevelButton standardButton">10</p>
+                <p id="chooseLevel11" class="chooseLevelButton standardButton">11</p>
+                <p id="chooseLevel12" class="chooseLevelButton standardButton">12</p>
+                <p id="chooseLevel13" class="chooseLevelButton standardButton">13</p>
+                <p id="chooseLevel14" class="chooseLevelButton standardButton">14</p>
+                <p id="chooseLevel15" class="chooseLevelButton standardButton">15</p>
+                <p id="chooseLevel16" class="chooseLevelButton standardButton">16</p>
+                <p id="chooseLevel17" class="chooseLevelButton standardButton">17</p>
+                <p id="chooseLevel18" class="chooseLevelButton standardButton">18</p>
+                <p id="chooseLevel19" class="chooseLevelButton standardButton">19</p>
+                <p id="chooseLevel20" class="chooseLevelButton standardButton">20</p>
               </div>
             </div>
-            <div class="itemOverviewContainer">
-              <div class="itemHeaderContainer">
-                <div class="itemPortraitContainer"><img src="assets/geraldo1.png" alt="" class="itemPortrait"></div>
-                <h2 class="itemName">Shooty Turret</h2>
+            <div class="heroStatsMarginAdder">
+              <div class="heroStatsContainer">
+        
               </div>
-              <div class="itemOverviewDescriptionContainer">
-                <p class="itemOverviewDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem esse quasi culpa odit. Praesentium possimus ipsam ipsum quaerat velit delectus veniam debitis labore. Culpa, sed.</p>
+            </div>
+          <div class="heroStoreButton"><img src="assets/geraldoShopIcon.png" alt="Store" class="openStoreIcon" draggable="false"></div>
+          <dialog class="storeContainer">
+            <div class="storeHeaderContainer"><h2 class="storeHeader">The Placeholder&nbsp;&nbsp;|&nbsp;&nbsp;Level 1</h2><span class="material-symbols-outlined closeStoreButton">close</span></div>
+            <div class="itemSelectAndOverviewContainer">
+              <div class="storeItemsContainer">
+                <div class="iconCover selected">
+                  <div id="storeItem1"><img src="assets/geraldo1.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem2"><img src="assets/geraldo2.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem3"><img src="assets/geraldo3.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem4"><img src="assets/geraldo4.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem5"><img src="assets/geraldo5.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem6"><img src="assets/geraldo6.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem7"><img src="assets/geraldo7.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem8"><img src="assets/geraldo8.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem9"><img src="assets/geraldo9.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem10"><img src="assets/geraldo10.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover inactive">
+                  <div id="storeItem11"><img src="assets/geraldo11.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem12"><img src="assets/geraldo12.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem13"><img src="assets/geraldo13.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem14"><img src="assets/geraldo14.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem15"><img src="assets/geraldo15.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
+                <div class="iconCover">
+                  <div id="storeItem16"><img src="assets/geraldo16.png" alt="" class="storeIcon" draggable="false"></div>
+                </div>
               </div>
-              <div class="overviewStatsContainer">
-                <div class="overviewStatsSectionContainer withImage geraldoExclusiveContainer">
-                  <div class="descriptionContainer">
-                    <h4 class="storeOverviewIconDescription">Cost</h4>
-                  </div>
-                  <div class="overviewImageAndValueContainer">
-                    <img src="assets/moneyIcon.png" alt="" class="overviewImage">
-                    <p class="storeItemCost">200</p>
-                  </div>
+              <div class="itemOverviewContainer">
+                <div class="itemHeaderContainer">
+                  <div class="itemPortraitContainer"><img src="assets/geraldo1.png" alt="" class="itemPortrait"></div>
+                  <h2 class="itemName">Shooty Turret</h2>
                 </div>
-                <div class="overviewStatsSectionContainer withImage">
-                  <div class="descriptionContainer">
-                    <h4 class="storeOverviewIconDescription">Refresh Time</h4>
-                  </div>
-                  <div class="overviewImageAndValueContainer">
-                    <span class="material-symbols-outlined reloadTimeIcon overviewIcon">refresh</span>
-                    <p class="storeItemReloadTime">5 rounds</p>
-                  </div>
+                <div class="itemOverviewDescriptionContainer">
+                  <p class="itemOverviewDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem esse quasi culpa odit. Praesentium possimus ipsam ipsum quaerat velit delectus veniam debitis labore. Culpa, sed.</p>
                 </div>
-                <div class="overviewStatsSectionContainer withImage">
-                  <div class="descriptionContainer">
-                    <h4 class="storeOverviewIconDescription">Duration</h4>
+                <div class="overviewStatsContainer">
+                  <div class="overviewStatsSectionContainer withImage geraldoExclusiveContainer">
+                    <div class="descriptionContainer">
+                      <h4 class="storeOverviewIconDescription">Cost</h4>
+                    </div>
+                    <div class="overviewImageAndValueContainer">
+                      <img src="assets/moneyIcon.png" alt="" class="overviewImage">
+                      <p class="storeItemCost">200</p>
+                    </div>
                   </div>
-                  <div class="overviewImageAndValueContainer">
-                    <img src="assets/timer.png" alt="" class="overviewImage">
-                    <p class="storeItemDurationTime">10 rounds</p>
+                  <div class="overviewStatsSectionContainer withImage">
+                    <div class="descriptionContainer">
+                      <h4 class="storeOverviewIconDescription">Refresh Time</h4>
+                    </div>
+                    <div class="overviewImageAndValueContainer">
+                      <span class="material-symbols-outlined reloadTimeIcon overviewIcon">refresh</span>
+                      <p class="storeItemReloadTime">5 rounds</p>
+                    </div>
                   </div>
-                </div>
-                <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
-                  <h4 class="overviewHeader">Max Stock</h4>
-                  <p class="storeItemMaxStock">10 items</p>
-                </div>
-                <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
-                  <h4 class="overviewHeader">Footprint Radius</h4>
-                  <p class="storeItemFootprintRadius">Extra Small (3)</p>
-                </div>
-                <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
-                  <h4 class="overviewHeader">Range</h4>
-                  <p class="storeItemRange">50</p>
+                  <div class="overviewStatsSectionContainer withImage">
+                    <div class="descriptionContainer">
+                      <h4 class="storeOverviewIconDescription">Duration</h4>
+                    </div>
+                    <div class="overviewImageAndValueContainer">
+                      <img src="assets/timer.png" alt="" class="overviewImage">
+                      <p class="storeItemDurationTime">10 rounds</p>
+                    </div>
+                  </div>
+                  <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+                    <h4 class="overviewHeader">Max Stock</h4>
+                    <p class="storeItemMaxStock">10 items</p>
+                  </div>
+                  <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+                    <h4 class="overviewHeader">Footprint Radius</h4>
+                    <p class="storeItemFootprintRadius">Extra Small (3)</p>
+                  </div>
+                  <div class="overviewStatsSectionContainer geraldoExclusiveContainer">
+                    <h4 class="overviewHeader">Range</h4>
+                    <p class="storeItemRange">50</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="relatedStatsContainer">
-              
-          </div>
-        </dialog>
-      </div>
-      </div>
-      <div class="disclaimerContainer">
-        <h2 class="disclaimerHeader">See a Mistake?</h2>
-        <p class="disclaimer">The <a class="decoratedLink" href="https://discord.gg/xzwcXGxMQR">BTD6 Central Discord</a> 
-          is the best way to get my attention about it.</p>
-        <p class="disclaimer">BTD6 Central's tower stats are made based on community-gathered data and 
-          community feedback. There will likely be some mistakes, so please report any you find!
-        </p>
+            <div class="relatedStatsContainer">
+        
+            </div>
+          </dialog>
+        </div>
+        </div>
+        <div class="disclaimerContainer">
+          <h2 class="disclaimerHeader">See a Mistake?</h2>
+          <p class="disclaimer">The <a class="decoratedLink" href="https://discord.gg/xzwcXGxMQR">BTD6 Central Discord</a>
+            is the best way to get my attention about it.</p>
+          <p class="disclaimer">BTD6 Central's tower stats are made based on community-gathered data and
+            community feedback. There will likely be some mistakes, so please report any you find!
+          </p>
+        </div>
       </div>
       <div class="popupOverlay"></div>
       <div class="loading">

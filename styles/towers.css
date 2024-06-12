@@ -9,6 +9,10 @@ select:hover {
     cursor: pointer;
 }
 
+.towerStatsBody {
+    max-width: var(--maxBodyWidth);
+    margin: 0 auto;
+}
 .wip {
     display: none;
 }
@@ -434,6 +438,7 @@ h1, h2, .attackName {
 }
 .heroStatsAndSelectContainer {
     display: flex;
+    justify-content: center;
 }
 .heroLevelSelectHeader {
     margin: 0 0 0 2rem;
@@ -443,8 +448,15 @@ h1, h2, .attackName {
     height: 200px;
     object-fit: contain;
 }
+.heroStatsAndSelectContainer {
+    max-width: var(--maxBodyWidth)
+}
+.heroStatsMarginAdder {
+    max-width: 90%;
+}
 .heroLevelSelectContainer {
     width: 25vw;
+    max-width: 300px;
     height: fit-content;
     margin: 0 0 0 2rem;
     background-color: var(--contentBackground1);
@@ -551,13 +563,13 @@ h1, h2, .attackName {
     display: none;
     background-color: var(--contentBackground1);
     width: fit-content;
-    display: flex;
+    justify-content: center;
     flex-direction: column;
+    margin: 0 auto;
     padding: 10px;
-    margin: 50px 0px 20px 20px;
     border-radius: 10px;
     width: 40vw;
-    min-width: 350px;
+    min-width: 300px;
     box-shadow: 0 0 3px var(--shadowColor);
 }
 @media only screen and (max-width: 768px) {
@@ -718,6 +730,7 @@ h1, h2, .attackName {
 }
 .relatedStatsContainer .attackDiv {
     margin: 0;
+    max-width: var(--maxContainerWidth);
 }
 .relatedStatsContainer .attackName {
     margin-top: 1rem;

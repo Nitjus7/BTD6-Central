@@ -3,6 +3,8 @@
   --mainFont: "Quicksand", sans-serif;
   --secondaryFont: "Poppins", sans-serif;
   --pageBackground: black;
+  --maxBodyWidth: 1750px;
+  --maxTextAreaWidth: 1250px;
   font-size: 16px;
   box-sizing: border-box;
 }

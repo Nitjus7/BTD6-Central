@@ -1,6 +1,6 @@
 function generateNewsLinks() {
   document.querySelector(".learnMoreButtonContainer").onclick = () => {
-    window.open("https://www.reddit.com/r/btd6/comments/1dca4jl/btd6_community_event_birthday_bad_bonanza/")
+    window.open("https://www.reddit.com/r/btd6/comments/1ddt11o/btd6_community_event_is_live_now/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button")
   }
 }
 function generateResourceLinks() {
