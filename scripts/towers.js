@@ -1,8 +1,6 @@
 const paragonDegreeInput = document.querySelector(".paragonDegreeInput")
 const paragonContainer = document.querySelector(".paragonContainer")
 const heroContainer = document.querySelector(".heroContainer")
-const selectDegreeCheck = document.querySelector("#pikachuIChooseYou")
-const calculateDegreeCheck = document.querySelector("#charizardIChooseYou")
 const calculateParagonDegreeButton = document.querySelector(".calculateParagonDegreeButton")
 
 const dataContainers = [paragonContainer, heroContainer, document.querySelector(".disclaimerContainer")]
@@ -354,8 +352,8 @@ async function swapToTower(category, tower, level) {
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".disclaimerContainer").style.display = "flex"
     document.querySelector(".toolsPickContainer").style.display = "none"
-    document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
-    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    // document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
     document.querySelector(".takeMeHomeContainer").style.display = "block"
     backButton.style.display = "block"
@@ -394,6 +392,7 @@ function displayParagonData(degree) {
     createAttackDivs(p, null)
     if (p.hasOwnProperty("abilities")) createAbilityDivs(p)
     if (p.hasOwnProperty("support")) createSupportDivs(p)
+    document.querySelector('.disclaimerContainer').classList.add("withShop")
     editURL("level", degree, false)
 }
 
@@ -538,50 +537,50 @@ function createElem(value, type, parent, st) {
     parent.appendChild(elem)
 }
 
-function calculateParagonDegree() {
-    let data = paragon.returnData()
+function calculateParagonDegree(selectedParagon) {
     let power = 0
     let degree = 1
     const maxPops = 16200000
-    let paragonCost = data["cost"]
-    switch (document.querySelector("#gamemodeDifficulty").value) {
-        case "easy": paragonCost = Math.round(data["cost"] * 0.85); break;
-        case "hard": paragonCost = Math.round(data["cost"] * 1.08); break;
-        case "impoppable": paragonCost = Math.round(data["cost"] * 1.2); break;
-        default: paragonCost = paragonCost
-    }
-    let pops = Math.floor(document.querySelector("#paragonPops").value)
-    if (pops == null || pops < 0) {pops = 0; document.querySelector("#paragonPops").value = 0}
-    const maxTiers = 100
-    let tiers = Math.floor(document.querySelector("#paragonTiersSacced").value)
-    if (tiers == null || tiers < 0) {tiers = 0; document.querySelector("#paragonTiersSacced").value = 0}
-    const maxCashSac = paragonCost * 3
-    let cashSac = Math.floor(document.querySelector("#paragonCashSacced").value)
-    if (cashSac == null || cashSac < 0) {cashSac = 0; document.querySelector("#paragonCashSacced").value}
-    const maxCashSlider = paragonCost * 3 * 1.05
-    let cashSlider = Math.floor(document.querySelector("#paragonCashSlider").value)
-    if (cashSlider == null || cashSlider < 0) {cashSlider = 0; document.querySelector("#paragonCashSlider").value = 0}
-    const maxT5 = 9
-    let t5 = Math.floor(document.querySelector("#paragonT5Sacced").value)
+    let paragonCost = costs["paragons"][selectedParagon]
+    paragonCost = Math.round(paragonCost * document.querySelector(".userDifficultyInput").value)
+
+
+    let pops = Math.floor(document.querySelector(".userPopsInput").value)
+    if (pops == null || pops < 0) {pops = 0; document.querySelector(".userPopsInput").value = 0}
+    // const maxTiers = 100
+    let tiers = Math.floor(document.querySelector(".userTiersInput").value)
+    if (tiers == null || tiers < 0) {tiers = 0; document.querySelector(".userTiersInput").value = 0}
+    // const maxCashSac = paragonCost * 3
+    let cashSac = Math.floor(document.querySelector(".userCashInput").value)
+    if (cashSac == null || cashSac < 0) {cashSac = 0; document.querySelector(".userCashInput").value}
+    // const maxCashSlider = paragonCost * 3 * 1.05
+    let cashSlider = Math.floor(document.querySelector(".userCashSliderInput").value)
+    if (cashSlider == null || cashSlider < 0) {cashSlider = 0; document.querySelector(".userCashSliderInput").value = 0}
+    // const maxT5 = 9
+    let t5 = Math.floor(document.querySelector(".userExtraTier5sInput").value)
     if (t5 > 9) {
         t5 = 9
-        document.querySelector("#paragonT5Sacced").value = 9
+        document.querySelector(".userExtraTier5sInput").value = 9
     }
+    let powerTotems = Math.floor(document.querySelector('.userTotemInput').value)
+    if (powerTotems == null || powerTotems < 0) {powerTotems = 0; document.querySelector(".userTotemInput").value = 0}
+
+
     let powerFromPops = pops / 180 > 90000 ? 90000 : Math.round(pops / 180)
     power += powerFromPops
-    if (powerFromPops >= 90000) document.querySelector("#paragonPops").value = maxPops
     power += tiers * 100 > 10000 ? 10000 : Math.round(tiers * 100)
-    if (tiers >= 100) document.querySelector("#paragonTiersSacced").value = maxTiers
 
     let powerFromCash
-    let idk = cashSac / (paragonCost / 20000) 
-    let idk2 = cashSlider / (paragonCost * 1.05 / 20000)
-    powerFromCash = idk + idk2 > 60000 ? 60000 : idk + idk2
-    if (powerFromCash >= 60000) {
-        if (cashSac < cashSlider) document.querySelector("#paragonCashSlider").value = maxCashSlider
-        else document.querySelector("#paragonCashSacced").value = maxCashSac
-    }
+    let powerFromSac = cashSac / (paragonCost / 20000) 
+    let powerFromSlider = cashSlider / (paragonCost * 1.05 / 20000)
+    powerFromCash = powerFromSac + powerFromSlider > 60000 ? 60000 : powerFromSac + powerFromSlider
+    /* if (powerFromSlider > 0 && powerFromSac + powerFromSlider > 60000) {
+        document.querySelector(".extraDetails").innerText += `You're spending more money than you need to on the cash slider!`
+    } */
     power += powerFromCash
+
+    let powerFromTotems = Math.round(powerTotems * 2000)
+    power += powerFromTotems
 
     power += t5 * 6000 > 50000 ? 50000 : t5 * 6000
     let i = 0;
@@ -589,11 +588,14 @@ function calculateParagonDegree() {
         i++
     }
     degree = i + 1
-    document.querySelector(".result").innerText = `Degree ${degree}`
-    displayParagonData(degree)
+    document.querySelector(".degreeResultHeader").innerText = `Degree ${degree}`
+    const extraDetails = document.querySelector(".extraDetails")
+    if (degree !== 100) extraDetails.innerText = `Your Paragon has ${Math.round(power)} power. 
+        It needs ${Math.round(POWER_DEGREE_REQUIREMENTS[degree - 1] - power)} for the next degree.`
+    else extraDetails.innerText = `Your Paragon is at max power!`
+
+    document.querySelector(".getStats")
 }
-
-
 
 function displayHeroData(level) {
     const scrollPos = window.scrollY
@@ -628,7 +630,7 @@ function displayHeroData(level) {
 
 
     if (h["hero"] === "Geraldo" || h["hero"] === "Corvus") {
-        document.querySelector(".disclaimerContainer").style.margin = "50px auto 100px auto"
+        document.querySelector(".disclaimerContainer").classList.add("withShop")
         storeButton.style.display = "flex"
         const storeItems = Object.keys(h["store"])
         if (h["hero"] === "Geraldo") {
@@ -687,7 +689,7 @@ function displayHeroData(level) {
             storeContainer.close()
         }
     } else {
-        document.querySelector(".disclaimerContainer").style.margin = "50px auto 20px auto"
+        document.querySelector(".disclaimerContainer").classList.remove("withShop")
         storeButton.style.display = "none"
     }
 
@@ -1217,17 +1219,35 @@ function getXPAtRound(round) {
         return (90 * (round - 50)) + 1620
     }
 }
-function swapToHeroCalculator() {
+function swapToDegreeCalculator() {
     document.querySelector(".towerPickContainer").style.display = "none"
     document.querySelector(".filterHeader").style.display = "none"
     document.querySelector(".optionsBar").style.display = "none"
     document.querySelector(".toolsPickContainer").style.display = "none"
-    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "block"
     document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
     document.querySelector(".takeMeHomeContainer").style.display = "block"
     backButton.style.display = "block"
-    document.querySelector(".heroLevelCalculatorContainer").style.display = "block"
-    editURL("menu", "heroLevelCalculator")
+    // document.querySelector(".heroLevelCalculatorContainer").style.display = "block"
+    
+    const userParagonInput = document.querySelector(".userParagonInput")
+    document.querySelector(".userParagonInput").addEventListener("change", async function() {
+        if (!costs) {
+            await getData("costs")
+        }
+        document.querySelector(".paragonPortrait").src = `assets/${userParagonInput.value}.webp`
+        document.querySelector(".maxCashSac").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)}`
+        document.querySelector(".maxCashSlider").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)}`
+    })
+    const userDifficultyInput = document.querySelector(".userDifficultyInput")
+    userDifficultyInput.addEventListener("change", function() {
+        document.querySelector(".maxCashSac").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)}`
+        document.querySelector(".maxCashSlider").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)}`
+    })
+    document.querySelector(".calculateButton").onclick = () => {
+        calculateParagonDegree(document.querySelector(".userParagonInput").value)
+    }
+    editURL("menu", "paragonDegreeCalculator")
 }
 
 
@@ -1273,21 +1293,12 @@ document.querySelector(".confirmHeroLevelByButton").onclick = () => {
     )
     document.querySelector(".heroLevelByResult").innerText = round
 }
-document.querySelector(".heroLevelButton").onclick = () => {
+/* document.querySelector(".heroLevelButton").onclick = () => {
     swapToHeroCalculator()
-}
-/* document.querySelector(".paragonDegreeButton").onclick = () => {
-    document.querySelector(".towerPickContainer").style.display = "none"
-    document.querySelector(".filterHeader").style.display = "none"
-    document.querySelector(".optionsBar").style.display = "none"
-    document.querySelector(".toolsPickContainer").style.display = "none"
-    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
-    document.querySelector(".actuallyTakeMeHomeContainer").style.display = "none"
-    document.querySelector(".takeMeHomeContainer").style.display = "block"
-    backButton.style.display = "block"
-    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "block"
-    editURL("menu", "paragonDegreeCalculator")
 } */
+document.querySelector(".paragonDegreeButton").onclick = () => {
+    swapToDegreeCalculator()
+}
 const optionsBarArray = Array.from(document.querySelector(".optionsBar").children)
 for (const child of optionsBarArray) {
     child.onclick = () => {
@@ -1300,25 +1311,20 @@ for (const child of optionsBarArray) {
 }
 
 paragonDegreeInput.addEventListener("change", function() {
-    if (!document.querySelector(".degreeSelectorContainer").classList.contains("unchecked")){
-        paragonDegreeInput.value = Math.floor(paragonDegreeInput.value)
-        if (paragonDegreeInput.value < 1) paragonDegreeInput.value = 1
-        if (paragonDegreeInput.value > 100) paragonDegreeInput.value = 100
-        let str = paragonDegreeInput.value.toString()
-        let parsedStr = parseInt(str, 10).toString()
-        let realDegree = +parsedStr
-        displayParagonData(realDegree)
-    }
+    paragonDegreeInput.value = Math.floor(paragonDegreeInput.value)
+    if (paragonDegreeInput.value < 1) paragonDegreeInput.value = 1
+    if (paragonDegreeInput.value > 100) paragonDegreeInput.value = 100
+    let str = paragonDegreeInput.value.toString()
+    let parsedStr = parseInt(str, 10).toString()
+    let realDegree = +parsedStr
+    displayParagonData(realDegree)
 })
-document.querySelector(".calculateParagonDegreeButton").onclick = () => {
-    if (!document.querySelector(".degreeCalculatorContainer").classList.contains("unchecked")){
-        calculateParagonDegree()
-    }
+document.querySelector(".paragonCalculatorButtonContainer").onclick = () => {
+    window.location.replace("towers.html?menu=paragonDegreeCalculator")
 }
 
 // thank god this only triggers when it's activated and not when it's deactivated
-selectDegreeCheck.addEventListener("change", function() {
-    calculateDegreeCheck.checked = false
+paragonDegreeInput.addEventListener("change", function() {
     if (paragonDegreeInput.value < 1) paragonDegreeInput.value = 1
     if (paragonDegreeInput.value > 100) paragonDegreeInput.value = 100
     let str = paragonDegreeInput.value.toString()
@@ -1326,14 +1332,6 @@ selectDegreeCheck.addEventListener("change", function() {
     let realDegree = +parsedStr
     paragonDegreeInput.value = realDegree
     displayParagonData(realDegree)
-    document.querySelector(".degreeSelectorContainer").classList.remove("unchecked")
-    document.querySelector(".degreeCalculatorContainer").classList.add("unchecked")
-})
-calculateDegreeCheck.addEventListener("change", function() {
-    selectDegreeCheck.checked = false
-    calculateParagonDegree()
-    document.querySelector(".degreeCalculatorContainer").classList.remove("unchecked")
-    document.querySelector(".degreeSelectorContainer").classList.add("unchecked")
 })
 
 backButton.onclick = () => {
@@ -1346,10 +1344,10 @@ backButton.onclick = () => {
     document.querySelector(".filterHeader").style.display = "block"
     document.querySelector(".optionsBar").style.display = "flex"
     backButton.style.display = "none"
-    // document.querySelector(".toolsPickContainer").style.display = "flex"
+    document.querySelector(".toolsPickContainer").style.display = "flex"
     // document.querySelector(".heroLevelCalculatorContainer").style.display = "none"
-    // document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
-    document.querySelector(".disclaimerContainer").style.margin = "50px auto 20px auto"
+    document.querySelector(".paragonDegreeCalculatorContainer").style.display = "none"
+    document.querySelector(".disclaimerContainer").classList.remove("withShop")
     document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
     document.querySelector("#chooseLevel1").classList.add("selected")
     checkFilter()
@@ -1375,7 +1373,7 @@ function formatNumber(input) {
     str = parseFloat(str);
     str = String(str);
     return str;
- } 
+}
 function enableLoading(str) {
     const msgElem = document.querySelector(".loadingMessage")
     document.querySelector(".popupOverlay").style.display = "block"
@@ -1405,7 +1403,7 @@ async function main() {
     urlTower = urlParams.get("tower")
     urlLevel = urlParams.get("level")
     if (urlMenu != null) {
-        if (urlMenu == "heroLevelCalculator") swapToHeroCalculator()
+        if (urlMenu == "paragonDegreeCalculator") swapToDegreeCalculator()
     } else if (urlParagon != null) {
         swapToTower("paragons", urlParagon, urlLevel)
         paragonDegreeInput.value = urlLevel

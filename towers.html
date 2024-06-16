@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> <!-- STORE RELOAD TIME / GERALDO & CORVUS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0" /> <!-- CALCULATOR ICON: PARAGON STATS -->
 
  
     <link rel="icon" href="https://i.ibb.co/7rKMr1k/victory.webp" type="image/x-icon" />
@@ -108,78 +109,21 @@
       </div>
 
       <div class="towerStatsBody">
-        <h2 class="filterHeader">Categories</h2>
-        <div class="optionsBar">
-          <button id="primary" class="standardButton filterOption">Primary</button>
-          <button id="military" class="standardButton filterOption">Military</button>
-          <button id="magic" class="standardButton filterOption">Magic</button>
-          <button id="support" class="standardButton filterOption">Support</button>
-          <button id="hero" class="standardButton filterOption">Heroes</button>
-          <button id="paragon" class="standardButton filterOption">All Paragons</button>
-          <button id="noFilter" class="standardButton filterOption selected">All Towers</button>
+      <div class="toolsPickContainer firstElem">
+        <h2 class="toolsHeader">Tools</h2>
+        <!-- <div class="toolButtonContainer">
+          <button class="heroLevelButton toolButton standardButton">Hero Level Calculator</button>
+        </div> -->
+       <div class="toolButtonContainer">
+          <button class="paragonDegreeButton toolButton standardButton">Paragon Degree Calculator</button>
         </div>
-        <div class="toolsPickContainer">
-          <h2 class="toolsHeader">Tools</h2>
-          <div class="toolButtonContainer">
-            <button class="heroLevelButton toolButton standardButton">Hero Level Calculator</button>
-          </div>
-         <!-- <div class="toolButtonContainer">
-            <button class="paragonDegreeButton toolButton standardButton">Paragon Degree Calculator</button>
-          </div> -->
-        </div>
-        <div class="heroLevelCalculatorContainer">
-          <h1 class="heroLevelCalcHeader">Hero Level Calculators</h1>
-          <div class="heroLevelBasicContainer">
-            <div class="heroLevelBasicInputContainer">
-              <label for="heroBasicCalcInput">Hero</label>
-              <select name="heroName" id="heroBasicCalcInput">
-                <option value="1">Quincy</option>
-                <option value="1">Gwendolin</option>
-                <option value="1">Striker Jones</option>
-                <option value="1">Obyn Greenfoot</option>
-                <option value="1.71">Captain Churchill</option>
-                <option value="1.5">Benjamin</option>
-                <option value="1.425">Ezili</option>
-                <option value="1.425">Pat Fusty</option>
-                <option value="1.71">Adora</option>
-                <option value="1.425">Admiral Brickell</option>
-                <option value="1">Etienne</option>
-                <option value="1.425">Sauda</option>
-                <option value="1.5">Psi</option>
-                <option value="1">Geraldo</option>
-                <option value="1.71">Corvus</option>
-                <option value="1.425">Rosalia</option>
-              </select>
-            </div>
-            <div class="heroLevelBasicInputContainer">
-              <label for="heroLevelCalcInput">Hero Placement Round</label>
-              <input type="number" class="calcInput" id="heroStartRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
-            </div>
-            <div class="heroLevelBasicInputContainer">
-              <label for="heroLevelCalcInput">Ending Round</label>
-              <input type="number" class="calcInput" id="heroEndRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
-            </div>
-            <div class="heroLevelBasicInputContainer">
-              <label for="mapDifficultyCalcInput">Map Difficulty</label>
-              <select name="mapDifficulty" id="mapDifficultyCalcInput">
-                <option value="1">Beginner</option>
-                <option value="1.1">Intermediate</option>
-                <option value="1.2">Advanced</option>
-                <option value="1.3">Expert</option>
-                <option value="1.1">Custom Map</option>
-              </select>
-            </div>
-            <div class="heroLevelBasicInputContainer">
-              <label for="energizerPlacementInput">Energizer Placement Round</label>
-              <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="1000"></input>
-            </div>
-            <button class="confirmHeroBasicCalcButton standardButton confirmHeroCalcButton">Calculate</button>
-            <h2 class="heroLevelBasicResult"></h2>
-          </div>
-          <h2 class="heroLevelByHeader">OR</h2>
-          <div class="heroLevelByContainer">
-            <p class="heroLevelByText">I want to get</p>
-            <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
+      </div>
+      <div class="heroLevelCalculatorContainer firstElem">
+        <h1 class="heroLevelCalcHeader">Hero Level Calculators</h1>
+        <div class="heroLevelBasicContainer">
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroBasicCalcInput">Hero</label>
+            <select name="heroName" id="heroBasicCalcInput">
               <option value="1">Quincy</option>
               <option value="1">Gwendolin</option>
               <option value="1">Striker Jones</option>
@@ -197,58 +141,150 @@
               <option value="1.71">Corvus</option>
               <option value="1.425">Rosalia</option>
             </select>
-            <p class="heroLevelByText">to level</p>
-            <input type="number" class="calcInput heroLevelCalcInput" id="heroLevelByTargetLevel" placeholder="required" name="heroRound" min="1" max="20"></input>
-            <p class="heroLevelByText">by round</p>
-            <input type="number" class="calcInput heroGoalRoundInput" placeholder="required" name="heroRound" min="1" max="100"></input>
-            <p class="heroLevelByText">on a(n)</p>
-            <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroLevelCalcInput">Hero Placement Round</label>
+            <input type="number" class="calcInput" id="heroStartRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="heroLevelCalcInput">Ending Round</label>
+            <input type="number" class="calcInput" id="heroEndRoundCalcInput" placeholder="required" name="heroRound" min="1" max="1000"></input>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="mapDifficultyCalcInput">Map Difficulty</label>
+            <select name="mapDifficulty" id="mapDifficultyCalcInput">
               <option value="1">Beginner</option>
               <option value="1.1">Intermediate</option>
               <option value="1.2">Advanced</option>
               <option value="1.3">Expert</option>
-              <option value="1.1">Custom</option>
+              <option value="1.1">Custom Map</option>
             </select>
-            <p class="heroLevelByText">map.</p>
-            <div class="lineBreak"></div>
-            <button class="confirmHeroLevelByButton standardButton confirmHeroCalcButton">Confirm</button>
-            <div class="lineBreak"></div>
-            <h4 class="heroLevelByResult"></h4>
+          </div>
+          <div class="heroLevelBasicInputContainer">
+            <label for="energizerPlacementInput">Energizer Placement Round</label>
+            <input type="number" name="energizerRound" id="energizerRoundCalcInput" placeholder="optional" min="1" max="1000"></input>
+          </div>
+          <button class="confirmHeroBasicCalcButton standardButton confirmHeroCalcButton">Calculate</button>
+          <h2 class="heroLevelBasicResult"></h2>
+        </div>
+        <h2 class="heroLevelByHeader">OR</h2>
+        <div class="heroLevelByContainer">
+          <p class="heroLevelByText">I want to get</p>
+          <select name="heroName" class="calcInput" id="heroLevelByCalcInput">
+            <option value="1">Quincy</option>
+            <option value="1">Gwendolin</option>
+            <option value="1">Striker Jones</option>
+            <option value="1">Obyn Greenfoot</option>
+            <option value="1.71">Captain Churchill</option>
+            <option value="1.5">Benjamin</option>
+            <option value="1.425">Ezili</option>
+            <option value="1.425">Pat Fusty</option>
+            <option value="1.71">Adora</option>
+            <option value="1.425">Admiral Brickell</option>
+            <option value="1">Etienne</option>
+            <option value="1.425">Sauda</option>
+            <option value="1.5">Psi</option>
+            <option value="1">Geraldo</option>
+            <option value="1.71">Corvus</option>
+            <option value="1.425">Rosalia</option>
+          </select>
+          <p class="heroLevelByText">to level</p>
+          <input type="number" class="calcInput heroLevelCalcInput" id="heroLevelByTargetLevel" placeholder="required" name="heroRound" min="1" max="20"></input>
+          <p class="heroLevelByText">by round</p>
+          <input type="number" class="calcInput heroGoalRoundInput" placeholder="required" name="heroRound" min="1" max="100"></input>
+          <p class="heroLevelByText">on a(n)</p>
+          <select name="mapDifficulty" class="calcInput" id="mapDifficultyLevelByInput">
+            <option value="1">Beginner</option>
+            <option value="1.1">Intermediate</option>
+            <option value="1.2">Advanced</option>
+            <option value="1.3">Expert</option>
+            <option value="1.1">Custom</option>
+          </select>
+          <p class="heroLevelByText">map.</p>
+          <div class="lineBreak"></div>
+          <button class="confirmHeroLevelByButton standardButton confirmHeroCalcButton">Confirm</button>
+          <div class="lineBreak"></div>
+          <h4 class="heroLevelByResult"></h4>
+        </div>
+      </div>
+      <div class="paragonDegreeCalculatorContainer firstElem">
+        <h1 class="degreeCalculatorHeader">Paragon Degree Calculator</h1>
+        <div class="selectParagonContainer">
+          <div class="paragonPortraitContainer">
+            <img src="assets/ParagonIcon.webp" alt="" class="paragonPortrait">
+          </div>
+          <select name="paragonName" class="userParagonInput userInput">
+            <option value="ParagonIcon" disabled selected hidden>Choose A Paragon</option>
+            <option value="ApexPlasmaMaster">Apex Plasma Master (Dart)</option>
+            <option value="GlaiveDominus">Glaive Dominus (Boomerang)</option>
+            <option value="NauticSiegeCore">Nautic Siege Core (Sub)</option>
+            <option value="NavarchOfTheSeas">Navarch of the Seas (Buccaneer)</option>
+            <option value="GoliathDoomship">Goliath Doomship (Ace)</option>
+            <option value="MagusPerfectus">Magus Perfectus (Wizard)</option>
+            <option value="AscendedShadow">Ascended Shadow (Ninja)</option>
+            <option value="MasterBuilder">Master Builder (Engineer)</option>
+          </select>
+        </div>
+        <div class="paragonCalculatorInputContainer">
+          <div class="inputContainer">
+            <h3 class="inputHeader">Tiers</h3>
+            <input type="number" class="userTiersInput userInput" max="100" min="1" max="100" value="0">
+            <p class="maxDescription">MAX: 100</p>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Total Pops</h3>
+            <input type="number" class="userPopsInput userInput" max="100" min="1" max="100" value="0">
+            <p class="maxDescription">MAX: 16200000</p>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Extra Tier 5s</h3>
+            <input type="number" class="userExtraTier5sInput userInput" min="1" max="9" value="0">
+            <p class="maxDescription">MAX: 9</p>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Cash in Sacrifices</h3>
+            <input type="number" class="userCashInput userInput" min="0" max="1000000000" value="0">
+            <p class="maxDescription maxCashSac">MAX: Variable</p>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Cash Slider</h3>
+            <input type="number" class="userCashSliderInput userInput" min="0" max="1000000000" value="0">
+            <p class="maxDescription maxCashSlider">MAX: Variable</p>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Difficulty</h3>
+            <select name="difficulty" class="userDifficultyInput userInput">
+              <option value="0.85">Easy</option>
+              <option value="1" selected>Medium</option>
+              <option value="1.08">Hard</option>
+              <option value="1.2">Impoppable</option>
+            </select>
+          </div>
+          <div class="inputContainer">
+            <h3 class="inputHeader">Paragon Totems</h3>
+            <input type="number" class="userTotemInput userInput" min="0" max="100" value="0">
+            <p class="maxDescription">MAX: 100</p>
           </div>
         </div>
-        <!-- <div class="paragonDegreeCalculatorContainer">
-          <h1 class="paragonDegreeCalcHeader">Paragon Degree Calculator</h1>
-          <label for="paragonNameInput">Choose a Paragon</label>
-          <select name="paragonName" id="paragonNameInput">
-            <option value="DartMonkey">Apex Plasma Master (Dart)</option>
-            <option value="BoomerangMonkey">Glaive Dominus (Boomerang)</option>
-            <option value="MonkeySub">Nautic Siege Core (Sub)</option>
-            <option value="MonkeyBuccaneer">Navarch of the Seas (Buccaneer)</option>
-            <option value="MonkeyAce">Goliath Doomship (Ace)</option>
-            <option value="WizardMonkey">Magus Perfectus (Wizard)</option>
-            <option value="NinjaMonkey">Ascended Shadow (Ninja)</option>
-            <option value="MonkeyEngineer">Master Builder (Engineer)</option>
-          </select><br><br>
-            <label for="paragonPops">Total Pops</label>
-            <input type="number" value="0" class="valueInput wider calcInput" id="paragonPopsInTool"><br>
-            <label for="paragonTiersSacced">Tiers in Sacrifices</label>
-            <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSaccedInTool"><br>
-            <label for="paragonCashSacced">Cash in Sacrifices</label>
-            <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSaccedInTool"><br>
-            <label for="paragonCashSlider">Cash Slider</label>
-            <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSliderInTool"><br>
-            <label for="paragonT5Sacced">Extra Tier 5s</label>
-            <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5SaccedInTool"><br>
-            <label for="gamemodeDifficulty">Difficulty</label>
-            <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
-              <option value="easy">Easy</option>
-              <option value="medium" selected>Medium</option>
-              <option value="hard">Hard</option>
-              <option value="impoppable">Impoppable</option>
-            </select><br>
-            <button class="calculateParagonDegreeButton standardButton" id="calculateParagonDegreeButtonInTool">Calculate</button>
-            <p class="resultInTool">Placeholder</p>
-        </div> -->
+        <div class="calculateButtonContainer">
+          <button class="calculateButton standardButton">Calculate</button>
+        </div>
+        <div class="resultsContainer">
+          <h2 class="degreeResultHeader">Choose a Paragon</h2>
+          <!-- <button class="getStatsButton standardButton">Get Stats</button> -->
+          <p class="extraDetails">Choose a Paragon from the menu at the top to get started.</p>
+        </div>
+      </div>
+        <h2 class="filterHeader">Categories</h2>
+        <div class="optionsBar">
+          <button id="primary" class="standardButton filterOption">Primary</button>
+          <button id="military" class="standardButton filterOption">Military</button>
+          <button id="magic" class="standardButton filterOption">Magic</button>
+          <button id="support" class="standardButton filterOption">Support</button>
+          <button id="hero" class="standardButton filterOption">Heroes</button>
+          <button id="paragon" class="standardButton filterOption">All Paragons</button>
+          <button id="noFilter" class="standardButton filterOption selected">All Towers</button>
+        </div>
         <div class="towerPickContainer">
           <!--PRIMARY-->
           <h2 class="primaryHeader">Primary</h2>
@@ -322,37 +358,12 @@
           <div class="paragonStatsContainer">
             <h1 class="name paragonName"></h1>
             <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
-            <div class="degreeEditorContainer">
-              <div class="degreeSelectorContainer editorOptionContainer">
-                <input type="radio" name="Billy" id="pikachuIChooseYou" class="checkmark" checked>
-                <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br><br>
-                <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
-              </div>
-              <div class="degreeCalculatorContainer editorOptionContainer unchecked">
-                <input type="radio" name="Bob" id="charizardIChooseYou" class="checkmark">
-                <b><label for="charizardIChooseYou" class="degreeEditorHeader">Calculate Degree</label></b><br><br>
-                <label for="paragonPops">Total Pops</label>
-                <input type="number" value="0" class="valueInput wider calcInput" id="paragonPops"><br>
-                <label for="paragonTiersSacced">Tiers in Sacrifices</label>
-                <input type="number" value="0" class="valueInput calcInput" id="paragonTiersSacced"><br>
-                <label for="paragonCashSacced">Cash in Sacrifices</label>
-                <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSacced"><br>
-                <label for="paragonCashSlider">Cash Slider</label>
-                <input type="number" value="0" class="valueInput wider calcInput" id="paragonCashSlider"><br>
-                <label for="paragonT5Sacced">Extra Tier 5s</label>
-                <input type="number" value="0" class="valueInput calcInput" min="0" max="9" id="paragonT5Sacced"><br>
-                <label for="gamemodeDifficulty">Difficulty</label>
-                <select name="difficulty" class="valueInput muchWider calcInput" id="gamemodeDifficulty">
-                  <option value="easy">Easy</option>
-                  <option value="medium" selected>Medium</option>
-                  <option value="hard">Hard</option>
-                  <option value="impoppable">Impoppable</option>
-                </select><br>
-                <button class="calculateParagonDegreeButton" id="calculateParagonDegreeButton">Calculate</button>
-                <label for="calculateParagonDegreeButton" class="result"></label>
-              </div>
+            <div class="degreeSelectorContainer editorOptionContainer">
+              <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br>
+              <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
             </div>
             <h1 class="tier paragonDegree"></h1>
+            <div class="paragonCalculatorButtonContainer"><span class="material-symbols-outlined">calculate</span></div>
           </div>
         </div>
         <div class="heroContainer">

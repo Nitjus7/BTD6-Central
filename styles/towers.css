@@ -53,9 +53,84 @@ h1, h2, .attackName {
     text-align: center
 }
 
+.paragonCalculatorInputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.paragonCalculatorButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    padding: 15px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: var(--buttonColor1);
+    transition: 0.25s background-color ease;
+}
+.paragonCalculatorButtonContainer:hover {
+    cursor: pointer;
+    background-color: var(--buttonColor2);
+}
+.inputContainer {
+    margin: 0 2rem;
+    @media only screen and (max-width: 768px) {
+        margin: 0 0.75rem;
+    }
+}
+.paragonPortraitContainer {
+    min-height: 150px;
+    height: 30vw;
+    max-height: 250px;
+    margin: 0 auto;
+}
+.paragonPortrait {
+    min-height: 150px;
+    height: 30vw;
+    max-height: 250px;
+    object-fit: contain;
+}
+.userParagonInput {
+    font-family: var(--secondaryFont);
+    font-size: 1rem;
+    color: var(--textColor);
+}
+.userInput {
+    background-color: var(--contentBackground1);
+    color: var(--textColor);
+    outline: none;
+    border-radius: 5px;
+    border: 1px var(--textColor) solid;
+    transition: 0.25s border ease;
+    text-align: center;
+    width: 100px;
+    font-size: 16px;
+}
+.userInput.userParagonInput {
+    width: 350px;
+}
+.userInput:focus {
+    border: 1px var(--textColor2) solid;
+}
+.maxDescription {
+    opacity: 0.7;
+    margin-top: 0;
+}
+.resultsContainer {
+    background-color: var(--contentBackground1);
+    border-radius: 10px;
+    width: 50%;
+    min-width: 300px;
+    margin: 20px auto;
+    padding: 3px 10px;
+}
+
 
 .filterHeader {
-    margin-top: 75px;
     text-align: center;
 }
 .optionsBar {
@@ -73,9 +148,6 @@ h1, h2, .attackName {
 .filterOption.selected {
     background-color: var(--contentBackground2);
     border: 1px solid var(--contentOutline2);
-}
-@media only screen and (max-width: 768px) {
-
 }
 .paragonName, .paragonDegree {
     color: var(--textColor3)
@@ -118,21 +190,20 @@ h1, h2, .attackName {
         margin: 0
     }
 }
-.degreeEditorContainer {
+
+.degreeSelectorContainer {
+    width: 50%;
+    margin: 10px auto;
     display: flex;
-    justify-content: center;
     align-items: center;
-}
-.degreeEditorContainer > * {
-    margin: 1.5rem;
-}
-.degreeCalculatorContainer {
-    display: block;
+    text-align: center;
+    flex-direction: column;
 }
 .valueInput {
     font-family: var(--primaryFont);
-    width: 40px;
-    height: 20px;
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
     border-radius: 10px;
     text-align: center;
     color: var(--textColor);
@@ -152,7 +223,7 @@ h1, h2, .attackName {
 }
 
 .toolsPickContainer {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -214,6 +285,10 @@ h1, h2, .attackName {
     padding: 0.25rem;
     border: 1px var(--textColor) solid;
     background-color: var(--contentBackground1);
+}
+.calculateButton {
+    padding: 15px;
+    font-size: 16px;
 }
 
 .calcInput {
@@ -559,23 +634,26 @@ h1, h2, .attackName {
         font-size: 1rem;
     }
 }
+
+
 .disclaimerContainer {
     display: none;
     background-color: var(--contentBackground1);
     width: fit-content;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
-    margin: 0 auto;
     padding: 10px;
+    margin: 20px 0 20px 20px;
     border-radius: 10px;
     width: 40vw;
     min-width: 300px;
     box-shadow: 0 0 3px var(--shadowColor);
-}
-@media only screen and (max-width: 768px) {
-    .disclaimerContainer {
-        margin: 50px auto 25px auto;
+    @media only screen and (min-width: 1600px) {
+        margin: 20px auto 20px auto;
     }
+}
+.disclaimerContainer.withShop {
+    margin-bottom: 100px;
 }
 
 
