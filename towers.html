@@ -214,7 +214,7 @@
             <img src="assets/ParagonIcon.webp" alt="" class="paragonPortrait">
           </div>
           <select name="paragonName" class="userParagonInput userInput">
-            <option value="ParagonIcon" disabled selected hidden>Choose A Paragon</option>
+            <option value="paragonIcon" disabled selected hidden>Choose A Paragon</option>
             <option value="ApexPlasmaMaster">Apex Plasma Master (Dart)</option>
             <option value="GlaiveDominus">Glaive Dominus (Boomerang)</option>
             <option value="NauticSiegeCore">Nautic Siege Core (Sub)</option>
@@ -234,7 +234,7 @@
           <div class="inputContainer">
             <h3 class="inputHeader">Total Pops</h3>
             <input type="number" class="userPopsInput userInput" max="100" min="1" max="100" value="0">
-            <p class="maxDescription">MAX: 16200000</p>
+            <p class="maxDescription">MAX: 16,200,000</p>
           </div>
           <div class="inputContainer">
             <h3 class="inputHeader">Extra Tier 5s</h3>
@@ -355,16 +355,26 @@
           </div>
         </div>
         <div class="paragonContainer">
-          <div class="paragonStatsContainer">
-            <h1 class="name paragonName"></h1>
-            <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
+          <div class="paragonStatsHeaderContainer">
+            <div class="paragonHeaderPortraitContainer">
+              <img src="assets/paragonIcon.webp" alt="" class="paragonHeaderPortrait">
+            </div>
+            <div class="paragonHeaderText">
+              <h1 class="name paragonName"></h1>
+              <h2 class="name paragonName noMarginTop paragonCost">$000,000</h2>
+              <h1 class="tier paragonDegree"></h1>
+            </div>
+          </div>
+          <div class="paragonStatsAndSelectContainer">
             <div class="degreeSelectorContainer editorOptionContainer">
-              <b><label for="pikachuIChooseYou" class="degreeEditorHeader">Choose Degree</label></b><br>
+              <h2 for="pikachuIChooseYou" class="degreeEditorHeader">Degree</h2>
               <input type="number" min="1" max="100" value="1" step="1" class="paragonDegreeInput valueInput" id="paragonDegreeInput">
             </div>
-            <h1 class="tier paragonDegree"></h1>
-            <div class="paragonCalculatorButtonContainer"><span class="material-symbols-outlined">calculate</span></div>
+            <div class="paragonStatsContainer">
+
+            </div>
           </div>
+          <div class="paragonCalculatorButtonContainer"><span class="material-symbols-outlined">calculate</span></div>
         </div>
         <div class="heroContainer">
           <div class="heroHeaderContainer firstElem">

@@ -149,12 +149,37 @@ h1, h2, .attackName {
     background-color: var(--contentBackground2);
     border: 1px solid var(--contentOutline2);
 }
+
+@media only screen and (min-width: 1000px) {
+     .paragonStatsHeaderContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+     }
+     .paragonHeaderPortrait {
+        margin-right: 20px;
+     }
+}
+.paragonHeaderPortraitContainer {
+    min-height: 150px;
+    height: 15vw;
+    max-height: 350px;
+    display: flex;
+    justify-content: center;
+}
+.paragonHeaderPortrait {
+    min-height: 150px;
+    height: 15vw;
+    max-height: 350px;
+    object-fit: contain;
+}
 .paragonName, .paragonDegree {
     color: var(--textColor3)
 }
-.degreeEditorContainer {
-    border-bottom: 1px var(--textColor) solid;
+.paragonName {
+    margin-top: 0;
 }
+
 .editorOptionContainer {
     background-color: var(--contentBackground1);
     border-radius: 5px;
@@ -192,34 +217,53 @@ h1, h2, .attackName {
 }
 
 .degreeSelectorContainer {
-    width: 50%;
+    width: 20%;
+    min-width: 175px;
+    height: fit-content;
+    padding: 5px 10px;
     margin: 10px auto;
+    border-radius: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    flex-direction: column;
+    font-family: var(--secondaryFont);
+    position: sticky;
+    top: 60px;
+    z-index: 5;
+    box-shadow: 0px 0px 5px var(--shadowColor);
+}
+.degreeEditorHeader {
+    margin-right: 8px;
+    color: var(--textColor3);
+}
+@media only screen and (min-width: 1000px) {
+    .paragonStatsAndSelectContainer {
+        display: flex;
+        margin-left: 20px;
+    }
+    .degreeSelectorContainer {
+        position: sticky;
+        top: 150px;
+    }
 }
 .valueInput {
-    font-family: var(--primaryFont);
-    width: 80px;
+    font-family: var(--secondaryFont);
+    font-size: 1.5em;
+    width: 60px;
     height: 40px;
-    font-size: 16px;
-    border-radius: 10px;
+    font-size: 24px;
+    border-radius: 5px;
     text-align: center;
     color: var(--textColor);
-    outline: 1px var(--textColor) solid;
     background-color: var(--contentBackground3);
     border: none;
-    transition: all 0.25s;
-}
-.valueInput.wider {
-    width: 65px;
-}
-.valueInput.muchWider {
-    width: 100px;
+    border: 1px var(--textColor) solid;
+    outline: none;
+    transition: border-bottom 0.25s;
 }
 .valueInput:focus {
-    outline: 1px var(--textColor2) solid;
+    border: 1px var(--textColor2) solid;
 }
 
 .toolsPickContainer {

@@ -1,5 +1,6 @@
 const paragonDegreeInput = document.querySelector(".paragonDegreeInput")
 const paragonContainer = document.querySelector(".paragonContainer")
+const paragonStatsContainer = document.querySelector(".paragonStatsContainer")
 const heroContainer = document.querySelector(".heroContainer")
 const calculateParagonDegreeButton = document.querySelector(".calculateParagonDegreeButton")
 
@@ -81,7 +82,7 @@ class Paragon {
         }
         return cp
     }
-    returnData() {
+    getData() {
         return this.paragon
     }
 }
@@ -372,6 +373,7 @@ async function swapToTower(category, tower, level) {
 }
 
 function displayParagonData(degree) {
+    const scrollPos = window.scrollY
     let attackDivs = Array.from(document.querySelectorAll(".attackDiv"))
     let attackNames = Array.from(document.querySelectorAll(".attackName"))
     let attackTypes = Array.from(document.querySelectorAll(".attackType"))
@@ -385,14 +387,19 @@ function displayParagonData(degree) {
         e.remove();
     }
     let p = paragon.applyDegreeBonus(degree)
-    document.querySelector(".paragonCost").innerText = `$${p["cost"].toLocaleString()}`
+    document.querySelector(".paragonCost").innerText = `$${p["cost"].toLocaleString()} | Degree ${degree}`
+    if (degree == 100) {
+        document.querySelector(".paragonCost").innerText += ` (MAX)`
+    }
+    const paragonNameNoSpace = p["name"].replace(/\s/g, '')
+    document.querySelector(".paragonHeaderPortrait").src = `assets/${paragonNameNoSpace}.webp`
+    document.querySelector(".paragonHeaderPortrait").alt = p["name"]
     document.querySelector(".paragonName").innerText = p["name"]
-    document.querySelector(".paragonDegree").innerText = `Degree ${degree}`
-    if (degree == 100) document.querySelector(".paragonDegree").innerText += ` (MAX)`
     createAttackDivs(p, null)
     if (p.hasOwnProperty("abilities")) createAbilityDivs(p)
     if (p.hasOwnProperty("support")) createSupportDivs(p)
     document.querySelector('.disclaimerContainer').classList.add("withShop")
+    window.scrollTo({ top: scrollPos })
     editURL("level", degree, false)
 }
 
@@ -403,18 +410,18 @@ function createAbilityDivs(p) {
         const attackName = document.createElement("h2")
         attackName.innerHTML = `${attackModel["name"]}`
         attackName.classList.add("attackName")
-        paragonContainer.appendChild(attackName)
+        paragonStatsContainer.appendChild(attackName)
         if (attackModel.hasOwnProperty("type") && attackModel["type"] === "passive ability"){
             const attackType = document.createElement("h3")
             attackType.innerText = attackModel["type"]
             attackType.classList.add("attackType")
-            paragonContainer.appendChild(attackType)
+            paragonStatsContainer.appendChild(attackType)
         } else {
             attackName.innerHTML = `<img src="assets/activatedAbilityIcon.png" class="attackCategoryIcon" alt="activated ability" draggable="false"/> ${attackModel["name"]}`
         }
         createElem(`${attackModel["cooldown"]} sec`, "Cooldown", attackDiv)
         createElem(attackModel["description"], "Description", attackDiv)
-        paragonContainer.appendChild(attackDiv)
+        paragonStatsContainer.appendChild(attackDiv)
         if (attackModel.hasOwnProperty("special")) createElem(attackModel["special"], "Special", attackDiv)
         if (attackModel.hasOwnProperty("emits")) createAttackDivs(attackModel["emits"], attackModel["name"])
         
@@ -431,7 +438,7 @@ function createAttackDivs(p, emitsFrom) {
         const attackName = document.createElement("h2")
         attackName.innerHTML = `<img src="assets/projectileIcon.png" class="attackCategoryIcon" alt="projectile" draggable="false"/> ${attackModel["name"]}`
         attackName.classList.add("attackName")
-        paragonContainer.appendChild(attackName)
+        paragonStatsContainer.appendChild(attackName)
         if (emitsFrom != null) {
             createElem(emitsFrom, "Emitted From", attackDiv)
             if (attackModel.hasOwnProperty("frequency")) createElem(attackModel["frequency"], "Frequency", attackDiv)
@@ -495,7 +502,7 @@ function createAttackDivs(p, emitsFrom) {
             }
         }
         if (attackModel.hasOwnProperty("special")) createElem(attackModel["special"], "Special", attackDiv)
-        paragonContainer.appendChild(attackDiv)
+        paragonStatsContainer.appendChild(attackDiv)
         if (attackModel.hasOwnProperty("emits")) {
             createAttackDivs(attackModel["emits"], attackModel["name"])
         }
@@ -509,9 +516,9 @@ function createSupportDivs(p) {
         const attackName = document.createElement("h2")
         attackName.innerHTML = `<img src="assets/supportIcon.png" class="attackCategoryIcon" draggable="false"/> ${supportModel["name"]}`
         attackName.classList.add("attackName")
-        paragonContainer.appendChild(attackName)
+        paragonStatsContainer.appendChild(attackName)
         createElem(supportModel["description"], "Description", attackDiv)
-        paragonContainer.appendChild(attackDiv)
+        paragonStatsContainer.appendChild(attackDiv)
     }
 }
 
@@ -1236,13 +1243,17 @@ function swapToDegreeCalculator() {
             await getData("costs")
         }
         document.querySelector(".paragonPortrait").src = `assets/${userParagonInput.value}.webp`
-        document.querySelector(".maxCashSac").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)}`
-        document.querySelector(".maxCashSlider").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)}`
+        let maxCashSac = Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)
+        let maxCashSlider = Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)
+        document.querySelector(".maxCashSac").innerText = `MAX: $${maxCashSac.toLocaleString()}`
+        document.querySelector(".maxCashSlider").innerText = `MAX: $${maxCashSlider.toLocaleString()}`
     })
     const userDifficultyInput = document.querySelector(".userDifficultyInput")
     userDifficultyInput.addEventListener("change", function() {
-        document.querySelector(".maxCashSac").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)}`
-        document.querySelector(".maxCashSlider").innerText = `MAX: $${Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)}`
+        let maxCashSac = Math.round(costs["paragons"][userParagonInput.value] * 3 * userDifficultyInput.value)
+        let maxCashSlider = Math.round(costs["paragons"][userParagonInput.value] * 3.15 * userDifficultyInput.value)
+        document.querySelector(".maxCashSac").innerText = `MAX: $${maxCashSac.toLocaleString()}`
+        document.querySelector(".maxCashSlider").innerText = `MAX: $${maxCashSlider.toLocaleString()}`
     })
     document.querySelector(".calculateButton").onclick = () => {
         calculateParagonDegree(document.querySelector(".userParagonInput").value)
@@ -1320,7 +1331,14 @@ paragonDegreeInput.addEventListener("change", function() {
     displayParagonData(realDegree)
 })
 document.querySelector(".paragonCalculatorButtonContainer").onclick = () => {
-    window.location.replace("towers.html?menu=paragonDegreeCalculator")
+    returnToHome()
+    swapToDegreeCalculator()
+    editURL("level", null)
+    editURL("paragon", null)
+    editURL("menu", "ParagonDegreeCalculator")
+    const paragonNameNoSpace = paragon.getData()["name"].replace(/\s/g, '')
+    document.querySelector(".userParagonInput").value = paragonNameNoSpace
+    document.querySelector(".userParagonInput").dispatchEvent(new Event('change')) // I had no idea you could do this
 }
 
 // thank god this only triggers when it's activated and not when it's deactivated
@@ -1335,6 +1353,15 @@ paragonDegreeInput.addEventListener("change", function() {
 })
 
 backButton.onclick = () => {
+    returnToHome()
+    checkFilter()
+    editURL("paragon", null)
+    editURL("level", null)
+    editURL("menu", null)
+    editURL("hero", null)
+}
+
+function returnToHome() {
     for (const vrej of dataContainers) {
         vrej.style.display = "none"
     }
@@ -1350,11 +1377,6 @@ backButton.onclick = () => {
     document.querySelector(".disclaimerContainer").classList.remove("withShop")
     document.querySelector(".chooseLevelButton.selected").classList.remove("selected")
     document.querySelector("#chooseLevel1").classList.add("selected")
-    checkFilter()
-    editURL("paragon", null)
-    editURL("level", null)
-    editURL("menu", null)
-    editURL("hero", null)
 }
 
 function editURL(name, value, push) {

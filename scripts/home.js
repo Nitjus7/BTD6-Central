@@ -1,6 +1,6 @@
 function generateNewsLinks() {
   document.querySelector(".learnMoreButtonContainer").onclick = () => {
-    window.open("https://www.reddit.com/r/btd6/comments/1ddt11o/btd6_community_event_is_live_now/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button")
+    window.open("https://www.reddit.com/r/btd6/")
   }
 }
 function generateResourceLinks() {
@@ -27,22 +27,22 @@ function generateFeaturedPagesLinks() {
   const links4 = Array.from(document.querySelectorAll(".goToLink4"))
   for (const link of links1) {
     link.onclick = () => {
-      window.open("towers.html")
+      window.location.replace("towers.html")
     }
   }
   for (const link of links2) {
     link.onclick = () => {
-      window.open("community.html")
+      window.location.replace("community.html")
     }
   }
   for (const link of links3) {
     link.onclick = () => {
-      window.open("events.html?event=bosses")
+      window.location.replace("events.html?event=bosses")
     }
   }
   for (const link of links4) {
     link.onclick = () => {
-      window.open("events.html?event=races") // testing this for when I push to github to see if it still works
+      window.location.replace("events.html?event=races") 
     }
   }
 }
