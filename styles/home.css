@@ -44,6 +44,8 @@
 }
 
 
+
+
 .newsCard {
     padding: 10px 15px 15px 15px;
     max-width: var(--maxTextAreaWidth);
@@ -87,6 +89,7 @@
         padding: 0 3px;
     }
 }
+
 
 
 .featuredPagesListContainer {
@@ -258,4 +261,9 @@
       margin: 2rem 0px 0.5rem 1rem;
       width: 85vw;
     }
+}
+
+/* TEMPORARY CSS ALERT!!!!! */
+.featuredPagesHeader {
+    margin-top: 125px;
 }

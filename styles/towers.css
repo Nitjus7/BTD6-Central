@@ -220,7 +220,7 @@ h1, h2, .attackName {
     width: 20%;
     min-width: 175px;
     height: fit-content;
-    padding: 5px 10px;
+    padding: 5px 15px;
     margin: 10px auto;
     border-radius: 10px;
     display: flex;
@@ -330,9 +330,16 @@ h1, h2, .attackName {
     border: 1px var(--textColor) solid;
     background-color: var(--contentBackground1);
 }
-.calculateButton {
+.calculateButton, .helpButton {
     padding: 15px;
     font-size: 16px;
+}
+.helpButton {
+    margin-bottom: 10px;
+}
+.helpButtonContainer {
+    display: flex;
+    justify-content: center;
 }
 
 .calcInput {

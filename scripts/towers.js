@@ -1,3 +1,7 @@
+const popupContainer = document.querySelector(".popupContainer")
+const popupTitle = document.querySelector(".popupTitle")
+const popupContentContainer = document.querySelector(".popupContentContainer")
+
 const paragonDegreeInput = document.querySelector(".paragonDegreeInput")
 const paragonContainer = document.querySelector(".paragonContainer")
 const paragonStatsContainer = document.querySelector(".paragonStatsContainer")
@@ -56,7 +60,11 @@ class Paragon {
         let cp = structuredClone(this.paragon)
         if (cp.hasOwnProperty("abilities")) {
             for (const abilityModel of cp["abilities"]) {
-                abilityModel["cooldown"] = formatNumber(abilityModel["cooldown"] / (1 + Math.sqrt((x-1) * 50) * 0.01))
+                const r0 = abilityModel["cooldown"]
+                const innerTerm = Math.round(Math.sqrt(50 * x - 50) * 10) / 10
+                const denominator = 1 + 0.01 * innerTerm
+                const cooldown = r0 / denominator
+                abilityModel["cooldown"] = formatNumber(cooldown)
                 if (abilityModel.hasOwnProperty("emits")) {
                     for (const emissionModel of abilityModel["emits"]) applyDegreeBonusForSubEffects(emissionModel, x)
                 }
@@ -64,17 +72,24 @@ class Paragon {
         }
         for (let i = 0; i < cp["attacks"].length; i++) {
             let attackModel = cp["attacks"][i]
-            if (attackModel.hasOwnProperty("rate")) attackModel["rate"] = formatNumber(attackModel["rate"] / (1 + Math.sqrt((x-1) * 50) * 0.01))
+            if (attackModel.hasOwnProperty("rate")) {
+                const r0 = attackModel["rate"]
+                const innerTerm = Math.round(Math.sqrt(50 * x - 50) * 10) / 10
+                const denominator = 1 + 0.01 * innerTerm
+                const cooldown = r0 / denominator
+                attackModel["rate"] = formatNumber(cooldown)
+            }
             if (attackModel["type"] != "subtower") {
                 if (attackModel["pierce"] != null) attackModel["pierce"] = x != 100 ? formatNumber(attackModel["pierce"] * (1 + 0.01 * (x - 1)) + (x - 1)) : attackModel["pierce"] * 2 + 100
                 else attackModel["pierce"] = 1
                 let dmgModel = attackModel["dmg"]
                 dmgModel["base"] = x != 100 ? formatNumber(dmgModel["base"] * (1 + (x-1)*0.01) + Math.floor((x-1)/10)) : formatNumber(dmgModel["base"] * 2 + 10)
-                if (dmgModel.hasOwnProperty("bonusCeram")) dmgModel["bonusCeram"] *= formatNumber(1 + (x-1)*0.01)
-                if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] *= formatNumber(1 + (x-1)*0.01)
-                if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] *= formatNumber(1 + (x-1)*0.01)
-                if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = formatNumber(dmgModel["bonusBoss"] * (1 + Math.floor(x/20)*0.25)) * (1 + (x-1)*0.01)
-                if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"] *= formatNumber(1 + (x-1)*0.01)
+                if (dmgModel.hasOwnProperty("bonusCeram")) dmgModel["bonusCeram"] = x != 100 ? formatNumber(dmgModel["bonusCeram"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusCeram"])
+                if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] = x != 100 ? formatNumber(dmgModel["bonusMOAB"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusMOAB"])
+                if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] = x != 100 ? formatNumber(dmgModel["bonusCamo"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusCamo"])
+                if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = x != 100 ? formatNumber(dmgModel["bonusBoss"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusBoss"])
+                if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"]= x != 100 ? formatNumber(dmgModel["bonusStunned"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusStunned"])
+                if (dmgModel.hasOwnProperty("bonusStickied")) dmgModel["bonusStickied"]= x != 100 ? formatNumber(dmgModel["bonusStickied"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusStickied"])
             }
             if (attackModel.hasOwnProperty("emits")) {
                 for (const emissionModel of attackModel["emits"]) applyDegreeBonusForSubEffects(emissionModel, x)
@@ -89,17 +104,24 @@ class Paragon {
 // x is for degree
 function applyDegreeBonusForSubEffects(attackModel, x) {
     if (attackModel["type"] == "attack" || attackModel["type"] == "projectile"){
-        if (attackModel.hasOwnProperty("rate")) attackModel["rate"] = formatNumber(attackModel["rate"] / (1 + Math.sqrt((x-1) * 50) * 0.01))
+        if (attackModel.hasOwnProperty("rate")) {
+            const r0 = attackModel["rate"]
+            const innerTerm = Math.round(Math.sqrt(50 * x - 50) * 10) / 10
+            const denominator = 1 + 0.01 * innerTerm
+            const cooldown = r0 / denominator
+            attackModel["rate"] = formatNumber(cooldown)
+        }
         if (attackModel["type"] != "subtower") {
             if (attackModel["pierce"] != null) attackModel["pierce"] = x != 100 ? formatNumber(attackModel["pierce"] * (1 + 0.01 * (x - 1)) + (x - 1)) : attackModel["pierce"] * 2 + 100
             else attackModel["pierce"] = 1
             let dmgModel = attackModel["dmg"]
             dmgModel["base"] = x != 100 ? formatNumber(dmgModel["base"] * (1 + (x-1)*0.01) + Math.floor((x-1)/10)) : formatNumber(dmgModel["base"] * 2 + 10)
-            if (dmgModel.hasOwnProperty("bonusCeram")) dmgModel["bonusCeram"] *= formatNumber(1 + (x-1)*0.01)
-            if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] *= formatNumber(1 + (x-1)*0.01)
-            if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] *= formatNumber(1 + (x-1)*0.01)
-            if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = formatNumber(dmgModel["bonusBoss"] * (1 + Math.floor(x/20)*0.25)) * (1 + (x-1)*0.01)
-            if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"] *= formatNumber(1 + (x-1)*0.01)
+            if (dmgModel.hasOwnProperty("bonusCeram")) dmgModel["bonusCeram"] = x != 100 ? formatNumber(dmgModel["bonusCeram"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusCeram"])
+            if (dmgModel.hasOwnProperty("bonusMOAB")) dmgModel["bonusMOAB"] = x != 100 ? formatNumber(dmgModel["bonusMOAB"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusMOAB"])
+            if (dmgModel.hasOwnProperty("bonusCamo")) dmgModel["bonusCamo"] = x != 100 ? formatNumber(dmgModel["bonusCamo"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusCamo"])
+            if (dmgModel.hasOwnProperty("bonusBoss")) dmgModel["bonusBoss"] = x != 100 ? formatNumber(dmgModel["bonusBoss"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusBoss"])
+            if (dmgModel.hasOwnProperty("bonusStunned")) dmgModel["bonusStunned"]= x != 100 ? formatNumber(dmgModel["bonusStunned"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusStunned"])
+            if (dmgModel.hasOwnProperty("bonusStickied")) dmgModel["bonusStickied"]= x != 100 ? formatNumber(dmgModel["bonusStickied"] * (1 + (x-1)*0.01)) : formatNumber(2 * dmgModel["bonusStickied"])
         }
     }
     if (attackModel.hasOwnProperty("emits")) {
@@ -591,6 +613,7 @@ function calculateParagonDegree(selectedParagon) {
 
     power += t5 * 6000 > 50000 ? 50000 : t5 * 6000
     let i = 0;
+    console.log(POWER_DEGREE_REQUIREMENTS[21])
     while (power >= POWER_DEGREE_REQUIREMENTS[i] && i <= 100) {
         i++
     }
@@ -1258,6 +1281,38 @@ function swapToDegreeCalculator() {
     document.querySelector(".calculateButton").onclick = () => {
         calculateParagonDegree(document.querySelector(".userParagonInput").value)
     }
+    document.querySelector(".helpButton").onclick = () => {
+        let popupHTML = `
+        <h2 class="popupInnerHeader">Tiers</h2>
+        <p class="popupInnerContent">
+            Select the total amount of upgrades purchased. <br> 
+            EX: One 0-0-2 Boomerang for a Glaive Dominus counts as 2 tiers. One 4-0-2 Boomerang would count as 6 tiers. <br> 
+            <b>DO NOT INCLUDE TIER 5s</b>.
+        </p>
+        <h2 class="popupInnerHeader">Total Pops</h2>
+        <p class="popupInnerContent">
+            Add up all the pop counts on the same tower type as the Paragon. <b>Multiply cash generated by 4, then add it 
+            to the pop count.</b>
+        </p>
+        <h2 class="popupInnerHeader">Extra Tier 5s</h2>
+        <p class="popupInnerContent">
+            Add up every Tier 5 on that tower type. <b>Do not include the original three Tier 5s.</b>
+        </p>
+        <h2 class="popupInnerHeader">Cash in Sacrifices</h2>
+        <p class="popupInnerContent">
+            The total amount of cash spent in towers that will be sacrificed to the Paragon when purchased.
+        </p>
+        <h2 class="popupInnerHeader">Cash Slider</h2>
+        <p class="popupInnerContent">
+            The cash slider right before a Paragon upgrade. This combines with your cash in sacrifices.
+        </p>
+        <h2 class="popupInnerHeader">Paragon Totems</h2>
+        <p class="popupInnerContent">
+            The amount of Geraldo Paragon Totems on the map.
+        </p>
+        `
+        showPopup("How to Use", popupHTML)
+    }
     editURL("menu", "paragonDegreeCalculator")
 }
 
@@ -1360,6 +1415,21 @@ backButton.onclick = () => {
     editURL("menu", null)
     editURL("hero", null)
 }
+
+function showPopup(title, content) {
+    popupTitle.innerText = title
+    popupContentContainer.innerHTML = content
+    popupContainer.showModal()
+    popupContainer.classList.add("open")
+    document.body.classList.add("no-scroll")
+  }
+  document.querySelector(".closePopupButton").onclick = () => {
+    popupContainer.classList.remove("open")
+    document.body.classList.remove("no-scroll")
+    setTimeout(() => {
+      popupContainer.close();
+    }, 300);
+  }
 
 function returnToHome() {
     for (const vrej of dataContainers) {
