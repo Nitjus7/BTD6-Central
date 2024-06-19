@@ -897,3 +897,13 @@ h1, h2, .attackName {
         width: 50vw;
     }
 }
+
+/* TEMPORARY CSS ALERT */
+.popupInnerContent {
+    margin-top: 0;
+    padding-top: 0;
+}
+.popupInnerHeader {
+    margin-bottom: 10px;
+    padding-bottom: 0;
+}

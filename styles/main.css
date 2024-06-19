@@ -303,6 +303,10 @@ body {
   border: none;
   outline: 1px var(--textColor) solid;
 }
+.closePopupButton {
+  display: flex;
+  align-items: center;
+}
 .popupContainer::backdrop {
   background: rgba(0, 0, 0, 0.45);
 }
@@ -318,7 +322,6 @@ body {
 }
 .popupTitle {
   font-family: var(--secondaryFont);
-  padding: 10px;
 }
 .popupOverlay {
   display: none;
