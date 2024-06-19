@@ -478,6 +478,7 @@ function createAttackDivs(p, emitsFrom) {
             if (dmgModel.hasOwnProperty("bonusMOAB")) createElem(`${formatNumber(Number(dmgModel["bonusMOAB"]) + Number(dmgModel["base"]))}`, "MOAB", damageDiv)
             if (dmgModel.hasOwnProperty("bonusCamo")) createElem(`${formatNumber(Number(dmgModel["bonusCamo"]) + Number(dmgModel["base"]))}`, "Camo", damageDiv)
             if (dmgModel.hasOwnProperty("bonusStunned")) createElem(`${formatNumber(Number(dmgModel["bonusStunned"]) + Number(dmgModel["base"]))}`, "Stunned", damageDiv)
+            if (dmgModel.hasOwnProperty("bonusStickied")) createElem(`${formatNumber(Number(dmgModel["bonusStickied"]) + Number(dmgModel["base"]))}`, "Stickied", damageDiv)
             if (dmgModel.hasOwnProperty("bonusBoss")) {
                 let totalBossDmg = 0
                 if (!dmgModel.hasOwnProperty("bonusMOAB")) totalBossDmg = Number(dmgModel["bonusBoss"]) + Number(dmgModel["base"])
