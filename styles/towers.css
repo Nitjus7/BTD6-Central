@@ -486,6 +486,7 @@ h1, h2, .attackName {
 .damageDiv, .lifespanDiv {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
 }
 .damageDiv > * {
     margin: 0 1rem;
