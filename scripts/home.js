@@ -1,8 +1,8 @@
-/* function generateNewsLinks() {
+function generateNewsLinks() {
   document.querySelector(".learnMoreButtonContainer").onclick = () => {
-    window.open("https://www.reddit.com/r/btd6/")
+    window.open("https://discord.com/invite/xNxjqXBp6B")
   }
-} */
+}
 function generateResourceLinks() {
   /* document.querySelector(".jumpToResourcesButton").onclick = () => {
     document.querySelector(".resourcesHeader").scrollIntoView({ behavior: 'smooth', top: "0" })
@@ -47,7 +47,7 @@ function generateFeaturedPagesLinks() {
   }
 }
 
-// generateNewsLinks()
+generateNewsLinks()
 generateResourceLinks()
 generateFeaturedPagesLinks()
 // main() 
